@@ -20,7 +20,7 @@
 * `codePattern.md`：变量、函数以及类的命名规范；注释的设计规范等
 * `architecture.md`：类的继承关系，设计框架图，思维导图，使用流程等图表以及相关说明
   * `architecture/`：放置相关图片
-* `demands.md`：需求说明，已完成的需求需作标注，标明完成的组员姓名以及完成时间。
+* `demands.md`：(此md已删除，需求在project的demands里面)
 * `deployment.md`：部署说明，相关配置说明，迭代版本记录等。
 
 ### 代码说明文档
