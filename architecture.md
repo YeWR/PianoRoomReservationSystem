@@ -16,4 +16,4 @@
 
 - 具体框架设计图
 
-![小程序使用流程]()
+![小程序使用流程](https://github.com/ThssSE/PianoRoomReservationSystem/raw/master/architecture/%E5%85%B7%E4%BD%93%E6%A1%86%E6%9E%B6%E8%AE%BE%E8%AE%A1%E5%9B%BE.jpg?raw=true)
