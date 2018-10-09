@@ -1,0 +1,10 @@
+npm install -g mocha
+npm install -g istanbul
+npm init
+npm install --save-dev mocha nyc
+npm install wafer-node-sdk --save
+ÐÞ¸Äpackage.json
+"scripts": {
+  "test":     "mocha --reporter dot",
+  "coverage": "nyc --reporter html --reporter text npm test"
+}
