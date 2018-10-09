@@ -30,8 +30,9 @@
 * `demands.md`：(此md已删除，需求在project的demands里面)
 * `deployment.md`：部署说明，相关配置说明，迭代版本记录等。
 * `ui/`：放置ui设计的文件
+* `src`：放置项目源码
 
 ### 代码说明文档
 
-* 
+> `src`目录下说明
 
