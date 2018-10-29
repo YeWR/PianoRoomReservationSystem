@@ -1,4 +1,4 @@
-// pages/index/index.js
+// pages/register_out_school/register_out_school.js
 Page({
 
   /**

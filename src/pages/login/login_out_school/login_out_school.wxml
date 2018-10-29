@@ -1,0 +1,29 @@
+<!--pages/login_out_school/login_out_school.wxml-->
+<view class="container">
+    <view class="login_icon">
+        <!--<image class="login-img" src="../images/loginLog.jpg"></image>-->
+    </view>
+    <view class="login_from">
+
+        <!--账号-->
+        <view class="input_view">
+            <input class="input_text" placeholder="请输入账号" bindinput="getUsername" />
+        </view>
+
+        <!--密码-->
+        <view class="input_view">
+            <input class="input_text" password="true" placeholder="请输入密码" bindinput="getPassword" />
+        </view>
+
+        <!--登录-->
+        <view class="login_btn_view">
+            <button class="login_btn" bindtap="login">登录</button>
+        </view>
+
+        <!--注册-->
+        <view class="login_btn_view">
+            <button class="register_btn" bindtap="register">注册</button>
+        </view>
+
+    </view>
+</view>
