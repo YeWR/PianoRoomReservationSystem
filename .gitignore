@@ -33,7 +33,7 @@ src/.lock-wscript
 src/build/Release
 
 # Dependency directories
-src/node_modules/
+back_end/node_modules/
 src/jspm_packages/
 
 # TypeScript v1 declaration files
@@ -72,4 +72,5 @@ src/.vuepress/dist
 # Serverless directories
 src/.serverless
 
-src/.idea
+front_end/.idea
+back_end/.idea
