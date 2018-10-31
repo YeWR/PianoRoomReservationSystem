@@ -4,22 +4,24 @@
 let app = getApp();
 let util = app.util;
 
+// 此处成员变量没有以_开头是因为这些变量都是小程序默认初始化的，如果要强行更改，麻烦...
+
 Page({
     data: {
         userInfo: {},
         hasUserInfo: false,
-        canIUse: wx.canIUse('button.open-type.getUserInfo')
+        canIUse: wx.canIUse("button.open-type.getUserInfo")
     },
     // 校内
     loginInSchool: function () {
         wx.navigateTo({
-            url: './login_in_school/login_in_school'
+            url: "./login_in_school/login_in_school"
         });
     },
     // 校外
     loginOutSchool: function () {
         wx.navigateTo({
-            url: './login_out_school/login_out_school'
+            url: "./login_out_school/login_out_school"
         })
     },
     onLoad: function () {

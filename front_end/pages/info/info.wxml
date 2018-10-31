@@ -1,0 +1,4 @@
+<!--pages/info/info.wxml-->
+<view>
+    {{_username}}，欢迎使用THU琴房预约
+</view>

@@ -1,0 +1,12 @@
+<!--pages/reserve/reserve.wxml-->
+<view class="container">
+    <view class="up_board">
+        <image class="img" mode="aspectFit" src="../../images/bg/welcome_in_reserve.jpg"></image>
+    </view>
+    <view class="reserve_space">
+        <view class="reserve_title">空间</view>
+        <view class="reserve_info">琴房介绍</view>
+        <view class="reserve_detail" bindtap="toReserveSpace">预约空间</view>
+    </view>
+
+</view>

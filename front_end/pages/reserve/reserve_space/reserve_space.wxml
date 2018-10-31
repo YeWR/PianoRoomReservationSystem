@@ -1,0 +1,7 @@
+<!--pages/reserve/reserve_space/reserve_space.wxml-->
+<view class="container">
+    <view class="up_board">
+        <image class="img" mode="aspectFit" src="../../../images/icon/calendar.png"></image>
+    </view>
+
+</view>

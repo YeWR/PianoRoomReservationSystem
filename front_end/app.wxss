@@ -8,3 +8,7 @@
     padding: 200 rpx 0;
     box-sizing: border-box;
 }
+
+.up_board {
+    
+}

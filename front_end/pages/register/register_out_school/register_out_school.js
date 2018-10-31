@@ -9,12 +9,12 @@ Page({
      * 页面的初始数据
      */
     data: {
-        username: '',
-        password: '',
-        rePassword: '',
-        realName: '',
-        idNumber: '',
-        // agreement: {name: 'agreement', value: '我已阅读并同意《注册协议》', checked: true},
+        _username: "",
+        _password: "",
+        _rePassword: "",
+        _realName: "",
+        _idNumber: "",
+        // agreement: {name: "agreement", value: "我已阅读并同意《注册协议》", checked: true},
     },
 
     /*******************************************************************************************************
@@ -23,35 +23,35 @@ Page({
     // get username
     getUsername: function (e) {
         this.setData({
-            username: e.detail.value
+            _username: e.detail.value
         });
     },
 
     // get password
     getPassword: function (e) {
         this.setData({
-            password: e.detail.value
+            _password: e.detail.value
         });
     },
 
     // get re password
     reGetPassword: function (e) {
         this.setData({
-            rePassword: e.detail.value
+            _rePassword: e.detail.value
         });
     },
 
     // get real name
     getRealName: function (e) {
         this.setData({
-            realName: e.detail.value
+            _realName: e.detail.value
         });
     },
 
     // get the id number(身份证)
     getIdNumber: function (e) {
         this.setData({
-            idNumber: e.detail.value
+            _idNumber: e.detail.value
         });
     },
 
@@ -78,25 +78,25 @@ Page({
         // TODO: add info in the checks
         let notEmptyCheck = function () {
             let ans = true;
-            if (!that.data.username) {
+            if (!that.data._username) {
                 ans = false;
-                util.alertInfo('用户名不能为空', 'none', 1000);
+                util.alertInfo("用户名不能为空", "none", 1000);
             }
-            else if (!that.data.password) {
+            else if (!that.data._password) {
                 ans = false;
-                util.alertInfo('密码不嫩为空', 'none', 1000);
+                util.alertInfo("密码不嫩为空", "none", 1000);
             }
-            else if (!that.data.rePassword) {
+            else if (!that.data._rePassword) {
                 ans = false;
-                util.alertInfo('密码不能为空', 'none', 1000);
+                util.alertInfo("密码不能为空", "none", 1000);
             }
-            else if (!that.data.realName) {
+            else if (!that.data._realName) {
                 ans = false;
-                util.alertInfo('真实姓名不能为空', 'none', 1000);
+                util.alertInfo("真实姓名不能为空", "none", 1000);
             }
-            else if (!that.data.idNumber) {
+            else if (!that.data._idNumber) {
                 ans = false;
-                util.alertInfo('身份证号不能为空', 'none', 1000);
+                util.alertInfo("身份证号不能为空", "none", 1000);
             }
             return ans;
         };
@@ -105,7 +105,7 @@ Page({
         let formatCheck = function () {
             let valid = true;
             // TODO: set the format of register
-            if (that.data.username.length > 15 || that.data.username.password !== that.data.username.rePassword) {
+            if (that.data._username.length > 15 || that.data._password !== that.data._username._rePassword) {
                 valid = false
             }
             return valid;
@@ -120,21 +120,21 @@ Page({
         // register POST
         let post = function () {
             wx.request({
-                url: '',
+                url: "",
                 data: {
-                    username: that.data.username,
-                    password: that.data.password,
-                    realName: that.data.realName,
-                    idNumber: that.data.idNumber
+                    username: that.data._username,
+                    password: that.data._password,
+                    realName: that.data._realName,
+                    idNumber: that.data._idNumber
                 },
-                method: 'POST',
+                method: "POST",
                 header: {
                     "Content-Type": "application/x-www-form-urlencoded"
                 },
                 success: function (res) {
-                    util.alertInfo('成功', 'success', 1000);
+                    util.alertInfo("成功", "success", 1000);
                     wx.navigateTo({
-                        url: ''
+                        url: ""
                     });
                     // success
                 },
@@ -159,7 +159,7 @@ Page({
     // go to login
     toLogin:function(e){
         wx.navigateTo({
-            url: '../../login/login_out_school/login_out_school'
+            url: "../../login/login_out_school/login_out_school"
         });
     },
 

@@ -1,4 +1,4 @@
-// pages/index/index.js
+// pages/reserve/reserve.js
 
 let app = getApp();
 let util = app.util;
@@ -9,6 +9,13 @@ Page({
      * 页面的初始数据
      */
     data: {},
+
+    // to reserve_space
+    toReserveSpace:function(e){
+        wx.navigateTo({
+            url: "./reserve_space/reserve_space"
+        });
+    },
 
     /**
      * 生命周期函数--监听页面加载
@@ -65,4 +72,4 @@ Page({
     onShareAppMessage: function () {
 
     }
-});
+})

@@ -9,21 +9,21 @@ Page({
      * 页面的初始数据
      */
     data: {
-        username: '',
-        password: ''
+        _username: "",
+        _password: ""
     },
 
     // get username
     getUsername: function (e) {
         this.setData({
-            username: e.detail.value
+            _username: e.detail.value
         });
     },
 
     // get password
     getPassword: function (e) {
         this.setData({
-            password: e.detail.value
+            _password: e.detail.value
         });
     },
 
@@ -41,13 +41,13 @@ Page({
         // TODO: add info in the checks
         let notEmptyCheck = function () {
             let ans = true;
-            if (!that.data.username) {
+            if (!that.data._username) {
                 ans = false;
-                util.alertInfo('用户名不能为空', 'none', 1000);
+                util.alertInfo("用户名不能为空", "none", 1000);
             }
-            else if (!that.data.password) {
+            else if (!that.data._password) {
                 ans = false;
-                util.alertInfo('密码不能为空', 'none', 1000);
+                util.alertInfo("密码不能为空", "none", 1000);
             }
             return ans;
         };
@@ -55,21 +55,25 @@ Page({
         // register POST
         let post = function () {
             wx.request({
-                url: '',
+                url: "",
                 data: {
-                    username: that.data.username,
-                    password: that.data.password,
+                    username: that.data._username,
+                    password: that.data._password,
                 },
-                method: 'POST',
+                method: "POST",
                 header: {
                     "Content-Type": "application/x-www-form-urlencoded"
                 },
                 success: function (res) {
-                    util.alertInfo('成功', 'success', 1000);
-                    wx.navigateTo({
-                        url: ''
-                    });
-                    // success
+                    // if success
+                    if(res.success){
+                        util.alertInfo("登录成功", "success", 500);
+                        that.toBoard();
+                    }
+                    // if wrong
+                    else{
+                        util.alertInfo(res.info, "none", 1000);
+                    }
                 },
                 fail: function (res) {
                     // fail
@@ -79,9 +83,9 @@ Page({
 
         // check
         if (notEmptyCheck()) {
-            // TODO：暂时跳转到index界面
+            // TODO：暂时跳转到board界面
             // post();
-            that.toIndex();
+            that.toBoard();
         }
 
     },
@@ -89,14 +93,15 @@ Page({
     // to register
     toRegister: function () {
         wx.navigateTo({
-            url: '../../register/register_out_school/register_out_school'
+            url: "../../register/register_out_school/register_out_school"
         });
     },
 
-    // to index
-    toIndex:function(){
-        wx.navigateTo({
-            url: '../../index/index'
+    // to board
+    toBoard: function () {
+        app.globalData._username = this.data._username;
+        wx.switchTab({
+            url: "../../board/board"
         });
     },
 
@@ -155,4 +160,4 @@ Page({
     onShareAppMessage: function () {
 
     }
-})
+});
