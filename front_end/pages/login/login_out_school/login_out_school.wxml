@@ -22,7 +22,7 @@
 
         <!--注册-->
         <view class="login_btn_view">
-            <button class="register_btn" bindtap="register">注册</button>
+            <button class="register_btn" bindtap="toRegister">注册</button>
         </view>
 
     </view>

@@ -1,4 +1,24 @@
 <!--pages/login_in_school/login_in_school.wxml-->
 <view class="container">
+    <view class="login_icon">
+        <!--<image class="login-img" src="../images/loginLog.jpg"></image>-->
+    </view>
+    <view class="login_from">
 
+        <!--账号-->
+        <view class="input_view">
+            <input class="input_text" placeholder="请输入学号或工号" bindinput="getUsername" />
+        </view>
+
+        <!--密码-->
+        <view class="input_view">
+            <input class="input_text" password="true" placeholder="请输入密码" bindinput="getPassword" />
+        </view>
+
+        <!--登录-->
+        <view class="login_btn_view">
+            <button class="login_btn" bindtap="login">登录</button>
+        </view>
+
+    </view>
 </view>

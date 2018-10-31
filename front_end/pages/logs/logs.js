@@ -1,5 +1,7 @@
 //logs.js
-const util = require('../../utils/util.js')
+
+let app = getApp();
+let util = app.util;
 
 Page({
   data: {
@@ -12,4 +14,4 @@ Page({
       })
     })
   }
-})
+});

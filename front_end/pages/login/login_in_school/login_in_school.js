@@ -1,10 +1,97 @@
 // pages/login_in_school/login_in_school.js
+
+let app = getApp();
+let util = app.util;
+
 Page({
 
     /**
      * 页面的初始数据
      */
-    data: {},
+    data: {
+        username: '',
+        password: ''
+    },
+
+    // get username
+    getUsername: function (e) {
+        this.setData({
+            username: e.detail.value
+        });
+    },
+
+    // get password
+    getPassword: function (e) {
+        this.setData({
+            password: e.detail.value
+        });
+    },
+
+    /*******************************************************************************************************
+     * TODO:密码加密以及API使用
+     * check if any info is empty
+     * send register POST
+     *******************************************************************************************************/
+
+    // login
+    login: function () {
+        let that = this;
+
+        // not empty check
+        // TODO: add info in the checks
+        let notEmptyCheck = function () {
+            let ans = true;
+            if (!that.data.username) {
+                ans = false;
+                util.alertInfo('学号或者工号不能为空', 'none', 1000);
+            }
+            else if (!that.data.password) {
+                ans = false;
+                util.alertInfo('密码不能为空', 'none', 1000);
+            }
+            return ans;
+        };
+
+        // register POST
+        let post = function () {
+            wx.request({
+                url: '',
+                data: {
+                    username: that.data.username,
+                    password: that.data.password,
+                },
+                method: 'POST',
+                header: {
+                    "Content-Type": "application/x-www-form-urlencoded"
+                },
+                success: function (res) {
+                    util.alertInfo('成功', 'success', 1000);
+                    wx.navigateTo({
+                        url: ''
+                    });
+                    // success
+                },
+                fail: function (res) {
+                    // fail
+                }
+            });
+        };
+
+        // check
+        if (notEmptyCheck()) {
+            // TODO：暂时跳转到index界面
+            // post();
+            that.toIndex();
+        }
+
+    },
+
+    // to index
+    toIndex: function () {
+        wx.navigateTo({
+            url: '../../index/index'
+        });
+    },
 
     /**
      * 生命周期函数--监听页面加载

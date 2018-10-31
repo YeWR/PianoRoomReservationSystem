@@ -1,6 +1,8 @@
 //login.js
 //获取应用实例
-const app = getApp();
+
+let app = getApp();
+let util = app.util;
 
 Page({
     data: {

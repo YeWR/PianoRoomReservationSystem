@@ -1,4 +1,8 @@
 // pages/login_out_school/login_out_school.js
+
+let app = getApp();
+let util = app.util;
+
 Page({
 
     /**
@@ -23,48 +27,76 @@ Page({
         });
     },
 
+    /*******************************************************************************************************
+     * TODO:密码加密
+     * check if any info is empty
+     * send register POST
+     *******************************************************************************************************/
+
     // login
     login: function () {
-        if (this.data.username.length === 0 || this.data.password.length === 0) {
-            wx.showToast({
-                title: '账号或密码不得为空!',
-                icon: 'loading',
-                duration: 1500
-            });
-            setTimeout(function(){
-                wx.hideToast()
-            },2000);
-        } else {
-            // 密码 记得加密
+        let that = this;
+
+        // not empty check
+        // TODO: add info in the checks
+        let notEmptyCheck = function () {
+            let ans = true;
+            if (!that.data.username) {
+                ans = false;
+                util.alertInfo('用户名不能为空', 'none', 1000);
+            }
+            else if (!that.data.password) {
+                ans = false;
+                util.alertInfo('密码不能为空', 'none', 1000);
+            }
+            return ans;
+        };
+
+        // register POST
+        let post = function () {
             wx.request({
                 url: '',
-                data: {username:this.data.username, password:this.data.password},
-                method: 'POST', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
+                data: {
+                    username: that.data.username,
+                    password: that.data.password,
+                },
+                method: 'POST',
                 header: {
                     "Content-Type": "application/x-www-form-urlencoded"
-                }, // 设置请求的 header
-                success: function(res){
-                    wx.showToast({
-                        title: '成功',
-                        icon: 'success',
-                        duration: 1000
-                    });
+                },
+                success: function (res) {
+                    util.alertInfo('成功', 'success', 1000);
                     wx.navigateTo({
-                      url: ''
+                        url: ''
                     });
                     // success
                 },
-                fail: function(res) {
+                fail: function (res) {
                     // fail
                 }
             });
+        };
+
+        // check
+        if (notEmptyCheck()) {
+            // TODO：暂时跳转到index界面
+            // post();
+            that.toIndex();
         }
+
     },
 
-    // register
-    register: function () {
+    // to register
+    toRegister: function () {
         wx.navigateTo({
             url: '../../register/register_out_school/register_out_school'
+        });
+    },
+
+    // to index
+    toIndex:function(){
+        wx.navigateTo({
+            url: '../../index/index'
         });
     },
 

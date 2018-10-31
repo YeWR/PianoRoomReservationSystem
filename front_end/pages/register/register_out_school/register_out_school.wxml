@@ -1,2 +1,51 @@
 <!--pages/register_out_school/register_out_school.wxml-->
-<text>pages/register_out_school/register_out_school.wxml</text>
+
+<view class="container">
+    <view class="login_icon">
+        <!--<image class="login-img" src="../images/loginLog.jpg"></image>-->
+    </view>
+    <view class="login_from">
+
+        <!--账号-->
+        <view class="input_view">
+            <input class="input_text" placeholder="请填写账号" bindinput="getUsername"/>
+        </view>
+
+        <!--密码-->
+        <view class="input_view">
+            <input class="input_text" password="true" placeholder="请填写密码" bindinput="getPassword"/>
+        </view>
+
+        <view class="input_view">
+            <input class="input_text" password="true" placeholder="确认密码" bindinput="reGetPassword"/>
+        </view>
+
+        <!--姓名-->
+        <view class="input_view">
+            <input class="input_text" placeholder="姓名" bindinput="getRealName"/>
+        </view>
+
+        <!--身份证号-->
+        <view class="input_view">
+            <input class="input_text" placeholder="身份证号" bindinput="getIdNumber"/>
+        </view>
+
+        <!--协议-->
+        <!--<view class="login_btn_view">-->
+            <!--<checkbox value="{{agreement.name}}" checked="{{agreement.checked}}" bindinput="getAgreement">-->
+                <!--{{agreement.value}}-->
+            <!--</checkbox>-->
+        <!--</view>-->
+
+        <!--注册-->
+        <view class="login_btn_view">
+            <button class="register_btn" bindtap="register">注册</button>
+        </view>
+
+        <!--已有账号登录-->
+        <view class="login_btn_view">
+            <text bindtap="toLogin">已有账号？去登录</text>
+        </view>
+
+    </view>
+</view>
