@@ -1,1 +1,39 @@
 /* pages/reserve/reserve.wxss */
+
+.reserve_space{
+    height: 80%;
+    width: 100%;
+}
+
+.reserve_title {
+    background-color: white;
+    height: 10%;
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+
+    justify-content: space-between;
+}
+
+.reserve_info {
+    background-color: white;
+    height: 10%;
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+
+    justify-content: space-between;
+}
+
+.reserve_detail {
+    background-color: white;
+    height: 10%;
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+
+    justify-content: space-between;
+}

@@ -1,1 +1,16 @@
 /* pages/login_out_school/login_out_school.wxss */
+
+.login_btn{
+    height: 10%;
+    background-color: #1dc5ff;
+    color: white;
+    font-size:15px;
+}
+
+.register_btn{
+    height: 10%;
+    background-color: red;
+    color: white;
+    font-size:15px;
+    top: 20%;
+}

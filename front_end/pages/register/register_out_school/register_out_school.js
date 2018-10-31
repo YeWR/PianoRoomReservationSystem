@@ -105,8 +105,13 @@ Page({
         let formatCheck = function () {
             let valid = true;
             // TODO: set the format of register
-            if (that.data._username.length > 15 || that.data._password !== that.data._username._rePassword) {
-                valid = false
+            if (that.data._username.length > 15) {
+                valid = false;
+                util.alertInfo("用户名过长", "none", 1000);
+            }
+            else if(that.data._password !== that.data._rePassword){
+                valid = false;
+                util.alertInfo("两次输入的密码不相等", "none", 1000);
             }
             return valid;
         };

@@ -1,34 +1,39 @@
-// pages/reserve/reserve.js
-
-let app = getApp();
-let util = app.util;
-
+// pages/reserve/reserve_detail/reserve_detail.js
 Page({
 
     /**
      * 页面的初始数据
      */
-    data: {},
+    data: {
+        _pianoId: 0
+    },
 
-    // to reserve_space
-    toReserveSpace: function (e) {
-        wx.navigateTo({
-            url: "./reserve_space/reserve_space"
-        });
+    // submit reservation
+    submitReservation: function (e) {
+        // TODO: check if success
+        this.toAlarm(e);
+    },
+
+    // to alarm
+    toAlarm:function(e){
+        wx.switchTab({
+          url: "../../alarm/alarm"
+        })
     },
 
     /**
      * 生命周期函数--监听页面加载
      */
     onLoad: function (options) {
-
+        this.setData({
+            _pianoId: options.pianoId
+        })
     },
 
     /**
      * 生命周期函数--监听页面初次渲染完成
      */
     onReady: function () {
-
     },
 
     /**

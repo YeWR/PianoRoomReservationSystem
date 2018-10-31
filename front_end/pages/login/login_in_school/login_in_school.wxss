@@ -1,1 +1,22 @@
 /* pages/login_in_school/login_in_school.wxss */
+
+.login_from{
+     height: 90%;
+     width: 60%;
+ }
+
+.input_view{
+    height: 10%;
+
+}
+
+.input_text{
+    height: 10%;
+    background-color: white;
+}
+
+.login_btn{
+    background-color: #1dc5ff;
+    color: white;
+    font-size:15px;
+}

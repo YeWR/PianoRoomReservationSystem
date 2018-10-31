@@ -1,0 +1,31 @@
+<!--pages/reserve/reserve_detail/reserve_detail.wxml-->
+<view class="container">
+    <view class="up_board">
+        <view>
+            <image class="icon" mode="aspectFit" src="../../../images/icon/calendar.png"></image>
+        </view>
+        <view class="date">
+            蒙民伟楼 F1-0{{_pianoId}}
+        </view>
+
+    </view>
+
+    <view class="select_time_board">
+        预约日期<input class="input_text" placeholder="" bindinput="getUsername"/>
+    </view>
+
+    <view class="select_time_board">
+        预约时间<input class="input_text" placeholder="" bindinput="getUsername"/>
+    </view>
+
+    <view class="select_time_board">
+        成员<input class="input_text" placeholder="" bindinput="getUsername"/>
+    </view>
+
+    <view class="reserve_btn_view">
+        <button class="reserve_btn" bindtap="submitReservation">
+            提交
+        </button>
+    </view>
+
+</view>

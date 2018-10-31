@@ -1,0 +1,21 @@
+<template name="cardstemplate">
+    <view class='preview'>
+        <view class='card'>
+            <view class='title-container'>
+                <text class='title'>{{_pianoId}}</text>
+                <view class='detail' catchtap='alert'>
+                    <text>详情</text>
+                </view>
+            </view>
+            <view class='lable'>
+                <text>{{_pianoInfo}}</text>
+            </view>
+            <view class='progress-days'>
+                <view class='progress'>
+                    <progress percent="20" stroke-width='3' activeColor="#FFFFFF" backgroundColor="#AAAAAA"
+                              active="true"/>
+                </view>
+            </view>
+        </view>
+    </view>
+</template>

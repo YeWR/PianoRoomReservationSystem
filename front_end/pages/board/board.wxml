@@ -1,5 +1,5 @@
 <!--pages/board/board.wxml-->
 
-<view>
-    暂无公告
+<view class="container">
+    <view class="info">暂无公告</view>
 </view>

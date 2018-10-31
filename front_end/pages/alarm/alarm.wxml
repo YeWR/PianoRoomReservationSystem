@@ -1,4 +1,4 @@
 <!--pages/alarm/alarm.wxml-->
-<view>
-    此功能暂未开放
+<view class="container">
+    <view class="info"> 暂无有效的预约~</view>
 </view>

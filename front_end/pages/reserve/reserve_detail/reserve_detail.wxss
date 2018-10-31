@@ -1,0 +1,49 @@
+/* pages/reserve/reserve_detail/reserve_detail.wxss */
+
+.date {
+    font-weight: bold;
+    font-size: xx-large;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+}
+
+.select_time_board {
+    background-color: white;
+    height: 10%;
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+
+    justify-content: space-between;
+}
+
+.progress-days{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    height: 35rpx;
+}
+
+.progress{
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    font-size: 30rpx;
+    color: #DDD;
+}
+
+.reserve_btn_view {
+    height: 30%;
+    width: 80%;
+}
+
+.reserve_btn{
+    width: 90%;
+    background-color: #1dc5ff;
+    color: white;
+    font-size:15px;
+}

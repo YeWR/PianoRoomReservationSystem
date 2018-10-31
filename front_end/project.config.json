@@ -4,7 +4,7 @@
 		"ignore": []
 	},
 	"setting": {
-		"urlCheck": true,
+		"urlCheck": false,
 		"es6": true,
 		"postcss": true,
 		"minified": true,
@@ -36,7 +36,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 1,
+			"current": 2,
 			"list": [
 				{
 					"id": -1,
@@ -47,7 +47,13 @@
 				{
 					"id": -1,
 					"name": "免注册登录",
-					"pathName": "pages/board/board"
+					"pathName": "pages/board/board",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "预约空间",
+					"pathName": "pages/reserve/reserve_space/reserve_space"
 				}
 			]
 		}
