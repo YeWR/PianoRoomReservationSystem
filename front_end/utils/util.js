@@ -36,8 +36,26 @@ const alertInfo = (title, icon, duration) => {
     });
 };
 
+// add some paras to url;
+// @paras is dict
+const setUrl = (rawUrl, paras) => {
+    let url = rawUrl + "?";
+    let flag = 0;
+    for (let key in paras) {
+        if (flag) {
+            url += "&";
+        }
+        else {
+            flag = 1;
+        }
+        url = url + key + "=" + paras[key];
+    }
+    return url;
+};
+
 module.exports = {
     alertInfo: alertInfo,
     formatTime: formatTime,
-    formatDate: formatDate
+    formatDate: formatDate,
+    setUrl: setUrl
 };

@@ -1,39 +1,84 @@
-/* pages/reserve/reserve.wxss */
+/* pages/reserve/reserve_space/reserve.wxss */
 
-.reserve_space{
-    height: 80%;
-    width: 100%;
+.date {
+    font-weight: bold;
+    font-size: xx-large;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
 }
 
-.reserve_title {
+.select_time_board {
     background-color: white;
-    height: 10%;
+    height: 35%;
     width: 100%;
 
     display: flex;
     align-items: center;
 
+    justify-content: center;
+    color: #c7c7cc;
+}
+
+.preview{
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    margin-top: 30rpx;
+}
+
+.card {
+    background-color: #525253;
+    margin-top: 15rpx;
+    height: 150rpx;
+    border-radius: 25rpx;
+    padding: 25rpx;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
     justify-content: space-between;
 }
 
-.reserve_info {
-    background-color: white;
-    height: 10%;
-    width: 100%;
-
-    display: flex;
-    align-items: center;
-
-    justify-content: space-between;
+.cards-container{
+    margin: 120rpx 40rpx 0rpx 40rpx;
+    padding-bottom: 40rpx;
 }
 
-.reserve_detail {
-    background-color: white;
-    height: 10%;
-    width: 100%;
-
+.title-container{
+    width: 90%;
     display: flex;
-    align-items: center;
-
+    flex-direction: row;
     justify-content: space-between;
+}
+.title{
+    font-size: 35rpx;
+    /* font-weight: bolder; */
+}
+
+.detail{
+    border: 2rpx solid #fff;
+    border-radius: 30rpx;
+    width: 120rpx;
+    height: 40rpx;
+    font-size: 28rpx;
+    text-align: center;
+    line-height: 40rpx;
+}
+
+.lable{
+    background-color: #AAA;
+    font-size: 28rpx;
+    color: #fff;
+    width: 100rpx;
+    text-align: center;
+    border-radius: 5rpx;
+}
+
+.period{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    font-size: 25rpx;
+    color: #DDD;
 }

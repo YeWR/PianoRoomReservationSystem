@@ -9,7 +9,6 @@
     "pages/alarm/alarm",
     "pages/reserve/reserve",
     "pages/info/info",
-    "pages/reserve/reserve_space/reserve_space",
     "pages/reserve/reserve_detail/reserve_detail"
   ],
   "window": {

@@ -1,12 +1,38 @@
-<!--pages/reserve/reserve.wxml-->
+<!--pages/reserve/reserve_space/reserve.wxml-->
 <view class="container">
     <view class="up_board">
-        <!--<image class="img" mode="aspectFit" src="../../images/bg/welcome_in_reserve.jpg"></image>-->
+        <view>
+            <image class="icon" mode="aspectFit" src="../../../images/icon/calendar.png"></image>
+        </view>
+        <view class="date">
+            {{_date}}
+        </view>
+        <view class="select_time_board">
+            <!--<image class="icon_time" mode="aspectFit" src="../../../images/icon/clock.png"></image>-->
+            点击选择时间
+        </view>
+
     </view>
-    <view class="reserve_space">
-        <view class="reserve_title">空间</view>
-        <view class="reserve_info">琴房介绍</view>
-        <view class="reserve_detail" bindtap="toReserveSpace">预约空间</view>
+
+    <view class='preview' wx:for="{{_pianoList}}" wx:for-index="id" wx:for-item="piano">
+        <view class='card'>
+            <view class='title-container'>
+                <text class='title'>F1-0{{id}}</text>
+                <view class='detail' data-id="{{id}}" bindtap='toReservePiano'>
+                    <text>预约</text>
+                </view>
+            </view>
+            <view class='lable'>
+                <text>暂无</text>
+            </view>
+            <view class='progress-days'>
+                <view class='progress'>
+                    <progress percent="{{10 * (id + 1)}}" stroke-width='3' activeColor="#FFFFFF" backgroundColor="#AAAAAA" active="true" />
+                </view>
+            </view>
+        </view>
     </view>
+
+
 
 </view>

@@ -11,11 +11,19 @@
     </view>
 
     <view class="select_time_board">
-        预约日期<input class="input_text" placeholder="" bindinput="getUsername"/>
+        预约日期{{_date}}
     </view>
 
     <view class="select_time_board">
-        预约时间<input class="input_text" placeholder="" bindinput="getUsername"/>
+        预约时间 :
+        <picker mode="multiSelector" value="{{_begTimeIndex}}" range="{{_begTimeArray}}"
+                bindcolumnchange="bindBegTimeChange">
+            {{_begHour}}:{{_begMinute}}
+        </picker>
+        <picker mode="multiSelector" value="{{_endTimeIndex}}" range="{{_endTimeArray}}"
+                bindcolumnchange="bindEndTimeChange" >
+            {{_endHour}}:{{_endMinute}}
+        </picker>
     </view>
 
     <view class="select_time_board">
