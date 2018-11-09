@@ -1,5 +1,6 @@
 const Router = require("koa-router");
 const router = new Router();
+const dataBase = require("../dataBase")
 
 const routers = router.post("/", async (ctx, next) => {
     let username = ctx.request.body.username,
