@@ -13,26 +13,24 @@ let db = new Db.Adapter({
 });
 
 
-async function register(type, username, password, realname, idnumber, wechat, tele, item) {
+async function SocietyRegister(socType, socId, socRealname, socName, socPassword, socTele) {
     let test = function(){
         return new Promise(resolve =>{
-            db.where({ user_name: username }).get('user', function (err, res, fields) {
+            db.where({ soc_name: socName }).get('society_user', function (err, res, fields) {
                 let _select = res;
                 if (_select.length != 0) {
                     resolve(0);
                 }
                 else {
                     let _info = {
-                        user_type: type,
-                        user_wechat: wechat,
-                        user_tele: tele,
-                        user_id: idnumber,
-                        user_item: item,
-                        user_name: username,
-                        user_realName: realname,
-                        user_pass: password
+                        soc_type: socType,
+                        soc_id: socId,
+                        soc_realname: socRealname,
+                        soc_name: socName,
+                        soc_password: socPassword,
+                        soc_tele: socTele
                     };
-                    db.insert('user', _info, function (err, info) { });
+                    db.insert('society_user', _info, function (err, info) { });
                     resolve(1);
                 }
             });
@@ -48,15 +46,15 @@ async function register(type, username, password, realname, idnumber, wechat, te
     }
 }
 
-async function login(type, username, password) {
+async function SocietyLogin(socName, socPassword) {
     let test = function(){
         return new Promise(resolve =>{
-            db.where({ user_name: username }).get('user', function (err, res, fields) {
+            db.where({ soc_name: socName }).get('society_user', function (err, res, fields) {
                 let _select = res;
                 let _data = JSON.stringify(_select);
                 let _info = JSON.parse(_data);
                 for (let i = 0; i < _info.length; i++) {
-                    if (password == _info[i].user_pass) {
+                    if (socPassword == _info[i].soc_password) {
                         resolve(1);
                     }
                 }
@@ -73,3 +71,4 @@ async function login(type, username, password) {
         return {"success":true};
     }
 }
+
