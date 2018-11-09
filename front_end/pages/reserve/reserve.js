@@ -10,7 +10,166 @@ Page({
      */
     data: {
         _date: "",
-        _pianoList: [{}]
+        _pianoList: [{}],
+
+        _begTimeArray: [],
+        _begTimeIndex: [],
+        _endTimeArray: [],
+        _endTimeIndex: [],
+
+        _begHour: 0,
+        _begMinute: 0,
+        _endHour: 0,
+        _endMinute: 0,
+        _lastHour : util.ENDHOUR,
+        _lastMinute: util.ENDMINUTE
+    },
+
+    // should reset end time
+    shouldResetEndTime: function () {
+        let should = false;
+        if ((this.data._endHour < this.data._begHour) ||
+            (this.data._endHour === this.data._begHour && this.data._endMinute < this.data._begMinute)) {
+            should = true;
+        }
+        else if (
+            (this.data._endHour > this.data._lastHour) ||
+            (this.data._endHour === this.data._lastHour && this.data._endMinute > this.data._lastMinute)) {
+            should = true;
+        }
+        return should;
+    },
+
+    // set begin time
+    setBegTime: function (hours, minutes, selectedHour) {
+        let date = new Date();
+        let currentHours = date.getHours();
+        let currentMinute = date.getMinutes();
+        util.setTimeTemplate(hours, minutes, currentHours, currentMinute, this.data._lastHour, this.data._lastMinute,selectedHour);
+    },
+
+    // set end time
+    setEndTime: function (hours, minutes, selectedHour) {
+        let currentHours = this.data._begHour;
+        let currentMinute = this.data._begMinute;
+        util.setTimeTemplate(hours, minutes, currentHours, currentMinute, this.data._lastHour, this.data._lastMinute,selectedHour);
+    },
+
+    /*
+     * bind begin time change
+     * only when user change the value of begin time
+     */
+    bindBegTimeChange: function (e) {
+        let begTimeArray = this.data._begTimeArray;
+        let column = e.detail.column;
+        let value = e.detail.value;
+
+        let hours = [];
+        let minutes = [];
+
+        // change hour
+        if (column === 0) {
+            const begHour = begTimeArray[column][value];
+            this.setBegTime(hours, minutes, begHour);
+            this.setData({
+                _begTimeArray: [hours, minutes],
+                _begHour: begHour,
+                _begMinute: minutes[0]
+            });
+        }
+        // change minute
+        else {
+            this.setData({
+                _begMinute: begTimeArray[column][value]
+            });
+        }
+
+        // reset the end time range
+        let endHours = [];
+        let endMinutes = [];
+        this.setEndTime(endHours, endMinutes, this.data._endHour);
+        this.setData({
+            _endTimeArray: [endHours, endMinutes]
+        });
+        // reset end time
+        if (this.shouldResetEndTime()) {
+            this.setData({
+                _endHour: this.data._begHour,
+                _endMinute: this.data._begMinute
+            });
+        }
+        // reset the index
+        let hourIndex = endHours.indexOf(this.data._endHour);
+        let minuteIndex = endMinutes.indexOf(this.data._endMinute);
+        this.setData({
+            _endTimeIndex: [hourIndex, minuteIndex]
+        });
+
+    },
+
+    /*
+     * bind end time change
+     * only when user change the value of end time
+     */
+    bindEndTimeChange: function (e) {
+        let endTimeArray = this.data._endTimeArray;
+        let column = e.detail.column;
+        let value = e.detail.value;
+
+        let hours = [];
+        let minutes = [];
+
+        // change hour
+        if (column === 0) {
+            let endHour = endTimeArray[column][value];
+            this.setEndTime(hours, minutes, endHour);
+            this.setData({
+                _endTimeArray: [hours, minutes],
+                _endHour: endHour,
+                _endMinute: minutes[0]
+            });
+        }
+        // change minute
+        else {
+            this.setData({
+                _endMinute: endTimeArray[column][value]
+            });
+        }
+    },
+
+    /* init time
+     * begin time -> current time
+     * end time -> current time
+     */
+    initTime: function () {
+        let begHours = [];
+        let begMinutes = [];
+
+        let date = new Date();
+        let currentHours = date.getHours();
+        let currentMinute = date.getMinutes();
+        util.setTimeTemplate(begHours, begMinutes, currentHours, currentMinute, this.data._lastHour, this.data._lastMinute,currentHours);
+
+        this.setData({
+            _begTimeArray: [begHours, begMinutes],
+            _begHour: begHours[0],
+            _begMinute: begMinutes[0]
+        });
+
+        let endHours = [];
+        let endMinutes = [];
+        this.setEndTime(endHours, endMinutes, null);
+        this.setData({
+            _endTimeArray: [endHours, endMinutes],
+            _endHour: 22,
+            _endMinute: 0
+        });
+        // reset the index
+        let hourIndex = endHours.indexOf(this.data._endHour);
+        let minuteIndex = endMinutes.indexOf(this.data._endMinute);
+        this.setData({
+            _endTimeIndex: [hourIndex, minuteIndex]
+        });
     },
 
     /**
@@ -18,6 +177,8 @@ Page({
      */
     onLoad: function (options) {
 
+        // init time array
+        this.initTime();
     },
 
     setPianoList: function (list, that) {
@@ -113,4 +274,4 @@ Page({
     onShareAppMessage: function () {
 
     }
-})
+});

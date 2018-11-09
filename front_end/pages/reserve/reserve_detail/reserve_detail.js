@@ -1,4 +1,8 @@
 // pages/reserve/reserve_detail/reserve_detail.js
+
+let app = getApp();
+let util = app.util;
+
 Page({
 
     /**
@@ -7,6 +11,7 @@ Page({
     data: {
         _date: "",
         _pianoId: 0,
+        _timeTable: [],
 
         _begTimeArray: [],
         _begTimeIndex: [],
@@ -16,7 +21,9 @@ Page({
         _begHour: 0,
         _begMinute: 0,
         _endHour: 0,
-        _endMinute: 0
+        _endMinute: 0,
+        _lastHour: util.ENDHOUR,
+        _lastMinute: util.ENDMINUTE
     },
 
     // should reset end time
@@ -26,45 +33,36 @@ Page({
             (this.data._endHour === this.data._begHour && this.data._endMinute < this.data._begMinute)) {
             should = true;
         }
+        else if (
+            (this.data._endHour > this.data._lastHour) ||
+            (this.data._endHour === this.data._lastHour && this.data._endMinute > this.data._lastMinute)) {
+            should = true;
+        }
         return should;
     },
 
-    // set time TODO: some restrict
-    setTimeTemplate: function (hours, minutes, currentHours, currentMinute, begHour) {
-        let minuteIndex = parseInt((currentMinute - 1) / 10) + 1;
-
-        if (minuteIndex === 6) {
-            currentHours++;
-            minuteIndex = 0;
-        }
-
-        if((begHour !== null && begHour > currentHours) ||
-            (currentMinute === 0)){
-            minuteIndex = 0;
-        }
-
-        for (let i = currentHours; i < 24; i++) {
-            hours.push(i);
-        }
-        for(let i = minuteIndex * 10; i < 60; i += 10){
-            minutes.push(i);
-        }
-
-    },
-
     // set begin time
-    setBegTime: function (hours, minutes, begHour) {
+    setBegTime: function (hours, minutes, selectedHour) {
         let date = new Date();
         let currentHours = date.getHours();
         let currentMinute = date.getMinutes();
-        this.setTimeTemplate(hours, minutes, currentHours, currentMinute, begHour);
+        this.setData({
+            _lastHour: util.ENDHOUR,
+            _lastMinute: util.ENDMINUTE
+        });
+        util.setTimeTemplate(hours, minutes, currentHours, currentMinute, this.data._lastHour, this.data._lastMinute, selectedHour);
     },
 
     // set end time
-    setEndTime: function (hours, minutes, begHour, begMinute) {
+    setEndTime: function (hours, minutes, selectedHour) {
         let currentHours = this.data._begHour;
         let currentMinute = this.data._begMinute;
-        this.setTimeTemplate(hours, minutes, currentHours, currentMinute, begHour);
+        let lastTime = util.getNearestEndTime(this.data._begHour, this.data._begMinute, this.data._timeTable);
+        this.setData({
+            _lastHour: lastTime[0],
+            _lastMinute: lastTime[1]
+        });
+        util.setTimeTemplate(hours, minutes, currentHours, currentMinute, this.data._lastHour, this.data._lastMinute, selectedHour);
     },
 
     // submit reservation
@@ -77,7 +75,7 @@ Page({
     toAlarm: function (e) {
         wx.switchTab({
             url: "../../alarm/alarm"
-        })
+        });
     },
 
     /*
@@ -129,8 +127,7 @@ Page({
         let minuteIndex = endMinutes.indexOf(this.data._endMinute);
         this.setData({
             _endTimeIndex: [hourIndex, minuteIndex]
-        })
-
+        });
     },
 
     /*
@@ -172,7 +169,11 @@ Page({
         let begHours = [];
         let begMinutes = [];
 
-        this.setBegTime(begHours, begMinutes, null);
+        let date = new Date();
+        let currentHours = date.getHours();
+        let currentMinute = date.getMinutes();
+        util.setTimeTemplate(begHours, begMinutes, currentHours, currentMinute, this.data._lastHour, this.data._lastMinute, currentHours);
+
         this.setData({
             _begTimeArray: [begHours, begMinutes],
             _begHour: begHours[0],
@@ -181,11 +182,29 @@ Page({
 
         let endHours = [];
         let endMinutes = [];
-        this.setEndTime(endHours, endMinutes, null);
+        this.setEndTime(endHours, endMinutes, begHours[0]);
         this.setData({
             _endTimeArray: [endHours, endMinutes],
             _endHour: endHours[0],
             _endMinute: endMinutes[0]
+        });
+    },
+
+    /*
+     * init time table
+     */
+    initTimeTable: function () {
+        let timeTable = [];
+        for (let i = 0; i < 84; ++i) {
+            if(i < 76){
+                timeTable.push(0);
+            }
+            else{
+                timeTable.push(1);
+            }
+        }
+        this.setData({
+            _timeTable: timeTable
         });
     },
 
@@ -197,10 +216,10 @@ Page({
             _date: options.date,
             _pianoId: options.pianoId
         });
-
+        // init time table
+        this.initTimeTable();
         // init time array
         this.initTime();
-
     },
 
     /**

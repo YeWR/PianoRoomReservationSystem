@@ -9,7 +9,15 @@
         </view>
         <view class="select_time_board">
             <!--<image class="icon_time" mode="aspectFit" src="../../../images/icon/clock.png"></image>-->
-            点击选择时间
+            <picker mode="multiSelector" value="{{_begTimeIndex}}" range="{{_begTimeArray}}"
+                    bindcolumnchange="bindBegTimeChange">
+                {{_begHour}}:{{_begMinute}}
+            </picker>
+            --
+            <picker mode="multiSelector" value="{{_endTimeIndex}}" range="{{_endTimeArray}}"
+                    bindcolumnchange="bindEndTimeChange" >
+                {{_endHour}}:{{_endMinute}}
+            </picker>
         </view>
 
     </view>

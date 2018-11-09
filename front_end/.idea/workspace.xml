@@ -17,15 +17,6 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="register_out_school.wxml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/pages/register/register_out_school/register_out_school.wxml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="903">
-              <caret line="43" selection-start-line="43" selection-end-line="43" />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="register_out_school.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/pages/register/register_out_school/register_out_school.js">
           <provider selected="true" editor-type-id="text-editor">
@@ -44,11 +35,20 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="reserve.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="reserve.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/pages/reserve/reserve.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="420">
-              <caret line="20" column="6" selection-start-line="20" selection-start-column="6" selection-end-line="20" selection-end-column="6" />
+            <state relative-caret-position="633">
+              <caret line="62" column="51" lean-forward="true" selection-start-line="62" selection-start-column="51" selection-end-line="62" selection-end-column="51" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="reserve.wxml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/pages/reserve/reserve.wxml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="315">
+              <caret line="15" column="14" selection-start-line="15" selection-start-column="14" selection-end-line="15" selection-end-column="14" />
             </state>
           </provider>
         </entry>
@@ -56,17 +56,20 @@
       <file leaf-file-name="util.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/utils/util.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="600">
-              <caret line="53" column="2" lean-forward="true" selection-start-line="53" selection-start-column="2" selection-end-line="53" selection-end-column="2" />
+            <state relative-caret-position="726">
+              <caret line="181" column="36" selection-start-line="181" selection-start-column="36" selection-end-line="181" selection-end-column="36" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="reserve_detail.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="reserve_detail.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/pages/reserve/reserve_detail/reserve_detail.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="621">
-              <caret line="122" column="45" lean-forward="true" selection-start-line="122" selection-start-column="45" selection-end-line="122" selection-end-column="45" />
+            <state relative-caret-position="561">
+              <caret line="187" column="34" lean-forward="true" selection-start-line="187" selection-start-column="34" selection-end-line="187" selection-end-column="34" />
+              <folding>
+                <element signature="e#62#88#0" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -93,8 +96,8 @@
       <file leaf-file-name="reserve_detail.wxml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/pages/reserve/reserve_detail/reserve_detail.wxml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="588">
-              <caret line="29" column="76" lean-forward="true" selection-start-line="29" selection-start-column="76" selection-end-line="29" selection-end-column="76" />
+            <state relative-caret-position="504">
+              <caret line="25" column="17" lean-forward="true" selection-start-line="18" selection-start-column="8" selection-end-line="25" selection-end-column="17" />
             </state>
           </provider>
         </entry>
@@ -103,11 +106,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>agreement</find>
-      <find>toR</find>
-      <find>index</find>
-      <find>to board</find>
-      <find>&quot;</find>
       <find>'</find>
       <find>.data.</find>
       <find>userInfo</find>
@@ -133,6 +131,11 @@
       <find>shouldUpdateTime</find>
       <find>updateFlag</find>
       <find>setTimeData</find>
+      <find>begHour</find>
+      <find>_timeTable</find>
+      <find>/</find>
+      <find>submitReservation</find>
+      <find>setTimeTemplate</find>
     </findStrings>
     <replaceStrings>
       <replace>board</replace>
@@ -144,6 +147,7 @@
       <replace>curMinute</replace>
       <replace>curHour</replace>
       <replace>let</replace>
+      <replace>selectedHour</replace>
     </replaceStrings>
   </component>
   <component name="IdeDocumentHistory">
@@ -174,7 +178,6 @@
         <option value="$PROJECT_DIR$/pages/reserve/reserve_space/reserve_space.js" />
         <option value="$PROJECT_DIR$/pages/reserve/reserve_space/reserve_space.wxml" />
         <option value="$PROJECT_DIR$/pages/reserve/reserve_space/reserve_space.wxss" />
-        <option value="$PROJECT_DIR$/pages/reserve/reserve.wxml" />
         <option value="$PROJECT_DIR$/pages/reserve/reserve.wxss" />
         <option value="$PROJECT_DIR$/pages/alarm/alarm.wxml" />
         <option value="$PROJECT_DIR$/pages/board/board.wxml" />
@@ -185,11 +188,12 @@
         <option value="$PROJECT_DIR$/app.wxss" />
         <option value="$PROJECT_DIR$/pages/register/register_out_school/register_out_school.js" />
         <option value="$PROJECT_DIR$/app.json" />
-        <option value="$PROJECT_DIR$/utils/util.js" />
-        <option value="$PROJECT_DIR$/pages/reserve/reserve.js" />
         <option value="$PROJECT_DIR$/pages/reserve/reserve_detail/reserve_detail.wxss" />
         <option value="$PROJECT_DIR$/pages/reserve/reserve_detail/reserve_detail.wxml" />
+        <option value="$PROJECT_DIR$/pages/reserve/reserve.wxml" />
+        <option value="$PROJECT_DIR$/utils/util.js" />
         <option value="$PROJECT_DIR$/pages/reserve/reserve_detail/reserve_detail.js" />
+        <option value="$PROJECT_DIR$/pages/reserve/reserve.js" />
       </list>
     </option>
   </component>
@@ -291,25 +295,26 @@
       <workItem from="1540819145066" duration="7949000" />
       <workItem from="1540952033503" duration="44497000" />
       <workItem from="1541485590112" duration="5502000" />
-      <workItem from="1541661433475" duration="20453000" />
+      <workItem from="1541661433475" duration="20737000" />
+      <workItem from="1541741921829" duration="7134000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="78882000" />
+    <option name="totallyTimeSpent" value="86300000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.14739583" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.14739583" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
       <window_info anchor="bottom" id="Version Control" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Run" order="2" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info anchor="bottom" id="Terminal" order="7" />
+      <window_info anchor="bottom" id="Terminal" order="7" weight="0.32946146" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -330,7 +335,7 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="1" />
+      <option name="time" value="2" />
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
@@ -441,13 +446,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="84">
           <caret line="4" column="16" lean-forward="true" selection-start-line="4" selection-start-column="16" selection-end-line="4" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pages/reserve/reserve.wxml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="252">
-          <caret line="12" lean-forward="true" selection-start-line="12" selection-end-line="12" />
         </state>
       </provider>
     </entry>
@@ -575,13 +573,6 @@
     <entry file="file://$PROJECT_DIR$/pages/reserve/reserve.json">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/pages/reserve/reserve.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="420">
-          <caret line="20" column="6" selection-start-line="20" selection-start-column="6" selection-end-line="20" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/pages/reserve/reserve_detail/reserve_detail.wxss">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="420">
@@ -592,24 +583,41 @@
     <entry file="file://$PROJECT_DIR$/pages/reserve/reserve_detail/reserve_detail.json">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/utils/util.js">
+    <entry file="file://$PROJECT_DIR$/pages/reserve/reserve_detail/reserve_detail.wxml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="600">
-          <caret line="53" column="2" lean-forward="true" selection-start-line="53" selection-start-column="2" selection-end-line="53" selection-end-column="2" />
+        <state relative-caret-position="504">
+          <caret line="25" column="17" lean-forward="true" selection-start-line="18" selection-start-column="8" selection-end-line="25" selection-end-column="17" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/pages/reserve/reserve_detail/reserve_detail.wxml">
+    <entry file="file://$PROJECT_DIR$/pages/reserve/reserve.wxml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="588">
-          <caret line="29" column="76" lean-forward="true" selection-start-line="29" selection-start-column="76" selection-end-line="29" selection-end-column="76" />
+        <state relative-caret-position="315">
+          <caret line="15" column="14" selection-start-line="15" selection-start-column="14" selection-end-line="15" selection-end-column="14" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/pages/reserve/reserve_detail/reserve_detail.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="621">
-          <caret line="122" column="45" lean-forward="true" selection-start-line="122" selection-start-column="45" selection-end-line="122" selection-end-column="45" />
+        <state relative-caret-position="561">
+          <caret line="187" column="34" lean-forward="true" selection-start-line="187" selection-start-column="34" selection-end-line="187" selection-end-column="34" />
+          <folding>
+            <element signature="e#62#88#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/utils/util.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="726">
+          <caret line="181" column="36" selection-start-line="181" selection-start-column="36" selection-end-line="181" selection-end-column="36" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pages/reserve/reserve.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="633">
+          <caret line="62" column="51" lean-forward="true" selection-start-line="62" selection-start-column="51" selection-end-line="62" selection-end-column="51" />
         </state>
       </provider>
     </entry>
