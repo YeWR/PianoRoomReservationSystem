@@ -12,7 +12,7 @@ let db = new Db.Adapter({
     reconnectTimeout: config.TimeOut
 });
 
-async function SocietyRegister(socType, socId, socRealname, socName, socPassword, socTele) {
+let SocietyRegister = async function(socType, socId, socRealname, socName, socPassword, socTele) {
     let errorMsg = "";
     let test = function(){
         return new Promise(resolve =>{
@@ -48,7 +48,7 @@ async function SocietyRegister(socType, socId, socRealname, socName, socPassword
     }
 }
 
-async function SocietyLogin(socName, socPassword) {
+let SocietyLogin = async function(socName, socPassword) {
     let errorMsg = "";
     let test = function(){
         return new Promise(resolve =>{
@@ -81,7 +81,7 @@ async function SocietyLogin(socName, socPassword) {
     }
 }
 
-async function InsertPiano(pianoList, pianoId, pianoRoom, pianoPicurl, pianoInfo, pianoStuvalue, pianoTeavalue, pianoSocvalue, pianoMultivalue, pianoType) {
+let InsertPiano = async function(pianoList, pianoId, pianoRoom, pianoPicurl, pianoInfo, pianoStuvalue, pianoTeavalue, pianoSocvalue, pianoMultivalue, pianoType) {
     let errorMsg = "";
     let test = function(){
         return new Promise(resolve =>{
@@ -121,7 +121,7 @@ async function InsertPiano(pianoList, pianoId, pianoRoom, pianoPicurl, pianoInfo
     }
 }
 
-async function GetPianoRoomInfo(pianoId) {
+let GetPianoRoomInfo = async function(pianoId) {
     let errorMsg = "";
     let pianoInfo = null;
     let test = function(){
@@ -152,4 +152,7 @@ async function GetPianoRoomInfo(pianoId) {
                 "info":errorMsg};
     }
 }
-
+exports.GetPianoRoomInfo = GetPianoRoomInfo;
+exports.InsertPiano = InsertPiano;
+exports.SocietyRegister = SocietyRegister;
+exports.SocietyLogin = SocietyLogin;
