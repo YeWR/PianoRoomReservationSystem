@@ -1,8 +1,0 @@
-{
-    "userName" : "root",
-    "passWord" : "1234",
-    "dataBase" : "pianoRoom",
-    "serverIp" : "localhost",
-    "TimeOut"  : 2000
-}
-  

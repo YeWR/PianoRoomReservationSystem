@@ -46,7 +46,6 @@ async function register(type, username, password, realname, idnumber, wechat, te
     if(flag == 1){
         return {"success":true};
     }
-    // return flag;
 }
 
 async function login(type, username, password) {
@@ -73,6 +72,4 @@ async function login(type, username, password) {
     if(flag == 1){
         return {"success":true};
     }
-    // return flag;
 }
-s = register(1, "sdds", 'sa', null, null, null, null, null);
