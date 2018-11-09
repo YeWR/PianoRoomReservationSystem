@@ -6,7 +6,7 @@ const routers = router.post("/", async (ctx, next) => {
         password = ctx.request.body.password;
     console.log(`login with name: ${username}, password: ${password}`);
     let result = dataBase.SocietyLogin(username,password);
-    result.then(res=>{ctx.response.body = res}).catch(res=>{ctx.response.body = {success:false}})
+    result.then(res=>{ctx.response.body = res}).catch(res=>{ctx.response.body = {success:false, info: "Database Error"}})
 });
 
 module.exports = routers;

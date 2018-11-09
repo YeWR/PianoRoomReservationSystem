@@ -9,7 +9,7 @@ const routers = router.post("/", async (ctx, next) => {
         realname = ctx.request.body.realname,
         idNumber = ctx.request.body.idNumber;
     let result = dataBase.SocietyRegister(1,idNumber,realname,username,password,null);
-    result.then(res=>{ctx.response.body = res}).catch(res=>{ctx.response.body = {success:false, info:}})
+    result.then(res=>{ctx.response.body = res}).catch(res=>{ctx.response.body = {success:false, info: "Database Error"}})
     console.log(`signin with name: ${username}, password: ${password}`);
 });
 

@@ -39,7 +39,7 @@ async function SocietyRegister(socType, socId, socRealname, socName, socPassword
     let flag = await test();
     console.log(flag);
     if(flag == 0){
-        return {"success":false};
+        return {"success":false, "info": "hhh"};
     }
     if(flag == 1){
         return {"success":true};
@@ -65,7 +65,7 @@ async function SocietyLogin(socName, socPassword) {
     let flag = await test();
     console.log(flag);
     if(flag == 0){
-        return {"success":false};
+        return {"success":false, "info": "hhh"};
     }
     if(flag == 1){
         return {"success":true};
