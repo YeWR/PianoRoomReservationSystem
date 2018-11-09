@@ -6,7 +6,7 @@ const routers = router.post("/", async (ctx, next) => {
     console.log(ctx.request)
     let username = ctx.request.body.username,
         password = ctx.request.body.password,
-        realname = ctx.request.body.realname,
+        realname = ctx.request.body.realName,
         idNumber = ctx.request.body.idNumber;
     let result = await dataBase.SocietyRegister(1,idNumber,realname,username,password,null);
     ctx.response.body = result;
