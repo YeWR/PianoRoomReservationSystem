@@ -152,6 +152,42 @@ let GetPianoRoomInfo = async function(pianoId) {
                 "info":errorMsg};
     }
 }
+
+let insertItem = async function(itemTime, itemUsername, itemRoom, itemType, itemMember, itemValue, itemDuration){
+    // to do username exist
+    // let errorMsg = "";
+    // let test = function(){
+    //     return new Promise(resolve =>{
+    //             let _info = {
+    //                 item_time: itemTime,
+    //                 item_username: itemUsername,
+    //                 item_room: itemRoom,
+    //                 item_type: itemType,
+    //                 item_member: itemMember,
+    //                 item_value: itemValue,
+    //                 item_duration: itemDuration,
+    //             }
+    //             db.insert('item', _info, function (err, info) { });
+    //             resolve(1);
+    //     });
+    // };
+    // let flag = await test();
+    // console.log(flag);
+    // if(flag == 0){
+    //     return {"success":false,
+    //             "info":errorMsg};
+    // }
+    // if(flag == 1){
+    //     return {"success":true};
+    // }
+}
+
+let updateItem = async function(itemTime, itemUsername, itemRoom, itemType, itemMember, itemValue, itemDuration){
+    // to do 
+    // check lock
+}
+
+exports.insertItem = insertItem;
 exports.GetPianoRoomInfo = GetPianoRoomInfo;
 exports.InsertPiano = InsertPiano;
 exports.SocietyRegister = SocietyRegister;
