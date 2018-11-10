@@ -32,8 +32,15 @@ let SocietyRegister = async function(socType, socId, socRealname, socTele) {
                         soc_realname: socRealname,
                         soc_tele: socTele
                     };
-                    db.insert('society_user', _info, function (err, info) { });
-                    resolve(1);
+                    db.insert('society_user', _info, function (err, info) {
+                        if(err == null){
+                            resolve(1);
+                        }
+                        else{
+                            errorMsg = "新建用户失败";
+                            resolve(0);
+                        }
+                    });
                 }
             });
         });
@@ -120,8 +127,15 @@ let InsertPiano = async function(pianoList, pianoId, pianoRoom, pianoPicurl, pia
                         piano_multivalue: pianoMultivalue,
                         piano_type: pianoType
                     }
-                    db.insert('piano', _info, function (err, info) { });
-                    resolve(1);
+                    db.insert('piano', _info, function (err, info) { 
+                        if(err == null){
+                            resolve(1);
+                        }
+                        else{
+                            errorMsg = "新建琴房失败";
+                            resolve(0);
+                        }
+                    });
                 }
             });
         });
@@ -193,44 +207,85 @@ let GetPianoRoomInfo = async function(pianoId) {
     }
 }
 
-let insertItem = async function(itemTime, itemUsername, itemRoom, itemType, itemMember, itemValue, itemDuration){
-    // to do username exist
-    // let errorMsg = "";
-    // let test = function(){
-    //     return new Promise(resolve =>{
-    //             let _info = {
-    //                 item_time: itemTime,
-    //                 item_username: itemUsername,
-    //                 item_room: itemRoom,
-    //                 item_type: itemType,
-    //                 item_member: itemMember,
-    //                 item_value: itemValue,
-    //                 item_duration: itemDuration,
-    //             }
-    //             db.insert('item', _info, function (err, info) { });
-    //             resolve(1);
-    //     });
-    // };
-    // let flag = await test();
-    // console.log(flag);
-    // if(flag == 0){
-    //     return {"success":false,
-    //             "info":errorMsg};
-    // }
-    // if(flag == 1){
-    //     return {"success":true};
-    // }
+let InsertItem = async function(itemTime, itemUsername, itemRoom, itemType, itemMember, itemValue, itemDuration){
+    // 琴房信息解析，查看是否可以预定。
+    // 修改可预约时间段。
+    let errorMsg = "";
+    let test = function(){
+        return new Promise(resolve =>{
+            try{
+                let _info = {
+                    item_time: itemTime,
+                    item_username: itemUsername,
+                    item_room: itemRoom,
+                    item_type: itemType,
+                    item_member: itemMember,
+                    item_value: itemValue,
+                    item_duration: itemDuration,
+                }
+                db.insert('item', _info, function (err, info) {
+                    if(err == null){
+                        resolve(1);
+                    }
+                    else{
+                        errorMsg = "新建订单失败";
+                        resolve(0);
+                    }
+                });
+            }
+            catch{
+                errorMsg = "预约失败";
+                resolve(0);
+            }
+        });
+    };
+    let flag = await test();
+    console.log(flag);
+    if(flag == 0){
+        return {"success":false,
+                "info":errorMsg};
+    }
+    if(flag == 1){
+        return {"success":true};
+    }
 }
 
-let updateItem = async function(itemTime, itemUsername, itemRoom, itemType, itemMember, itemValue, itemDuration){
+let UpdateItem = async function(itemTime, itemUsername, itemRoom, itemType, itemMember, itemValue, itemDuration){
     // to do 
     // check lock
 }
 
-exports.SetLoginMsg = SetLoginMsg;
-exports.insertItem = insertItem;
+let GetItem = async function(itemUsername){
+    let errorMsg = "";
+    let itemInfo = null;
+    let test = function(){
+        return new Promise(resolve =>{
+            db.where({ item_username: itemUsername }).get('item', function (err, res, fields) {
+                let _data = JSON.stringify(res);
+                itemInfo = JSON.parse(_data);
+                resolve(1);
+            });
+        });
+    };
+    let flag = await test();
+    console.log(flag);
+    if(flag == 0){
+        return {"data":itemInfo,
+                "info":errorMsg};
+    }
+    if(flag == 1){
+        return {"data":itemInfo};
+    }
+}
+
+exports.GetItem = GetItem;
+exports.UpdateItem = UpdateItem;
+exports.InsertItem = InsertItem;
+
 exports.GetPianoRoomInfo = GetPianoRoomInfo;
 exports.GetPianoRoomAll = GetPianoRoomAll;
 exports.InsertPiano = InsertPiano;
+
 exports.SocietyRegister = SocietyRegister;
 exports.SocietyLogin = SocietyLogin;
+exports.SetLoginMsg = SetLoginMsg;
