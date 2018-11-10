@@ -1,9 +1,13 @@
 <!--login.wxml-->
 <view class="container" xmlns:wx="http://www.w3.org/1999/xhtml">
-  <view class="login_title_view">
+  <view class="up_board">
     <text class="login_title">
       清华大学琴房预约系统
     </text>
+  </view>
+  <view class="login_img">
+    <view class="login_img_bg"></view>
+    <!--<image class="login_img_img" mode="aspectFit" src="../../../images/icon/calendar.png"></image>-->
   </view>
   <view class="login_btn_view">
     <button class="login_btn_in_school" bindtap="loginInSchool">

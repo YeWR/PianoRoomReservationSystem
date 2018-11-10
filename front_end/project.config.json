@@ -13,7 +13,7 @@
 	"compileType": "miniprogram",
 	"libVersion": "2.3.2",
 	"appid": "wx9af8ee119208bf4e",
-	"projectname": "THU%E7%90%B4%E6%88%BF",
+	"projectname": "THU%E7%90%B4%E6%88%BF%E9%A2%84%E7%BA%A6",
 	"debugOptions": {
 		"hidedInDevtools": []
 	},
@@ -36,7 +36,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 2,
+			"current": 3,
 			"list": [
 				{
 					"id": -1,
@@ -53,7 +53,14 @@
 				{
 					"id": -1,
 					"name": "预约空间",
-					"pathName": "pages/reserve/reserve_space/reserve_space"
+					"pathName": "pages/reserve/reserve_space/reserve_space",
+					"query": ""
+				},
+				{
+					"id": 3,
+					"name": "预约",
+					"pathName": "pages/reserve/reserve",
+					"query": ""
 				}
 			]
 		}
