@@ -48,7 +48,7 @@ let SocietyRegister = async function(socType, socId, socRealname, socTele) {
         return {"success":true};
     }
 }
-// to do
+
 let SetLoginMsg = function(socTele, socPassword) {
     let errorMsg = "";
     try{
@@ -137,6 +137,30 @@ let InsertPiano = async function(pianoList, pianoId, pianoRoom, pianoPicurl, pia
     }
 }
 
+let GetPianoRoomAll = async function(){
+    let errorMsg = "";
+    let pianoInfo = null;
+    let test = function(){
+        return new Promise(resolve =>{
+            db.get('piano', function(err, rows, fields) { 
+                let _data = JSON.stringify(rows);
+                pianoInfo = JSON.parse(_data);
+                resolve(1);
+            });
+        });
+    };
+    let flag = await test();
+    console.log(flag);
+    if(flag == 0){
+        return {"data":pianoInfo,
+                "info":errorMsg};
+    }
+    if(flag == 1){
+        return {"data":pianoInfo,
+                "info":errorMsg};
+    }
+}
+
 let GetPianoRoomInfo = async function(pianoId) {
     let errorMsg = "";
     let pianoInfo = null;
@@ -202,9 +226,11 @@ let updateItem = async function(itemTime, itemUsername, itemRoom, itemType, item
     // to do 
     // check lock
 }
+
 exports.SetLoginMsg = SetLoginMsg;
 exports.insertItem = insertItem;
 exports.GetPianoRoomInfo = GetPianoRoomInfo;
+exports.GetPianoRoomAll = GetPianoRoomAll;
 exports.InsertPiano = InsertPiano;
 exports.SocietyRegister = SocietyRegister;
 exports.SocietyLogin = SocietyLogin;
