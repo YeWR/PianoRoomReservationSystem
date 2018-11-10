@@ -12,14 +12,17 @@ let db = new Db.Adapter({
     reconnectTimeout: config.TimeOut
 });
 
-let SocietyRegister = async function(socType, socId, socRealname, socName, socPassword, socTele) {
+let redis = require("redis");
+let client = redis.createClient(config.redisPort,config.serverIp)
+
+let SocietyRegister = async function(socType, socId, socRealname, socTele) {
     let errorMsg = "";
     let test = function(){
         return new Promise(resolve =>{
-            db.where({ soc_name: socName }).get('society_user', function (err, res, fields) {
+            db.where({ soc_tele: socTele }).get('society_user', function (err, res, fields) {
                 let _select = res;
                 if (_select.length != 0) {
-                    errorMsg = "用户名已经被使用"; // to do 
+                    errorMsg = "手机号已经被使用"; // to do 
                     resolve(0);
                 }
                 else {
@@ -27,8 +30,6 @@ let SocietyRegister = async function(socType, socId, socRealname, socName, socPa
                         soc_type: socType,
                         soc_id: socId,
                         soc_realname: socRealname,
-                        soc_name: socName,
-                        soc_password: socPassword,
                         soc_tele: socTele
                     };
                     db.insert('society_user', _info, function (err, info) { });
@@ -47,26 +48,41 @@ let SocietyRegister = async function(socType, socId, socRealname, socName, socPa
         return {"success":true};
     }
 }
+// to do
+let SetLoginMsg = function(socTele, socPassword) {
+    let errorMsg = "";
+    try{
+        client.set(socTele, socPassword);
+        client.expire(socTele, 60);
+        return {"success":true,
+        "info":errorMsg};
+    }
+    catch(err){
+        errorMsg = "发送失败";
+        return {"success":false,
+        "info":errorMsg};
+    }
+}
 
-let SocietyLogin = async function(socName, socPassword) {
+// to do check if already online
+let SocietyLogin = async function(socTele, socPassword) {
     let errorMsg = "";
     let test = function(){
         return new Promise(resolve =>{
-            db.where({ soc_name: socName }).get('society_user', function (err, res, fields) {
-                let _select = res;
-                if(_select.length == 0){
-                    errorMsg = "用户不存在";
-                    resolve(0);
-                }
-                let _data = JSON.stringify(_select);
-                let _info = JSON.parse(_data);
-                for (let i = 0; i < _info.length; i++) {
-                    if (socPassword == _info[i].soc_password) {
+            client.get(socTele, function(err, reply){
+                if(reply){
+                    if(socPassword == (reply.toString())){
                         resolve(1);
                     }
+                    else{
+                        errorMsg = "验证码错误";
+                        resolve(0);
+                    }
                 }
-                errorMsg = "密码错误";
-                resolve(0);
+                else{
+                    errorMsg = "请先发送验证码";
+                    resolve(0);
+                }
             });
         });
     };
@@ -186,7 +202,7 @@ let updateItem = async function(itemTime, itemUsername, itemRoom, itemType, item
     // to do 
     // check lock
 }
-
+exports.SetLoginMsg = SetLoginMsg;
 exports.insertItem = insertItem;
 exports.GetPianoRoomInfo = GetPianoRoomInfo;
 exports.InsertPiano = InsertPiano;
