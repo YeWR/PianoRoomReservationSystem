@@ -4,13 +4,12 @@ const dataBase = require("../dataBase")
 
 const routers = router.post("/", async (ctx, next) => {
     console.log(ctx.request)
-    let username = ctx.request.body.username,
-        password = ctx.request.body.password,
+    let username = ctx.request.body.teleNumber,
+        password = ctx.request.body.veriCode,
         realname = ctx.request.body.realName,
         idNumber = ctx.request.body.idNumber;
     let result = await dataBase.SocietyRegister(1,idNumber,realname,username,password,null);
     ctx.response.body = result;
     console.log(`signin with name: ${username}, password: ${password}`);
-});
-
+})
 module.exports = routers;
