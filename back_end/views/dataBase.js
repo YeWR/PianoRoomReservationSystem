@@ -12,14 +12,17 @@ let db = new Db.Adapter({
     reconnectTimeout: config.TimeOut
 });
 
-let SocietyRegister = async function(socType, socId, socRealname, socName, socPassword, socTele) {
+let redis = require("redis");
+let client = redis.createClient(config.redisPort,config.serverIp)
+
+let SocietyRegister = async function(socType, socId, socRealname, socTele) {
     let errorMsg = "";
     let test = function(){
         return new Promise(resolve =>{
-            db.where({ soc_name: socName }).get('society_user', function (err, res, fields) {
+            db.where({ soc_tele: socTele }).get('society_user', function (err, res, fields) {
                 let _select = res;
                 if (_select.length != 0) {
-                    errorMsg = "用户名已经被使用"; // to do 
+                    errorMsg = "手机号已经被使用"; // to do 
                     resolve(0);
                 }
                 else {
@@ -27,8 +30,6 @@ let SocietyRegister = async function(socType, socId, socRealname, socName, socPa
                         soc_type: socType,
                         soc_id: socId,
                         soc_realname: socRealname,
-                        soc_name: socName,
-                        soc_password: socPassword,
                         soc_tele: socTele
                     };
                     db.insert('society_user', _info, function (err, info) { });
@@ -48,25 +49,40 @@ let SocietyRegister = async function(socType, socId, socRealname, socName, socPa
     }
 }
 
-let SocietyLogin = async function(socName, socPassword) {
+let SetLoginMsg = function(socTele, socPassword) {
+    let errorMsg = "";
+    try{
+        client.set(socTele, socPassword);
+        client.expire(socTele, 60);
+        return {"success":true,
+        "info":errorMsg};
+    }
+    catch(err){
+        errorMsg = "发送失败";
+        return {"success":false,
+        "info":errorMsg};
+    }
+}
+
+// to do check if already online
+let SocietyLogin = async function(socTele, socPassword) {
     let errorMsg = "";
     let test = function(){
         return new Promise(resolve =>{
-            db.where({ soc_name: socName }).get('society_user', function (err, res, fields) {
-                let _select = res;
-                if(_select.length == 0){
-                    errorMsg = "用户不存在";
-                    resolve(0);
-                }
-                let _data = JSON.stringify(_select);
-                let _info = JSON.parse(_data);
-                for (let i = 0; i < _info.length; i++) {
-                    if (socPassword == _info[i].soc_password) {
+            client.get(socTele, function(err, reply){
+                if(reply){
+                    if(socPassword == (reply.toString())){
                         resolve(1);
                     }
+                    else{
+                        errorMsg = "验证码错误";
+                        resolve(0);
+                    }
                 }
-                errorMsg = "密码错误";
-                resolve(0);
+                else{
+                    errorMsg = "请先发送验证码";
+                    resolve(0);
+                }
             });
         });
     };
@@ -118,6 +134,30 @@ let InsertPiano = async function(pianoList, pianoId, pianoRoom, pianoPicurl, pia
     }
     if(flag == 1){
         return {"success":true};
+    }
+}
+
+let GetPianoRoomAll = async function(){
+    let errorMsg = "";
+    let pianoInfo = null;
+    let test = function(){
+        return new Promise(resolve =>{
+            db.get('piano', function(err, rows, fields) { 
+                let _data = JSON.stringify(rows);
+                pianoInfo = JSON.parse(_data);
+                resolve(1);
+            });
+        });
+    };
+    let flag = await test();
+    console.log(flag);
+    if(flag == 0){
+        return {"data":pianoInfo,
+                "info":errorMsg};
+    }
+    if(flag == 1){
+        return {"data":pianoInfo,
+                "info":errorMsg};
     }
 }
 
@@ -187,8 +227,10 @@ let updateItem = async function(itemTime, itemUsername, itemRoom, itemType, item
     // check lock
 }
 
+exports.SetLoginMsg = SetLoginMsg;
 exports.insertItem = insertItem;
 exports.GetPianoRoomInfo = GetPianoRoomInfo;
+exports.GetPianoRoomAll = GetPianoRoomAll;
 exports.InsertPiano = InsertPiano;
 exports.SocietyRegister = SocietyRegister;
 exports.SocietyLogin = SocietyLogin;
