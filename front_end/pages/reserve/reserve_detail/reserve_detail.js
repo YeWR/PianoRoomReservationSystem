@@ -12,6 +12,8 @@ Page({
         _date: "",
         _pianoId: 0,
         _timeTable: [],
+        _pianoPrices: [],
+        _pianoInfo: "",
 
         _begTimeArray: [],
         _begTimeIndex: [],
@@ -191,20 +193,36 @@ Page({
     },
 
     /*
-     * init time table
+     * post
+     * get the info needed
      */
-    initTimeTable: function () {
-        let timeTable = [];
-        for (let i = 0; i < 84; ++i) {
-            if(i < 76){
-                timeTable.push(0);
+    initInfo: function () {
+        let that = this;
+        wx.request({
+            url: "https://958107.iterator-traits.com/reserve/detail",
+            data: {
+                pianoId: that._pianoId,
+                date: that._date
+            },
+            method: "POST",
+            header: {
+                "Content-Type": "application/x-www-form-urlencoded"
+            },
+            success: function (res) {
+                that.setInfo(res, that);
+            },
+            fail: function (res) {
+                util.alertInfo("获取琴房信息失败，请检查网络设备是否正常。", "none", 1000);
             }
-            else{
-                timeTable.push(1);
-            }
-        }
-        this.setData({
-            _timeTable: timeTable
+        });
+    },
+
+    // setInfo
+    setInfo: function (dict, that) {
+        that.setData({
+            _timeTable: dict.timeTable,
+            _pianoPrices: dict.pianoPrices,
+            _pianoInfo: dict.pianoInfo
         });
     },
 
@@ -216,8 +234,8 @@ Page({
             _date: options.date,
             _pianoId: options.pianoId
         });
-        // init time table
-        this.initTimeTable();
+        // init piano infos
+        this.initInfo();
         // init time array
         this.initTime();
     },

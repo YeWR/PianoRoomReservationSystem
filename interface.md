@@ -64,7 +64,7 @@
     "url": "/login/outSchool",
     "data": {
         "phoneNumber": "电话号码",
-        "validateCode": "验证码",
+        "validateCode": "验证码"
     },
     "res": {
         "success": "登录成功",

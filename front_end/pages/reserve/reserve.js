@@ -10,7 +10,7 @@ Page({
      */
     data: {
         _date: "",
-        _pianoList: [{}],
+        _pianoList: [],
 
         _begTimeArray: [],
         _begTimeIndex: [],
@@ -21,7 +21,7 @@ Page({
         _begMinute: 0,
         _endHour: 0,
         _endMinute: 0,
-        _lastHour : util.ENDHOUR,
+        _lastHour: util.ENDHOUR,
         _lastMinute: util.ENDMINUTE
     },
 
@@ -45,14 +45,14 @@ Page({
         let date = new Date();
         let currentHours = date.getHours();
         let currentMinute = date.getMinutes();
-        util.setTimeTemplate(hours, minutes, currentHours, currentMinute, this.data._lastHour, this.data._lastMinute,selectedHour);
+        util.setTimeTemplate(hours, minutes, currentHours, currentMinute, this.data._lastHour, this.data._lastMinute, selectedHour);
     },
 
     // set end time
     setEndTime: function (hours, minutes, selectedHour) {
         let currentHours = this.data._begHour;
         let currentMinute = this.data._begMinute;
-        util.setTimeTemplate(hours, minutes, currentHours, currentMinute, this.data._lastHour, this.data._lastMinute,selectedHour);
+        util.setTimeTemplate(hours, minutes, currentHours, currentMinute, this.data._lastHour, this.data._lastMinute, selectedHour);
     },
 
     /*
@@ -148,7 +148,7 @@ Page({
         let date = new Date();
         let currentHours = date.getHours();
         let currentMinute = date.getMinutes();
-        util.setTimeTemplate(begHours, begMinutes, currentHours, currentMinute, this.data._lastHour, this.data._lastMinute,currentHours);
+        util.setTimeTemplate(begHours, begMinutes, currentHours, currentMinute, this.data._lastHour, this.data._lastMinute, currentHours);
 
         this.setData({
             _begTimeArray: [begHours, begMinutes],
@@ -176,33 +176,47 @@ Page({
      * 生命周期函数--监听页面加载
      */
     onLoad: function (options) {
-
+        // get the date
+        let date = util.formatDate(new Date());
+        let that = this;
+        this.setData({
+            _date: date
+        });
         // init time array
         this.initTime();
+
+        // get the piano list
+        wx.request({
+            url: "https://958107.iterator-traits.com/reserve/all",
+            method: "POST",
+            header: {
+                "Content-Type": "application/x-www-form-urlencoded"
+            },
+            success: function (res) {
+                // set the piano list data
+                that.setPianoList(res.pianoList, that);
+            },
+            fail: function (res) {
+                util.alertInfo("获取琴房信息失败，请检查网络设备是否正常。", "none", 1000);
+            }
+        });
     },
 
     setPianoList: function (list, that) {
-        let pianoList = [];
-        list.forEach((e) => {
-            let piano = {};
-            piano._pianoId = e.id;
-            piano._pianoInfo = e.info;
-            pianoList.push(piano);
+        that.setData({
+            _pianoList: list
         });
-        this.setData({
-            _pianoList: pianoList
-        })
     },
 
     // to reserve a piano
-    toReservePiano:function(e) {
+    toReservePiano: function (e) {
         let paras = {};
         paras["pianoId"] = e.currentTarget.dataset.id;
         paras["date"] = this.data._date;
 
         let url = util.setUrl("./reserve_detail/reserve_detail", paras);
         wx.navigateTo({
-            url:url
+            url: url
         });
     },
 
@@ -210,27 +224,7 @@ Page({
      * 生命周期函数--监听页面初次渲染完成
      */
     onReady: function () {
-        // get the date
-        let date = util.formatDate(new Date());
-        let that = this;
-        this.setData({
-            _date: date
-        });
-        // get the piano list
-        // wx.request({
-        //     url: "",
-        //     method: "GET",
-        //     header: {
-        //         "Content-Type": "application/x-www-form-urlencoded"
-        //     },
-        //     success: function (res) {
-        //         // set the piano list data
-        //         setPianoList(res.pianoList, that);
-        //     },
-        //     fail: function (res) {
-        //         util.alertInfo("获取琴房信息失败，请检查网络设备是否正常。", "none", 1000);
-        //     }
-        // });
+
     },
 
     /**

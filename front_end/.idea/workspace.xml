@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="BookmarkManager">
-    <bookmark url="file://$PROJECT_DIR$/pages/register/register_out_school/register_out_school.js" description="&#10;    // get info&#10;    getInfo:function(e){&#10;        ..." line="70" />
-  </component>
   <component name="ChangeListManager">
     <list default="true" id="7495c48e-2fa0-4236-b01d-6b74e4898d18" name="Default" comment="" />
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -17,29 +14,29 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file leaf-file-name="reserve.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/pages/reserve/reserve.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state>
+              <caret line="207" column="11" selection-start-line="207" selection-start-column="11" selection-end-line="207" selection-end-column="11" />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="register_out_school.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/pages/register/register_out_school/register_out_school.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2751">
-              <caret line="131" column="50" selection-start-line="131" selection-start-column="50" selection-end-line="131" selection-end-column="50" />
+            <state relative-caret-position="336">
+              <caret line="16" column="23" lean-forward="true" selection-start-line="16" selection-start-column="8" selection-end-line="16" selection-end-column="23" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="app.json" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app.json">
+      <file leaf-file-name="register_out_school.wxml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/pages/register/register_out_school/register_out_school.wxml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="210">
-              <caret line="10" column="22" selection-start-line="10" selection-start-column="22" selection-end-line="10" selection-end-column="22" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="reserve.js" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/pages/reserve/reserve.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="633">
-              <caret line="62" column="51" lean-forward="true" selection-start-line="62" selection-start-column="51" selection-end-line="62" selection-end-column="51" />
+            <state relative-caret-position="630">
+              <caret line="30" column="92" selection-start-line="30" selection-start-column="46" selection-end-line="30" selection-end-column="92" />
             </state>
           </provider>
         </entry>
@@ -56,8 +53,35 @@
       <file leaf-file-name="util.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/utils/util.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="726">
-              <caret line="181" column="36" selection-start-line="181" selection-start-column="36" selection-end-line="181" selection-end-column="36" />
+            <state relative-caret-position="474">
+              <caret line="428" column="123" selection-start-line="428" selection-start-column="123" selection-end-line="428" selection-end-column="123" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="login.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/pages/login/login.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="336">
+              <caret line="25" column="6" selection-start-line="25" selection-start-column="6" selection-end-line="25" selection-end-column="6" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="login_out_school.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/pages/login/login_out_school/login_out_school.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="273">
+              <caret line="19" lean-forward="true" selection-start-line="19" selection-end-line="19" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="login_out_school.wxml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/pages/login/login_out_school/login_out_school.wxml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="399">
+              <caret line="19" column="110" selection-start-line="19" selection-start-column="110" selection-end-line="19" selection-end-column="110" />
             </state>
           </provider>
         </entry>
@@ -65,38 +89,16 @@
       <file leaf-file-name="reserve_detail.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/pages/reserve/reserve_detail/reserve_detail.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="561">
-              <caret line="187" column="34" lean-forward="true" selection-start-line="187" selection-start-column="34" selection-end-line="187" selection-end-column="34" />
-              <folding>
-                <element signature="e#62#88#0" />
-              </folding>
+            <state relative-caret-position="4725">
+              <caret line="225" column="11" selection-start-line="225" selection-start-column="11" selection-end-line="225" selection-end-column="11" />
             </state>
           </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="reserve_detail.wxss" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/pages/reserve/reserve_detail/reserve_detail.wxss">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="420">
-              <caret line="20" column="24" selection-start-line="20" selection-start-column="24" selection-end-line="20" selection-end-column="24" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="reserve_detail.json" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/pages/reserve/reserve_detail/reserve_detail.json">
-          <provider selected="true" editor-type-id="text-editor" />
-        </entry>
-      </file>
-      <file leaf-file-name="reserve.json" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/pages/reserve/reserve.json">
-          <provider selected="true" editor-type-id="text-editor" />
         </entry>
       </file>
       <file leaf-file-name="reserve_detail.wxml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/pages/reserve/reserve_detail/reserve_detail.wxml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="504">
+            <state relative-caret-position="525">
               <caret line="25" column="17" lean-forward="true" selection-start-line="18" selection-start-column="8" selection-end-line="25" selection-end-column="17" />
             </state>
           </provider>
@@ -106,10 +108,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>'</find>
-      <find>.data.</find>
-      <find>userInfo</find>
-      <find>username</find>
       <find>password</find>
       <find>rpx</find>
       <find>preview</find>
@@ -117,11 +115,9 @@
       <find>select_time_board</find>
       <find>register</find>
       <find>toAlarm</find>
-      <find>setPianoList</find>
       <find>getUsername</find>
       <find>currentMinute</find>
       <find>currentHours</find>
-      <find>var</find>
       <find>loadData</find>
       <find>setData</find>
       <find>getBegTime</find>
@@ -135,7 +131,13 @@
       <find>_timeTable</find>
       <find>/</find>
       <find>submitReservation</find>
+      <find>toLogin</find>
+      <find>var</find>
       <find>setTimeTemplate</find>
+      <find>_pianoList</find>
+      <find>setPianoList</find>
+      <find>_timeTabel</find>
+      <find>_disable</find>
     </findStrings>
     <replaceStrings>
       <replace>board</replace>
@@ -146,8 +148,8 @@
       <replace>rpx</replace>
       <replace>curMinute</replace>
       <replace>curHour</replace>
-      <replace>let</replace>
       <replace>selectedHour</replace>
+      <replace>let</replace>
     </replaceStrings>
   </component>
   <component name="IdeDocumentHistory">
@@ -161,8 +163,6 @@
         <option value="$PROJECT_DIR$/pages/login_out_school/login_out_school.wxss" />
         <option value="$PROJECT_DIR$/pages/login_out_school/login_out_school.js" />
         <option value="$PROJECT_DIR$/pages/login_out_school/login_out_school.wxml" />
-        <option value="$PROJECT_DIR$/pages/login/login_out_school/login_out_school.wxml" />
-        <option value="$PROJECT_DIR$/pages/register/register_out_school/register_out_school.wxml" />
         <option value="$PROJECT_DIR$/pages/login/login_in_school/login_in_school.wxml" />
         <option value="$PROJECT_DIR$/pages/logs/logs.js" />
         <option value="$PROJECT_DIR$/pages/index/index.js" />
@@ -183,17 +183,19 @@
         <option value="$PROJECT_DIR$/pages/board/board.wxml" />
         <option value="$PROJECT_DIR$/pages/info/info.wxml" />
         <option value="$PROJECT_DIR$/pages/login/login_in_school/login_in_school.wxss" />
-        <option value="$PROJECT_DIR$/pages/login/login_out_school/login_out_school.js" />
         <option value="$PROJECT_DIR$/pages/login/login_out_school/login_out_school.wxss" />
         <option value="$PROJECT_DIR$/app.wxss" />
-        <option value="$PROJECT_DIR$/pages/register/register_out_school/register_out_school.js" />
         <option value="$PROJECT_DIR$/app.json" />
         <option value="$PROJECT_DIR$/pages/reserve/reserve_detail/reserve_detail.wxss" />
         <option value="$PROJECT_DIR$/pages/reserve/reserve_detail/reserve_detail.wxml" />
         <option value="$PROJECT_DIR$/pages/reserve/reserve.wxml" />
-        <option value="$PROJECT_DIR$/utils/util.js" />
-        <option value="$PROJECT_DIR$/pages/reserve/reserve_detail/reserve_detail.js" />
         <option value="$PROJECT_DIR$/pages/reserve/reserve.js" />
+        <option value="$PROJECT_DIR$/pages/reserve/reserve_detail/reserve_detail.js" />
+        <option value="$PROJECT_DIR$/pages/register/register_out_school/register_out_school.wxml" />
+        <option value="$PROJECT_DIR$/utils/util.js" />
+        <option value="$PROJECT_DIR$/pages/login/login_out_school/login_out_school.wxml" />
+        <option value="$PROJECT_DIR$/pages/register/register_out_school/register_out_school.js" />
+        <option value="$PROJECT_DIR$/pages/login/login_out_school/login_out_school.js" />
       </list>
     </option>
   </component>
@@ -216,7 +218,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -228,6 +229,32 @@
               <item name="front_end" type="b2602c69:ProjectViewProjectNode" />
               <item name="front_end" type="462c0819:PsiDirectoryNode" />
               <item name="pages" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="front_end" type="b2602c69:ProjectViewProjectNode" />
+              <item name="front_end" type="462c0819:PsiDirectoryNode" />
+              <item name="pages" type="462c0819:PsiDirectoryNode" />
+              <item name="login" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="front_end" type="b2602c69:ProjectViewProjectNode" />
+              <item name="front_end" type="462c0819:PsiDirectoryNode" />
+              <item name="pages" type="462c0819:PsiDirectoryNode" />
+              <item name="login" type="462c0819:PsiDirectoryNode" />
+              <item name="login_out_school" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="front_end" type="b2602c69:ProjectViewProjectNode" />
+              <item name="front_end" type="462c0819:PsiDirectoryNode" />
+              <item name="pages" type="462c0819:PsiDirectoryNode" />
+              <item name="register" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="front_end" type="b2602c69:ProjectViewProjectNode" />
+              <item name="front_end" type="462c0819:PsiDirectoryNode" />
+              <item name="pages" type="462c0819:PsiDirectoryNode" />
+              <item name="register" type="462c0819:PsiDirectoryNode" />
+              <item name="register_out_school" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="front_end" type="b2602c69:ProjectViewProjectNode" />
@@ -251,6 +278,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -296,18 +324,19 @@
       <workItem from="1540952033503" duration="44497000" />
       <workItem from="1541485590112" duration="5502000" />
       <workItem from="1541661433475" duration="20737000" />
-      <workItem from="1541741921829" duration="7134000" />
+      <workItem from="1541741921829" duration="17641000" />
+      <workItem from="1541925112571" duration="8454000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="86300000" />
+    <option name="totallyTimeSpent" value="105261000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.14739583" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.14739583" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
@@ -339,7 +368,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/package.json" />
     <entry file="file://$PROJECT_DIR$/pages/index/index.wxml" />
     <entry file="file://$PROJECT_DIR$/pages/board/index.js" />
     <entry file="file://$PROJECT_DIR$/pages/index/index.js" />
@@ -358,13 +386,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="210">
           <caret line="10" column="11" selection-start-line="10" selection-start-column="11" selection-end-line="10" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pages/login/login.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="126">
-          <caret line="6" column="47" selection-start-line="6" selection-start-column="47" selection-end-line="6" selection-end-column="47" />
         </state>
       </provider>
     </entry>
@@ -508,22 +529,8 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/pages/login/login_out_school/login_out_school.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1911">
-          <caret line="91" selection-start-line="91" selection-end-line="91" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/pages/login/login_out_school/login_out_school.json">
       <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pages/login/login_out_school/login_out_school.wxml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="504">
-          <caret line="24" column="39" selection-start-line="24" selection-start-column="27" selection-end-line="24" selection-end-column="39" />
-        </state>
-      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/pages/login/login_out_school/login_out_school.wxss">
       <provider selected="true" editor-type-id="text-editor">
@@ -549,20 +556,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/pages/register/register_out_school/register_out_school.wxml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="903">
-          <caret line="43" selection-start-line="43" selection-end-line="43" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pages/register/register_out_school/register_out_school.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2751">
-          <caret line="131" column="50" selection-start-line="131" selection-start-column="50" selection-end-line="131" selection-end-column="50" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app.json">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="210">
@@ -585,7 +578,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/pages/reserve/reserve_detail/reserve_detail.wxml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="504">
+        <state relative-caret-position="525">
           <caret line="25" column="17" lean-forward="true" selection-start-line="18" selection-start-column="8" selection-end-line="25" selection-end-column="17" />
         </state>
       </provider>
@@ -599,25 +592,64 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/pages/reserve/reserve_detail/reserve_detail.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="561">
-          <caret line="187" column="34" lean-forward="true" selection-start-line="187" selection-start-column="34" selection-end-line="187" selection-end-column="34" />
-          <folding>
-            <element signature="e#62#88#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/utils/util.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="726">
-          <caret line="181" column="36" selection-start-line="181" selection-start-column="36" selection-end-line="181" selection-end-column="36" />
+        <state relative-caret-position="4725">
+          <caret line="225" column="11" selection-start-line="225" selection-start-column="11" selection-end-line="225" selection-end-column="11" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/pages/reserve/reserve.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="633">
-          <caret line="62" column="51" lean-forward="true" selection-start-line="62" selection-start-column="51" selection-end-line="62" selection-end-column="51" />
+        <state>
+          <caret line="207" column="11" selection-start-line="207" selection-start-column="11" selection-end-line="207" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external/lib.es2015.core.d.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="306">
+          <caret line="234" column="4" selection-start-line="234" selection-start-column="4" selection-end-line="234" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pages/login/login.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="336">
+          <caret line="25" column="6" selection-start-line="25" selection-start-column="6" selection-end-line="25" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/utils/util.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="474">
+          <caret line="428" column="123" selection-start-line="428" selection-start-column="123" selection-end-line="428" selection-end-column="123" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pages/register/register_out_school/register_out_school.wxml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="630">
+          <caret line="30" column="92" selection-start-line="30" selection-start-column="46" selection-end-line="30" selection-end-column="92" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pages/login/login_out_school/login_out_school.wxml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="399">
+          <caret line="19" column="110" selection-start-line="19" selection-start-column="110" selection-end-line="19" selection-end-column="110" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pages/register/register_out_school/register_out_school.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="336">
+          <caret line="16" column="23" lean-forward="true" selection-start-line="16" selection-start-column="8" selection-end-line="16" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pages/login/login_out_school/login_out_school.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="273">
+          <caret line="19" lean-forward="true" selection-start-line="19" selection-end-line="19" />
         </state>
       </provider>
     </entry>
