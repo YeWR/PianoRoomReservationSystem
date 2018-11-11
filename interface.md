@@ -112,3 +112,25 @@
     }
 }
 ```
+
+## 琴房预约（暂时无支付功能）
+
+```json
+{
+    "url": "/reserve/order",
+    "data": {
+        "phoneNumber":"用户（手机号）",
+        "pianoId":"琴房id",
+        "userType":"用户类别：校内单人，校外单人，多人等",
+        "pianoPrice":"价格",
+        "begTimeIndex":"开始时间index",
+        "endTimeIndex":"结束时间index"
+    },
+    "res": {
+        "success": "预约成功",
+        "info": "预约失败信息（已被预约等）"
+    }
+}
+```
+
+ 
