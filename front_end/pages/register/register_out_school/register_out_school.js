@@ -74,7 +74,7 @@ Page({
      */
     getValidateCode: function (e) {
         if (util.checkPhoneNumber(this.data._phoneNumber)) {
-            util.getValidateCode(this.data._phoneNumber);
+            util.getValidateCode(this.data._phoneNumber, 0);
 
             // count down 60s
             let that = this;
@@ -103,7 +103,10 @@ Page({
             });
         }
         else {
-            util.alertInfo("手机号码格式不正确", "none", 500);
+            util.alertInfo("手机号码格式不正确", "none", 1000);
+            this.setData({
+                _disable: false
+            });
         }
     },
 
@@ -154,7 +157,9 @@ Page({
                     // if success
                     if (res.data.success) {
                         util.alertInfo("注册成功", "success", 1000);
-                        that.toLogin();
+                        app.globalData._username = that.data._realName;
+                        app.globalData._userType = util.USERTYPE.SOCIAL;
+                        that.toBoard();
                     }
                     // if wrong
                     else {
@@ -175,11 +180,11 @@ Page({
     },
 
     /*
-     * go to login
+     * go to board
      */
-    toLogin: function () {
-        wx.navigateTo({
-            url: "../../login/login_out_school/login_out_school"
+    toBoard: function () {
+        wx.switchTab({
+            url: "../../board/board"
         });
     },
 

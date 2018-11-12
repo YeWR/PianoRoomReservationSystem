@@ -9,6 +9,7 @@ Page({
      * 页面的初始数据
      */
     data: {
+        _jsDate: "",
         _date: "",
         _pianoList: [],
 
@@ -22,11 +23,17 @@ Page({
         _endHour: 0,
         _endMinute: 0,
         _lastHour: util.ENDHOUR,
-        _lastMinute: util.ENDMINUTE
+        _lastMinute: util.ENDMINUTE,
+
+        _cannotPrevious: true,
+        _cannotNext: true
     },
 
-    // should reset end time
+    /*
+     * should reset end time
+     */
     shouldResetEndTime: function () {
+
         let should = false;
         if ((this.data._endHour < this.data._begHour) ||
             (this.data._endHour === this.data._begHour && this.data._endMinute < this.data._begMinute)) {
@@ -40,16 +47,34 @@ Page({
         return should;
     },
 
-    // set begin time
+    /*
+     * set begin time
+     */
     setBegTime: function (hours, minutes, selectedHour) {
-        let date = new Date();
-        let currentHours = date.getHours();
-        let currentMinute = date.getMinutes();
+
+        let curDate = new Date();
+        let currentHours = Math.max(Math.min(curDate.getHours(), util.ENDHOUR), util.BEGINHOUR);
+        let currentMinute = curDate.getMinutes();
+
+        if (currentHours === util.BEGINHOUR) {
+            currentMinute = util.BEGINMINUTE;
+        }
+        else if (currentHours === util.ENDHOUR) {
+            currentMinute = util.ENDMINUTE;
+        }
+
+        if (util.dateCompare(this.data._jsDate, curDate) > 0) {
+            currentHours = util.BEGINHOUR;
+            currentMinute = util.BEGINMINUTE;
+        }
         util.setTimeTemplate(hours, minutes, currentHours, currentMinute, this.data._lastHour, this.data._lastMinute, selectedHour);
     },
 
-    // set end time
+    /*
+     * set end time
+     */
     setEndTime: function (hours, minutes, selectedHour) {
+
         let currentHours = this.data._begHour;
         let currentMinute = this.data._begMinute;
         util.setTimeTemplate(hours, minutes, currentHours, currentMinute, this.data._lastHour, this.data._lastMinute, selectedHour);
@@ -137,17 +162,105 @@ Page({
         }
     },
 
+    /*
+     * set the preious and next day validation
+     * [begDay, endDay]
+     */
+    setPreNextDay: function (begDay, endDay) {
+        if (util.dateCompare(this.data._jsDate, begDay) === 1) {
+            this.setData({
+                _cannotPrevious: false
+            })
+        }
+        else {
+            this.setData({
+                _cannotPrevious: true
+            })
+        }
+
+        if (util.dateCompare(this.data._jsDate, endDay) === -1) {
+            this.setData({
+                _cannotNext: false
+            });
+        }
+        else {
+            this.setData({
+                _cannotNext: true
+            })
+        }
+    },
+
+    /*
+     * bind choose previous day
+     */
+    bindChoosePreviousDay: function (e) {
+        let curDate = new Date();
+        let lastDate = new Date();
+        lastDate.setDate(lastDate.getDate() + util.DATELEN);
+
+        if (util.dateCompare(this.data._jsDate, curDate) === 1 &&
+            util.dateCompare(this.data._jsDate, lastDate) <= 0) {
+
+            let date = this.data._jsDate;
+            date.setDate(date.getDate() - 1);
+            this.setData({
+                _jsDate: date,
+                _date: util.formatDate(date)
+            });
+        }
+
+        this.setPreNextDay(curDate, lastDate);
+        this.initTime();
+    },
+
+    /*
+     * bind choose next day
+     */
+    bindChooseNextDay: function (e) {
+
+        let curDate = new Date();
+        let lastDate = new Date();
+        lastDate.setDate(lastDate.getDate() + util.DATELEN);
+
+        if (util.dateCompare(this.data._jsDate, lastDate) === -1 &&
+            util.dateCompare(this.data._jsDate, curDate) >= 0) {
+
+            let date = this.data._jsDate;
+            date.setDate(date.getDate() + 1);
+            this.setData({
+                _jsDate: date,
+                _date: util.formatDate(date)
+            });
+        }
+
+        this.setPreNextDay(curDate, lastDate);
+        this.initTime();
+    },
+
     /* init time
      * begin time -> current time
      * end time -> current time
      */
     initTime: function () {
+        let curDate = new Date();
         let begHours = [];
         let begMinutes = [];
 
-        let date = new Date();
-        let currentHours = date.getHours();
-        let currentMinute = date.getMinutes();
+        let currentHours = Math.max(Math.min(curDate.getHours(), util.ENDHOUR), util.BEGINHOUR);
+        let currentMinute = curDate.getMinutes();
+
+        if (currentHours === util.BEGINHOUR) {
+            currentMinute = util.BEGINMINUTE;
+        }
+        else if (currentHours === util.ENDHOUR) {
+            currentMinute = util.ENDMINUTE;
+        }
+
+        if (util.dateCompare(this.data._jsDate, curDate) > 0) {
+            currentHours = util.BEGINHOUR;
+            currentMinute = util.BEGINMINUTE;
+        }
+
         util.setTimeTemplate(begHours, begMinutes, currentHours, currentMinute, this.data._lastHour, this.data._lastMinute, currentHours);
 
         this.setData({
@@ -158,17 +271,11 @@ Page({
 
         let endHours = [];
         let endMinutes = [];
-        this.setEndTime(endHours, endMinutes, null);
+        this.setEndTime(endHours, endMinutes, this.data._lastHour);
         this.setData({
             _endTimeArray: [endHours, endMinutes],
-            _endHour: 22,
-            _endMinute: 0
-        });
-        // reset the index
-        let hourIndex = endHours.indexOf(this.data._endHour);
-        let minuteIndex = endMinutes.indexOf(this.data._endMinute);
-        this.setData({
-            _endTimeIndex: [hourIndex, minuteIndex]
+            _endHour: util.ENDHOUR,
+            _endMinute: util.ENDMINUTE
         });
     },
 
@@ -177,29 +284,31 @@ Page({
      */
     onLoad: function (options) {
         // get the date
-        let date = util.formatDate(new Date());
+        let date = new Date();
         let that = this;
         this.setData({
-            _date: date
+            _jsDate: date,
+            _date: util.formatDate(date),
+            _cannotNext: false
         });
         // init time array
         this.initTime();
 
         // get the piano list
-        wx.request({
-            url: "https://958107.iterator-traits.com/reserve/all",
-            method: "POST",
-            header: {
-                "Content-Type": "application/x-www-form-urlencoded"
-            },
-            success: function (res) {
-                // set the piano list data
-                that.setPianoList(res.pianoList, that);
-            },
-            fail: function (res) {
-                util.alertInfo("获取琴房信息失败，请检查网络设备是否正常。", "none", 1000);
-            }
-        });
+        // wx.request({
+        //     url: "https://958107.iterator-traits.com/reserve/all",
+        //     method: "POST",
+        //     header: {
+        //         "Content-Type": "application/x-www-form-urlencoded"
+        //     },
+        //     success: function (res) {
+        //         // set the piano list data
+        //         that.setPianoList(res.pianoList, that);
+        //     },
+        //     fail: function (res) {
+        //         util.alertInfo("获取琴房信息失败，请检查网络设备是否正常。", "none", 1000);
+        //     }
+        // });
     },
 
     setPianoList: function (list, that) {
@@ -215,6 +324,7 @@ Page({
         paras["pianoId"] = this.data._pianoList[id].pianoId;
         paras["pianoPlace"] = this.data._pianoList[id].pianoPlace;
         paras["date"] = this.data._date;
+        paras["jsDate"] = this.data._jsDate;
 
         let url = util.setUrl("./reserve_detail/reserve_detail", paras);
         wx.navigateTo({

@@ -2,6 +2,7 @@
  * common functions defined here
  *******************************************************************************************************/
 
+const DATELEN = 2;
 const BEGINHOUR = 8;
 const BEGINMINUTE = 0;
 const ENDHOUR = 22;
@@ -32,6 +33,44 @@ const formatDate = (date) => {
     let day = date.getDate();
 
     return [year, month, day].map(formatNumber).join('-');
+};
+
+/*
+ * compare two dates
+ * return 1 if date1 > date2
+ * return 0 if date1 == date2
+ * return -1 if date1 < date2
+ * date format: xxxx-xx-xx
+ */
+const dateCompare = (date1, date2) => {
+    let d1 = formatDate(date1).split("-");
+    let d2 = formatDate(date2).split("-");
+    let ans = 0;
+
+    if(d1[0] > d2[0]){
+        ans = 1;
+    }
+    else if(d1[0] < d2[0]){
+        ans = -1;
+    }
+    else{
+        if(d1[1] > d2[1]){
+            ans = 1;
+        }
+        else if(d1[1] < d2[1]){
+            ans = -1;
+        }
+        else{
+            if(d1[2] > d2[2]){
+                ans = 1;
+            }
+            else if(d1[2] < d2[2]){
+                ans = -1;
+            }
+        }
+    }
+
+    return ans;
 };
 
 // alert an info
@@ -326,6 +365,9 @@ const getNearestEndTime = (begHour, begMinute, timeTable) => {
         if (timeTable[i] === 0) {
             interval++;
         }
+        else{
+            break;
+        }
     }
     return getEndTime(begHour, begMinute, interval);
 };
@@ -389,13 +431,15 @@ const setTimeTemplate = (hours, minutes, currentHours, currentMinute, lastHour, 
 
 /*
  * get the validation code
+ * state -> which state: 0 -> register, 1 -> login , 2 -> change
  */
-const getValidateCode = (phoneNumber) => {
+const getValidateCode = (phoneNumber, state) => {
     let post = function () {
         wx.request({
             url: "https://958107.iterator-traits.com/validate",
             data: {
-                phoneNumber: phoneNumber
+                phoneNumber: phoneNumber,
+                state: state
             },
             method: "POST",
             header: {
@@ -404,7 +448,7 @@ const getValidateCode = (phoneNumber) => {
             success: function (res) {
                 // if success
                 if (res.data.success) {
-                    alertInfo("发送验证码成功，请等待", "success", 300);
+                    alertInfo("发送验证码成功，请等待", "success", 1000);
                 }
                 // if wrong
                 else {
@@ -449,7 +493,10 @@ const checkRealName = (string) => {
  */
 const checkIdNumber = (string) => {
     let ans = false;
-    if (/^[0-9]{17}[0-9X]$/.test(string)) {
+    if (/^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{4}$/.test(string)) {
+        ans = true;
+    }
+    else if(/^1[45][0-9]{7}|G[0-9]{8}|P[0-9]{7}|S[0-9]{7,8}|D[0-9]+$/.test(string)){
         ans = true;
     }
     return ans;
@@ -480,10 +527,14 @@ module.exports = {
     alertInfo: alertInfo,
     formatTime: formatTime,
     formatDate: formatDate,
+    dateCompare: dateCompare,
     setUrl: setUrl,
     getNearestEndTime: getNearestEndTime,
+    BEGINHOUR: BEGINHOUR,
+    BEGINMINUTE: BEGINMINUTE,
     ENDHOUR: ENDHOUR,
     ENDMINUTE: ENDMINUTE,
+    DATELEN: DATELEN,
     getIndexInTimeTable: getIndexInTimeTable,
     setTimeTemplate: setTimeTemplate,
     md5: md5,

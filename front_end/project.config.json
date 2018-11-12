@@ -57,9 +57,10 @@
 					"query": ""
 				},
 				{
-					"id": -1,
+					"id": 3,
 					"name": "预约",
-					"pathName": "pages/reserve/reserve_detail/reserve_detail"
+					"pathName": "pages/reserve/reserve_detail/reserve_detail",
+					"query": "date=2018-11-13&jsDate=2018-11-13T15:45:18.422Z"
 				}
 			]
 		}

@@ -50,7 +50,7 @@ Page({
      */
     getValidateCode: function (e) {
         if (util.checkPhoneNumber(this.data._phoneNumber)) {
-            util.getValidateCode(this.data._phoneNumber);
+            util.getValidateCode(this.data._phoneNumber, 1);
 
             // count down 60s
             let that = this;
@@ -79,7 +79,10 @@ Page({
             });
         }
         else {
-            util.alertInfo("手机号码格式不正确", "none", 500);
+            util.alertInfo("手机号码格式不正确", "none", 1000);
+            this.setData({
+                _disable: false
+            });
         }
     },
 
@@ -118,7 +121,7 @@ Page({
                 success: function (res) {
                     // if success
                     if (res.data.success) {
-                        util.alertInfo("登录成功", "success", 500);
+                        util.alertInfo("登录成功", "success", 1000);
                         app.globalData._username = res.data.realName;
                         app.globalData._userType = util.USERTYPE.SOCIAL;
                         that.toBoard();

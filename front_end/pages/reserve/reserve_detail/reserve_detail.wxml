@@ -18,11 +18,11 @@
         预约时间 :
         <picker mode="multiSelector" value="{{_begTimeIndex}}" range="{{_begTimeArray}}"
                 bindcolumnchange="bindBegTimeChange">
-            {{_begHour}}:{{_begMinute}}
+            {{_begHour}}:<text wx:if="{{_begMinute == 0}}">00</text><text wx:else>{{_begMinute}}</text>
         </picker>
         <picker mode="multiSelector" value="{{_endTimeIndex}}" range="{{_endTimeArray}}"
                 bindcolumnchange="bindEndTimeChange" >
-            {{_endHour}}:{{_endMinute}}
+            {{_endHour}}:<text wx:if="{{_endMinute == 0}}">00</text><text wx:else>{{_endMinute}}</text>
         </picker>
     </view>
 

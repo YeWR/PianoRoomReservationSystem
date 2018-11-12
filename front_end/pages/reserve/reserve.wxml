@@ -7,16 +7,20 @@
         <view class="date">
             {{_date}}
         </view>
+        <view>
+            <button bindtap="bindChoosePreviousDay" disabled="{{_cannotPrevious}}">前一天</button>
+            <button bindtap="bindChooseNextDay" disabled="{{_cannotNext}}">后一天</button>
+        </view>
         <view class="select_time_board">
             <!--<image class="icon_time" mode="aspectFit" src="../../../images/icon/clock.png"></image>-->
             <picker mode="multiSelector" value="{{_begTimeIndex}}" range="{{_begTimeArray}}"
                     bindcolumnchange="bindBegTimeChange">
-                {{_begHour}}:{{_begMinute}}
+                {{_begHour}}:<text wx:if="{{_begMinute == 0}}">00</text><text wx:else>{{_begMinute}}</text>
             </picker>
             --
             <picker mode="multiSelector" value="{{_endTimeIndex}}" range="{{_endTimeArray}}"
                     bindcolumnchange="bindEndTimeChange" >
-                {{_endHour}}:{{_endMinute}}
+                {{_endHour}}:<text wx:if="{{_endMinute == 0}}">00</text><text wx:else>{{_endMinute}}</text>
             </picker>
         </view>
 
@@ -25,8 +29,8 @@
     <view class='preview' wx:for="{{_pianoList}}" wx:for-index="id" wx:for-item="piano">
         <view class='card'>
             <view class='title-container'>
-                <text class='title'>F1-0{{id}}</text>
-                <view class='detail' data-id="{{id}}" bindtap='toReservePiano'>
+                <text class='title'>{{piano.pianoId}}</text>
+                <view class='detail' data-id="{{piano.pianoId}}" bindtap='toReservePiano'>
                     <text>预约</text>
                 </view>
             </view>
@@ -40,7 +44,5 @@
             </view>
         </view>
     </view>
-
-
 
 </view>

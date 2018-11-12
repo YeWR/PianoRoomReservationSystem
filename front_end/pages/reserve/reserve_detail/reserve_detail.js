@@ -9,6 +9,7 @@ Page({
      * 页面的初始数据
      */
     data: {
+        _jsDate: "",
         _date: "",
         _pianoId: 0,
         _timeTable: [],
@@ -53,13 +54,28 @@ Page({
      * set begin time
      */
     setBegTime: function (hours, minutes, selectedHour) {
-        let date = new Date();
-        let currentHours = date.getHours();
-        let currentMinute = date.getMinutes();
+
+        let curDate = new Date();
+        let currentHours = Math.max(Math.min(curDate.getHours(), util.ENDHOUR), util.BEGINHOUR);
+        let currentMinute = curDate.getMinutes();
+
+        if (currentHours === util.BEGINHOUR) {
+            currentMinute = util.BEGINMINUTE;
+        }
+        else if (currentHours === util.ENDHOUR) {
+            currentMinute = util.ENDMINUTE;
+        }
+
+        if (util.dateCompare(this.data._jsDate, curDate) > 0) {
+            currentHours = util.BEGINHOUR;
+            currentMinute = util.BEGINMINUTE;
+        }
+
         this.setData({
             _lastHour: util.ENDHOUR,
             _lastMinute: util.ENDMINUTE
         });
+
         util.setTimeTemplate(hours, minutes, currentHours, currentMinute, this.data._lastHour, this.data._lastMinute, selectedHour);
     },
 
@@ -97,8 +113,8 @@ Page({
         paras["date"] = this.data._date;
         paras["begTime"] = this.data._begHour + ":" + this.data._begMinute;
         paras["endTime"] = this.data._endHour + ":" + this.data._endMinute;
-        paras["_begTimeIndex"] = util.getIndexInTimeTable(this.data._begHour, this.data._begMinute);
-        paras["_endTimeIndex"] = util.getIndexInTimeTable(this.data._endHour, this.data._endMinute);
+        paras["begTimeIndex"] = util.getIndexInTimeTable(this.data._begHour, this.data._begMinute);
+        paras["endTimeIndex"] = util.getIndexInTimeTable(this.data._endHour, this.data._endMinute);
         paras["pianoPlace"] = this.data._pianoPlace;
         // TODO: price should be determined by the settings of userType
         // paras["pianoPrice"] = this.data._pianoPrices;
@@ -216,12 +232,25 @@ Page({
      * end time -> current time
      */
     initTime: function () {
+        let curDate = new Date();
         let begHours = [];
         let begMinutes = [];
 
-        let date = new Date();
-        let currentHours = date.getHours();
-        let currentMinute = date.getMinutes();
+        let currentHours = Math.max(Math.min(curDate.getHours(), util.ENDHOUR), util.BEGINHOUR);
+        let currentMinute = curDate.getMinutes();
+
+        if (currentHours === util.BEGINHOUR) {
+            currentMinute = util.BEGINMINUTE;
+        }
+        else if (currentHours === util.ENDHOUR) {
+            currentMinute = util.ENDMINUTE;
+        }
+
+        if (util.dateCompare(this.data._jsDate, curDate) > 0) {
+            currentHours = util.BEGINHOUR;
+            currentMinute = util.BEGINMINUTE;
+        }
+
         util.setTimeTemplate(begHours, begMinutes, currentHours, currentMinute, this.data._lastHour, this.data._lastMinute, currentHours);
 
         this.setData({
@@ -232,7 +261,7 @@ Page({
 
         let endHours = [];
         let endMinutes = [];
-        this.setEndTime(endHours, endMinutes, begHours[0]);
+        this.setEndTime(endHours, endMinutes, this.data._lastHour);
         this.setData({
             _endTimeArray: [endHours, endMinutes],
             _endHour: endHours[0],
@@ -246,33 +275,38 @@ Page({
      */
     initInfo: function () {
         let that = this;
-        wx.request({
-            url: "https://958107.iterator-traits.com/reserve/detail",
-            data: {
-                pianoId: that._pianoId,
-                date: that._date
-            },
-            method: "POST",
-            header: {
-                "Content-Type": "application/x-www-form-urlencoded"
-            },
-            success: function (res) {
-                that.setInfo(res, that);
-            },
-            fail: function (res) {
-                util.alertInfo("获取琴房信息失败，请检查网络设备是否正常。", "none", 1000);
-            }
-        });
+        // wx.request({
+        //     url: "https://958107.iterator-traits.com/reserve/detail",
+        //     data: {
+        //         pianoId: that._pianoId,
+        //         date: that._date
+        //     },
+        //     method: "POST",
+        //     header: {
+        //         "Content-Type": "application/x-www-form-urlencoded"
+        //     },
+        //     success: function (res) {
+        //         that.setInfo(res, that);
+        //     },
+        //     fail: function (res) {
+        //         util.alertInfo("获取琴房信息失败，请检查网络设备是否正常。", "none", 1000);
+        //     }
+        // });
+        that.setInfo(null, that);
     },
 
     /*
      * setInfo
      */
     setInfo: function (dict, that) {
+        let timeTable = [];
+        for (let i = 0; i < 84; ++i){
+            timeTable.push(i % 2);
+        }
         that.setData({
-            _timeTable: dict.timeTable,
-            _pianoPrices: dict.pianoPrices,
-            _pianoInfo: dict.pianoInfo
+            _timeTable: timeTable,//dict.timeTable,
+            _pianoPrices: 1,//dict.pianoPrices,
+            _pianoInfo: "gg"//dict.pianoInfo
         });
     },
 
@@ -281,6 +315,7 @@ Page({
      */
     onLoad: function (options) {
         this.setData({
+            _jsDate: new Date(options.jsDate),
             _date: options.date,
             _pianoId: options.pianoId,
             _pianoPlace: options.pianoPlace,
