@@ -125,6 +125,7 @@
         "pianoId":"琴房id",
         "userType":"用户类别：校内学生，校内老师，校外单人，多人(0/1/2/3)等",
         "pianoPrice":"价格",
+        "date": "日期",
         "begTimeIndex":"开始时间index",
         "endTimeIndex":"结束时间index"
     },
