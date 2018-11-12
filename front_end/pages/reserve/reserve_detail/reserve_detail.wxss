@@ -54,8 +54,39 @@
 .progress-time-each{
     margin-left: 7%;
 }
-/*.select_time {*/
 
+.reserve-card{
+    align-items: center;
+    background-color: white;
+    margin-top: 20%;
+    height: 43%;
+    width: 86%;
+    color: rgba(0, 0, 0, 1);
+    display: flex;
+    flex-direction: column;
+    border-radius: 10rpx;
+}
+
+.date-view{
+    margin-top:5%;
+    width: 90%;
+    height: 10%;
+    display: flex;
+}
+.date-icon{
+    width: 50rpx;
+    height: 50rpx;
+    background-color: rgba(102, 8, 116, 1);
+}
+
+.date-text{
+    width: 20%;
+    margin-left: 2%;
+    color: rgba(136, 136, 136, 1);
+    font-size: 18px;
+    font-family: Arial;
+}
+/*.select_time {*/
     /*height: 30%;*/
     /*width: 100%;*/
     /*font-size: 50rpx;*/
@@ -63,30 +94,17 @@
     /*align-items: center;*/
     /*color: #c7c7cc;*/
 /*}*/
-/*.icon_time{*/
-    /*margin-left: 6%;*/
-    /*width: 50rpx;*/
-    /*height: 50rpx;*/
-/*}*/
-/*.select_time_board{*/
-    /*justify-content: center;*/
-    /*margin-left: 11%;*/
-    /*border-bottom:1px solid rgba(187, 187, 187, 1);*/
-    /*border-top:1px solid rgba(187, 187, 187, 1);*/
 
-/*}*/
+.date-info{
+    justify-content: center;
+    width: 70%;
+    border-bottom:1px solid rgba(187, 187, 187, 1);
+    text-align: center;
+
+}
 /*.select_time_--{*/
     /*justify-content: center;*/
     /*margin-left: 10%;*/
-/*}*/
-
-/*.date {*/
-    /*font-weight: bold;*/
-    /*font-size: xx-large;*/
-    /*display: flex;*/
-    /*align-items: center;*/
-    /*justify-content: center;*/
-    /*color: white;*/
 /*}*/
 
 /*.select_time_board {*/

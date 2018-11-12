@@ -19,9 +19,11 @@
         </view>
 
         <view class='progress-days'>
+
             <view class='progress'>
                 <progress percent="{{50}}" stroke-width='5' activeColor="rgba(187, 187, 187, 1)" backgroundColor="rgb(187, 187, 187) 100%" active="true" />
             </view>
+
             <view class='progress-time'>
                 <text class="progress-time-each">08</text>
                 <text class="progress-time-each">10</text>
@@ -36,9 +38,22 @@
 
     </view>
 
-    <!--<view class="select_time_board">-->
-        <!--预约日期{{_date}}-->
-    <!--</view>-->
+    <view class="reserve-card">
+        <view class="date-view">
+            <image class="date-icon" mode="aspectFit" src="../../../images/icon/calendar.png"></image>
+            <view class="date-text">
+                日期：
+                <!--<text class="fa fa-camera-retro fa-lg"></text>-->
+            </view>
+            <view class="date-info">
+                <!--{{_date}}-->
+                2018-11-11
+            </view>
+        </view>
+        <!--<view class="select_time">-->
+
+        <!--</view>-->
+    </view>
 
     <!--<view class="select_time_board">-->
         <!--预约时间 :-->
