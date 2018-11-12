@@ -4,13 +4,13 @@ const router = new Router();
 const dataBase = require("../dataBase")
 
 const routers = router.post("/", async (ctx, next) => {
-    let username = ctx.request.body.username,
-        password = ctx.request.body.veriCode;
-    console.log(`login with name: ${username}, password: ${password}`);
-    let result = await dataBase.SocietyLogin(username,password);
+    let tele = ctx.request.body.phoneNumber,
+        code = ctx.request.body.validateCode;
+    console.log(`login with tele: ${tele}`);
+    let result = await dataBase.SocietyLogin(tele,code);
     if(result.success === true)
     {
-        ctx.session.user = JSON.stringify({"username": username})
+        ctx.session.user = JSON.stringify({"user": tele})
     }
     ctx.response.body = result;
 });

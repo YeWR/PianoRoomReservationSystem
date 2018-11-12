@@ -10,10 +10,15 @@ let smsClient = new SMSClient({accessKeyId, secretAccessKey})
 
 const routers = router.post("/", async (ctx, next) => {
     console.log(ctx.request)
-    let tele = ctx.request.body.teleNumber;
-    //todo:查找是否存在
+    let tele = ctx.request.body.phoneNumber;
     let code = Math.floor(Math.random()*8999)+1000;
-    //todo:存入数据库
+    let result = await dataBase.SetRegisterMsg(tele,code);
+    //let result = await dataBase.SetLoginMsg(tele,code);
+    if(!result.success)
+    {
+        ctx.response.body = result;
+        return;
+    }
     let sendsms = await smsClient.sendSMS({
         PhoneNumbers: tele,
     SignName: '云通信产品',
@@ -22,14 +27,15 @@ const routers = router.post("/", async (ctx, next) => {
     }).then(function (res) {
             let {Code}=res
             if (Code === 'OK') {
-                console.log(res);
+                console.log(Code);
                 return {"success": true};
             }
         }, function (err) {
-            console.log(err);
-            return {"success": false};
+            let {Code}=res
+            console.log(Code);
+            return {"success": false, "info": Code};
         })
     ctx.response.body = sendsms;
-    console.log(`signin with name: ${username}`);
 })
+
 module.exports = routers;
