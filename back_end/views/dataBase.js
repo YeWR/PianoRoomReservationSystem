@@ -316,9 +316,33 @@ let GetPianoRoomInfo = async function(pianoId) {
                 "info":errorMsg};
     }
 }
+// s = InsertItem('2018-11-13 08:00:00','wu',203,1,3,10,1,0)
+let getDateNum = function(itemDate){
+    let item_date = new Date(itemDate);
+    let now_date = new Date();
+    now_date.setHours(now_date.getHours()+8);
+    if(now_date>item_date){
+        return 0;
+    }
+    else{
+        item_date.setDate(item_date.getDate()-1);
+        console.log(item_date);
+        console.log(now_date);
+        if(now_date>item_date){
+            console.log('=-------------------1');
+            return 1;
+        }
+        else{
+            return 2;
+        }
+    }
+}
 
 // 加上读写锁
-let preparePiano = async function(itemRoom, itemTime, itemDuration){
+let preparePiano = async function(itemRoom, itemBegin, itemDuration, itemDate){
+    let errorMsg = "";
+    itemBegin = 84*getDateNum(itemDate)+itemBegin;
+    let itemEnd = itemBegin+itemDuration;
     let test = function(){
         return new Promise(resolve =>{
             db.where({ piano_room: itemRoom }).get('piano', function (err, res, fields) {
@@ -331,12 +355,9 @@ let preparePiano = async function(itemRoom, itemTime, itemDuration){
                     let _data = JSON.stringify(_select);
                     let _info = JSON.parse(_data);
                     pianoInfo = _info[0];
-                    console.log(pianoInfo);
                     // change data
-                    for(let i = itemTime; i<itemTime+itemDuration; i++){
-                        console.log(pianoInfo.piano_list.data[i]);
-                        if(pianoInfo.piano_list.data[i] == '1'){
-                            console.log()
+                    for(let i = itemBegin; i<itemEnd; i++){
+                        if(pianoInfo.piano_list.data[i] == '1' || pianoInfo.piano_list.data[i] == 49){
                             resolve(0);
                         }
                     }
@@ -352,14 +373,59 @@ let preparePiano = async function(itemRoom, itemTime, itemDuration){
                 "info":errorMsg};
     }
     if(flag == 1){
-        return {"success":true};
+        // to do 更新数据
+        let newList = "";
+        let len = pianoInfo.piano_list.data.length;
+        for(let i = 0; i<len; i++){
+            if(i < itemEnd){
+                if(i >= itemBegin){
+                    newList += '1';
+                    continue;
+                }
+            }
+            if(pianoInfo.piano_list.data[i] == '0' || pianoInfo.piano_list.data[i] == 48){
+                newList += '0';
+            }
+            else{
+                newList += '1';
+            }
+        }
+        console.log(newList);
+        let checkUpdate = function(){
+            return new Promise(resolve =>{
+                db.where({piano_room:itemRoom}).update('piano',{piano_list:newList},function(err){
+                    if(err){
+                        resolve(0);
+                    }
+                    else{
+                        resolve(1);
+                    }
+                });
+            });
+        };
+        let check = await checkUpdate()
+        if(check == 0){
+            errorMsg = "更新失败";
+            return {"success":false,
+                    "info":errorMsg};
+        }
+        else{
+            return {"success":true};
+        }
     }
 }
-// s = InsertItem("2018-10-01","wu",202,1,3,40,10,0)
-// time is the begin index, duration is the length
+
+// begin is the begin index, duration is the length
 let InsertItem = async function(itemDate, itemUsername, itemRoom, itemType, itemMember, itemValue, itemDuration, itemBegin){
-    // 修改可预约时间段。
     let errorMsg = "";
+    // 修改可预约时间段。
+    let result = await preparePiano(itemRoom, itemBegin, itemDuration, itemDate);
+    if(result.success == false){
+        errorMsg = "预约失败";
+        return {"success":false,
+                "info":errorMsg};
+    }
+    // 插入订单
     let test = function(){
         return new Promise(resolve =>{
             try{
@@ -425,6 +491,7 @@ let GetItem = async function(itemUsername){
                 "info":errorMsg};
     }
     if(flag == 1){
+        console.log(itemInfo[0].item_date);
         return {"data":itemInfo};
     }
 }
