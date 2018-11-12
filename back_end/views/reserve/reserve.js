@@ -10,17 +10,17 @@ const routers = router.get("/all", async (ctx, next) => {
     }
     else
     {
-        let pianolist = [];
-        for(let p in result.data) {
+        let pianolist = new Array();
+        for(p of result.data) {
             let info = {
                 "pianoId": p.piano_id,
                 "pianoType": p.piano_type,
                 "timeTable": p.piano_list,
                 "pianoPlace": p.piano_room
             };
-            pianolist.append(info);
+            pianolist.push(info);
         }
-        ctx.response.body = {"pianoList": pianolist.toString() };
+        ctx.response.body = {"pianoList": pianolist };
     }
     console.log(result);
 
@@ -56,7 +56,7 @@ const routers = router.get("/all", async (ctx, next) => {
     date.setSeconds(0,0);
     let starthour = 8;
     date.setHours(Math.floor(begTimeIndex/6)+starthour, begTimeIndex%6*10, 0,0);
-    let duration = (endTimeIndex - begTimeIndex) * 10;
+    let duration = endTimeIndex - begTimeIndex;
     let result = await dataBase.InsertItem(date,phoneNumber,pianoId,1,userType,pianoPrice,duration);
     ctx.response.body = result;
 });
