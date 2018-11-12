@@ -2,8 +2,8 @@ const Router = require("koa-router");
 const router = new Router();
 const dataBase = require("../dataBase")
 const SMSClient = require('@alicloud/sms-sdk')
-const fs = reauire("fs");
-const configPath = "../../configs.json";
+const fs = require("fs");
+const configPath = "configs.json";
 const configs = JSON.parse(fs.readFileSync(configPath))
 // ACCESS_KEY_ID/ACCESS_KEY_SECRET 根据实际申请的账号信息进行替换
 const accessKeyId = configs.accessKeyId;
@@ -15,11 +15,12 @@ const routers = router.post("/", async (ctx, next) => {
     console.log(ctx.request)
     let tele = ctx.request.body.phoneNumber;
     let code = Math.floor(Math.random()*8999)+1000;
-    let state = ctx.request.body.state;
+    let state = parseInt(ctx.request.body.state);
+    let result = null;
     if(state === 0)
-        let result = await dataBase.SetRegisterMsg(tele,code);
+        result = await dataBase.SetRegisterMsg(tele,code);
     else
-        let result = await dataBase.SetLoginMsg(tele,code);
+        result = await dataBase.SetLoginMsg(tele,code);
     if(!result.success)
     {
         ctx.response.body = result;
