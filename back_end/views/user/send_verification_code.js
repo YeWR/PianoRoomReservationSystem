@@ -12,7 +12,7 @@ const secretAccessKey = configs.secretAccessKey;
 let smsClient = new SMSClient({accessKeyId, secretAccessKey})
 
 const routers = router.post("/", async (ctx, next) => {
-    console.log(ctx.request)
+    console.log(ctx.request.body);
     let tele = ctx.request.body.phoneNumber;
     let code = Math.floor(Math.random()*8999)+1000;
     let state = parseInt(ctx.request.body.state);

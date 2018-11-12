@@ -4,6 +4,7 @@ const router = new Router();
 const dataBase = require("../dataBase")
 
 const routers = router.post("/", async (ctx, next) => {
+    console.log(ctx.request.body);
     let tele = ctx.request.body.phoneNumber,
         code = ctx.request.body.validateCode;
     console.log(`login with tele: ${tele}`);

@@ -3,6 +3,7 @@ const router = new Router();
 const dataBase = require("../dataBase")
 
 const routers = router.get("/all", async (ctx, next) => {
+    console.log(ctx.request.body);
     let result = await dataBase.GetPianoRoomAll();
     if(result.data === null)
     {
@@ -24,6 +25,7 @@ const routers = router.get("/all", async (ctx, next) => {
     }
     console.log(ctx.response.body);
 }).get("/detail", async (ctx, next) => {
+    console.log(ctx.request.body);
     let pianoId = ctx.request.body.pianoId;
     let dateStr = ctx.request.body.date;
     let date = new Date(dateStr.replace(/-/g, "/"));
@@ -49,6 +51,7 @@ const routers = router.get("/all", async (ctx, next) => {
     }
     console.log(ctx.response.body);
 }).post("/order", async (ctx, next) => {
+    console.log(ctx.request.body);
     let phoneNumber = ctx.request.body.phoneNumber;
     let pianoId = ctx.request.body.pianoId;
     let userType = ctx.request.body.userType;

@@ -3,7 +3,7 @@ const router = new Router();
 const dataBase = require("../dataBase")
 
 const routers = router.post("/", async (ctx, next) => {
-    console.log(ctx.request)
+    console.log(ctx.request.body);
     let phoneNumber = ctx.request.body.phoneNumber,
         validateCode = ctx.request.body.validateCode,
         realname = ctx.request.body.realName,
