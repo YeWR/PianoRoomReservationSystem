@@ -12,15 +12,15 @@ app.use(session({
     })
 },app));
 
-app.use(async (ctx, next) => {
-    let reg = /^((\/register)|(\/login)|(\/validate))/
-    if(!ctx.cookies.get('koa:sess') && !reg.test(ctx.path)){
-        console.log(ctx.cookies.get('koa:sess'),ctx.path);
-        ctx.response.body = {"success": false, "info": "请登录"};
-        return;
-    }
-    next();
-})
+//app.use(async (ctx, next) => {
+//    let reg = /^((\/register)|(\/login)|(\/validate))/
+//    if(!ctx.cookies.get('koa:sess') && !reg.test(ctx.path)){
+//        console.log(ctx.cookies.get('koa:sess'),ctx.path);
+//        ctx.response.body = {"success": false, "info": "请登录"};
+//return;
+//    }
+//    next();
+//})
 
 app.use(bodyParser());
 
