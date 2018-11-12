@@ -30,7 +30,8 @@
 {
     "url": "/validate",
     "data":{
-        "phoneNumber": "电话号码"
+        "phoneNumber": "电话号码",
+        "state": "代表注册/登录/更改信息等(0/1/2/...)"
     },
     "res":{
         "success": "成功发送",
@@ -122,7 +123,7 @@
     "data": {
         "phoneNumber":"用户（手机号）",
         "pianoId":"琴房id",
-        "userType":"用户类别：校内单人，校外单人，多人等",
+        "userType":"用户类别：校内学生，校内老师，校外单人，多人(0/1/2/3)等",
         "pianoPrice":"价格",
         "begTimeIndex":"开始时间index",
         "endTimeIndex":"结束时间index"
