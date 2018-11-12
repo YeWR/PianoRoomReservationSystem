@@ -58,6 +58,7 @@ let SocietyRegister = async function(socType, socId, socRealname, socTele, socPa
             client.get(socTele, function(err, reply){
                 if(reply){
                     if(socPassword == (reply.toString())){
+                        client.del(socTele, function (err, reply) {});
                         resolve(1);
                     }
                     else{
@@ -186,6 +187,7 @@ let SocietyLogin = async function(socTele, socPassword) {
             client.get(socTele, function(err, reply){
                 if(reply){
                     if(socPassword == (reply.toString())){
+                        client.del(socTele, function (err, reply) {});
                         resolve(1);
                     }
                     else{
@@ -402,4 +404,3 @@ exports.SocietyRegister = SocietyRegister;  // 点击注册
 // 登录
 exports.SetLoginMsg = SetLoginMsg;          // 点击发送
 exports.SocietyLogin = SocietyLogin;        // 点击登录
-
