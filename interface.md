@@ -58,6 +58,24 @@
 }
 ```
 
+## Cookie登录
+
+```json
+{
+    "url": "/login/cookie",
+    "data": {
+        
+    },
+    "res": {
+        "success": "登录成功",
+        "userType": "用户类别：校内学生，校内老师，校外单人",
+        "realName": "真实姓名",
+        "idNumber": "学号/工号（如果是校内人士的话）",
+        "info":"登录失败信息（cookie失效）"
+    }
+}
+```
+
 ## 校外登录
 
 ```json
