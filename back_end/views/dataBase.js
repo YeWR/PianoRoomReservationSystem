@@ -284,38 +284,6 @@ let GetPianoRoomAll = async function(){
                 "info":errorMsg};
     }
 }
-
-let GetPianoRoomInfo = async function(pianoId) {
-    let errorMsg = "";
-    let pianoInfo = null;
-    let test = function(){
-        return new Promise(resolve =>{
-            db.where({ piano_id: pianoId }).get('piano', function (err, res, fields) {
-                let _select = res;
-                if(_select.length == 0){
-                    errorMsg = "琴房不存在";
-                    resolve(0);
-                }
-                else{
-                    let _data = JSON.stringify(_select);
-                    let _info = JSON.parse(_data);
-                    pianoInfo = _info[0];
-                    resolve(1);
-                }
-            });
-        });
-    };
-    let flag = await test();
-    console.log(flag);
-    if(flag == 0){
-        return {"data":pianoInfo,
-                "info":errorMsg};
-    }
-    if(flag == 1){
-        return {"data":pianoInfo,
-                "info":errorMsg};
-    }
-}
 // s = InsertItem('2018-11-13 08:00:00','wu',203,1,3,10,1,0)
 let getDateNum = function(itemDate){
     let item_date = new Date(itemDate);
@@ -335,6 +303,62 @@ let getDateNum = function(itemDate){
         else{
             return 2;
         }
+    }
+}
+
+let GetPianoRoomInfo = async function(pianoId, date) {
+    let num = getDateNum(date);
+    let errorMsg = "";
+    let pianoInfo = null;
+    let pianoInfoRes = null;
+    let pianoList = "";
+    let test = function(){
+        return new Promise(resolve =>{
+            db.where({ piano_id: pianoId }).get('piano', function (err, res, fields) {
+                let _select = res;
+                if(_select.length == 0){
+                    errorMsg = "琴房不存在";
+                    resolve(0);
+                }
+                else{
+                    let _data = JSON.stringify(_select);
+                    let _info = JSON.parse(_data);
+                    pianoInfo = _info[0];
+                    
+                    for(let i = num*84; i<(num+1)*84; i++){
+                        if(pianoInfo.piano_list.data[i] == 48){
+                            pianoList += '0';
+                        }
+                        if(pianoInfo.piano_list.data[i] == 49){
+                            pianoList += '1';
+                        }
+                    }
+                    pianoInfoRes = {
+                        "piano_list": pianoList,
+                        "piano_id": pianoInfo.piano_id,
+                        "piano_room": pianoInfo.piano_room,
+                        "piano_picurl": pianoInfo.piano_picurl,
+                        "piano_info": pianoInfo.piano_info,
+                        "piano_stuvalue": pianoInfo.piano_stuvalue,
+                        "piano_teavalue": pianoInfo.piano_teavalue,
+                        "piano_socvalue": pianoInfo.piano_socvalue,
+                        "piano_multivalue": pianoInfo.piano_multivalue,
+                        "piano_type": pianoInfo.piano_type
+                    }
+                    resolve(1);
+                }
+            });
+        });
+    };
+    let flag = await test();
+    console.log(flag);
+    if(flag == 0){
+        return {"data":pianoInfoRes,
+                "info":errorMsg};
+    }
+    if(flag == 1){
+        return {"data":pianoInfoRes,
+                "info":errorMsg};
     }
 }
 
