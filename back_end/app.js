@@ -19,7 +19,7 @@ app.use(session({
 //        ctx.response.body = {"success": false, "info": "请登录"};
 //return;
 //    }
-//    next();
+//    await next();
 //})
 
 app.use(bodyParser());

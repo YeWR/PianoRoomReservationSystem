@@ -10,7 +10,7 @@ const routers = router.get("/all", async (ctx, next) => {
     }
     else
     {
-        let pianolist = new Array();
+        let pianolist = [];
         for(p of result.data) {
             let info = {
                 "pianoId": p.piano_id,
@@ -20,10 +20,8 @@ const routers = router.get("/all", async (ctx, next) => {
             };
             pianolist.push(info);
         }
-        ctx.response.body = {"pianoList": pianolist };
+        ctx.response.body = {"pianoList": pianolist};
     }
-    console.log(result);
-
 }).get("/detail", async (ctx, next) => {
     let pianoId = ctx.request.body.pianoId;
     let result = await dataBase.GetPianoRoomInfo(pianoId);
@@ -44,7 +42,6 @@ const routers = router.get("/all", async (ctx, next) => {
             "pianoInfo": result.data.piano_info
         };
     }
-    console.log(result);
 }).post("/order", async (ctx, next) => {
     let phoneNumber = ctx.request.body.phoneNumber;
     let pianoId = ctx.request.body.pianoId;
@@ -52,12 +49,9 @@ const routers = router.get("/all", async (ctx, next) => {
     let pianoPrice = ctx.request.body.pianoPrice;
     let begTimeIndex = ctx.request.body.begTimeIndex;
     let endTimeIndex = ctx.request.body.endTimeIndex;
-    let date = new Date();
-    date.setSeconds(0,0);
-    let starthour = 8;
-    date.setHours(Math.floor(begTimeIndex/6)+starthour, begTimeIndex%6*10, 0,0);
+    let date = ctx.request.body.date;
     let duration = endTimeIndex - begTimeIndex;
-    let result = await dataBase.InsertItem(date,phoneNumber,pianoId,1,userType,pianoPrice,duration);
+    let result = await dataBase.InsertItem(date,phoneNumber,pianoId,1,userType,pianoPrice,duration,begTimeIndex);
     ctx.response.body = result;
 });
 
