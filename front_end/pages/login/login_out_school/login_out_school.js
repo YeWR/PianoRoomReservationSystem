@@ -116,14 +116,23 @@ Page({
                 },
                 method: "POST",
                 header: {
-                    "Content-Type": "application/x-www-form-urlencoded"
+                    "Content-Type": "application/x-www-form-urlencoded",
+                    "cookie": wx.getStorageSync("sessionid")
                 },
                 success: function (res) {
                     // if success
                     if (res.data.success) {
+
                         util.alertInfo("登录成功", "success", 1000);
+
                         app.globalData._username = res.data.realName;
                         app.globalData._userType = util.USERTYPE.SOCIAL;
+
+                        let cookie = res.header["Set-Cookie"];
+                        if(cookie !== null){
+                            wx.setStorageSync("sessionid", res.header["Set-Cookie"]);
+                        }
+
                         that.toBoard();
                     }
                     // if wrong

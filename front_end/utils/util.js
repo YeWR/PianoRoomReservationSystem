@@ -9,6 +9,8 @@ const ENDHOUR = 22;
 const ENDMINUTE = 0;
 // interval -> 10 => 8:00 8:10 8:20...
 const TIMEINTERVAL = 10;
+// 2h
+const MAXTIMEINTERVAL = 2 * 6;
 
 const formatNumber = (n) => {
     n = n.toString();
@@ -362,7 +364,7 @@ const getNearestEndTime = (begHour, begMinute, timeTable) => {
     let interval = 0;
     for (let i = begIndex; i < tableLen; ++i) {
         // is free
-        if (timeTable[i] === 0) {
+        if (timeTable[i] === 0 && interval < MAXTIMEINTERVAL) {
             interval++;
         }
         else{

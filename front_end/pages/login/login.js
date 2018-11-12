@@ -51,6 +51,42 @@ Page({
                 }
             })
         }
+
+        // if there is cookie
+        let cookie = wx.getStorageSync("sessionid");
+        if(cookie !== null){
+            wx.request({
+                url: "https://958107.iterator-traits.com/login/cookie",
+                data: {
+                },
+                method: "POST",
+                header: {
+                    "Content-Type": "application/x-www-form-urlencoded",
+                    "cookie": cookie
+                },
+                success: function (res) {
+                    // if success
+                    if (res.data.success) {
+
+                        util.alertInfo("欢迎回来", "success", 1000);
+
+                        app.globalData._username = res.data.realName;
+                        app.globalData._userType = res.data.userType;
+                        app.globalData._idNumber = res.data.idNumer;
+
+                        that.toBoard();
+                    }
+                    // if wrong
+                    else {
+                        util.alertInfo(res.data.info, "none", 1000);
+                    }
+                },
+                fail: function (res) {
+                    // fail
+                    util.alertInfo("自动登录失败，请检查您的网络设备是否连接正常", "none", 1000);
+                }
+            });
+        }
     },
     getUserInfo: function (e) {
         console.log(e);

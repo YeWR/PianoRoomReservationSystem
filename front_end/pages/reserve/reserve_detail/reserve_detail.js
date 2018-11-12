@@ -301,7 +301,7 @@ Page({
     setInfo: function (dict, that) {
         let timeTable = [];
         for (let i = 0; i < 84; ++i){
-            timeTable.push(i % 2);
+            timeTable.push(0);
         }
         that.setData({
             _timeTable: timeTable,//dict.timeTable,
