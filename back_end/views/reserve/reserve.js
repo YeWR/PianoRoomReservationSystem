@@ -20,7 +20,7 @@ const routers = router.get("/all", async (ctx, next) => {
             };
             pianolist.append(info);
         }
-        ctx.response.body = {"pianoList": pianolist};
+        ctx.response.body = {"pianoList": pianolist.toString() };
     }
     console.log(result);
 
@@ -45,6 +45,20 @@ const routers = router.get("/all", async (ctx, next) => {
         };
     }
     console.log(result);
+}).post("/order", async (ctx, next) => {
+    let phoneNumber = ctx.request.body.phoneNumber;
+    let pianoId = ctx.request.body.pianoId;
+    let userType = ctx.request.body.userType;
+    let pianoPrice = ctx.request.body.pianoPrice;
+    let begTimeIndex = ctx.request.body.begTimeIndex;
+    let endTimeIndex = ctx.request.body.endTimeIndex;
+    let date = new Date();
+    date.setSeconds(0,0);
+    let starthour = 8;
+    date.setHours(Math.floor(begTimeIndex/6)+starthour, begTimeIndex%6*10, 0,0);
+    let duration = (endTimeIndex - begTimeIndex) * 10;
+    let result = await dataBase.InsertItem(date,phoneNumber,pianoId,1,userType,pianoPrice,duration);
+    ctx.response.body = result;
 });
 
 module.exports = routers;
