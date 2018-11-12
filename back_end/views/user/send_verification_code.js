@@ -2,9 +2,12 @@ const Router = require("koa-router");
 const router = new Router();
 const dataBase = require("../dataBase")
 const SMSClient = require('@alicloud/sms-sdk')
+const fs = reauire("fs");
+const configPath = "../../configs.json";
+const configs = JSON.parse(fs.readFileSync(configPath))
 // ACCESS_KEY_ID/ACCESS_KEY_SECRET 根据实际申请的账号信息进行替换
-const accessKeyId = 'yourAccessKeyId'
-const secretAccessKey = 'yourAccessKeySecret'
+const accessKeyId = configs.accessKeyId;
+const secretAccessKey = configs.secretAccessKey;
 //初始化sms_client
 let smsClient = new SMSClient({accessKeyId, secretAccessKey})
 
@@ -12,8 +15,11 @@ const routers = router.post("/", async (ctx, next) => {
     console.log(ctx.request)
     let tele = ctx.request.body.phoneNumber;
     let code = Math.floor(Math.random()*8999)+1000;
-    let result = await dataBase.SetRegisterMsg(tele,code);
-    //let result = await dataBase.SetLoginMsg(tele,code);
+    let state = ctx.request.body.state;
+    if(state === 0)
+        let result = await dataBase.SetRegisterMsg(tele,code);
+    else
+        let result = await dataBase.SetLoginMsg(tele,code);
     if(!result.success)
     {
         ctx.response.body = result;
@@ -21,8 +27,8 @@ const routers = router.post("/", async (ctx, next) => {
     }
     let sendsms = await smsClient.sendSMS({
         PhoneNumbers: tele,
-    SignName: '云通信产品',
-    TemplateCode: 'SMS_1000000',
+    SignName: configs.SignName,
+    TemplateCode: configs.TemplateCode,
     TemplateParam: JSON.stringify({"code": code.toString()}),
     }).then(function (res) {
             let {Code}=res

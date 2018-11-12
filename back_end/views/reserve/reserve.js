@@ -57,7 +57,7 @@ const routers = router.get("/all", async (ctx, next) => {
     let starthour = 8;
     date.setHours(Math.floor(begTimeIndex/6)+starthour, begTimeIndex%6*10, 0,0);
     let duration = (endTimeIndex - begTimeIndex) * 10;
-    let result = await dataBase.InsertItem(date,phoneNumber,pianoId,userType,1,pianoPrice,duration);
+    let result = await dataBase.InsertItem(date,phoneNumber,pianoId,1,userType,pianoPrice,duration);
     ctx.response.body = result;
 });
 
