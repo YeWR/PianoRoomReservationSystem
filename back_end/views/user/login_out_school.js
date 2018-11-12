@@ -10,7 +10,7 @@ const routers = router.post("/", async (ctx, next) => {
     let result = await dataBase.SocietyLogin(tele,code);
     if(result.success === true)
     {
-        ctx.session.user = JSON.stringify({"user": tele})
+        //ctx.session.user = JSON.stringify({"user": tele})
     }
     ctx.response.body = result;
 });

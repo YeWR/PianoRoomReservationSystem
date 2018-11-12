@@ -8,7 +8,7 @@ const routers = router.post("/", async (ctx, next) => {
         validateCode = ctx.request.body.validateCode,
         realname = ctx.request.body.realName,
         idNumber = ctx.request.body.idNumber;
-    let result = await dataBase.SocietyRegister(1,idNumber,realname,phoneNumber);
+    let result = await dataBase.SocietyRegister(1,idNumber,realname,phoneNumber,validateCode);
     ctx.response.body = result;
     console.log(`signin with number: ${phoneNumber}`);
 })
