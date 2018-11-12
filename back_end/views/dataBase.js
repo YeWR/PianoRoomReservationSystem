@@ -311,7 +311,7 @@ let GetPianoRoomInfo = async function(pianoId, date) {
     let errorMsg = "";
     let pianoInfo = null;
     let pianoInfoRes = null;
-    let pianoList = "";
+    let pianoList = [];
     let test = function(){
         return new Promise(resolve =>{
             db.where({ piano_id: pianoId }).get('piano', function (err, res, fields) {
@@ -327,10 +327,10 @@ let GetPianoRoomInfo = async function(pianoId, date) {
                     
                     for(let i = num*84; i<(num+1)*84; i++){
                         if(pianoInfo.piano_list.data[i] == 48){
-                            pianoList += '0';
+                            pianoList.push(0);
                         }
                         if(pianoInfo.piano_list.data[i] == 49){
-                            pianoList += '1';
+                            pianoList.push(1);
                         }
                     }
                     pianoInfoRes = {
@@ -357,6 +357,7 @@ let GetPianoRoomInfo = async function(pianoId, date) {
                 "info":errorMsg};
     }
     if(flag == 1){
+        console.log(pianoInfoRes.piano_list);
         return {"data":pianoInfoRes,
                 "info":errorMsg};
     }
