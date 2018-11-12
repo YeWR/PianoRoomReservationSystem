@@ -13,6 +13,7 @@ Page({
         _pianoId: 0,
         _timeTable: [],
         _pianoPrices: [],
+        _pianoPlace: "",
         _pianoInfo: "",
 
         _begTimeArray: [],
@@ -25,10 +26,15 @@ Page({
         _endHour: 0,
         _endMinute: 0,
         _lastHour: util.ENDHOUR,
-        _lastMinute: util.ENDMINUTE
+        _lastMinute: util.ENDMINUTE,
+
+        _chooseSingle: true,
+        _userType: null,
     },
 
-    // should reset end time
+    /*
+     * should reset end time
+     */
     shouldResetEndTime: function () {
         let should = false;
         if ((this.data._endHour < this.data._begHour) ||
@@ -43,7 +49,9 @@ Page({
         return should;
     },
 
-    // set begin time
+    /*
+     * set begin time
+     */
     setBegTime: function (hours, minutes, selectedHour) {
         let date = new Date();
         let currentHours = date.getHours();
@@ -55,7 +63,9 @@ Page({
         util.setTimeTemplate(hours, minutes, currentHours, currentMinute, this.data._lastHour, this.data._lastMinute, selectedHour);
     },
 
-    // set end time
+    /*
+     * set end time
+     */
     setEndTime: function (hours, minutes, selectedHour) {
         let currentHours = this.data._begHour;
         let currentMinute = this.data._begMinute;
@@ -67,23 +77,42 @@ Page({
         util.setTimeTemplate(hours, minutes, currentHours, currentMinute, this.data._lastHour, this.data._lastMinute, selectedHour);
     },
 
-    // submit reservation
+    /*
+     * submit reservation
+     * to confirm
+     */
     submitReservation: function (e) {
-        // TODO: check if success
-        this.toAlarm(e);
+        this.toConfirm(e);
     },
 
-    // to alarm
-    toAlarm: function (e) {
-        wx.switchTab({
-            url: "../../alarm/alarm"
+    /*
+     * to confirm
+     */
+    toConfirm: function (e) {
+        let paras = {};
+
+        paras["realName"] = app.globalData._username;
+        paras["idNumber"] = app.globalData._idNumber;
+        paras["userType"] = this.data._userType;
+        paras["date"] = this.data._date;
+        paras["begTime"] = this.data._begHour + ":" + this.data._begMinute;
+        paras["endTime"] = this.data._endHour + ":" + this.data._endMinute;
+        paras["_begTimeIndex"] = util.getIndexInTimeTable(this.data._begHour, this.data._begMinute);
+        paras["_endTimeIndex"] = util.getIndexInTimeTable(this.data._endHour, this.data._endMinute);
+        paras["pianoPlace"] = this.data._pianoPlace;
+        // TODO: price should be determined by the settings of userType
+        // paras["pianoPrice"] = this.data._pianoPrices;
+        paras["pianoPrice"] = 10;
+
+        let url = util.setUrl("../reserve_confirm/reserve_confirm", paras);
+        wx.navigateTo({
+            url: url
         });
     },
 
     /*
      * bind begin time change
      * only when user change the value of begin time
-     * TODO: remember to restrict the time array if some rooms are busy.
      */
     bindBegTimeChange: function (e) {
         let begTimeArray = this.data._begTimeArray;
@@ -135,7 +164,6 @@ Page({
     /*
      * bind end time change
      * only when user change the value of end time
-     * TODO: remember to restrict the time array if some rooms are busy.
      */
     bindEndTimeChange: function (e) {
         let endTimeArray = this.data._endTimeArray;
@@ -161,6 +189,26 @@ Page({
                 _endMinute: endTimeArray[column][value]
             });
         }
+    },
+
+    /*
+     * bind choose single user
+     */
+    bindSingleUser: function(e){
+        this.setData({
+            _chooseSingle: true,
+            _userType: app.globalData._userType
+        });
+    },
+
+    /*
+     * bind choose multi users
+     */
+    bindMultiUsers: function(e){
+        this.setData({
+            _chooseSingle: false,
+            _userType: util.USERTYPE.MULTI
+        });
     },
 
     /* init time
@@ -217,7 +265,9 @@ Page({
         });
     },
 
-    // setInfo
+    /*
+     * setInfo
+     */
     setInfo: function (dict, that) {
         that.setData({
             _timeTable: dict.timeTable,
@@ -232,7 +282,9 @@ Page({
     onLoad: function (options) {
         this.setData({
             _date: options.date,
-            _pianoId: options.pianoId
+            _pianoId: options.pianoId,
+            _pianoPlace: options.pianoPlace,
+            _userType: app.globalData._userType
         });
         // init piano infos
         this.initInfo();

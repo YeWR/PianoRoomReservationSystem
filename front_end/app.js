@@ -45,5 +45,7 @@ App({
     globalData: {
         userInfo: null,
         _username: null,
+        _userType: null,
+        _idNumber: null,
     }
 });

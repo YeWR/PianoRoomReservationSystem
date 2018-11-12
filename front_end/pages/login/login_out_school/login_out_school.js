@@ -119,6 +119,8 @@ Page({
                     // if success
                     if (res.data.success) {
                         util.alertInfo("登录成功", "success", 500);
+                        app.globalData._username = res.data.realName;
+                        app.globalData._userType = util.USERTYPE.SOCIAL;
                         that.toBoard();
                     }
                     // if wrong
@@ -154,7 +156,6 @@ Page({
      * after login success
      */
     toBoard: function () {
-        app.globalData._username = this.data._username;
         wx.switchTab({
             url: "../../board/board"
         });

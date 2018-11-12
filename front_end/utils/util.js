@@ -438,7 +438,7 @@ const checkPhoneNumber = (string) => {
  */
 const checkRealName = (string) => {
     let ans = false;
-    if(string.length > 0){
+    if (string.length > 0) {
         ans = true;
     }
     return ans;
@@ -449,11 +449,32 @@ const checkRealName = (string) => {
  */
 const checkIdNumber = (string) => {
     let ans = false;
-    if(/^[0-9]{17}[0-9X]$/.test(string)){
+    if (/^[0-9]{17}[0-9X]$/.test(string)) {
         ans = true;
     }
     return ans;
 };
+
+/*
+ * user type
+ * enum type
+ */
+const USERTYPE = class {
+    constructor(type) {
+        this.type = type;
+    }
+
+    getType() {
+        return this.type;
+    }
+};
+
+USERTYPE.STUDENT = new USERTYPE(0);
+USERTYPE.TEACHER = new USERTYPE(1);
+USERTYPE.SOCIAL = new USERTYPE(2);
+USERTYPE.MULTI = new USERTYPE(3);
+
+Object.freeze(USERTYPE);
 
 module.exports = {
     alertInfo: alertInfo,
@@ -463,10 +484,12 @@ module.exports = {
     getNearestEndTime: getNearestEndTime,
     ENDHOUR: ENDHOUR,
     ENDMINUTE: ENDMINUTE,
+    getIndexInTimeTable: getIndexInTimeTable,
     setTimeTemplate: setTimeTemplate,
     md5: md5,
     getValidateCode: getValidateCode,
     checkPhoneNumber: checkPhoneNumber,
     checkRealName: checkRealName,
-    checkIdNumber: checkIdNumber
+    checkIdNumber: checkIdNumber,
+    USERTYPE: USERTYPE
 };

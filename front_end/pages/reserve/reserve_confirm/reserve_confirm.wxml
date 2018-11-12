@@ -1,0 +1,28 @@
+<!--pages/reserve/reserve_confirm/reserve_confirm.wxml-->
+
+<view class="container">
+    <view>
+        <text>预约信息</text>
+        <view>
+            <text>{{_realName}}
+                <text wx:if="{{_idNumber}}">
+                    ({{_idNumber}})
+                </text>
+            </text>
+            <text>{{_userType}}</text>
+        </view>
+        <view>
+            <text>{{_date}}</text>
+            <text>{{_begTime}} - {{_endTime}}</text>
+        </view>
+        <view>
+            <text>{{_pianoPlace}}</text>
+        </view>
+        <view>
+            <text>{{_pianoPrice}}</text>
+        </view>
+    </view>
+    <view>
+        <button bindtap="confirmReservation">确认预约</button>
+    </view>
+</view>

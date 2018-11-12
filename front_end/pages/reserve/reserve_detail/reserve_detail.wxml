@@ -26,8 +26,15 @@
         </picker>
     </view>
 
-    <view class="select_time_board">
-        成员<input class="input_text" placeholder="" bindinput="getUsername"/>
+    <view wx:if="{{_chooseSingle}}">
+        人数：
+        <button bindtap="bindSingleUser" style="background-color: #660874">单人</button>
+        <button bindtap="bindMultiUsers" style="background-color: #ffffff">多人</button>
+    </view>
+    <view wx:if="{{!_chooseSingle}}">
+        人数：
+        <button bindtap="bindSingleUser" style="background-color: #ffffff">单人</button>
+        <button bindtap="bindMultiUsers" style="background-color: #660874">多人</button>
     </view>
 
     <view class="reserve_btn_view">

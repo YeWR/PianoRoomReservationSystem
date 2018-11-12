@@ -211,7 +211,9 @@ Page({
     // to reserve a piano
     toReservePiano: function (e) {
         let paras = {};
-        paras["pianoId"] = e.currentTarget.dataset.id;
+        let id = e.currentTarget.dataset.id;
+        paras["pianoId"] = this.data._pianoList[id].pianoId;
+        paras["pianoPlace"] = this.data._pianoList[id].pianoPlace;
         paras["date"] = this.data._date;
 
         let url = util.setUrl("./reserve_detail/reserve_detail", paras);
