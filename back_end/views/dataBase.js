@@ -118,7 +118,6 @@ let SocietyRegister = async function(socType, socId, socRealname, socTele, socPa
     }
 }
 
-
 // to do check tele
 let SetLoginMsg = async function(socTele, socPassword) {
     let errorMsg = "";
@@ -318,23 +317,64 @@ let GetPianoRoomInfo = async function(pianoId) {
     }
 }
 
-let InsertItem = async function(itemTime, itemUsername, itemRoom, itemType, itemMember, itemValue, itemDuration){
-    // 琴房信息解析，查看是否可以预定。
+// 加上读写锁
+let preparePiano = async function(itemRoom, itemTime, itemDuration){
+    let test = function(){
+        return new Promise(resolve =>{
+            db.where({ piano_room: itemRoom }).get('piano', function (err, res, fields) {
+                let _select = res;
+                if(_select.length == 0){
+                    errorMsg = "琴房不存在";
+                    resolve(0);
+                }
+                else{
+                    let _data = JSON.stringify(_select);
+                    let _info = JSON.parse(_data);
+                    pianoInfo = _info[0];
+                    console.log(pianoInfo);
+                    // change data
+                    for(let i = itemTime; i<itemTime+itemDuration; i++){
+                        console.log(pianoInfo.piano_list.data[i]);
+                        if(pianoInfo.piano_list.data[i] == '1'){
+                            console.log()
+                            resolve(0);
+                        }
+                    }
+                    resolve(1);
+                }
+            });
+        });
+    };
+    let flag = await test();
+    console.log(flag);
+    if(flag == 0){
+        return {"success":false,
+                "info":errorMsg};
+    }
+    if(flag == 1){
+        return {"success":true};
+    }
+}
+// s = InsertItem("2018-10-01","wu",202,1,3,40,10,0)
+// time is the begin index, duration is the length
+let InsertItem = async function(itemDate, itemUsername, itemRoom, itemType, itemMember, itemValue, itemDuration, itemBegin){
     // 修改可预约时间段。
     let errorMsg = "";
     let test = function(){
         return new Promise(resolve =>{
             try{
                 let _info = {
-                    item_time: itemTime,
+                    item_date: itemDate,
                     item_username: itemUsername,
                     item_room: itemRoom,
                     item_type: itemType,
                     item_member: itemMember,
                     item_value: itemValue,
                     item_duration: itemDuration,
+                    item_begin: itemBegin
                 }
                 db.insert('item', _info, function (err, info) {
+                    console.log(err);
                     if(err == null){
                         resolve(1);
                     }
@@ -389,10 +429,12 @@ let GetItem = async function(itemUsername){
     }
 }
 
-exports.GetItem = GetItem;                  // 获取某个人的订单信息
-exports.UpdateItem = UpdateItem;            // 更新订单
+// 订单
 exports.InsertItem = InsertItem;            // 新增订单
+exports.UpdateItem = UpdateItem;            // 更新订单
+exports.GetItem = GetItem;                  // 获取某个人的订单信息
 
+// 琴房
 exports.GetPianoRoomInfo = GetPianoRoomInfo;// 获取单个琴房信息
 exports.GetPianoRoomAll = GetPianoRoomAll;  // 获取所有琴房信息
 exports.InsertPiano = InsertPiano;          // 新增琴房
