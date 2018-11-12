@@ -10,7 +10,7 @@ const routers = router.get("/all", async (ctx, next) => {
     }
     else
     {
-        let pianolist = [];
+        let pianolist = new Array();
         for(let p in result.data) {
             let info = {
                 "pianoId": p.piano_id,
@@ -18,7 +18,7 @@ const routers = router.get("/all", async (ctx, next) => {
                 "timeTable": p.piano_list,
                 "pianoPlace": p.piano_room
             };
-            pianolist.append(info);
+            pianolist.push(info);
         }
         ctx.response.body = {"pianoList": pianolist.toString() };
     }
