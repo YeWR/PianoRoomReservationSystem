@@ -56,18 +56,75 @@ let SocietyRegister = async function(socType, socId, socRealname, socTele) {
     }
 }
 
-let SetLoginMsg = function(socTele, socPassword) {
+// to do check tele
+let SetRegisterMsg = async function(socTele, socPassword) {
     let errorMsg = "";
-    try{
-        client.set(socTele, socPassword);
-        client.expire(socTele, 60);
-        return {"success":true,
-        "info":errorMsg};
-    }
-    catch(err){
-        errorMsg = "发送失败";
+    let test = function(){
+        return new Promise(resolve =>{
+            db.where({ soc_tele: socTele }).get('society_user', function (err, res, fields) {
+                let _select = res;
+                if (_select.length != 0) {
+                    errorMsg = "手机号已经被使用"; // to do 
+                    resolve(0);
+                }
+                else {
+                    try{
+                        client.set(socTele, socPassword);
+                        client.expire(socTele, 60);
+                        resolve(1);
+                    }
+                    catch(err){
+                        errorMsg = "发送失败";
+                        resolve(0);
+                    }
+                }
+            });
+        });
+    };
+    let flag = await test();
+    console.log(flag);
+    if(flag == 0){
         return {"success":false,
-        "info":errorMsg};
+                "info":errorMsg};
+    }
+    if(flag == 1){
+        return {"success":true};
+    }
+}
+
+// to do check tele
+let SetLoginMsg = async function(socTele, socPassword) {
+    let errorMsg = "";
+    let test = function(){
+        return new Promise(resolve =>{
+            db.where({ soc_tele: socTele }).get('society_user', function (err, res, fields) {
+                let _select = res;
+                if (_select.length == 0) {
+                    errorMsg = "手机号未注册"; // to do 
+                    resolve(0);
+                }
+                else {
+                    try{
+                        client.set(socTele, socPassword);
+                        client.expire(socTele, 60);
+                        resolve(1);
+                    }
+                    catch(err){
+                        errorMsg = "发送失败";
+                        resolve(0);
+                    }
+                }
+            });
+        });
+    };
+    let flag = await test();
+    console.log(flag);
+    if(flag == 0){
+        return {"success":false,
+                "info":errorMsg};
+    }
+    if(flag == 1){
+        return {"success":true};
     }
 }
 
@@ -289,3 +346,4 @@ exports.InsertPiano = InsertPiano;
 exports.SocietyRegister = SocietyRegister;
 exports.SocietyLogin = SocietyLogin;
 exports.SetLoginMsg = SetLoginMsg;
+exports.SetRegisterMsg = SetRegisterMsg;
