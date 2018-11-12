@@ -2,7 +2,7 @@ const Router = require("koa-router");
 const router = new Router();
 const dataBase = require("../dataBase")
 const SMSClient = require('@alicloud/sms-sdk')
-const fs = reauire("fs");
+const fs = require("fs");
 const configPath = "configs.json";
 const configs = JSON.parse(fs.readFileSync(configPath))
 // ACCESS_KEY_ID/ACCESS_KEY_SECRET 根据实际申请的账号信息进行替换
