@@ -32,13 +32,13 @@ const routers = router.post("/", async (ctx, next) => {
     TemplateCode: configs.TemplateCode,
     TemplateParam: JSON.stringify({"code": code.toString()}),
     }).then(function (res) {
-            let {Code}=res
+            let {Code}=res;
             if (Code === 'OK') {
                 console.log(Code);
                 return {"success": true};
             }
         }, function (err) {
-            let {Code}=res
+            let {Code}= err;
             console.log(Code);
             return {"success": false, "info": Code};
         })

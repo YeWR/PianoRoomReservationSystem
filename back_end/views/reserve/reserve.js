@@ -22,9 +22,14 @@ const routers = router.get("/all", async (ctx, next) => {
         }
         ctx.response.body = {"pianoList": pianolist};
     }
+    console.log(ctx.response.body);
 }).get("/detail", async (ctx, next) => {
     let pianoId = ctx.request.body.pianoId;
-    let result = await dataBase.GetPianoRoomInfo(pianoId);
+    let dateStr = ctx.request.body.date;
+    let date = new Date(dateStr.replace(/-/g, "/"));
+    date.setHours(8,0,0,0);
+    date = date.Format("yyyy-MM-dd hh:mm:ss");
+    let result = await dataBase.GetPianoRoomInfo(pianoId, date);
     if(result.data === null)
     {
         ctx.response.body = {"tableTime": null, "pianoPrices": null, "pianoInfo": null, "errorMsg":result.info};
@@ -42,6 +47,7 @@ const routers = router.get("/all", async (ctx, next) => {
             "pianoInfo": result.data.piano_info
         };
     }
+    console.log(ctx.response.body);
 }).post("/order", async (ctx, next) => {
     let phoneNumber = ctx.request.body.phoneNumber;
     let pianoId = ctx.request.body.pianoId;
@@ -52,9 +58,11 @@ const routers = router.get("/all", async (ctx, next) => {
     let dateStr = ctx.request.body.date;
     let date = new Date(dateStr.replace(/-/g, "/"));
     date.setHours(8,0,0,0);
+    date = date.Format("yyyy-MM-dd hh:mm:ss");
     let duration = endTimeIndex - begTimeIndex;
     let result = await dataBase.InsertItem(date,phoneNumber,pianoId,1,userType,pianoPrice,duration,begTimeIndex);
     ctx.response.body = result;
+    console.log(ctx.response.body);
 });
 
 module.exports = routers;
