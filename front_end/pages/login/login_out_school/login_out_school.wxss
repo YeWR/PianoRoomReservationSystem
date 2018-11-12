@@ -28,15 +28,11 @@ page{
 }
 
 .input_view{
-    width: 50%;
+    margin-top:8%;
+    margin-left: 18%;
+    width: 70%;
     height: 10%;
-    left:20%;
-    text-align: left;
-    flex-direction:row;
     display: flex;
-    /*justify-content: space-between;*/
-
-
 }
 .input_icon{
     width: 50rpx;
@@ -45,8 +41,8 @@ page{
 }
 
 .input_text{
-    width: 220px;
-    height: 30px;
+    text-align: left;
+    margin-left: 6%;
     color: rgba(136, 136, 136, 1);
     font-size: 14px;
     font-family: Arial;
@@ -55,7 +51,8 @@ page{
 }
 
 .login_btn_view {
-    height: 20%;
+    margin-top: 13%;
+    height: 7%;
 }
 
 .login_btn {

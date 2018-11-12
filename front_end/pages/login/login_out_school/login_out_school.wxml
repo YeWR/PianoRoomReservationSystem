@@ -12,17 +12,17 @@
 
     <view class="login_form_los">
 
-        <!--账号-->
+        <!--手机号-->
         <view class="input_view">
             <image class="input_icon" mode="aspectFit" src="../../../images/icon/calendar.png"></image>
-            <input class="input_text" placeholder="请输入账号" bindinput="getUsername" />
+            <input class="input_text" placeholder="手机号" bindinput="getUsername" />
         </view>
 
-        <!--密码-->
+        <!--验证码-->
         <view class="input_view">
             <image class="input_icon" mode="aspectFit" src="../../../images/icon/calendar.png"></image>
 
-            <input class="input_text" password="true" placeholder="请输入密码" bindinput="getPassword" />
+            <input class="input_text" password="true" placeholder="验证码" bindinput="getPassword" />
 
         </view>
 
