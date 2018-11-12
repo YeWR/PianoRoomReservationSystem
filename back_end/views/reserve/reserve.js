@@ -49,7 +49,9 @@ const routers = router.get("/all", async (ctx, next) => {
     let pianoPrice = ctx.request.body.pianoPrice;
     let begTimeIndex = ctx.request.body.begTimeIndex;
     let endTimeIndex = ctx.request.body.endTimeIndex;
-    let date = ctx.request.body.date;
+    let dateStr = ctx.request.body.date;
+    let date = new Date(dateStr.replace(/-/g, "/"));
+    date.setHours(8,0,0,0);
     let duration = endTimeIndex - begTimeIndex;
     let result = await dataBase.InsertItem(date,phoneNumber,pianoId,1,userType,pianoPrice,duration,begTimeIndex);
     ctx.response.body = result;
