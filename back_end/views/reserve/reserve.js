@@ -2,7 +2,7 @@ const Router = require("koa-router");
 const router = new Router();
 const dataBase = require("../dataBase")
 
-const routers = router.get("/all", async (ctx, next) => {
+const routers = router.post("/all", async (ctx, next) => {
     console.log(ctx.request.body);
     let result = await dataBase.GetPianoRoomAll();
     if(result.data === null)
@@ -24,14 +24,12 @@ const routers = router.get("/all", async (ctx, next) => {
         ctx.response.body = {"pianoList": pianolist};
     }
     console.log(ctx.response.body);
-}).get("/detail", async (ctx, next) => {
+}).post("/detail", async (ctx, next) => {
     console.log(ctx.request.body);
     let pianoId = ctx.request.body.pianoId;
     let dateStr = ctx.request.body.date;
-    let date = new Date(dateStr.replace(/-/g, "/"));
-    date.setHours(8,0,0,0);
-    date = date.Format("yyyy-MM-dd hh:mm:ss");
-    let result = await dataBase.GetPianoRoomInfo(pianoId, date);
+    dateStr.concat(" 08:00:00");
+    let result = await dataBase.GetPianoRoomInfo(pianoId, dateStr);
     if(result.data === null)
     {
         ctx.response.body = {"tableTime": null, "pianoPrices": null, "pianoInfo": null, "errorMsg":result.info};
@@ -59,11 +57,9 @@ const routers = router.get("/all", async (ctx, next) => {
     let begTimeIndex = ctx.request.body.begTimeIndex;
     let endTimeIndex = ctx.request.body.endTimeIndex;
     let dateStr = ctx.request.body.date;
-    let date = new Date(dateStr.replace(/-/g, "/"));
-    date.setHours(8,0,0,0);
-    date = date.Format("yyyy-MM-dd hh:mm:ss");
+    dateStr.concat(" 08:00:00");
     let duration = endTimeIndex - begTimeIndex;
-    let result = await dataBase.InsertItem(date,phoneNumber,pianoId,1,userType,pianoPrice,duration,begTimeIndex);
+    let result = await dataBase.InsertItem(dateStr,phoneNumber,pianoId,1,userType,pianoPrice,duration,begTimeIndex);
     ctx.response.body = result;
     console.log(ctx.response.body);
 });
