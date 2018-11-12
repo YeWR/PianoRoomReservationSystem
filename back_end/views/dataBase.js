@@ -15,8 +15,69 @@ let db = new Db.Adapter({
 let redis = require("redis");
 let client = redis.createClient(config.redisPort,config.serverIp)
 
-let SocietyRegister = async function(socType, socId, socRealname, socTele) {
+// to do check tele
+let SetRegisterMsg = async function(socTele, socPassword) {
     let errorMsg = "";
+    let test = function(){
+        return new Promise(resolve =>{
+            db.where({ soc_tele: socTele }).get('society_user', function (err, res, fields) {
+                let _select = res;
+                if (_select.length != 0) {
+                    errorMsg = "手机号已经被使用"; // to do 
+                    resolve(0);
+                }
+                else {
+                    try{
+                        client.set(socTele, socPassword);
+                        client.expire(socTele, 60);
+                        resolve(1);
+                    }
+                    catch(err){
+                        errorMsg = "发送失败";
+                        resolve(0);
+                    }
+                }
+            });
+        });
+    };
+    let flag = await test();
+    console.log(flag);
+    if(flag == 0){
+        return {"success":false,
+                "info":errorMsg};
+    }
+    if(flag == 1){
+        return {"success":true};
+    }
+}
+
+let SocietyRegister = async function(socType, socId, socRealname, socTele, socPassword) {
+    let errorMsg = "";
+    let checkMsg = function(){
+        return new Promise(resolve =>{
+            client.get(socTele, function(err, reply){
+                if(reply){
+                    if(socPassword == (reply.toString())){
+                        resolve(1);
+                    }
+                    else{
+                        errorMsg = "验证码错误";
+                        resolve(0);
+                    }
+                }
+                else{
+                    errorMsg = "请先发送验证码";
+                    resolve(0);
+                }
+            });
+        });
+    };
+    let res = await checkMsg();
+    console.log(res);
+    if(res == 0){
+        return {"success":false,
+                "info":errorMsg};
+    }
     let test = function(){
         return new Promise(resolve =>{
             db.where({ soc_tele: socTele }).get('society_user', function (err, res, fields) {
@@ -56,41 +117,6 @@ let SocietyRegister = async function(socType, socId, socRealname, socTele) {
     }
 }
 
-// to do check tele
-let SetRegisterMsg = async function(socTele, socPassword) {
-    let errorMsg = "";
-    let test = function(){
-        return new Promise(resolve =>{
-            db.where({ soc_tele: socTele }).get('society_user', function (err, res, fields) {
-                let _select = res;
-                if (_select.length != 0) {
-                    errorMsg = "手机号已经被使用"; // to do 
-                    resolve(0);
-                }
-                else {
-                    try{
-                        client.set(socTele, socPassword);
-                        client.expire(socTele, 60);
-                        resolve(1);
-                    }
-                    catch(err){
-                        errorMsg = "发送失败";
-                        resolve(0);
-                    }
-                }
-            });
-        });
-    };
-    let flag = await test();
-    console.log(flag);
-    if(flag == 0){
-        return {"success":false,
-                "info":errorMsg};
-    }
-    if(flag == 1){
-        return {"success":true};
-    }
-}
 
 // to do check tele
 let SetLoginMsg = async function(socTele, socPassword) {
@@ -131,6 +157,30 @@ let SetLoginMsg = async function(socTele, socPassword) {
 // to do check if already online
 let SocietyLogin = async function(socTele, socPassword) {
     let errorMsg = "";
+    let getUser = function(){
+        return new Promise(resolve =>{
+            db.where({ soc_tele: socTele }).get('society_user', function (err, res, fields) {
+                let _select = res;
+                if (_select.length == 0) {
+                    errorMsg = "手机号未注册"; // to do 
+                    resolve(0);
+                }
+                else {
+                    let _data = JSON.stringify(_select);
+                    let _info = JSON.parse(_data);
+                    user = _info[0];
+                    console.log(user);
+                    resolve(user.soc_realname);
+                }
+            });
+        });
+    };
+    let realName = await getUser();
+    if(realName == 0){
+        return {"success":false,
+                "data": realName,
+                "info":errorMsg};
+    }
     let test = function(){
         return new Promise(resolve =>{
             client.get(socTele, function(err, reply){
@@ -154,10 +204,12 @@ let SocietyLogin = async function(socTele, socPassword) {
     console.log(flag);
     if(flag == 0){
         return {"success":false,
+                "data":realName,
                 "info":errorMsg};
     }
     if(flag == 1){
-        return {"success":true};
+        return {"success":true,
+                "data":realName};
     }
 }
 
@@ -335,15 +387,19 @@ let GetItem = async function(itemUsername){
     }
 }
 
-exports.GetItem = GetItem;
-exports.UpdateItem = UpdateItem;
-exports.InsertItem = InsertItem;
+exports.GetItem = GetItem;                  // 获取某个人的订单信息
+exports.UpdateItem = UpdateItem;            // 更新订单
+exports.InsertItem = InsertItem;            // 新增订单
 
-exports.GetPianoRoomInfo = GetPianoRoomInfo;
-exports.GetPianoRoomAll = GetPianoRoomAll;
-exports.InsertPiano = InsertPiano;
+exports.GetPianoRoomInfo = GetPianoRoomInfo;// 获取单个琴房信息
+exports.GetPianoRoomAll = GetPianoRoomAll;  // 获取所有琴房信息
+exports.InsertPiano = InsertPiano;          // 新增琴房
 
-exports.SocietyRegister = SocietyRegister;
-exports.SocietyLogin = SocietyLogin;
-exports.SetLoginMsg = SetLoginMsg;
-exports.SetRegisterMsg = SetRegisterMsg;
+// 注册
+exports.SetRegisterMsg = SetRegisterMsg;    // 点击发送
+exports.SocietyRegister = SocietyRegister;  // 点击注册
+
+// 登录
+exports.SetLoginMsg = SetLoginMsg;          // 点击发送
+exports.SocietyLogin = SocietyLogin;        // 点击登录
+
