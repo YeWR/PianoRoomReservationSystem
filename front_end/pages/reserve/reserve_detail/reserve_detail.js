@@ -30,7 +30,7 @@ Page({
         _lastMinute: util.ENDMINUTE,
 
         _chooseSingle: true,
-        _userType: null,
+        _reserveType: null,
     },
 
     /*
@@ -107,16 +107,18 @@ Page({
     toConfirm: function (e) {
         let paras = {};
 
-        paras["realName"] = app.globalData._username;
-        paras["idNumber"] = app.globalData._idNumber;
-        paras["userType"] = this.data._userType;
+        paras["reserveType"] = this.data._reserveType;
         paras["date"] = this.data._date;
-        paras["begTime"] = this.data._begHour + ":" + this.data._begMinute;
-        paras["endTime"] = this.data._endHour + ":" + this.data._endMinute;
+
+        paras["begTime"] = util.getTimeDiscription(this.data._begHour, this.data._begMinute);
+        paras["endTime"] = util.getTimeDiscription(this.data._endHour, this.data._endMinute);
+
         paras["begTimeIndex"] = util.getIndexInTimeTable(this.data._begHour, this.data._begMinute);
         paras["endTimeIndex"] = util.getIndexInTimeTable(this.data._endHour, this.data._endMinute);
+
         paras["pianoPlace"] = this.data._pianoPlace;
-        // TODO: price should be determined by the settings of userType
+        paras["pianoId"] = this.data._pianoId;
+        // TODO: price should be determined by the settings of reserveType
         // paras["pianoPrice"] = this.data._pianoPrices;
         paras["pianoPrice"] = 10;
 
@@ -213,7 +215,7 @@ Page({
     bindSingleUser: function(e){
         this.setData({
             _chooseSingle: true,
-            _userType: app.globalData._userType
+            _reserveType: app.globalData._userType
         });
     },
 
@@ -223,7 +225,7 @@ Page({
     bindMultiUsers: function(e){
         this.setData({
             _chooseSingle: false,
-            _userType: util.USERTYPE.MULTI
+            _reserveType: util.USERTYPE.MULTI
         });
     },
 
@@ -275,38 +277,40 @@ Page({
      */
     initInfo: function () {
         let that = this;
-        // wx.request({
-        //     url: "https://958107.iterator-traits.com/reserve/detail",
-        //     data: {
-        //         pianoId: that._pianoId,
-        //         date: that._date
-        //     },
-        //     method: "POST",
-        //     header: {
-        //         "Content-Type": "application/x-www-form-urlencoded"
-        //     },
-        //     success: function (res) {
-        //         that.setInfo(res, that);
-        //     },
-        //     fail: function (res) {
-        //         util.alertInfo("获取琴房信息失败，请检查网络设备是否正常。", "none", 1000);
-        //     }
-        // });
-        that.setInfo(null, that);
+
+        wx.request({
+            url: "https://958107.iterator-traits.com/reserve/detail",
+            data: {
+                pianoId: that.data._pianoId,
+                date: that.data._date
+            },
+            method: "POST",
+            header: {
+                "Content-Type": "application/x-www-form-urlencoded"
+            },
+            success: function (res) {
+                that.setInfo(res.data, that);
+
+                // init time array
+                that.initTime();
+
+            },
+            fail: function (res) {
+                util.alertInfo("获取琴房信息失败，请检查网络设备是否正常。", "none", 1000);
+                console.log("get failed!!!!!!!!!!!!!!!");
+            }
+        });
+
     },
 
     /*
      * setInfo
      */
     setInfo: function (dict, that) {
-        let timeTable = [];
-        for (let i = 0; i < 84; ++i){
-            timeTable.push(0);
-        }
         that.setData({
-            _timeTable: timeTable,//dict.timeTable,
-            _pianoPrices: 1,//dict.pianoPrices,
-            _pianoInfo: "gg"//dict.pianoInfo
+            _timeTable: dict.timeTable,
+            _pianoPrices: dict.pianoPrices,
+            _pianoInfo: dict.pianoInfo
         });
     },
 
@@ -319,12 +323,10 @@ Page({
             _date: options.date,
             _pianoId: options.pianoId,
             _pianoPlace: options.pianoPlace,
-            _userType: app.globalData._userType
+            _reserveType: app.globalData._userType
         });
         // init piano infos
         this.initInfo();
-        // init time array
-        this.initTime();
     },
 
     /**

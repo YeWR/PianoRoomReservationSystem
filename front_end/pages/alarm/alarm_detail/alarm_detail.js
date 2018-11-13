@@ -1,35 +1,25 @@
-// pages/board/board.js
-
-let app = getApp();
-let util = app.util;
-
+// pages/alarm/alarm_detail/alarm_detail.js
 Page({
 
     /**
      * 页面的初始数据
      */
-    data: {
-    },
+    data: {},
+
+
 
     /**
      * 生命周期函数--监听页面加载
      */
     onLoad: function (options) {
-        // 模拟登录
-        let login = () => {
-            app.globalData._phoneNumber = options.phoneNumber;
-            app.globalData._username = options.realName;
-            app.globalData._userType = options.userType;
-            app.globalData._idNumber = options.idNumber;
-        };
 
-        login();
     },
 
     /**
      * 生命周期函数--监听页面初次渲染完成
      */
     onReady: function () {
+
     },
 
     /**
@@ -73,4 +63,4 @@ Page({
     onShareAppMessage: function () {
 
     }
-});
+})

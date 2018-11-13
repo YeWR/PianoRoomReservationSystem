@@ -42,37 +42,49 @@ const formatDate = (date) => {
  * return 1 if date1 > date2
  * return 0 if date1 == date2
  * return -1 if date1 < date2
- * date format: xxxx-xx-xx
+ * date is Date()
  */
 const dateCompare = (date1, date2) => {
     let d1 = formatDate(date1).split("-");
     let d2 = formatDate(date2).split("-");
     let ans = 0;
 
-    if(d1[0] > d2[0]){
+    if (d1[0] > d2[0]) {
         ans = 1;
     }
-    else if(d1[0] < d2[0]){
+    else if (d1[0] < d2[0]) {
         ans = -1;
     }
-    else{
-        if(d1[1] > d2[1]){
+    else {
+        if (d1[1] > d2[1]) {
             ans = 1;
         }
-        else if(d1[1] < d2[1]){
+        else if (d1[1] < d2[1]) {
             ans = -1;
         }
-        else{
-            if(d1[2] > d2[2]){
+        else {
+            if (d1[2] > d2[2]) {
                 ans = 1;
             }
-            else if(d1[2] < d2[2]){
+            else if (d1[2] < d2[2]) {
                 ans = -1;
             }
         }
     }
 
     return ans;
+};
+
+/*
+ * date sub
+ * date1: new Date()
+ * date2: new Date()
+ * return the date1 - date2
+ */
+const dateSub = (date1, date2) => {
+    let days = date1.getTime() - date2.getTime();
+    let day = parseInt(days / (1000 * 60 * 60 * 24));
+    return day;
 };
 
 // alert an info
@@ -327,6 +339,23 @@ const getIndexInTimeTable = (hour, minute) => {
 };
 
 /*
+ * get the discription of time
+ * hour: 9, minute : 0 -> 09:00
+ */
+const getTimeDiscription = (hour, minute) => {
+    let dis = "";
+    if (hour < 10) {
+        dis += "0";
+    }
+    dis = dis + hour + ":";
+    if (minute < 10) {
+        dis += "0";
+    }
+    dis += minute;
+    return dis;
+};
+
+/*
  * get the len of time table
  */
 const getTimeTableLen = () => {
@@ -367,7 +396,7 @@ const getNearestEndTime = (begHour, begMinute, timeTable) => {
         if (timeTable[i] === 0 && interval < MAXTIMEINTERVAL) {
             interval++;
         }
-        else{
+        else {
             break;
         }
     }
@@ -498,7 +527,7 @@ const checkIdNumber = (string) => {
     if (/^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{4}$/.test(string)) {
         ans = true;
     }
-    else if(/^1[45][0-9]{7}|G[0-9]{8}|P[0-9]{7}|S[0-9]{7,8}|D[0-9]+$/.test(string)){
+    else if (/^1[45][0-9]{7}|G[0-9]{8}|P[0-9]{7}|S[0-9]{7,8}|D[0-9]+$/.test(string)) {
         ans = true;
     }
     return ans;
@@ -508,30 +537,76 @@ const checkIdNumber = (string) => {
  * user type
  * enum type
  */
-const USERTYPE = class {
-    constructor(type) {
-        this.type = type;
-    }
+const USERTYPE = {};
+USERTYPE.STUDENT = 0;
+USERTYPE.TEACHER = 1;
+USERTYPE.SOCIAL = 2;
+USERTYPE.MULTI = 3;
 
-    getType() {
-        return this.type;
+const setUserTypeDiscription = (userType) => {
+    let dis = "信息获取错误";
+    switch (userType) {
+        case USERTYPE.STUDENT:
+            dis = "单人（学生）";
+            break;
+        case USERTYPE.TEACHER:
+            dis = "单人（教职工）";
+            break;
+        case USERTYPE.SOCIAL:
+            dis = "单人（校外人士）";
+            break;
+        case USERTYPE.MULTI:
+            dis = "多人";
+            break
     }
+    return dis;
 };
 
-USERTYPE.STUDENT = new USERTYPE(0);
-USERTYPE.TEACHER = new USERTYPE(1);
-USERTYPE.SOCIAL = new USERTYPE(2);
-USERTYPE.MULTI = new USERTYPE(3);
+/*
+ * reservation state
+ */
+const RESERVATIONSTATE = {};
+RESERVATIONSTATE.NOTUSED = 1;
+RESERVATIONSTATE.USED = 2;
+RESERVATIONSTATE.LONGNOTPAYED = -1;
+RESERVATIONSTATE.LONGPAYED = -2;
+RESERVATIONSTATE.LONGUSED = -3;
+
+const setRsvStateDiscription = (reservationState) => {
+    let dis = "信息获取错误";
+    switch (reservationState) {
+        case RESERVATIONSTATE.NOTUSED:
+            dis = "未使用";
+            break;
+        case RESERVATIONSTATE.USED:
+            dis = "已使用";
+            break;
+        case RESERVATIONSTATE.LONGNOTPAYED:
+            dis = "长期未缴费";
+            break;
+        case RESERVATIONSTATE.LONGPAYED:
+            dis = "长期已缴费";
+            break;
+        case RESERVATIONSTATE.LONGUSED:
+            dis = "长期已使用";
+            break;
+    }
+    return dis;
+};
 
 Object.freeze(USERTYPE);
+Object.freeze(RESERVATIONSTATE);
 
 module.exports = {
     alertInfo: alertInfo,
     formatTime: formatTime,
     formatDate: formatDate,
     dateCompare: dateCompare,
+    dateSub: dateSub,
     setUrl: setUrl,
+    getTimeTableLen: getTimeTableLen,
     getNearestEndTime: getNearestEndTime,
+    getEndTime:getEndTime,
     BEGINHOUR: BEGINHOUR,
     BEGINMINUTE: BEGINMINUTE,
     ENDHOUR: ENDHOUR,
@@ -544,5 +619,9 @@ module.exports = {
     checkPhoneNumber: checkPhoneNumber,
     checkRealName: checkRealName,
     checkIdNumber: checkIdNumber,
-    USERTYPE: USERTYPE
+    USERTYPE: USERTYPE,
+    setUserTypeDiscription: setUserTypeDiscription,
+    RESERVATIONSTATE: RESERVATIONSTATE,
+    setRsvStateDiscription: setRsvStateDiscription,
+    getTimeDiscription: getTimeDiscription,
 };

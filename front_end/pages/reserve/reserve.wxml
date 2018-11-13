@@ -15,21 +15,29 @@
             <!--<image class="icon_time" mode="aspectFit" src="../../../images/icon/clock.png"></image>-->
             <picker mode="multiSelector" value="{{_begTimeIndex}}" range="{{_begTimeArray}}"
                     bindcolumnchange="bindBegTimeChange">
-                {{_begHour}}:<text wx:if="{{_begMinute == 0}}">00</text><text wx:else>{{_begMinute}}</text>
+                <text wx:if="{{_begHour < 10}}">0{{_begHour}}</text>
+                <text wx:else>{{_begHour}}</text>
+                :
+                <text wx:if="{{_begMinute < 10}}">0{{_begMinute}}</text>
+                <text wx:else>{{_begMinute}}</text>
             </picker>
             --
             <picker mode="multiSelector" value="{{_endTimeIndex}}" range="{{_endTimeArray}}"
                     bindcolumnchange="bindEndTimeChange" >
-                {{_endHour}}:<text wx:if="{{_endMinute == 0}}">00</text><text wx:else>{{_endMinute}}</text>
+                <text wx:if="{{_endHour < 10}}">0{{_endHour}}</text>
+                <text wx:else>{{_endHour}}</text>
+                :
+                <text wx:if="{{_endMinute < 10}}">0{{_endMinute}}</text>
+                <text wx:else>{{_endMinute}}</text>
             </picker>
         </view>
 
     </view>
 
-    <view class='preview' wx:for="{{_pianoList}}" wx:for-index="id" wx:for-item="piano">
+    <view class='preview' wx:for="{{_pianoAvailable}}" wx:for-index="id" wx:for-item="piano">
         <view class='card'>
             <view class='title-container'>
-                <text class='title'>{{piano.pianoId}}</text>
+                <text class='title'>{{piano.pianoType}}{{piano.pianoPlace}}</text>
                 <view class='detail' data-id="{{piano.pianoId}}" bindtap='toReservePiano'>
                     <text>预约</text>
                 </view>

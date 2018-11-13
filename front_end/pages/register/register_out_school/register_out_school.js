@@ -159,6 +159,7 @@ Page({
                         util.alertInfo("注册成功", "success", 1000);
                         app.globalData._username = that.data._realName;
                         app.globalData._userType = util.USERTYPE.SOCIAL;
+                        app.globalData._phoneNumber = that.data._phoneNumber;
                         that.toBoard();
                     }
                     // if wrong

@@ -1,20 +1,26 @@
 // pages/reserve/reserve_confirm/reserve_confirm.js
+
+let app = getApp();
+let util = app.util;
+
 Page({
 
     /**
      * 页面的初始数据
      */
     data: {
-        _realName: "",
-        _idNumber: "",
-        _userType: "",
+        _realName: app.globalData._username,
+        _idNumber: app.globalData._idNumber,
+        _reserveType: "",
+        _reserveTypeDiscription: "",
         _date: "",
         _begTime: "",
         _endTime: "",
         _begTimeIndex: -1,
         _endTimeIndex: -1,
         _pianoPlace: "",
-        _pianoPrice: ""
+        _pianoPrice: "",
+        _pianoId: "",
     },
 
     /*
@@ -23,15 +29,17 @@ Page({
      */
     confirmReservation: function(e){
         let that = this;
+
         wx.request({
             url: "https://958107.iterator-traits.com/reserve/order",
             data: {
-                phoneNumber: that.data._phoneNumber,
+                number: number,
+                reserveType:that.data._reserveType,
                 pianoId:that.data._pianoId,
-                userType:that.data._userType,
                 pianoPrice:that.data._pianoPrice,
                 begTimeIndex:that.data._begTimeIndex,
-                endTimeIndex:that.data._endTimeIndex
+                endTimeIndex:that.data._endTimeIndex,
+                date: that.data._date,
             },
             method: "POST",
             header: {
@@ -62,15 +70,18 @@ Page({
      * 生命周期函数--监听页面加载
      */
     onLoad: function (options) {
+        console.log(options);
         this.setData({
-            _realName: options.realName,
-            _idNumber: options.idNumber,
-            _userType: options.userType,
+            _reserveType: options.reserveType,
+            _reserveTypeDiscription: util.setUserTypeDiscription(options.reserveType),
             _date: options.date,
             _begTime: options.begTime,
             _endTime: options.endTime,
+            _begTimeIndex: options.begTimeIndex,
+            _endTimeIndex: options.endTimeIndex,
             _pianoPlace: options.pianoPlace,
-            _pianoPrice: options.pianoPrice
+            _pianoPrice: options.pianoPrice,
+            _pianoId: options.pianoId,
         });
     },
 

@@ -12,6 +12,7 @@ Page({
         _jsDate: "",
         _date: "",
         _pianoList: [],
+        _pianoAvailable: [],
 
         _begTimeArray: [],
         _begTimeIndex: [],
@@ -191,6 +192,67 @@ Page({
     },
 
     /*
+     * get time table of given day
+     * timeString: 3 x 84 string
+     * day: 0 -> today, 1 -> tomorrow, 2 -> the day after tommorrow
+     */
+    getTimeTable: function(timeString, day){
+        const tableLen = util.getTimeTableLen();
+        let timeTable = [];
+        let index = tableLen * day;
+        for(let i = 0; i < tableLen; ++i){
+            timeTable.push(Number(timeString[index + i]));
+        }
+        return timeTable;
+    },
+
+    /*
+     * judge whether the piano is available
+     * begIndex and endIndex
+     */
+    isAvailable: function(timeTable, that){
+
+        const begIndex = util.getIndexInTimeTable(that.data._begHour, that.data._begMinute);
+        const endIndex = util.getIndexInTimeTable(that.data._endHour, that.data._endMinute);
+        let avaliable = false;
+
+        for(let i = begIndex; i < endIndex; ++i){
+            if(timeTable[i] === 0){
+                avaliable = true;
+                break;
+            }
+        }
+
+        return avaliable;
+    },
+
+    /*
+     * set piano list available
+     */
+    setPianoAvailable: function(that){
+        let pianoAvailable = [];
+        let curDate = new Date();
+        let day = util.dateSub(that.data._jsDate, curDate);
+
+        for(piano of that.data._pianoList){
+            let timeTable = that.getTimeTable(piano.timeTable, day);
+            if(that.isAvailable(timeTable, that)){
+                let pianoAvl = {};
+                pianoAvl.pianoPlace = piano.pianoPlace;
+                pianoAvl.pianoId = piano.pianoId;
+                pianoAvl.pianoType = piano.pianoType;
+                pianoAvl.timeTable = timeTable.slice();
+
+                pianoAvailable.push(pianoAvl);
+            }
+        }
+
+        that.setData({
+            _pianoAvailable: pianoAvailable
+        });
+    },
+
+    /*
      * bind choose previous day
      */
     bindChoosePreviousDay: function (e) {
@@ -211,6 +273,7 @@ Page({
 
         this.setPreNextDay(curDate, lastDate);
         this.initTime();
+        this.setPianoAvailable(this);
     },
 
     /*
@@ -235,6 +298,7 @@ Page({
 
         this.setPreNextDay(curDate, lastDate);
         this.initTime();
+        this.setPianoAvailable(this);
     },
 
     /* init time
@@ -295,29 +359,33 @@ Page({
         this.initTime();
 
         // get the piano list
-        // wx.request({
-        //     url: "https://958107.iterator-traits.com/reserve/all",
-        //     method: "POST",
-        //     header: {
-        //         "Content-Type": "application/x-www-form-urlencoded"
-        //     },
-        //     success: function (res) {
-        //         // set the piano list data
-        //         that.setPianoList(res.pianoList, that);
-        //     },
-        //     fail: function (res) {
-        //         util.alertInfo("获取琴房信息失败，请检查网络设备是否正常。", "none", 1000);
-        //     }
-        // });
+        wx.request({
+            url: "https://958107.iterator-traits.com/reserve/all",
+            method: "POST",
+            header: {
+                "Content-Type": "application/x-www-form-urlencoded"
+            },
+            success: function (res) {
+                // set the piano list data
+                that.setPianoList(res.data.pianoList, that);
+            },
+            fail: function (res) {
+                util.alertInfo("获取琴房信息失败，请检查网络设备是否正常。", "none", 1000);
+            }
+        });
     },
 
     setPianoList: function (list, that) {
         that.setData({
             _pianoList: list
         });
+        // set the piano Available
+        that.setPianoAvailable(that);
     },
 
-    // to reserve a piano
+    /*
+     * to reserve a piano
+     */
     toReservePiano: function (e) {
         let paras = {};
         let id = e.currentTarget.dataset.id;

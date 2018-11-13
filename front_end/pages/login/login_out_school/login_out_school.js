@@ -127,6 +127,7 @@ Page({
 
                         app.globalData._username = res.data.realName;
                         app.globalData._userType = util.USERTYPE.SOCIAL;
+                        app.globalData._phoneNumber = that.data._phoneNumber;
 
                         let cookie = res.header["Set-Cookie"];
                         if(cookie !== null){

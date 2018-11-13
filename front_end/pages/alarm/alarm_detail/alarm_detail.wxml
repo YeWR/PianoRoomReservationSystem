@@ -1,0 +1,32 @@
+<!--pages/alarm/alarm_detail/alarm_detail.wxml-->
+<view>
+    预约信息
+    <view>
+        订单号: {{_reservationId}}
+    </view>
+    <view>
+        {{_reservationUser}} {{_reservationType}}
+    </view>
+    <view>
+        {{_reservationDate}} {{_reservationWeekday}} {{_reservationBegTime}} - {{_reservationEndTime}}
+    </view>
+    <view>
+        {{_reservationPianoPlace}}
+    </view>
+    <view>
+        {{_reservationPianoType}}
+    </view>
+    <view>
+        {{_userType}}
+    </view>
+    <view>
+        预约成功，{{_reservationState}}
+    </view>
+    <view>
+        {{_reservationPianoPrice}}
+    </view>
+    扫码验证使用琴房
+    <view>
+        xxx
+    </view>
+</view>

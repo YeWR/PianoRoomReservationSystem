@@ -10,7 +10,8 @@
     "pages/reserve/reserve",
     "pages/info/info",
     "pages/reserve/reserve_detail/reserve_detail",
-    "pages/reserve/reserve_confirm/reserve_confirm"
+    "pages/reserve/reserve_confirm/reserve_confirm",
+    "pages/alarm/alarm_detail/alarm_detail"
   ],
   "window": {
     "backgroundTextStyle": "light",
