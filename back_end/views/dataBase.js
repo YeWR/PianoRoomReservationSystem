@@ -15,22 +15,22 @@ let db = new Db.Adapter({
 let redis = require("redis");
 let client = redis.createClient(config.redisPort,config.serverIp)
 
-let GetSocietyInfo = async function(socTele){
+let GetSocietyUserInfo = async function(userId){
     let errorMsg = "";
-    let socInfo = null;
+    let userInfo = null;
     let test = function(){
         return new Promise(resolve =>{
-            db.where({ soc_tele: socTele }).get('society_user', function (err, res, fields) {
+            db.where({ soc_tele: userId }).get('society_user', function (err, res, fields) {
                 let _select = res;
                 if (_select.length == 0) {
-                    errorMsg = "手机号未注册"; // to do 
+                    errorMsg = "用户不存在"; // to do
                     resolve(0);
                 }
                 else {
                     let _data = JSON.stringify(_select);
                     let _info = JSON.parse(_data);
-                    socInfo = _info[0];
-                    resolve(1)
+                    userInfo = _info[0];
+                    resolve(1);
                 }
             });
         });
@@ -38,14 +38,11 @@ let GetSocietyInfo = async function(socTele){
     let flag = await test();
     console.log(flag);
     if(flag == 0){
-        return {"success":false,
-                "info":errorMsg,
-                "data": socInfo};
+        return {"data":userInfo,
+            "info":errorMsg};
     }
     if(flag == 1){
-        return {"success":true,
-                "info": errorMsg,
-                "data": socInfo};
+        return {"data":userInfo};
     }
 }
 
@@ -554,6 +551,8 @@ let GetItem = async function(itemUsername){
     }
 }
 
+
+
 // 订单
 exports.InsertItem = InsertItem;            // 新增订单
 exports.UpdateItem = UpdateItem;            // 更新订单
@@ -572,5 +571,5 @@ exports.SocietyRegister = SocietyRegister;  // 点击注册
 exports.SetLoginMsg = SetLoginMsg;          // 点击发送
 exports.SocietyLogin = SocietyLogin;        // 点击登录
 
-// 用户
-exports.GetSocietyInfo = GetSocietyInfo;    // 获取信息
+//用户
+exports.GetSocietyUserInfo = GetSocietyUserInfo;  // 获取某个校外用户的信息
