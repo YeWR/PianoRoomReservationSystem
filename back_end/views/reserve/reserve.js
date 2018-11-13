@@ -16,7 +16,7 @@ const routers = router.post("/all", async (ctx, next) => {
             let info = {
                 "pianoId": p.piano_id,
                 "pianoType": p.piano_type,
-                "timeTable": p.piano_list,
+                "timeTable": p.piano_list.data,
                 "pianoPlace": p.piano_room
             };
             pianolist.push(info);
