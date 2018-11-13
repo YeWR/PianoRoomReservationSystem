@@ -16,7 +16,7 @@ const routers = router.post("/all", async (ctx, next) => {
             let timeList = [];
             for(let i = 0; i<p.piano_list.data.length;i++)
             {
-                timeList.push(p.piano_list.data[i] - '0');
+                timeList.push(p.piano_list.data[i] - 48);
             }
             let info = {
                 "pianoId": p.piano_id,
