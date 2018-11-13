@@ -140,7 +140,7 @@
     "url": "/reserve/order",
     "data": {
         "number":"号码（手机号/学号）",
-        "reserveType": "预约类别(校内学生，校内老师，校外单人，多人)",
+        "reservationType": "预约类别(校内学生，校内老师，校外单人，多人)",
         "pianoId":"琴房id",
         "pianoPrice":"价格",
         "date": "日期",
@@ -160,13 +160,13 @@
 {
     "url": "/alarm/all",
     "data": {
-        "number":"号码（手机号/学号）",
-        "reserveType": "预约类别(校内学生，校内老师，校外单人，多人)"
+        "number":"号码（手机号/学号）"
     },
     "res": {
         "reservationList"(可用订单信息列表，正在使用，未使用): [{
             "pianoPlace":"琴房地点",
        		"pianoType":"钢琴简介信息",
+        	"reservationType": "预约类别",
         	"reservationState":"预约状态（正在使用、未生效）",
         	"date":"预约时间",
         	"begTimeIndex":"开始时间index",
