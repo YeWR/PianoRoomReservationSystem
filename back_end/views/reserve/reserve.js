@@ -50,16 +50,16 @@ const routers = router.post("/all", async (ctx, next) => {
     console.log(ctx.response.body);
 }).post("/order", async (ctx, next) => {
     console.log(ctx.request.body);
-    let phoneNumber = ctx.request.body.phoneNumber;
+    let number = ctx.request.body.number;
     let pianoId = ctx.request.body.pianoId;
-    let userType = ctx.request.body.userType;
+    let reserveType = parseInt(ctx.request.body.reserveType);
     let pianoPrice = parseInt(ctx.request.body.pianoPrice);
     let begTimeIndex = parseInt(ctx.request.body.begTimeIndex);
     let endTimeIndex = parseInt(ctx.request.body.endTimeIndex);
     let dateStr = ctx.request.body.date;
     dateStr.concat(" 08:00:00");
     let duration = endTimeIndex - begTimeIndex;
-    let result = await dataBase.InsertItem(dateStr,phoneNumber,pianoId,1,userType,pianoPrice,duration,begTimeIndex);
+    let result = await dataBase.InsertItem(dateStr,number,pianoId,1,reserveType,pianoPrice,duration,begTimeIndex);
     ctx.response.body = result;
     console.log(ctx.response.body);
 });
