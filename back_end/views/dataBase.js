@@ -15,6 +15,40 @@ let db = new Db.Adapter({
 let redis = require("redis");
 let client = redis.createClient(config.redisPort,config.serverIp)
 
+let GetSocietyInfo = async function(socTele){
+    let errorMsg = "";
+    let socInfo = null;
+    let test = function(){
+        return new Promise(resolve =>{
+            db.where({ soc_tele: socTele }).get('society_user', function (err, res, fields) {
+                let _select = res;
+                if (_select.length == 0) {
+                    errorMsg = "手机号未注册"; // to do 
+                    resolve(0);
+                }
+                else {
+                    let _data = JSON.stringify(_select);
+                    let _info = JSON.parse(_data);
+                    socInfo = _info[0];
+                    resolve(1)
+                }
+            });
+        });
+    };
+    let flag = await test();
+    console.log(flag);
+    if(flag == 0){
+        return {"success":false,
+                "info":errorMsg,
+                "data": socInfo};
+    }
+    if(flag == 1){
+        return {"success":true,
+                "info": errorMsg,
+                "data": socInfo};
+    }
+}
+
 // to do check tele
 let SetRegisterMsg = async function(socTele, socPassword) {
     let errorMsg = "";
@@ -537,3 +571,6 @@ exports.SocietyRegister = SocietyRegister;  // 点击注册
 // 登录
 exports.SetLoginMsg = SetLoginMsg;          // 点击发送
 exports.SocietyLogin = SocietyLogin;        // 点击登录
+
+// 用户
+exports.GetSocietyInfo = GetSocietyInfo;    // 获取信息
