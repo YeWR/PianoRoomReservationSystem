@@ -357,20 +357,19 @@ let GetPianoRoomInfo = async function(pianoId, date) {
                 "info":errorMsg};
     }
     if(flag == 1){
-        console.log(pianoInfoRes.piano_list);
         return {"data":pianoInfoRes,
                 "info":errorMsg};
     }
 }
 
 // 加上读写锁
-let preparePiano = async function(itemRoom, itemBegin, itemDuration, itemDate){
+let preparePiano = async function(itemRoomId, itemBegin, itemDuration, itemDate){
     let errorMsg = "";
     itemBegin = 84*getDateNum(itemDate)+itemBegin;
     let itemEnd = itemBegin+itemDuration;
     let test = function(){
         return new Promise(resolve =>{
-            db.where({ piano_room: itemRoom }).get('piano', function (err, res, fields) {
+            db.where({ piano_id: itemRoomId }).get('piano', function (err, res, fields) {
                 let _select = res;
                 if(_select.length == 0){
                     errorMsg = "琴房不存在";
@@ -418,7 +417,7 @@ let preparePiano = async function(itemRoom, itemBegin, itemDuration, itemDate){
         console.log(newList);
         let checkUpdate = function(){
             return new Promise(resolve =>{
-                db.where({piano_room:itemRoom}).update('piano',{piano_list:newList},function(err){
+                db.where({piano_id: itemRoomId}).update('piano',{piano_list:newList},function(err){
                     if(err){
                         resolve(0);
                     }
@@ -441,10 +440,10 @@ let preparePiano = async function(itemRoom, itemBegin, itemDuration, itemDate){
 }
 
 // begin is the begin index, duration is the length
-let InsertItem = async function(itemDate, itemUsername, itemRoom, itemType, itemMember, itemValue, itemDuration, itemBegin){
+let InsertItem = async function(itemDate, itemUsername, itemRoomId, itemType, itemMember, itemValue, itemDuration, itemBegin){
     let errorMsg = "";
     // 修改可预约时间段。
-    let result = await preparePiano(itemRoom, itemBegin, itemDuration, itemDate);
+    let result = await preparePiano(itemRoomId, itemBegin, itemDuration, itemDate);
     if(result.success == false){
         errorMsg = "预约失败";
         return {"success":false,
@@ -457,7 +456,7 @@ let InsertItem = async function(itemDate, itemUsername, itemRoom, itemType, item
                 let _info = {
                     item_date: itemDate,
                     item_username: itemUsername,
-                    item_room: itemRoom,
+                    item_roomId: itemRoomId,
                     item_type: itemType,
                     item_member: itemMember,
                     item_value: itemValue,
