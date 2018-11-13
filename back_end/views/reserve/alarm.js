@@ -19,8 +19,8 @@ const routers = router.post("/all", async (ctx, next) => {
                 if(i.piano_id === p.item_roomId)
                 {
                     let info = {
-                        "pianoPlace":info.pianoPlace,
-                        "pianoType": info.pianoType,
+                        "pianoPlace":i.pianoPlace,
+                        "pianoType": i.pianoType,
                         "pianoPrice": p.item_value,
                         "reservationType": p.item_member,
                         "reservationState": p.item_type,
