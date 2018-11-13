@@ -47,6 +47,5 @@ App({
         _username: null,
         _userType: null,
         _idNumber: null,
-        _phoneNumber: null,
     }
 });

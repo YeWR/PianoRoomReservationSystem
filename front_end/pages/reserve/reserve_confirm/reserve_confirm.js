@@ -30,7 +30,7 @@ Page({
     confirmReservation: function (e) {
         let that = this;
 
-        let number = app.globalData._phoneNumber;
+        let number = app.globalData._idNumber;
         if (app.globalData._userType !== util.USERTYPE.SOCIAL) {
             // stu id card
             number = app.globalData._idNumber;

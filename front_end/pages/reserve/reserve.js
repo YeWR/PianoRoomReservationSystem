@@ -198,14 +198,14 @@ Page({
      * judge whether the piano is available
      * begIndex and endIndex
      */
-    isAvailable: function(timeTable, that){
+    isAvailable: function (timeTable, that) {
 
         const begIndex = util.getIndexInTimeTable(that.data._begHour, that.data._begMinute);
         const endIndex = util.getIndexInTimeTable(that.data._endHour, that.data._endMinute);
         let avaliable = false;
 
-        for(let i = begIndex; i < endIndex; ++i){
-            if(timeTable[i] === 0){
+        for (let i = begIndex; i < endIndex; ++i) {
+            if (timeTable[i] === 0) {
                 avaliable = true;
                 break;
             }
@@ -217,15 +217,15 @@ Page({
     /*
      * set piano list available+-----------
      */
-    setPianoAvailable: function(that){
+    setPianoAvailable: function (that) {
         const tableLen = util.getTimeTableLen();
         let pianoAvailable = [];
         let curDate = new Date();
         let day = util.dateSub(that.data._jsDate, curDate);
 
-        for(let piano of that.data._pianoList){
+        for (let piano of that.data._pianoList) {
             let timeTable = piano.timeTable.slice(tableLen * day, tableLen * (day + 1));
-            if(that.isAvailable(timeTable, that)){
+            if (that.isAvailable(timeTable, that)) {
                 let pianoAvl = {};
                 pianoAvl.pianoPlace = piano.pianoPlace;
                 pianoAvl.pianoId = piano.pianoId;
@@ -342,7 +342,7 @@ Page({
     /*
      * init data
      */
-    initData: function(){
+    initData: function () {
         this.setData({
             _pianoList: [],
             _pianoAvailable: [],
@@ -367,7 +367,7 @@ Page({
     setPianoList: function (list, that) {
         that.setData({
             _pianoList: list
-    });
+        });
         // set the piano Available
         that.setPianoAvailable(that);
     },
@@ -420,6 +420,7 @@ Page({
             success: function (res) {
                 // set the piano list data
                 that.setPianoList(res.data.pianoList, that);
+                console.log("ggggggg");
             },
             fail: function (res) {
                 util.alertInfo("获取琴房信息失败，请检查网络设备是否正常。", "none", 1000);

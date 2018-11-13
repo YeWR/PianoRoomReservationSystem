@@ -1,6 +1,6 @@
 <!--pages/alarm/alarm.wxml-->
 <view class="container">
-    <view wx:for="{{_reservationList}}" wx:for-index="id" wx:for-item="reservation">
+    <view wx:for="{{_reservationList}}" wx:for-index="id" wx:for-item="reservation" wx:key="reservationId">
         <view data-id="{{id}}" bindtap="bindReserveDetail">
             <view>
                 钢琴地点：{{reservation.pianoPlace}}

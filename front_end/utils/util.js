@@ -376,6 +376,12 @@ const getEndTime = (begHour, begMinute, interval) => {
     let minute = (interval % 6) * 10;
     let endHour = begHour + hour;
     let endMinute = begMinute + minute;
+
+    if(endMinute >= 60){
+        endMinute -= 60;
+        endHour += 1;
+    }
+
     return [endHour, endMinute]
 };
 
@@ -404,6 +410,73 @@ const getNearestEndTime = (begHour, begMinute, timeTable) => {
         }
     }
     return getEndTime(begHour, begMinute, interval);
+};
+
+/*
+ * get hours available
+ * given a timeTable
+ * given begTimeIndex
+ * return hours -> [8,10,14,...] available
+ */
+const getHoursAvailable = (begTimeIndex, timeTable) => {
+    let hours = [];
+    // 6
+    const interval = Math.floor(60 / TIMEINTERVAL);
+    // 84
+    const tableLen = getTimeTableLen();
+
+    for (let i = 0; i < Math.floor(tableLen / interval); ++i) {
+        // i * 6
+        let index = interval * i;
+        // flag
+        let flag = false;
+        for (let j = 0; j < interval; ++j) {
+            if (index + j >= begTimeIndex) {
+                if (timeTable[index + j] === 0) {
+                    flag = true;
+                    break;
+                }
+            }
+        }
+
+        if (flag) {
+            hours.push(BEGINHOUR + i);
+        }
+    }
+    if (hours.length === 0) {
+        hours = [ENDHOUR];
+    }
+
+    return hours;
+};
+
+/*
+ * get minutes available
+ * given a timeTable
+ * given selectHour
+ * return minutes -> [0, 10, 20, 40, 50]
+ */
+const getMinutesAvailable = (selectHour, begTimeIndex, timeTable) => {
+    let minutes = [];
+    // 6
+    const interval = Math.floor(60 / TIMEINTERVAL);
+    // 84
+    const tableLen = getTimeTableLen();
+    let index = (selectHour - BEGINHOUR) * interval;
+
+    for (let i = 0; i < interval; ++i) {
+        if(index + i >= begTimeIndex){
+            if(timeTable[index + i] === 0){
+                minutes.push((i * TIMEINTERVAL));
+            }
+        }
+    }
+
+    if(minutes.length === 0){
+        minutes = [ENDMINUTE];
+    }
+
+    return minutes;
 };
 
 /*
@@ -649,4 +722,6 @@ module.exports = {
     drawQrCode: drawQrCode,
     MINTIMEINTERVAL: MINTIMEINTERVAL,
     TIMEINTERVAL: TIMEINTERVAL,
+    getHoursAvailable: getHoursAvailable,
+    getMinutesAvailable: getMinutesAvailable,
 };

@@ -53,7 +53,7 @@ Page({
     /*
      * set begin time
      */
-    setBegTime: function (hours, minutes, selectedHour) {
+    setBegTime: function (selectedHour) {
 
         let curDate = new Date();
         let currentHours = Math.max(Math.min(curDate.getHours(), util.ENDHOUR), util.BEGINHOUR);
@@ -76,7 +76,10 @@ Page({
             _lastMinute: util.ENDMINUTE
         });
 
-        util.setTimeTemplate(hours, minutes, currentHours, currentMinute, this.data._lastHour, this.data._lastMinute, selectedHour);
+        let currentTimeIndex = util.getIndexInTimeTable(currentHours, currentMinute);
+        let hours = util.getHoursAvailable(currentTimeIndex, this.data._timeTable).slice();
+        let minutes = util.getMinutesAvailable(this.data._begHour, currentTimeIndex, this.data._timeTable).slice();
+        return [hours, minutes];
     },
 
     /*
@@ -100,10 +103,10 @@ Page({
     submitReservation: function (e) {
         let begTimeIndex = util.getIndexInTimeTable(this.data._begHour, this.data._begMinute);
         let endTimeIndex = util.getIndexInTimeTable(this.data._endHour, this.data._endMinute);
-        if(endTimeIndex - begTimeIndex < util.MINTIMEINTERVAL){
+        if (endTimeIndex - begTimeIndex < util.MINTIMEINTERVAL) {
             util.alertInfo("预约时长不可小于" + util.MINTIMEINTERVAL * util.TIMEINTERVAL + "min", "none", 1000);
         }
-        else{
+        else {
             this.toConfirm(e);
         }
     },
@@ -150,10 +153,14 @@ Page({
         // change hour
         if (column === 0) {
             const begHour = begTimeArray[column][value];
-            this.setBegTime(hours, minutes, begHour);
+            this.setData({
+                _begHour: begHour
+            });
+            let time = this.setBegTime(begHour);
+            hours = time[0];
+            minutes = time[1];
             this.setData({
                 _begTimeArray: [hours, minutes],
-                _begHour: begHour,
                 _begMinute: minutes[0]
             });
         }
@@ -219,7 +226,7 @@ Page({
     /*
      * bind choose single user
      */
-    bindSingleUser: function(e){
+    bindSingleUser: function (e) {
         this.setData({
             _chooseSingle: true,
             _reservationType: app.globalData._userType
@@ -229,7 +236,7 @@ Page({
     /*
      * bind choose multi users
      */
-    bindMultiUsers: function(e){
+    bindMultiUsers: function (e) {
         this.setData({
             _chooseSingle: false,
             _reservationType: util.USERTYPE.MULTI
@@ -260,7 +267,9 @@ Page({
             currentMinute = util.BEGINMINUTE;
         }
 
-        util.setTimeTemplate(begHours, begMinutes, currentHours, currentMinute, this.data._lastHour, this.data._lastMinute, currentHours);
+        let currentTimeIndex = util.getIndexInTimeTable(currentHours, currentMinute);
+        begHours = util.getHoursAvailable(currentTimeIndex, this.data._timeTable);
+        begMinutes = util.getMinutesAvailable(begHours[0], currentTimeIndex, this.data._timeTable);
 
         this.setData({
             _begTimeArray: [begHours, begMinutes],
@@ -270,7 +279,7 @@ Page({
 
         let endHours = [];
         let endMinutes = [];
-        this.setEndTime(endHours, endMinutes, this.data._lastHour);
+        this.setEndTime(endHours, endMinutes, this.data._begHour);
         this.setData({
             _endTimeArray: [endHours, endMinutes],
             _endHour: endHours[0],
