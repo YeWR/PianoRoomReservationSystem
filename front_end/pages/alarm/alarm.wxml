@@ -1,17 +1,19 @@
 <!--pages/alarm/alarm.wxml-->
 <view class="container">
-    <view wx:for="{{_reservationList}}" wx:for-index="id" wx:for-item="reservation" bindtap="bindReserveDetail">
-        <view>
-            钢琴地点：{{reservation.pianoPlace}}
-        </view>
-        <view>
-            钢琴信息：{{reservation.pianoType}}
-        </view>
-        <view>
-            预约状态：{{reservation.reservationStateDis}}
-        </view>
-        <view>
-            预约时间：{{reservation.date}} {{reservation.weekday}} {{reservation.begTime}}-{{reservation.endTime}}
+    <view wx:for="{{_reservationList}}" wx:for-index="id" wx:for-item="reservation">
+        <view data-id="{{id}}" bindtap="bindReserveDetail">
+            <view>
+                钢琴地点：{{reservation.pianoPlace}}
+            </view>
+            <view>
+                钢琴信息：{{reservation.pianoType}}
+            </view>
+            <view>
+                预约状态：{{reservation.reservationStateDis}}
+            </view>
+            <view>
+                预约时间：{{reservation.date}} {{reservation.weekday}} {{reservation.begTime}}-{{reservation.endTime}}
+            </view>
         </view>
     </view>
 </view>

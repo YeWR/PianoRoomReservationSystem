@@ -9,7 +9,7 @@
                     ({{_idNumber}})
                 </text>
             </text>
-            <text>{{_reserveTypeDiscription}}</text>
+            <text>{{_reservationTypeDiscription}}</text>
         </view>
         <view>
             <text>{{_date}}</text>

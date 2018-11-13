@@ -2,6 +2,8 @@
  * common functions defined here
  *******************************************************************************************************/
 
+import drawQrcode from "weapp.qrcode.min.js"
+
 const DATELEN = 2;
 const BEGINHOUR = 8;
 const BEGINMINUTE = 0;
@@ -597,6 +599,18 @@ const setRsvStateDiscription = (reservationState) => {
 Object.freeze(USERTYPE);
 Object.freeze(RESERVATIONSTATE);
 
+/*
+ * draw Qrcode
+ */
+const drawQrCode = (id, url) => {
+    drawQrcode({
+        width: 200,
+        height: 200,
+        canvasId: id,
+        text: url
+    });
+};
+
 module.exports = {
     alertInfo: alertInfo,
     formatTime: formatTime,
@@ -606,7 +620,7 @@ module.exports = {
     setUrl: setUrl,
     getTimeTableLen: getTimeTableLen,
     getNearestEndTime: getNearestEndTime,
-    getEndTime:getEndTime,
+    getEndTime: getEndTime,
     BEGINHOUR: BEGINHOUR,
     BEGINMINUTE: BEGINMINUTE,
     ENDHOUR: ENDHOUR,
@@ -624,4 +638,5 @@ module.exports = {
     RESERVATIONSTATE: RESERVATIONSTATE,
     setRsvStateDiscription: setRsvStateDiscription,
     getTimeDiscription: getTimeDiscription,
+    drawQrCode: drawQrCode,
 };

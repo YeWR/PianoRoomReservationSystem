@@ -18,16 +18,16 @@ Page({
 
     /*
      * bind reservation detail
-     */
-    bindReserveDetail: function(e){
-
-    },
-
-    /*
      * to detail
      */
-    toAlarmDetail: function(){
+    bindReserveDetail: function(e){
+        let id = e.currentTarget.dataset.id;
+        let paras = this.data._reservationList[id];
 
+        let url = util.setUrl("./alarm_detail/alarm_detail", paras);
+        wx.navigateTo({
+            url: url
+        });
     },
 
     /*
@@ -38,16 +38,23 @@ Page({
         let scaleHour = util.BEGINHOUR;
         let scaleMinute = util.BEGINMINUTE;
         reservationList.forEach((e) => {
-            reservation = {};
-            reservation.pianoPlace = e.pianoPlace;
-            reservation.pianoType = e.pianoType;
-            reservation.reservationStateDis = util.setRsvStateDiscription(e.reservationState);
-            reservation.date = e.date;
-            reservation.weekday = e.date.getDay();
             let begTime = util.getEndTime(scaleHour, scaleMinute, e.begTimeIndex);
             let endTime = util.getEndTime(scaleHour, scaleMinute, e.endTimeIndex);
-            reservation.begTime = util.getTimeDiscription(begTime[0], begTime[1]);
-            reservation.endTime = util.getTimeDiscription(endTime[0], endTime[1]);
+
+            reservation = {};
+            reservation.reservationId = e.reservationId;
+
+            reservation.reservationType = util.setUserTypeDiscription(e.reservationType);
+            reservation.reservationStateDis = util.setRsvStateDiscription(e.reservationState);
+
+            reservation.reservationDate = e.date;
+            reservation.reservationWeekday = e.date.getDay();
+            reservation.reservationBegTime = util.getTimeDiscription(begTime[0], begTime[1]);
+            reservation.reservationEndTime = util.getTimeDiscription(endTime[0], endTime[1]);
+
+            reservation.reservationPianoPlace = e.pianoPlace;
+            reservation.reservationPianoType = e.pianoType;
+            reservation.reservationPianoPrice = e.pianoPrice;
         });
     },
 
@@ -56,22 +63,17 @@ Page({
      */
     initReserveInfo: function(){
         let that = this;
-        let numberType = app.globalData._userType;
-        let number;
-        if(numberType === util.USERTYPE.SOCIAL){
-            // phone number
-            number = app.globalData._phoneNumber;
-        }
-        else{
-            // student id number or teacher
+
+        let number = app.globalData._phoneNumber;
+        if(app.globalData._userType !== util.USERTYPE.SOCIAL){
+            // stu id card
             number = app.globalData._idNumber;
         }
 
         wx.request({
             url: "https://958107.iterator-traits.com/alarm/all",
             data: {
-                number: number,
-                numberType: numberType
+                number: number
             },
             method: "POST",
             header: {

@@ -26,7 +26,7 @@
         {{_reservationPianoPrice}}
     </view>
     扫码验证使用琴房
-    <view>
-        xxx
-    </view>
+    <canvas style="width: 200px; height: 200px;" canvas-id="reservationDetailQr">
+    </canvas>
+
 </view>

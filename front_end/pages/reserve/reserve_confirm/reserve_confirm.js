@@ -11,8 +11,8 @@ Page({
     data: {
         _realName: app.globalData._username,
         _idNumber: app.globalData._idNumber,
-        _reserveType: "",
-        _reserveTypeDiscription: "",
+        _reservationType: "",
+        _reservationTypeDiscription: "",
         _date: "",
         _begTime: "",
         _endTime: "",
@@ -30,11 +30,17 @@ Page({
     confirmReservation: function(e){
         let that = this;
 
+        let number = app.globalData._phoneNumber;
+        if(app.globalData._userType !== util.USERTYPE.SOCIAL){
+            // stu id card
+            number = app.globalData._idNumber;
+        }
+
         wx.request({
             url: "https://958107.iterator-traits.com/reserve/order",
             data: {
                 number: number,
-                reserveType:that.data._reserveType,
+                reservationType:that.data._reservationType,
                 pianoId:that.data._pianoId,
                 pianoPrice:that.data._pianoPrice,
                 begTimeIndex:that.data._begTimeIndex,
@@ -72,8 +78,8 @@ Page({
     onLoad: function (options) {
         console.log(options);
         this.setData({
-            _reserveType: options.reserveType,
-            _reserveTypeDiscription: util.setUserTypeDiscription(options.reserveType),
+            _reservationType: options.reservationType,
+            _reservationTypeDiscription: util.setUserTypeDiscription(options.reservationType),
             _date: options.date,
             _begTime: options.begTime,
             _endTime: options.endTime,

@@ -14,11 +14,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="reserve.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="reserve.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/pages/reserve/reserve.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="633">
-              <caret line="300" column="37" selection-start-line="300" selection-start-column="37" selection-end-line="300" selection-end-column="37" />
+            <state relative-caret-position="-7737">
+              <caret column="16" selection-start-column="9" selection-end-column="16" />
             </state>
           </provider>
         </entry>
@@ -26,58 +26,26 @@
       <file leaf-file-name="reserve.wxml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/pages/reserve/reserve.wxml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="435">
-              <caret line="35" lean-forward="true" selection-start-line="35" selection-end-line="35" />
+            <state relative-caret-position="540">
+              <caret line="40" column="50" selection-start-line="40" selection-start-column="50" selection-end-line="40" selection-end-column="50" />
             </state>
           </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="reserve.json" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/pages/reserve/reserve.json">
-          <provider selected="true" editor-type-id="text-editor" />
         </entry>
       </file>
       <file leaf-file-name="util.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/utils/util.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="7014">
-              <caret line="334" column="6" selection-start-line="334" selection-start-column="6" selection-end-line="334" selection-end-column="6" />
+            <state relative-caret-position="579">
+              <caret line="608" column="21" lean-forward="true" selection-start-line="608" selection-start-column="21" selection-end-line="608" selection-end-column="21" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="reserve_detail.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/pages/reserve/reserve_detail/reserve_detail.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="318">
-              <caret line="115" column="49" selection-start-line="115" selection-start-column="49" selection-end-line="115" selection-end-column="49" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="alarm.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="alarm.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/pages/alarm/alarm.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="483">
-              <caret line="29" selection-start-line="29" selection-end-line="29" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="alarm_detail.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/pages/alarm/alarm_detail/alarm_detail.js">
-          <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="630">
-              <caret line="30" lean-forward="true" selection-start-line="30" selection-end-line="30" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="alarm_detail.wxml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/pages/alarm/alarm_detail/alarm_detail.wxml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="609">
-              <caret line="29" column="11" selection-start-line="29" selection-start-column="11" selection-end-line="29" selection-end-column="11" />
+              <caret line="87" column="11" lean-forward="true" selection-start-line="87" selection-start-column="11" selection-end-line="87" selection-end-column="11" />
             </state>
           </provider>
         </entry>
@@ -86,7 +54,7 @@
         <entry file="file://$PROJECT_DIR$/pages/alarm/alarm.wxml">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="63">
-              <caret line="3" column="14" lean-forward="true" selection-start-line="3" selection-start-column="14" selection-end-line="3" selection-end-column="14" />
+              <caret line="3" column="59" selection-start-line="3" selection-start-column="59" selection-end-line="3" selection-end-column="59" />
             </state>
           </provider>
         </entry>
@@ -94,18 +62,48 @@
       <file leaf-file-name="reserve_confirm.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/pages/reserve/reserve_confirm/reserve_confirm.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="168">
-              <caret line="41" column="38" lean-forward="true" selection-start-line="41" selection-start-column="38" selection-end-line="41" selection-end-column="38" />
+            <state relative-caret-position="-168">
+              <caret line="25" column="6" lean-forward="true" selection-start-line="25" selection-start-column="6" selection-end-line="25" selection-end-column="6" />
             </state>
           </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="reserve_confirm.wxml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/pages/reserve/reserve_confirm/reserve_confirm.wxml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="231">
+              <caret line="11" column="36" selection-start-line="11" selection-start-column="36" selection-end-line="11" selection-end-column="36" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="alarm_detail.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/pages/alarm/alarm_detail/alarm_detail.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="264">
+              <caret line="29" column="23" lean-forward="true" selection-start-line="29" selection-start-column="23" selection-end-line="29" selection-end-column="23" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="app.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="777">
+              <caret line="49" column="27" lean-forward="true" selection-start-line="49" selection-start-column="27" selection-end-line="49" selection-end-column="27" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="alarm_detail.wxss" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/pages/alarm/alarm_detail/alarm_detail.wxss">
+          <provider selected="true" editor-type-id="text-editor" />
         </entry>
       </file>
     </leaf>
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>userTY</find>
-      <find>res</find>
       <find>setEndTime</find>
       <find>to Con</find>
       <find>realNa</find>
@@ -134,6 +132,8 @@
       <find>t</find>
       <find>this</find>
       <find>prevu</find>
+      <find>toReservePiano</find>
+      <find>reserve</find>
     </findStrings>
     <replaceStrings>
       <replace>board</replace>
@@ -190,15 +190,15 @@
         <option value="$PROJECT_DIR$/app.js" />
         <option value="$PROJECT_DIR$/pages/reserve/reserve_detail/reserve_detail.wxml" />
         <option value="$PROJECT_DIR$/pages/reserve/reserve_detail/reserve_detail.js" />
-        <option value="$PROJECT_DIR$/pages/reserve/reserve_confirm/reserve_confirm.wxml" />
-        <option value="$PROJECT_DIR$/pages/alarm/alarm_detail/alarm_detail.js" />
         <option value="$PROJECT_DIR$/pages/alarm/alarm_detail/alarm_detail.wxml" />
-        <option value="$PROJECT_DIR$/pages/alarm/alarm.wxml" />
-        <option value="$PROJECT_DIR$/pages/alarm/alarm.js" />
-        <option value="$PROJECT_DIR$/pages/reserve/reserve_confirm/reserve_confirm.js" />
-        <option value="$PROJECT_DIR$/utils/util.js" />
         <option value="$PROJECT_DIR$/pages/reserve/reserve.wxml" />
+        <option value="$PROJECT_DIR$/pages/alarm/alarm.wxml" />
         <option value="$PROJECT_DIR$/pages/reserve/reserve.js" />
+        <option value="$PROJECT_DIR$/pages/reserve/reserve_confirm/reserve_confirm.js" />
+        <option value="$PROJECT_DIR$/pages/reserve/reserve_confirm/reserve_confirm.wxml" />
+        <option value="$PROJECT_DIR$/utils/util.js" />
+        <option value="$PROJECT_DIR$/pages/alarm/alarm_detail/alarm_detail.js" />
+        <option value="$PROJECT_DIR$/pages/alarm/alarm.js" />
       </list>
     </option>
   </component>
@@ -250,38 +250,6 @@
               <item name="front_end" type="b2602c69:ProjectViewProjectNode" />
               <item name="front_end" type="462c0819:PsiDirectoryNode" />
               <item name="pages" type="462c0819:PsiDirectoryNode" />
-              <item name="board" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="front_end" type="b2602c69:ProjectViewProjectNode" />
-              <item name="front_end" type="462c0819:PsiDirectoryNode" />
-              <item name="pages" type="462c0819:PsiDirectoryNode" />
-              <item name="login" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="front_end" type="b2602c69:ProjectViewProjectNode" />
-              <item name="front_end" type="462c0819:PsiDirectoryNode" />
-              <item name="pages" type="462c0819:PsiDirectoryNode" />
-              <item name="login" type="462c0819:PsiDirectoryNode" />
-              <item name="login_out_school" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="front_end" type="b2602c69:ProjectViewProjectNode" />
-              <item name="front_end" type="462c0819:PsiDirectoryNode" />
-              <item name="pages" type="462c0819:PsiDirectoryNode" />
-              <item name="register" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="front_end" type="b2602c69:ProjectViewProjectNode" />
-              <item name="front_end" type="462c0819:PsiDirectoryNode" />
-              <item name="pages" type="462c0819:PsiDirectoryNode" />
-              <item name="register" type="462c0819:PsiDirectoryNode" />
-              <item name="register_out_school" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="front_end" type="b2602c69:ProjectViewProjectNode" />
-              <item name="front_end" type="462c0819:PsiDirectoryNode" />
-              <item name="pages" type="462c0819:PsiDirectoryNode" />
               <item name="reserve" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -290,13 +258,6 @@
               <item name="pages" type="462c0819:PsiDirectoryNode" />
               <item name="reserve" type="462c0819:PsiDirectoryNode" />
               <item name="reserve_confirm" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="front_end" type="b2602c69:ProjectViewProjectNode" />
-              <item name="front_end" type="462c0819:PsiDirectoryNode" />
-              <item name="pages" type="462c0819:PsiDirectoryNode" />
-              <item name="reserve" type="462c0819:PsiDirectoryNode" />
-              <item name="reserve_detail" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="front_end" type="b2602c69:ProjectViewProjectNode" />
@@ -356,12 +317,12 @@
       <workItem from="1541741921829" duration="17641000" />
       <workItem from="1541925112571" duration="10919000" />
       <workItem from="1541989859139" duration="3939000" />
-      <workItem from="1542025099785" duration="35755000" />
+      <workItem from="1542025099785" duration="39656000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="147420000" />
+    <option name="totallyTimeSpent" value="151321000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -399,13 +360,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/pages/board/board.wxss">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="9" selection-start-column="9" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/pages/login/login_in_school/login_in_school.json">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -618,13 +572,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="777">
-          <caret line="49" column="27" lean-forward="true" selection-start-line="49" selection-start-column="27" selection-end-line="49" selection-end-column="27" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/pages/login/login_out_school/login_out_school.wxml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="399">
@@ -645,48 +592,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/pages/reserve/reserve_confirm/reserve_confirm.wxml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="315">
-          <caret line="15" column="28" selection-start-line="15" selection-start-column="20" selection-end-line="15" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pages/alarm/alarm_detail/alarm_detail.wxml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="609">
-          <caret line="29" column="11" selection-start-line="29" selection-start-column="11" selection-end-line="29" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pages/alarm/alarm.wxml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="63">
-          <caret line="3" column="14" lean-forward="true" selection-start-line="3" selection-start-column="14" selection-end-line="3" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pages/alarm/alarm.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="483">
-          <caret line="29" selection-start-line="29" selection-end-line="29" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pages/reserve/reserve_confirm/reserve_confirm.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="168">
-          <caret line="41" column="38" lean-forward="true" selection-start-line="41" selection-start-column="38" selection-end-line="41" selection-end-column="38" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pages/alarm/alarm_detail/alarm_detail.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="630">
-          <caret line="30" lean-forward="true" selection-start-line="30" selection-end-line="30" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/pages/reserve/reserve.json">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -697,24 +602,79 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/utils/util.js">
+    <entry file="file://$PROJECT_DIR$/pages/alarm/alarm_detail/alarm_detail.wxml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="7014">
-          <caret line="334" column="6" selection-start-line="334" selection-start-column="6" selection-end-line="334" selection-end-column="6" />
+        <state relative-caret-position="588">
+          <caret line="28" column="81" lean-forward="true" selection-start-line="28" selection-start-column="81" selection-end-line="28" selection-end-column="81" />
+          <folding>
+            <element signature="n#style#0;n#canvas#0;n#view#0;n#!!top" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/pages/alarm/alarm_detail/alarm_detail.wxss">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
     <entry file="file://$PROJECT_DIR$/pages/reserve/reserve.wxml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="435">
-          <caret line="35" lean-forward="true" selection-start-line="35" selection-end-line="35" />
+        <state relative-caret-position="540">
+          <caret line="40" column="50" selection-start-line="40" selection-start-column="50" selection-end-line="40" selection-end-column="50" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="777">
+          <caret line="49" column="27" lean-forward="true" selection-start-line="49" selection-start-column="27" selection-end-line="49" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pages/reserve/reserve_confirm/reserve_confirm.wxml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="231">
+          <caret line="11" column="36" selection-start-line="11" selection-start-column="36" selection-end-line="11" selection-end-column="36" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pages/reserve/reserve_confirm/reserve_confirm.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-168">
+          <caret line="25" column="6" lean-forward="true" selection-start-line="25" selection-start-column="6" selection-end-line="25" selection-end-column="6" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/pages/reserve/reserve.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="633">
-          <caret line="300" column="37" selection-start-line="300" selection-start-column="37" selection-end-line="300" selection-end-column="37" />
+        <state relative-caret-position="-7737">
+          <caret column="16" selection-start-column="9" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pages/alarm/alarm.wxml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="63">
+          <caret line="3" column="59" selection-start-line="3" selection-start-column="59" selection-end-line="3" selection-end-column="59" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/utils/util.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="579">
+          <caret line="608" column="21" lean-forward="true" selection-start-line="608" selection-start-column="21" selection-end-line="608" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pages/alarm/alarm_detail/alarm_detail.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="264">
+          <caret line="29" column="23" lean-forward="true" selection-start-line="29" selection-start-column="23" selection-end-line="29" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pages/alarm/alarm.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="630">
+          <caret line="87" column="11" lean-forward="true" selection-start-line="87" selection-start-column="11" selection-end-line="87" selection-end-column="11" />
         </state>
       </provider>
     </entry>
