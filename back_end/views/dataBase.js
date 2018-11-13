@@ -520,6 +520,37 @@ let GetItem = async function(itemUsername){
     }
 }
 
+let GetSocietyUserInfo = async function(userId){
+    let errorMsg = "";
+    let userInfo = null;
+    let test = function(){
+        return new Promise(resolve =>{
+            db.where({ soc_tele: userId }).get('society_user', function (err, res, fields) {
+                let _select = res;
+                if (_select.length == 0) {
+                    errorMsg = "用户不存在"; // to do
+                    resolve(0);
+                }
+                else {
+                    let _data = JSON.stringify(_select);
+                    let _info = JSON.parse(_data);
+                    userInfo = _info[0];
+                    resolve(1);
+                }
+            });
+        });
+    };
+    let flag = await test();
+    console.log(flag);
+    if(flag == 0){
+        return {"data":userInfo,
+            "info":errorMsg};
+    }
+    if(flag == 1){
+        return {"data":userInfo};
+    }
+}
+
 // 订单
 exports.InsertItem = InsertItem;            // 新增订单
 exports.UpdateItem = UpdateItem;            // 更新订单
@@ -537,3 +568,6 @@ exports.SocietyRegister = SocietyRegister;  // 点击注册
 // 登录
 exports.SetLoginMsg = SetLoginMsg;          // 点击发送
 exports.SocietyLogin = SocietyLogin;        // 点击登录
+
+//用户
+exports.GetSocietyUserInfo = GetSocietyUserInfo;  //获取某个校外用户的信息

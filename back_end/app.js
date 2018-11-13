@@ -3,12 +3,17 @@ const app = new Koa();
 const bodyParser = require("koa-bodyparser");
 const views = require("./views/views");
 const session = require("koa-session2");
-const sessionStore = require("koa-redis");
+const sessionStore = require("koa-mysql-session");
+let dbconfigFile = "mysqlConfig.json";
+let dbconfig = JSON.parse(file.readFileSync(configFile));
 
 app.use(session({
     maxAge: 10*24*60*60*1000,  //10天
     store: new sessionStore({
-
+        user: dbconfig.userName,
+        password: dbconfig.passWord,
+        database: dbconfig.dataBase,
+        host: dbconfig.serverIp
     })
 },app));
 

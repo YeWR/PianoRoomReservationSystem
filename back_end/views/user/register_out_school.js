@@ -9,6 +9,11 @@ const routers = router.post("/", async (ctx, next) => {
         realname = ctx.request.body.realName,
         idNumber = ctx.request.body.idNumber;
     let result = await dataBase.SocietyRegister(1,idNumber,realname,phoneNumber,validateCode);
+    if(result.success === true)
+    {
+        ctx.session.userId = tele;
+        ctx.session.userType = constVariable.USERTYPE_OUTSCHOOL;
+    }
     ctx.response.body = result;
     console.log(`signin with number: ${phoneNumber}`);
 })
