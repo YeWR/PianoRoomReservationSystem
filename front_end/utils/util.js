@@ -13,6 +13,8 @@ const ENDMINUTE = 0;
 const TIMEINTERVAL = 10;
 // 2h
 const MAXTIMEINTERVAL = 2 * 6;
+// 30 min
+const MINTIMEINTERVAL = 3;
 
 const formatNumber = (n) => {
     n = n.toString();
@@ -85,7 +87,7 @@ const dateCompare = (date1, date2) => {
  */
 const dateSub = (date1, date2) => {
     let days = date1.getTime() - date2.getTime();
-    let day = parseInt(days / (1000 * 60 * 60 * 24));
+    let day = Math.abs(parseInt(days / (1000 * 60 * 60 * 24)));
     return day;
 };
 
@@ -387,7 +389,6 @@ const getEndTime = (begHour, begMinute, interval) => {
 const getNearestEndTime = (begHour, begMinute, timeTable) => {
     let tableLen = getTimeTableLen();
     if (timeTable === null || timeTable.length !== tableLen) {
-        console.log("timeTable error.");
         return null;
     }
 
@@ -611,6 +612,13 @@ const drawQrCode = (id, url) => {
     });
 };
 
+/*
+ * get cookie
+ */
+const getCookie = (string, pat) => {
+
+};
+
 module.exports = {
     alertInfo: alertInfo,
     formatTime: formatTime,
@@ -639,4 +647,6 @@ module.exports = {
     setRsvStateDiscription: setRsvStateDiscription,
     getTimeDiscription: getTimeDiscription,
     drawQrCode: drawQrCode,
+    MINTIMEINTERVAL: MINTIMEINTERVAL,
+    TIMEINTERVAL: TIMEINTERVAL,
 };

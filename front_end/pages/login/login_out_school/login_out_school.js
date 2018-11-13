@@ -117,7 +117,6 @@ Page({
                 method: "POST",
                 header: {
                     "Content-Type": "application/x-www-form-urlencoded",
-                    "cookie": wx.getStorageSync("sessionid")
                 },
                 success: function (res) {
                     // if success
@@ -125,14 +124,13 @@ Page({
 
                         util.alertInfo("登录成功", "success", 1000);
 
+                        let cookie = res.header["Set-Cookie"];
+                        cookie = cookie.replace(/httponly,/, "httponly;");
+                        wx.setStorageSync("sessionid", cookie);
+
                         app.globalData._username = res.data.realName;
                         app.globalData._userType = util.USERTYPE.SOCIAL;
                         app.globalData._phoneNumber = that.data._phoneNumber;
-
-                        let cookie = res.header["Set-Cookie"];
-                        if(cookie !== null){
-                            wx.setStorageSync("sessionid", res.header["Set-Cookie"]);
-                        }
 
                         that.toBoard();
                     }

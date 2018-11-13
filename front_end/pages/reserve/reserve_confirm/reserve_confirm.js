@@ -9,8 +9,8 @@ Page({
      * 页面的初始数据
      */
     data: {
-        _realName: app.globalData._username,
-        _idNumber: app.globalData._idNumber,
+        _realName: "",
+        _idNumber: "",
         _reservationType: "",
         _reservationTypeDiscription: "",
         _date: "",
@@ -27,11 +27,11 @@ Page({
      * confirm reservation
      * TODO: do not foret to pay for the reservation and check
      */
-    confirmReservation: function(e){
+    confirmReservation: function (e) {
         let that = this;
 
         let number = app.globalData._phoneNumber;
-        if(app.globalData._userType !== util.USERTYPE.SOCIAL){
+        if (app.globalData._userType !== util.USERTYPE.SOCIAL) {
             // stu id card
             number = app.globalData._idNumber;
         }
@@ -40,11 +40,11 @@ Page({
             url: "https://958107.iterator-traits.com/reserve/order",
             data: {
                 number: number,
-                reservationType:that.data._reservationType,
-                pianoId:that.data._pianoId,
-                pianoPrice:that.data._pianoPrice,
-                begTimeIndex:that.data._begTimeIndex,
-                endTimeIndex:that.data._endTimeIndex,
+                reservationType: that.data._reservationType,
+                pianoId: that.data._pianoId,
+                pianoPrice: that.data._pianoPrice,
+                begTimeIndex: that.data._begTimeIndex,
+                endTimeIndex: that.data._endTimeIndex,
                 date: that.data._date,
             },
             method: "POST",
@@ -52,9 +52,11 @@ Page({
                 "Content-Type": "application/x-www-form-urlencoded"
             },
             success: function (res) {
-                if(res.data.success){
+                if (res.data.success) {
                     util.alertInfo("预约成功！", "success", 500);
-                    that.toAlarm();
+                    setTimeout(() => {
+                        that.toAlarm();
+                    }, 500);
                 }
             },
             fail: function (res) {
@@ -66,7 +68,7 @@ Page({
     /*
      * to alarm
      */
-    toAlarm: function(){
+    toAlarm: function () {
         wx.switchTab({
             url: "../../alarm/alarm"
         });
@@ -76,10 +78,12 @@ Page({
      * 生命周期函数--监听页面加载
      */
     onLoad: function (options) {
-        console.log(options);
         this.setData({
+            _realName: app.globalData._username,
+            _idNumber: app.globalData._idNumber,
+
             _reservationType: options.reservationType,
-            _reservationTypeDiscription: util.setUserTypeDiscription(options.reservationType),
+            _reservationTypeDiscription: util.setUserTypeDiscription(Number(options.reservationType)),
             _date: options.date,
             _begTime: options.begTime,
             _endTime: options.endTime,

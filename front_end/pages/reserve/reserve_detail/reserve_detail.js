@@ -30,7 +30,7 @@ Page({
         _lastMinute: util.ENDMINUTE,
 
         _chooseSingle: true,
-        _reserveType: null,
+        _reservationType: null,
     },
 
     /*
@@ -98,7 +98,14 @@ Page({
      * to confirm
      */
     submitReservation: function (e) {
-        this.toConfirm(e);
+        let begTimeIndex = util.getIndexInTimeTable(this.data._begHour, this.data._begMinute);
+        let endTimeIndex = util.getIndexInTimeTable(this.data._endHour, this.data._endMinute);
+        if(endTimeIndex - begTimeIndex < util.MINTIMEINTERVAL){
+            util.alertInfo("预约时长不可小于" + util.MINTIMEINTERVAL * util.TIMEINTERVAL + "min", "none", 1000);
+        }
+        else{
+            this.toConfirm(e);
+        }
     },
 
     /*
@@ -107,7 +114,7 @@ Page({
     toConfirm: function (e) {
         let paras = {};
 
-        paras["reserveType"] = this.data._reserveType;
+        paras["reservationType"] = this.data._reservationType;
         paras["date"] = this.data._date;
 
         paras["begTime"] = util.getTimeDiscription(this.data._begHour, this.data._begMinute);
@@ -215,7 +222,7 @@ Page({
     bindSingleUser: function(e){
         this.setData({
             _chooseSingle: true,
-            _reserveType: app.globalData._userType
+            _reservationType: app.globalData._userType
         });
     },
 
@@ -225,7 +232,7 @@ Page({
     bindMultiUsers: function(e){
         this.setData({
             _chooseSingle: false,
-            _reserveType: util.USERTYPE.MULTI
+            _reservationType: util.USERTYPE.MULTI
         });
     },
 
@@ -297,7 +304,6 @@ Page({
             },
             fail: function (res) {
                 util.alertInfo("获取琴房信息失败，请检查网络设备是否正常。", "none", 1000);
-                console.log("get failed!!!!!!!!!!!!!!!");
             }
         });
 
@@ -323,7 +329,7 @@ Page({
             _date: options.date,
             _pianoId: options.pianoId,
             _pianoPlace: options.pianoPlace,
-            _reserveType: app.globalData._userType
+            _reservationType: app.globalData._userType
         });
         // init piano infos
         this.initInfo();

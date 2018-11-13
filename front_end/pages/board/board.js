@@ -15,15 +15,6 @@ Page({
      * 生命周期函数--监听页面加载
      */
     onLoad: function (options) {
-        // 模拟登录
-        let login = () => {
-            app.globalData._phoneNumber = options.phoneNumber;
-            app.globalData._username = options.realName;
-            app.globalData._userType = options.userType;
-            app.globalData._idNumber = options.idNumber;
-        };
-
-        login();
     },
 
     /**

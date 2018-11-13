@@ -4,6 +4,7 @@
 let app = getApp();
 let util = app.util;
 
+
 // 此处成员变量没有以_开头是因为这些变量都是小程序默认初始化的，如果要强行更改，麻烦...
 
 Page({
@@ -24,6 +25,18 @@ Page({
             url: "./login_out_school/login_out_school"
         })
     },
+
+    /*
+     * to board
+     * after login success
+     */
+    toBoard: function () {
+        wx.switchTab({
+            url: "../board/board"
+        });
+    },
+
+
     onLoad: function () {
         if (app.globalData.userInfo) {
             this.setData({
@@ -51,10 +64,12 @@ Page({
                 }
             })
         }
-
         // if there is cookie
+
         let cookie = wx.getStorageSync("sessionid");
-        if(cookie !== null){
+        let that = this;
+
+        if(cookie){
             wx.request({
                 url: "https://958107.iterator-traits.com/login/cookie",
                 data: {
@@ -62,7 +77,7 @@ Page({
                 method: "POST",
                 header: {
                     "Content-Type": "application/x-www-form-urlencoded",
-                    "cookie": cookie
+                    cookie: cookie
                 },
                 success: function (res) {
                     // if success
@@ -72,9 +87,11 @@ Page({
 
                         app.globalData._username = res.data.realName;
                         app.globalData._userType = res.data.userType;
-                        app.globalData._idNumber = res.data.idNumer;
+                        app.globalData._idNumber = res.data.idNumber;
 
-                        that.toBoard();
+                        setTimeout(() => {
+                            that.toBoard();
+                        }, 500);
                     }
                     // if wrong
                     else {
@@ -89,7 +106,6 @@ Page({
         }
     },
     getUserInfo: function (e) {
-        console.log(e);
         app.globalData.userInfo = e.detail.userInfo;
         this.setData({
             userInfo: e.detail.userInfo,

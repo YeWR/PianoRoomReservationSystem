@@ -27,7 +27,7 @@ Page({
         _lastMinute: util.ENDMINUTE,
 
         _cannotPrevious: true,
-        _cannotNext: true
+        _cannotNext: false
     },
 
     /*
@@ -131,6 +131,7 @@ Page({
             _endTimeIndex: [hourIndex, minuteIndex]
         });
 
+        this.setPianoAvailable(this);
     },
 
     /*
@@ -161,6 +162,8 @@ Page({
                 _endMinute: endTimeArray[column][value]
             });
         }
+
+        this.setPianoAvailable(this);
     },
 
     /*
@@ -192,21 +195,6 @@ Page({
     },
 
     /*
-     * get time table of given day
-     * timeString: 3 x 84 string
-     * day: 0 -> today, 1 -> tomorrow, 2 -> the day after tommorrow
-     */
-    getTimeTable: function(timeString, day){
-        const tableLen = util.getTimeTableLen();
-        let timeTable = [];
-        let index = tableLen * day;
-        for(let i = 0; i < tableLen; ++i){
-            timeTable.push(Number(timeString[index + i]));
-        }
-        return timeTable;
-    },
-
-    /*
      * judge whether the piano is available
      * begIndex and endIndex
      */
@@ -227,15 +215,16 @@ Page({
     },
 
     /*
-     * set piano list available
+     * set piano list available+-----------
      */
     setPianoAvailable: function(that){
+        const tableLen = util.getTimeTableLen();
         let pianoAvailable = [];
         let curDate = new Date();
         let day = util.dateSub(that.data._jsDate, curDate);
 
-        for(piano of that.data._pianoList){
-            let timeTable = that.getTimeTable(piano.timeTable, day);
+        for(let piano of that.data._pianoList){
+            let timeTable = piano.timeTable.slice(tableLen * day, tableLen * (day + 1));
             if(that.isAvailable(timeTable, that)){
                 let pianoAvl = {};
                 pianoAvl.pianoPlace = piano.pianoPlace;
@@ -341,44 +330,44 @@ Page({
             _endHour: util.ENDHOUR,
             _endMinute: util.ENDMINUTE
         });
+
+        // reset the index
+        let hourIndex = endHours.indexOf(this.data._endHour);
+        let minuteIndex = endMinutes.indexOf(this.data._endMinute);
+        this.setData({
+            _endTimeIndex: [hourIndex, minuteIndex]
+        });
+    },
+
+    /*
+     * init data
+     */
+    initData: function(){
+        this.setData({
+            _pianoList: [],
+            _pianoAvailable: [],
+
+            _begTimeArray: [],
+            _begTimeIndex: [],
+            _endTimeArray: [],
+            _endTimeIndex: [],
+
+            _cannotNext: false,
+            _cannotPrevious: true,
+        });
     },
 
     /**
      * 生命周期函数--监听页面加载
      */
     onLoad: function (options) {
-        // get the date
-        let date = new Date();
-        let that = this;
-        this.setData({
-            _jsDate: date,
-            _date: util.formatDate(date),
-            _cannotNext: false
-        });
-        // init time array
-        this.initTime();
 
-        // get the piano list
-        wx.request({
-            url: "https://958107.iterator-traits.com/reserve/all",
-            method: "POST",
-            header: {
-                "Content-Type": "application/x-www-form-urlencoded"
-            },
-            success: function (res) {
-                // set the piano list data
-                that.setPianoList(res.data.pianoList, that);
-            },
-            fail: function (res) {
-                util.alertInfo("获取琴房信息失败，请检查网络设备是否正常。", "none", 1000);
-            }
-        });
     },
 
     setPianoList: function (list, that) {
         that.setData({
             _pianoList: list
-        });
+    });
         // set the piano Available
         that.setPianoAvailable(that);
     },
@@ -411,14 +400,38 @@ Page({
      * 生命周期函数--监听页面显示
      */
     onShow: function () {
+        // get the date
+        let date = new Date();
+        let that = this;
+        this.setData({
+            _jsDate: date,
+            _date: util.formatDate(date),
+        });
+        // init time array
+        this.initTime();
 
+        // get the piano list
+        wx.request({
+            url: "https://958107.iterator-traits.com/reserve/all",
+            method: "POST",
+            header: {
+                "Content-Type": "application/x-www-form-urlencoded"
+            },
+            success: function (res) {
+                // set the piano list data
+                that.setPianoList(res.data.pianoList, that);
+            },
+            fail: function (res) {
+                util.alertInfo("获取琴房信息失败，请检查网络设备是否正常。", "none", 1000);
+            }
+        });
     },
 
     /**
      * 生命周期函数--监听页面隐藏
      */
     onHide: function () {
-
+        this.initData();
     },
 
     /**
