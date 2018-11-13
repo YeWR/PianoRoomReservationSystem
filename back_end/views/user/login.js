@@ -9,6 +9,7 @@ const routers = router.post("/outSchool", async (ctx, next) => {
         code = ctx.request.body.validateCode;
     console.log(`login with tele: ${tele}`);
     let result = await dataBase.SocietyLogin(tele,code);
+    //let result = {"success": true};
     if(result.success === true)
     {
         ctx.session.userId = tele;

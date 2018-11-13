@@ -11,12 +11,6 @@ let dbconfig = JSON.parse(file.readFileSync(dbconfigFile));
 app.keys = ["hello world"];
 app.use(session({
     maxAge: 10*24*60*60*1000,  //10天
-    store: new sessionStore({
-        user: dbconfig.userName,
-        password: dbconfig.passWord,
-        database: dbconfig.dataBase,
-        host: dbconfig.serverIp
-    })
 },app));
 
 //app.use(async (ctx, next) => {
