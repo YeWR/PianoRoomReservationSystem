@@ -12,7 +12,7 @@ const routers = router.post("/all", async (ctx, next) => {
     else
     {
         let pianolist = [];
-        for(p of result.data) {
+        for(let p of result.data) {
             let timeList = [];
             for(let i = 0; i<p.piano_list.data.length;i++)
             {
@@ -62,7 +62,7 @@ const routers = router.post("/all", async (ctx, next) => {
     console.log(ctx.request.body);
     let number = ctx.request.body.number;
     let pianoId = ctx.request.body.pianoId;
-    let reserveType = parseInt(ctx.request.body.reserveType);
+    let reserveType = parseInt(ctx.request.body.reservationType);
     let pianoPrice = parseInt(ctx.request.body.pianoPrice);
     let begTimeIndex = parseInt(ctx.request.body.begTimeIndex);
     let endTimeIndex = parseInt(ctx.request.body.endTimeIndex);
