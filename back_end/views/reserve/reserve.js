@@ -53,9 +53,9 @@ const routers = router.post("/all", async (ctx, next) => {
     let phoneNumber = ctx.request.body.phoneNumber;
     let pianoId = ctx.request.body.pianoId;
     let userType = ctx.request.body.userType;
-    let pianoPrice = ctx.request.body.pianoPrice;
-    let begTimeIndex = ctx.request.body.begTimeIndex;
-    let endTimeIndex = ctx.request.body.endTimeIndex;
+    let pianoPrice = parseInt(ctx.request.body.pianoPrice);
+    let begTimeIndex = parseInt(ctx.request.body.begTimeIndex);
+    let endTimeIndex = parseInt(ctx.request.body.endTimeIndex);
     let dateStr = ctx.request.body.date;
     dateStr.concat(" 08:00:00");
     let duration = endTimeIndex - begTimeIndex;
