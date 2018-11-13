@@ -1,5 +1,4 @@
 const Router = require("koa-router");
-const session = require("koa-session2");
 const router = new Router();
 const dataBase = require("../dataBase");
 const constVariable = require("../const");
@@ -24,6 +23,7 @@ const routers = router.post("/outSchool", async (ctx, next) => {
         "idNumber": null,
         "info": null
     }
+    console.log(ctx.session);
     if(ctx.session.userId && ctx.session.userType)
     {
         let userInfo = null;
