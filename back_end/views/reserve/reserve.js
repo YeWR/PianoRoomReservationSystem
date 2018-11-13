@@ -13,10 +13,15 @@ const routers = router.post("/all", async (ctx, next) => {
     {
         let pianolist = [];
         for(p of result.data) {
+            let timeList = [];
+            for(let i = 0; i<p.piano_list.data.length;i++)
+            {
+                timeList.push(p.piano_list.data[i] - '0');
+            }
             let info = {
                 "pianoId": p.piano_id,
                 "pianoType": p.piano_type,
-                "timeTable": p.piano_list.data,
+                "timeTable": timeList,
                 "pianoPlace": p.piano_room
             };
             pianolist.push(info);
@@ -41,8 +46,12 @@ const routers = router.post("/all", async (ctx, next) => {
             "society": result.data.piano_socvalue,
             "multi": result.data.piano_multivalue
         };
+        for(let i = 0; i<result.data.piano_list.length;i++)
+        {
+            timeList.push(result.data.piano_list[i] - '0');
+        }
         ctx.response.body = {
-            "timeTable": result.data.piano_list,
+            "timeTable": timeList,
             "pianoPrices": price,
             "pianoInfo": result.data.piano_info
         };
