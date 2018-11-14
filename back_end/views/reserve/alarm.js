@@ -1,6 +1,6 @@
 const Router = require("koa-router");
 const router = new Router();
-const dataBase = require("../dataBase")
+const dataBase = require("../dataBase");
 
 const routers = router.post("/all", async (ctx, next) => {
     let userId = ctx.request.body.number;
@@ -21,6 +21,8 @@ const routers = router.post("/all", async (ctx, next) => {
                     let date = new Date(p.item_date);
                     console.log(date.toISOString());
                     let dateStr = date.getFullYear().toString() + "年" + (date.getMonth()+1).toString() + "月" + date.getDate().toString() + "日";
+                    let week = date.getDay();
+                    const weekStr = ["星期日","星期一","星期二","星期三","星期四","星期五","星期六"];
                     let info = {
                         "pianoPlace":i.piano_room,
                         "pianoType": i.piano_type,
@@ -28,6 +30,7 @@ const routers = router.post("/all", async (ctx, next) => {
                         "reservationType": p.item_member,
                         "reservationState": p.item_type,
                         "date": dateStr,
+                        "weekday": weekStr[week],
                         "begTimeIndex": p.item_begin,
                         "endTimeIndex": p.item_begin+p.item_duration
                     };
@@ -39,6 +42,6 @@ const routers = router.post("/all", async (ctx, next) => {
         ctx.response.body = {"reservationList": reservationList};
     }
     console.log(ctx.response.body);
-})
+});
 
 module.exports = routers;
