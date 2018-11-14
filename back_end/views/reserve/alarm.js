@@ -20,10 +20,10 @@ const routers = router.post("/all", async (ctx, next) => {
                 {
                     let date = new Date(p.item_date);
                     console.log(date.toISOString());
-                    let dateStr = date.getFullYear().toString() + "年" + date.getMonth().toString() + "月" + date.getDate().toString() + "日";
+                    let dateStr = date.getFullYear().toString() + "年" + (date.getMonth()+1).toString() + "月" + date.getDate().toString() + "日";
                     let info = {
-                        "pianoPlace":i.pianoPlace,
-                        "pianoType": i.pianoType,
+                        "pianoPlace":i.piano_room,
+                        "pianoType": i.piano_type,
                         "pianoPrice": p.item_value,
                         "reservationType": p.item_member,
                         "reservationState": p.item_type,
