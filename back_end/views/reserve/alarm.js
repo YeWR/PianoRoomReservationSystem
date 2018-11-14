@@ -30,7 +30,6 @@ function sortItem(a, b)
 function getDateStr (date) {
     let dateStr = date.getFullYear().toString() + "年";
     let month = date.getMonth()+1;
-    String.format()
     let day = date.getDate();
     if(month < 10)
     {
