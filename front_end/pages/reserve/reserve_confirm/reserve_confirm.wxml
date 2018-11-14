@@ -1,11 +1,62 @@
 <!--pages/reserve/reserve_confirm/reserve_confirm.wxml-->
 
 <view class="container">
-    <view>
-        <text>预约信息</text>
+    <view class="up_board">
+        <text class="register_title">
+            确认预约信息
+        </text>
     </view>
-    
-    <view>
-        <button bindtap="confirmReservation">确认预约</button>
+
+    <view class="reserve-card">
+
+
+        <view class="date-view">
+            <text class="fa fa-calendar fa-lg"></text>
+            <view class="date-text">
+                日期：
+            </view>
+
+            <view class="date-info">
+                2018-11-11
+            </view>
+        </view>
+
+        <view class="date-view">
+            <text class="fa fa-clock-o fa-lg"></text>
+            <view class="date-text">
+                时间：
+            </view>
+
+            <view class="date-info">
+                8:00--9:00
+            </view>
+        </view>
+
+        <view class="date-view">
+            <text class="fa fa-user fa-lg"></text>
+            <view class="date-text">
+                人数：
+            </view>
+
+            <view class="date-info">
+                单人
+            </view>
+        </view>
+
+        <view class="date-view">
+            <text class="fa fa-jpy fa-lg"></text>
+            <view class="date-text">
+                金额 :
+            </view>
+
+            <view class="money-info">
+                $10
+            </view>
+        </view>
+
+        <view class="reserve_btn_view">
+            <button class="reserve_btn" >确认</button>
+        </view>
     </view>
+
 </view>

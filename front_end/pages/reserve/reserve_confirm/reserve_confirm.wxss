@@ -1,1 +1,71 @@
 /* pages/reserve/reserve_confirm/reserve_confirm.wxss */
+.reserve-card {
+    align-items: center;
+    background-color: white;
+    margin-top: 10%;
+    height: 43%;
+    width: 86%;
+    color: rgba(0, 0, 0, 1);
+    display: flex;
+    flex-direction: column;
+    border-radius: 6 rpx;
+}
+
+.date-view {
+    margin-top: 5%;
+    width: 90%;
+    height: 10%;
+    display: flex;
+    color: rgba(102, 8, 116, 1);
+
+}
+
+.date-icon {
+    width: 50 rpx;
+    height: 50 rpx;
+    background-color: rgba(102, 8, 116, 1);
+}
+
+.date-text {
+    width: 20%;
+    margin-left: 2%;
+    color: rgba(136, 136, 136, 1);
+    font-size: 18px;
+    font-family: Arial;
+}
+
+.date-info {
+    color: rgba(136, 136, 136, 1);
+    font-family: Arial;
+    justify-content: center;
+    width: 70%;
+    text-align: center;
+}
+.money-info{
+    color: rgba(136, 136, 136, 1);
+    justify-content: center;
+    width: 70%;
+    text-align: center;
+    color: black;
+    font-size: 80rpx;
+    font-weight: bolder;
+}
+.reserve_btn_view {
+    margin-top:10%;
+    width: 80%;
+    color: white;
+    font-size:15px;
+    border-radius: 6px;
+    background-color: rgba(102, 8, 116, 0.9);
+    font-family: Arial;
+    border: 1px solid rgba(187, 187, 187, 1);
+}
+
+.reserve_btn{
+    /*margin-top: 3%;*/
+    text-align: center;
+    color: white;
+    font-size: 14px;
+    font-family: Arial;
+    background-color: rgba(102, 8, 116, 0.9);
+}
