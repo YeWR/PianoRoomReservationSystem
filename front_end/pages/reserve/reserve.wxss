@@ -9,7 +9,7 @@
     background-color: rgba(102, 8, 116, 0.9);
     height: 30%;
     width: 100%;
-    border: 1px solid rgba(187, 187, 187, 1);
+    border: 2rpx solid rgba(187, 187, 187, 1);
 }
 .date {
     font-size: xx-large;
@@ -147,7 +147,7 @@
 
 .caret_btn{
     background: none ;
-    border: 1px solid transparent;
+    border: 2rpx solid transparent;
     height: 100%;
 }
 .no_room{

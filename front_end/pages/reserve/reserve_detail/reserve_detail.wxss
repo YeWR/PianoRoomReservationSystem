@@ -89,14 +89,14 @@
     width: 30%;
     margin-left: 2%;
     color: rgba(136, 136, 136, 1);
-    font-size: 18px;
+    font-size: 36rpx;
     font-family: Arial;
 }
 
 .date-info {
     justify-content: center;
     width: 70%;
-    border-bottom: 1px solid rgba(187, 187, 187, 1);
+    border-bottom: 2rpx solid rgba(187, 187, 187, 1);
     text-align: center;
     color: black;
 }
@@ -117,7 +117,7 @@
     display: flex;
     justify-content: space-between;
     width: 70%;
-    border-bottom: 1px solid rgba(187, 187, 187, 1);
+    border-bottom: 2rpx solid rgba(187, 187, 187, 1);
     text-align: center;
     color: black;
 }
@@ -166,18 +166,18 @@
     margin-top:10%;
     width: 80%;
     color: white;
-    font-size:15px;
-    border-radius: 6px;
+    font-size:30rpx;
+    border-radius: 12rpx;
     background-color: rgba(102, 8, 116, 0.9);
     font-family: Arial;
-    border: 1px solid rgba(187, 187, 187, 1);
+    border: 2rpx solid rgba(187, 187, 187, 1);
 }
 
 .reserve_btn{
     /*margin-top: 3%;*/
     text-align: center;
     color: white;
-    font-size: 14px;
+    font-size: 28rpx;
     font-family: Arial;
     background-color: rgba(102, 8, 116, 0.9);
 }
