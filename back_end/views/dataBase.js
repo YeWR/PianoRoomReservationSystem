@@ -536,7 +536,7 @@ let GetItem = async function(itemUsername){
     let test = function(){
         return new Promise(resolve =>{
             db.where({ item_username: itemUsername }).get('item', function (err, res, fields) {
-                let _data = JSON.stringify(_select);
+                let _data = JSON.stringify(res);
                 let _info = JSON.parse(_data);
                 itemInfo = _info[0];
                 resolve(1);
