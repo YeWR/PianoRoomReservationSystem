@@ -76,16 +76,17 @@
     width: 90%;
     height: 10%;
     display: flex;
+    color: rgba(102, 8, 116, 1);
+
 }
 
 .date-icon {
-    width: 50 rpx;
-    height: 50 rpx;
-    background-color: rgba(102, 8, 116, 1);
+    color: rgba(102, 8, 116, 1);
 }
 
 .date-text {
-    width: 20%;
+    text-align: center;
+    width: 30%;
     margin-left: 2%;
     color: rgba(136, 136, 136, 1);
     font-size: 18px;

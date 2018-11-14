@@ -1,25 +1,73 @@
 <!--pages/reserve/reserve_confirm/reserve_confirm.wxml-->
 
 <view class="container">
-    <view>
-        <text>预约信息</text>
-        <view>
-            <text>{{_realName}} ({{_idNumberHiden}})
-            </text>
-            <text>{{_reservationTypeDiscription}}</text>
+    <view class="up_board">
+        <text class="register_title">
+            确认预约信息
+        </text>
+    </view>
+
+    <view class="reserve-card">
+
+
+        <view class="date-view">
+            <text class="fa fa-calendar fa-lg"></text>
+            <view class="date-text">
+                日期：
+            </view>
+
+            <view class="date-info">
+                {{_date}}
+            </view>
         </view>
-        <view>
-            <text>{{_date}}</text>
-            <text>{{_begTime}} - {{_endTime}}</text>
+
+        <view class="date-view">
+            <text class="fa fa-clock-o fa-lg"></text>
+            <view class="date-text">
+                时间：
+            </view>
+
+            <view class="date-info">
+                {{_begTime}}--{{_endTime}}
+            </view>
         </view>
-        <view>
-            <text>{{_pianoPlace}}</text>
+
+        <view class="date-view">
+            <text class="fa fa-user fa-lg"></text>
+            <view class="date-text">
+                人数：
+            </view>
+
+            <view class="date-info">
+                {{_reservationTypeDiscription}}
+            </view>
         </view>
-        <view>
-            <text>{{_pianoPrice}}</text>
+
+        <view class="date-view">
+            <text class="fa fa-user fa-lg"></text>
+            <view class="date-text">
+                地点：
+            </view>
+
+            <view class="date-info">
+                {{_pianoPlace}}
+            </view>
+        </view>
+
+        <view class="date-view">
+            <text class="fa fa-jpy fa-lg"></text>
+            <view class="date-text">
+                金额 :
+            </view>
+
+            <view class="money-info">
+                {{_pianoPrice}}元
+            </view>
+        </view>
+
+        <view class="reserve_btn_view">
+            <button class="reserve_btn" >确认预约</button>
         </view>
     </view>
-    <view>
-        <button bindtap="confirmReservation">确认预约</button>
-    </view>
+
 </view>
