@@ -8,7 +8,7 @@ let file = require("fs");
 let dbconfigFile = "mysqlConfig.json";
 let dbconfig = JSON.parse(file.readFileSync(dbconfigFile));
 const configPath = "configs.json";
-const configs = JSON.parse(fs.readFileSync(configPath))
+const configs = JSON.parse(file.readFileSync(configPath))
 
 app.keys = configs.app_key;
 app.use(session({
