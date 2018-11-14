@@ -179,5 +179,18 @@
 }
 ```
 
+## 订单退订
 
+```json
+{
+    "url": "/reserve/refund",
+    "data": {
+        "reservationId": "订单号"
+    },
+    "res": {
+        "success": "退订成功",
+        "info": "退订失败信息"
+    }
+}
+```
 
