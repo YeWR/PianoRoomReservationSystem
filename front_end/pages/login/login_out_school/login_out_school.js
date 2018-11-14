@@ -60,7 +60,7 @@ Page({
                 that.setData({
                     _disable: true,
                     _timeLeft: timeLeft,
-                    _validateCodeTitle: timeLeft + "秒后重新发送"
+                    _validateCodeTitle: timeLeft + "秒发送"
                 });
 
                 if (timeLeft <= 0) {
@@ -68,7 +68,7 @@ Page({
                     that.setData({
                         _disable: false,
                         _timeLeft: 60,
-                        _validateCodeTitle: "重新获取验证码"
+                        _validateCodeTitle: "获取验证码"
                     });
                 }
             };
