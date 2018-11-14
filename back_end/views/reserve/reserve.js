@@ -82,8 +82,9 @@ const routers = router.post("/all", async (ctx, next) => {
     let result = await dataBase.InsertItem(dateStr,number,pianoId,1,reserveType,pianoPrice,duration,begTimeIndex,itemUuid);
     ctx.response.body = result;
     //console.log(ctx.response.body);
-}).post("/delete", async (ctx, next) => {
+}).post("/refund", async (ctx, next) => {
     let itemId = ctx.request.body.reservationId;
+    //let result =
     //let result = await dataBase.DeleteItem(dateStr,number,pianoId,1,reserveType,pianoPrice,duration,begTimeIndex);
     //ctx.response.body = result;
     //console.log(ctx.response.body);
