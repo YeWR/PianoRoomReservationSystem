@@ -7,10 +7,12 @@ const sessionStore = require("koa-mysql-session");
 let file = require("fs");
 let dbconfigFile = "mysqlConfig.json";
 let dbconfig = JSON.parse(file.readFileSync(dbconfigFile));
+const configPath = "configs.json";
+const configs = JSON.parse(fs.readFileSync(configPath))
 
-app.keys = ["hello world"];
+app.keys = configs.app_key;
 app.use(session({
-    maxAge: 10*24*60*60*1000,  //10天
+    maxAge: configs.expire_day *24*60*60*1000,
 },app));
 
 //app.use(async (ctx, next) => {
