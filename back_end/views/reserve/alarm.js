@@ -2,6 +2,31 @@ const Router = require("koa-router");
 const router = new Router();
 const dataBase = require("../dataBase");
 
+function sortItem(a, b)
+{
+    if(a.date > b.date)
+    {
+        return 1;
+    }
+    else if(a.date < b.date)
+    {
+        return -1;
+    }
+    else
+    {
+        if(a.begTimeIndex > b.begTimeIndex)
+        {
+            return 1;
+        }
+        else if(a.begTimeIndex < b.begTimeIndex)
+        {
+            return -1;
+        }
+        else
+            return 0;
+    }
+}
+
 const routers = router.post("/all", async (ctx, next) => {
     let userId = ctx.request.body.number;
     let result = await dataBase.GetItem(userId);
@@ -29,6 +54,7 @@ const routers = router.post("/all", async (ctx, next) => {
                         "pianoPrice": p.item_value,
                         "reservationType": p.item_member,
                         "reservationState": p.item_type,
+                        "reservationId": p.item_id,
                         "date": dateStr,
                         "weekday": weekStr[week],
                         "begTimeIndex": p.item_begin,
@@ -39,6 +65,7 @@ const routers = router.post("/all", async (ctx, next) => {
                 }
             }
         }
+        reservationList = reservationList.sort(sortItem);
         ctx.response.body = {"reservationList": reservationList};
     }
     console.log(ctx.response.body);

@@ -546,7 +546,7 @@ let GetItem = async function(itemUsername){
                 "info":errorMsg};
     }
     if(flag == 1){
-        console.log(itemInfo[0].item_date);
+        //console.log(itemInfo[0].item_date);
         return {"data":itemInfo};
     }
 }
