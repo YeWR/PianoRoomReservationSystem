@@ -39,7 +39,7 @@ Page({
      */
     toAlarm: function () {
         wx.switchTab({
-            url: "../alarm/alarm"
+            url: "../alarm"
         });
     },
 

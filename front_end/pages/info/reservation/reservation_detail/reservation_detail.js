@@ -1,4 +1,8 @@
 // pages/info/reservation/reservation_detail/reservation_detail.js
+
+let app = getApp();
+let util = app.util;
+
 Page({
 
     /**
@@ -25,6 +29,8 @@ Page({
 
         _reservationTypeDis: "",
         _reservationStateDis: "",
+
+        _canvasId: "reservationDetailQr",
     },
 
     /**
@@ -53,6 +59,8 @@ Page({
             _reservationTypeDis: util.setUserTypeDiscription(Number(options.reservationType)),
             _reservationStateDis: options.reservationStateDis,
         });
+        // draw Qr code
+        util.drawQrCode(this.data._canvasId, this.data._reservationId);
     },
 
     /**

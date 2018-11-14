@@ -23,5 +23,8 @@
         {{_reservationPianoPrice}}
     </view>
 
+    <canvas style="width: 200px; height: 200px;" canvas-id="reservationDetailQr">
+    </canvas>
+
 </view>
 

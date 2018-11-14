@@ -1,4 +1,8 @@
 // pages/info/reservation/reservation.js
+
+let app = getApp();
+let util = app.util;
+
 Page({
 
     /**
