@@ -190,7 +190,7 @@
 
 ```json
 {
-    "url": "/reserve/refund",
+    "url": "/item/refund",
     "data": {
         "reservationId": "订单号"
     },
