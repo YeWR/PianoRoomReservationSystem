@@ -9,7 +9,7 @@ Page({
      * 页面的初始数据
      */
     data: {
-        _username:app.globalData._username
+        _username: app.globalData._username
     },
 
     /**
