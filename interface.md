@@ -104,6 +104,8 @@
         
     },
     "res": {
+        "success": "获取琴房信息成功",
+        "info": "失败信息",
         "pianoList"(琴房信息列表): [{
             "pianoId": "琴房id",
             "pianoType": "琴种类",
@@ -126,6 +128,8 @@
         "date": "日期"
     },
     "res": {
+        "success":"获取琴房信息成功",
+        "info": "失败信息",
         "timeTable": "0-1串，琴房的可用时间",
         "pianoPrices": "琴房单位小时价格，一个dict，总共有4类",
         "pianoInfo": "琴房介绍信息"
@@ -149,6 +153,7 @@
     },
     "res": {
         "success": "预约成功",
+        "info": "失败信息",
         "info": "预约失败信息（已被预约等）"
     }
 }
@@ -163,6 +168,8 @@
         "number":"号码（手机号/学号）"
     },
     "res": {
+        "success": "预约订单获取成功",
+        "info": "失败信息",
         "reservationList"(可用订单信息列表，正在使用，未使用): [{
             "pianoPlace":"琴房地点",
        		"pianoType":"钢琴简介信息",
