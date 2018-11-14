@@ -36,7 +36,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 1,
+			"current": 6,
 			"list": [
 				{
 					"id": -1,
@@ -51,16 +51,34 @@
 					"query": "phoneNumber=18800123392&realName=牛顿&userType=2"
 				},
 				{
-					"id": -1,
+					"id": 2,
 					"name": "预约空间",
-					"pathName": "pages/reserve/reserve_space/reserve_space",
+					"pathName": "pages/reserve/reserve",
 					"query": ""
 				},
 				{
-					"id": 3,
+					"id": -1,
+					"name": "校外登录",
+					"pathName": "pages/login/login_out_school/login_out_school",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "注册",
+					"pathName": "pages/register/register_out_school/register_out_school",
+					"query": ""
+				},
+				{
+					"id": -1,
 					"name": "预约",
 					"pathName": "pages/reserve/reserve_detail/reserve_detail",
-					"query": "date=2018-11-13&jsDate=2018-11-13T15:45:18.422Z"
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "预约信息",
+					"pathName": "pages/reserve/reserve_confirm/reserve_confirm",
+					"query": ""
 				}
 			]
 		}

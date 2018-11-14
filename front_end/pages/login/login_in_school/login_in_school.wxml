@@ -1,7 +1,8 @@
 <!--pages/login_in_school/login_in_school.wxml-->
 <view class="container">
     <view class="login_icon">
-        <image class="login-img" src="../../../images/bg/v2_phk4lz.png_t.png"></image>
+        此功能暂未开放
+        <!--<image class="login-img" src="../../../images/bg/v2_phk4lz.png_t.png"></image>-->
         <!--<button class="login_btn" bindtap="login">-->
             <!--登录-->
         <!--</button>-->

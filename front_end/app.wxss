@@ -10,8 +10,6 @@ page {
     display: flex;
     flex-direction: column;
     align-items: center;
-    /*justify-content: space-between;*/
-    /*padding: 200rpx 0;*/
     box-sizing: border-box;
 }
 
@@ -56,6 +54,14 @@ page {
     /*height: 60%;*/
     /*background: #000;*/
 /*}*/
+.fa-icon{
+    width: 40rpx;
+    color: rgba(102, 8, 116, 1);
+}
+.fa-icon-back{
+    width: 40rpx;
+    color: white;
+}
 
 @font-face {
     font-family: 'FontAwesome';

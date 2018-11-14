@@ -2,6 +2,8 @@
 
 .scroll-y{
     /*height: 60%;*/
+    align-items: center;
+    justify-content: center;
 }
 .middle_board{
     background-color: rgba(102, 8, 116, 0.9);
@@ -27,10 +29,9 @@
     align-items: center;
     color: #c7c7cc;
 }
-.icon_time{
+.fa-icon-clock{
+    color: white;
     margin-left: 6%;
-    width: 50rpx;
-    height: 50rpx;
 }
 .select_time_board{
     justify-content: center;
@@ -44,18 +45,21 @@
     margin-left: 10%;
 }
 .preview{
-    width: 90%;
-    display: flex;
+    width: 100%;
     flex-direction: column;
     margin-top: 30rpx;
+    align-items: center;
+    justify-content: center;
 
 }
 
 .card {
+    margin-left: 5%;
+    margin-right: 5%;
     background-color: white;
-    margin-top: 23rpx;
+    margin-top: 50rpx;
     height: 180rpx;
-    width: 100%;
+    width: 90%;
     color: rgba(0, 0, 0, 1);
     display: flex;
     flex-direction: column;
@@ -118,4 +122,35 @@
 }
 .progress-time-each{
     margin-left: 7%;
+}
+
+.top_icon{
+    width: 100%;
+    margin-top: 1%;
+    display: flex;
+    /*vertical-align:middle;*/
+    /*align-items: flex-end;*/
+    justify-content: space-between;
+}
+.fa-icon-back-cal{
+    width: 14%;
+    margin-left: 3%;
+    margin-top: 1%;
+    color: white;
+}
+.fa-icon-back{
+    width: 14%;
+    display: flex;
+    justify-content: space-between;
+    margin-right: 3%;
+}
+
+.caret_btn{
+    background: none ;
+    border: 1px solid transparent;
+    height: 100%;
+}
+.no_room{
+    text-align: center;
+    margin-top: 20%;
 }
