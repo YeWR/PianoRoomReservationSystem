@@ -190,7 +190,7 @@
 
 ```json
 {
-    "url": "/item/refund",
+    "url": "/reservation/refund",
     "data": {
         "reservationId": "订单号"
     },
@@ -205,7 +205,7 @@
 
 ```json
 {
-    "url": "/item/all",
+    "url": "/reservation/all",
     "data": {
         "number":"号码（手机号/学号）"
     },

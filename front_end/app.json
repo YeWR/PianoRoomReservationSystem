@@ -11,7 +11,9 @@
     "pages/info/info",
     "pages/reserve/reserve_detail/reserve_detail",
     "pages/reserve/reserve_confirm/reserve_confirm",
-    "pages/alarm/alarm_detail/alarm_detail"
+    "pages/alarm/alarm_detail/alarm_detail",
+    "pages/info/reservation/reservation",
+    "pages/info/reservation/reservation_detail/reservation_detail"
   ],
   "window": {
     "backgroundTextStyle": "light",

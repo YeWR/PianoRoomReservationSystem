@@ -1,0 +1,27 @@
+<!--pages/info/reservation/reservation_detail/reservation_detail.wxml-->
+<view>
+    预约信息
+    <view>
+        {{_reservationUser}} {{_reservationTypeDis}}
+    </view>
+    <view>
+        {{_reservationDate}} {{_reservationWeekday}} {{_reservationBegTime}} - {{_reservationEndTime}}
+    </view>
+    <view>
+        {{_reservationPianoPlace}}
+    </view>
+    <view>
+        {{_reservationPianoType}}
+    </view>
+    <view>
+        {{_userType}}
+    </view>
+    <view>
+        {{_reservationStateDis}}
+    </view>
+    <view>
+        {{_reservationPianoPrice}}
+    </view>
+
+</view>
+

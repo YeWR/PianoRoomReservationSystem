@@ -1,8 +1,4 @@
-// pages/alarm/alarm_detail/alarm_detail.js
-
-let app = getApp();
-let util = app.util;
-
+// pages/info/reservation/reservation_detail/reservation_detail.js
 Page({
 
     /**
@@ -29,51 +25,6 @@ Page({
 
         _reservationTypeDis: "",
         _reservationStateDis: "",
-
-        _canvasId: "reservationDetailQr",
-        _refundDisable: false
-    },
-
-    /*
-     * to alarm
-     */
-    toAlarm: function () {
-        wx.switchTab({
-            url: "../alarm/alarm"
-        });
-    },
-
-    /*
-     * bind refund
-     */
-    bindRefund : function(e){
-        let that = this;
-
-        wx.request({
-            url: "https://958107.iterator-traits.com/reservation/refund",
-            data: {
-                reservationId: that.data._reservationId
-            },
-            method: "POST",
-            header: {
-                "Content-Type": "application/x-www-form-urlencoded"
-            },
-            success: function (res) {
-                if(res.data.success){
-                    util.alertInfo("退订成功！", "success", 500);
-
-                    setTimeout(() => {
-                        that.toAlarm();
-                    }, 500);
-                }
-                else{
-                    util.alertInfo(res.data.info, "none", 1000);
-                }
-            },
-            fail: function (res) {
-                util.alertInfo("退订失败，请检查网络设备是否正常。", "none", 1000);
-            }
-        });
     },
 
     /**
@@ -102,14 +53,6 @@ Page({
             _reservationTypeDis: util.setUserTypeDiscription(Number(options.reservationType)),
             _reservationStateDis: options.reservationStateDis,
         });
-        // draw Qr code
-        util.drawQrCode(this.data._canvasId, this.data._reservationId);
-        // set refund disable
-        if(Number(this.data._reservationState) !== util.RESERVATIONSTATE.NOTUSED){
-            this.setData({
-                _refundDisable: true
-            });
-        }
     },
 
     /**
@@ -160,4 +103,4 @@ Page({
     onShareAppMessage: function () {
 
     }
-});
+})
