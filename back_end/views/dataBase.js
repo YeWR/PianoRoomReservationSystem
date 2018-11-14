@@ -471,7 +471,7 @@ let preparePiano = async function(itemRoomId, itemBegin, itemDuration, itemDate)
 }
 
 // begin is the begin index, duration is the length
-let InsertItem = async function(itemDate, itemUsername, itemRoomId, itemType, itemMember, itemValue, itemDuration, itemBegin){
+let InsertItem = async function(itemDate, itemUsername, itemRoomId, itemType, itemMember, itemValue, itemDuration, itemBegin, itemUuid){
     let errorMsg = "";
     // 修改可预约时间段。
     let result = await preparePiano(itemRoomId, itemBegin, itemDuration, itemDate);
@@ -492,7 +492,8 @@ let InsertItem = async function(itemDate, itemUsername, itemRoomId, itemType, it
                     item_member: itemMember,
                     item_value: itemValue,
                     item_duration: itemDuration,
-                    item_begin: itemBegin
+                    item_begin: itemBegin,
+                    item_uuid: itemUuid
                 }
                 db.insert('item', _info, function (err, info) {
                     console.log(err);
@@ -551,12 +552,37 @@ let GetItem = async function(itemUsername){
     }
 }
 
+let GetNoticeAll = async function(){
+    let errorMsg = "";
+    let noticeInfo = null;
+    let test = function(){
+        return new Promise(resolve =>{
+            db.get('notice', function(err, rows, fields) { 
+                let _data = JSON.stringify(rows);
+                noticeInfo = JSON.parse(_data);
+                resolve(1);
+            });
+        });
+    };
+    let flag = await test();
+    console.log(flag);
+    if(flag == 0){
+        return {"data":noticeInfo,
+                "info":errorMsg};
+    }
+    if(flag == 1){
+        console.log(noticeInfo);
+        return {"data":noticeInfo,
+                "info":errorMsg};
+    }
+}
 
 
 // 订单
 exports.InsertItem = InsertItem;            // 新增订单
 exports.UpdateItem = UpdateItem;            // 更新订单
 exports.GetItem = GetItem;                  // 获取某个人的订单信息
+// 删除订单-需要改写琴房信息
 
 // 琴房
 exports.GetPianoRoomInfo = GetPianoRoomInfo;// 获取单个琴房信息
@@ -571,5 +597,10 @@ exports.SocietyRegister = SocietyRegister;  // 点击注册
 exports.SetLoginMsg = SetLoginMsg;          // 点击发送
 exports.SocietyLogin = SocietyLogin;        // 点击登录
 
-//用户
+// 用户
 exports.GetSocietyUserInfo = GetSocietyUserInfo;  // 获取某个校外用户的信息
+
+// 公告
+exports.GetNoticeAll = GetNoticeAll;
+
+
