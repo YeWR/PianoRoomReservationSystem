@@ -1,24 +1,27 @@
 <!--pages/login_in_school/login_in_school.wxml-->
 <view class="container">
     <view class="login_icon">
-        <!--<image class="login-img" src="../images/loginLog.jpg"></image>-->
+        <image class="login-img" src="../../../images/bg/v2_phk4lz.png_t.png"></image>
+        <button class="login_btn" bindtap="login">
+            登录
+        </button>
     </view>
-    <view class="login_from">
+    <!--<view class="login_from">-->
 
-        <!--账号-->
-        <view class="input_view">
-            <input class="input_text" placeholder="请输入学号或工号" bindinput="getUsername" />
-        </view>
+        <!--&lt;!&ndash;&lt;!&ndash;账号&ndash;&gt;&ndash;&gt;-->
+        <!--&lt;!&ndash;<view class="input_view">&ndash;&gt;-->
+            <!--&lt;!&ndash;<input class="input_text" placeholder="请输入学号或工号" bindinput="getUsername" />&ndash;&gt;-->
+        <!--&lt;!&ndash;</view>&ndash;&gt;-->
 
-        <!--密码-->
-        <view class="input_view">
-            <input class="input_text" password="true" placeholder="请输入密码" bindinput="getPassword" />
-        </view>
+        <!--&lt;!&ndash;&lt;!&ndash;密码&ndash;&gt;&ndash;&gt;-->
+        <!--&lt;!&ndash;<view class="input_view">&ndash;&gt;-->
+            <!--&lt;!&ndash;<input class="input_text" password="true" placeholder="请输入密码" bindinput="getPassword" />&ndash;&gt;-->
+        <!--&lt;!&ndash;</view>&ndash;&gt;-->
 
-        <!--登录-->
-        <view class="login_btn_view">
-            <button class="login_btn" bindtap="login">登录</button>
-        </view>
+        <!--&lt;!&ndash;&lt;!&ndash;登录&ndash;&gt;&ndash;&gt;-->
+        <!--<view class="login_btn_view">-->
+            <!--<button class="login_btn" bindtap="login">登录</button>-->
+        <!--</view>-->
 
-    </view>
+    <!--</view>-->
 </view>

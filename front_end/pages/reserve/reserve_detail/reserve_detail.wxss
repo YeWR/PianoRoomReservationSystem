@@ -1,52 +1,150 @@
 /* pages/reserve/reserve_detail/reserve_detail.wxss */
+.top_board{
+    background-color: rgba(102, 8, 116, 0.9);
+    height: 37%;
+    width: 100%;
+    border: 1px solid rgba(187, 187, 187, 1);
+}
+.reserve-info{
+
+
+    position: absolute;
+    margin-top: 18%;
+    border: 1px solid rgba(238, 238, 238, 1);
+    background-color: white;
+    height: 31%;
+    width: 86%;
+}
 
 .date {
-    font-weight: bold;
+    margin-top: 6%;
     font-size: xx-large;
+    text-align: center;
+    color: black;
+    font-weight:bolder;
+    font-family: SFUIText-regular;
+}
+
+.reserve-info-cut{
     display: flex;
-    align-items: center;
     justify-content: center;
-    color: white;
-}
-
-.select_time_board {
-    background-color: white;
-    height: 10%;
     width: 100%;
-
-    margin:20rpx;
-    padding:20rpx;
-
-    display: flex;
-    align-items: center;
-
-    justify-content: space-between;
+    margin-top: 6%;
+    height:1%;
 }
 
-.progress-days{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    height: 35rpx;
-}
-
-.progress{
+.reserve-info-cutline{
+    height:100%;
     width: 90%;
+    background-color: rgba(238, 238, 238, 1);
+}
+.progress-days{
+    margin-top: 8%;
+}
+.progress{
+    width: 83%;
+    margin-left: 8%;
+}
+.progress-time{
+    margin-top: 1%;
+    width: 100%;
+    font-size: 26rpx;
+    font-family: SFUIText-regular;
+}
+.progress-time-each{
+    margin-left: 7%;
+}
+
+.reserve-card{
+    align-items: center;
+    background-color: white;
+    margin-top: 20%;
+    height: 43%;
+    width: 86%;
+    color: rgba(0, 0, 0, 1);
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    font-size: 30rpx;
-    color: #DDD;
+    border-radius: 10rpx;
 }
 
-.reserve_btn_view {
-    height: 30%;
-    width: 80%;
-}
-
-.reserve_btn{
+.date-view{
+    margin-top:5%;
     width: 90%;
-    background-color: #1dc5ff;
-    color: white;
-    font-size:15px;
+    height: 10%;
+    display: flex;
 }
+.date-icon{
+    width: 50rpx;
+    height: 50rpx;
+    background-color: rgba(102, 8, 116, 1);
+}
+
+.date-text{
+    width: 20%;
+    margin-left: 2%;
+    color: rgba(136, 136, 136, 1);
+    font-size: 18px;
+    font-family: Arial;
+}
+/*.select_time {*/
+    /*height: 30%;*/
+    /*width: 100%;*/
+    /*font-size: 50rpx;*/
+    /*display: flex;*/
+    /*align-items: center;*/
+    /*color: #c7c7cc;*/
+/*}*/
+
+.date-info{
+    justify-content: center;
+    width: 70%;
+    border-bottom:1px solid rgba(187, 187, 187, 1);
+    text-align: center;
+
+}
+/*.select_time_--{*/
+    /*justify-content: center;*/
+    /*margin-left: 10%;*/
+/*}*/
+
+/*.select_time_board {*/
+    /*background-color: white;*/
+    /*height: 10%;*/
+    /*width: 100%;*/
+
+    /*margin:20rpx;*/
+    /*padding:20rpx;*/
+
+    /*display: flex;*/
+    /*align-items: center;*/
+
+    /*justify-content: space-between;*/
+/*}*/
+
+/*.progress-days{*/
+    /*display: flex;*/
+    /*flex-direction: row;*/
+    /*justify-content: space-between;*/
+    /*height: 35rpx;*/
+/*}*/
+
+/*.progress{*/
+    /*width: 90%;*/
+    /*display: flex;*/
+    /*flex-direction: column;*/
+    /*justify-content: space-between;*/
+    /*font-size: 30rpx;*/
+    /*color: #DDD;*/
+/*}*/
+
+/*.reserve_btn_view {*/
+    /*height: 30%;*/
+    /*width: 80%;*/
+/*}*/
+
+/*.reserve_btn{*/
+    /*width: 90%;*/
+    /*background-color: #1dc5ff;*/
+    /*color: white;*/
+    /*font-size:15px;*/
+/*}*/

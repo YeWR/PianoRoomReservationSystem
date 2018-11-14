@@ -1,84 +1,121 @@
 /* pages/reserve/reserve_space/reserve.wxss */
 
+.scroll-y{
+    /*height: 60%;*/
+}
+.middle_board{
+    background-color: rgba(102, 8, 116, 0.9);
+    height: 30%;
+    width: 100%;
+    border: 1px solid rgba(187, 187, 187, 1);
+}
 .date {
-    font-weight: bold;
     font-size: xx-large;
     display: flex;
     align-items: center;
     justify-content: center;
     color: white;
+    font-family: SFUIText-regular;
+    height: 40%;
 }
+.select_time {
 
-.select_time_board {
-    background-color: white;
-    height: 35%;
+    height: 30%;
     width: 100%;
-
+    font-size: 50rpx;
     display: flex;
     align-items: center;
-
-    justify-content: center;
     color: #c7c7cc;
 }
+.icon_time{
+    margin-left: 6%;
+    width: 50rpx;
+    height: 50rpx;
+}
+.select_time_board{
+    justify-content: center;
+    margin-left: 11%;
+    border-bottom:1px solid rgba(187, 187, 187, 1);
+    border-top:1px solid rgba(187, 187, 187, 1);
 
+}
+.select_time_--{
+    justify-content: center;
+    margin-left: 10%;
+}
 .preview{
-    width: 80%;
+    width: 90%;
     display: flex;
     flex-direction: column;
     margin-top: 30rpx;
+
 }
 
 .card {
-    background-color: #525253;
-    margin-top: 15rpx;
-    height: 150rpx;
-    border-radius: 25rpx;
-    padding: 25rpx;
-    color: #fff;
+    background-color: white;
+    margin-top: 23rpx;
+    height: 180rpx;
+    width: 100%;
+    color: rgba(0, 0, 0, 1);
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-}
-
-.cards-container{
-    margin: 120rpx 40rpx 0rpx 40rpx;
-    padding-bottom: 40rpx;
+    border-radius: 10rpx;
 }
 
 .title-container{
-    width: 90%;
+    margin-top: 1%;
+    margin-left: 6%;
+    width: 85%;
+    height: 10%;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-}
-.title{
-    font-size: 35rpx;
-    /* font-weight: bolder; */
+
 }
 
+.title{
+    font-size: 38rpx;
+    font-weight: bolder;
+}
 .detail{
-    border: 2rpx solid #fff;
-    border-radius: 30rpx;
-    width: 120rpx;
-    height: 40rpx;
+    width: 10%;
+    margin-top: 1%;
+}
+
+.icon_reserve{
+    width: 50rpx;
+    height: 50rpx;
     font-size: 28rpx;
-    text-align: center;
-    line-height: 40rpx;
 }
 
 .lable{
-    background-color: #AAA;
-    font-size: 28rpx;
-    color: #fff;
-    width: 100rpx;
-    text-align: center;
-    border-radius: 5rpx;
+    position: absolute;
+    margin-top: 7%;
+    width: 85%;
+    margin-left:5%;
+    font-size: 30rpx;
 }
+.lable-cut{
+    width: 100%;
+    margin-top: 9%;
+    height:1%;
+    background-color: rgba(187, 187, 187, 1);
+}
+.progress-days{
 
-.period{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    font-size: 25rpx;
-    color: #DDD;
+    /*position: absolute;*/
+}
+.progress{
+    width: 83%;
+    margin-left: 8%;
+}
+.progress-time{
+    margin-top: 1%;
+    width: 100%;
+    font-size: 26rpx;
+    font-family: SFUIText-regular;
+}
+.progress-time-each{
+    margin-left: 7%;
 }

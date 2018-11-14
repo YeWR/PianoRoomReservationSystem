@@ -1,17 +1,28 @@
 <!--pages/login_out_school/login_out_school.wxml-->
 <view class="container">
-    <view class="login_icon">
-        <!--<image class="login-img" src="../images/loginLog.jpg"></image>-->
+    <view class="up_board">
+        <text class="login_title">
+            登录
+        </text>
     </view>
-    <view class="login_from">
+
+    <view class="login_icon_los">
+        <image class="login_img_los" src="../../../images/bg/v2_phk5nq.jpg_t.png"></image>
+    </view>
+
+        <!--手机号-->
+    <view class="login_form_los">
 
         <!--手机号-->
         <view class="input_view">
+            <image class="input_icon" mode="aspectFit" src="../../../images/icon/calendar.png"></image>
             <input class="input_text" placeholder="手机号" bindinput="bindPhoneNumber" />
         </view>
 
         <!--验证码-->
         <view class="input_view">
+            <image class="input_icon" mode="aspectFit" src="../../../images/icon/calendar.png"></image>
+
             <input class="input_text" placeholder="验证码" bindinput="bindValidateCode" />
         </view>
 

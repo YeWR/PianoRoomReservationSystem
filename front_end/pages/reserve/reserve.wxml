@@ -1,6 +1,13 @@
 <!--pages/reserve/reserve_space/reserve.wxml-->
 <view class="container">
     <view class="up_board">
+        <text class="reserve_title">
+            资源预约
+        </text>
+    </view>
+
+
+    <view class="middle_board">
         <view>
             <image class="icon" mode="aspectFit" src="../../../images/icon/calendar.png"></image>
         </view>
@@ -11,46 +18,75 @@
             <button bindtap="bindChoosePreviousDay" disabled="{{_cannotPrevious}}">前一天</button>
             <button bindtap="bindChooseNextDay" disabled="{{_cannotNext}}">后一天</button>
         </view>
-        <view class="select_time_board">
-            <!--<image class="icon_time" mode="aspectFit" src="../../../images/icon/clock.png"></image>-->
-            <picker mode="multiSelector" value="{{_begTimeIndex}}" range="{{_begTimeArray}}"
-                    bindcolumnchange="bindBegTimeChange">
-                <text wx:if="{{_begHour < 10}}">0{{_begHour}}</text>
-                <text wx:else>{{_begHour}}</text>
-                :
-                <text wx:if="{{_begMinute < 10}}">0{{_begMinute}}</text>
-                <text wx:else>{{_begMinute}}</text>
-            </picker>
-            --
-            <picker mode="multiSelector" value="{{_endTimeIndex}}" range="{{_endTimeArray}}"
-                    bindcolumnchange="bindEndTimeChange" >
-                <text wx:if="{{_endHour < 10}}">0{{_endHour}}</text>
-                <text wx:else>{{_endHour}}</text>
-                :
-                <text wx:if="{{_endMinute < 10}}">0{{_endMinute}}</text>
-                <text wx:else>{{_endMinute}}</text>
-            </picker>
+
+        <view class="space"></view>
+
+        <view class="select_time">
+            <image class="icon_time" mode="aspectFit" src="../../../images/icon/clock.png"></image>
+
+            <view class="select_time_board">
+                <!--<image class="icon_time" mode="aspectFit" src="../../../images/icon/clock.png"></image>-->
+                <picker mode="multiSelector" value="{{_begTimeIndex}}" range="{{_begTimeArray}}"
+                        bindcolumnchange="bindBegTimeChange">
+                    <text wx:if="{{_begHour < 10}}">0{{_begHour}}</text>
+                    <text wx:else>{{_begHour}}</text>
+                    :
+                    <text wx:if="{{_begMinute < 10}}">0{{_begMinute}}</text>
+                    <text wx:else>{{_begMinute}}</text>
+                </picker>
+            </view>
+                <view class="select_time_--">
+                --
+                </view>
+            <view class="select_time_board">
+                <picker mode="multiSelector" value="{{_endTimeIndex}}" range="{{_endTimeArray}}"
+                        bindcolumnchange="bindEndTimeChange" >
+                    <text wx:if="{{_endHour < 10}}">0{{_endHour}}</text>
+                    <text wx:else>{{_endHour}}</text>
+                    :
+                    <text wx:if="{{_endMinute < 10}}">0{{_endMinute}}</text>
+                    <text wx:else>{{_endMinute}}</text>
+                </picker>
+            </view>
         </view>
 
     </view>
 
-    <view class='preview' wx:for="{{_pianoAvailable}}" wx:for-index="id" wx:for-item="piano" wx:key="pianoId">
-        <view class='card'>
-            <view class='title-container'>
-                <text class='title'>{{piano.pianoType}}{{piano.pianoPlace}}</text>
-                <view class='detail' data-id="{{id}}" bindtap='toReservePiano'>
-                    <text>预约</text>
+    <scrollview class='preview' scroll-y="true" style="height: 50px;" wx:for="{{_pianoAvailable}}" wx:for-index="id" wx:for-item="piano" wx:key="pianoId">
+        <view class='"scroll-y' >
+            <view class='card'>
+
+                <view class='title-container'>
+                    <text class='title'>{{piano.pianoType}}{{piano.pianoPlace}}</text>
+                    <view class='detail' data-id="{{id}}" bindtap='toReservePiano'>
+                        <image class="icon_reserve" mode="aspectFit" src="../../../images/icon/clock.png"></image>
+                    </view>
                 </view>
-            </view>
-            <view class='lable'>
-                <text>暂无</text>
-            </view>
-            <view class='progress-days'>
-                <view class='progress'>
-                    <progress percent="{{10 * (id + 1)}}" stroke-width='3' activeColor="#FFFFFF" backgroundColor="#AAAAAA" active="true" />
+
+                <view class='lable'>
+                    <text class="lable-detail">星海立式钢琴，位于蒙民伟楼二楼</text>
                 </view>
+
+                <view class='lable-cut'>
+                </view>
+
+                <view class='progress-days'>
+                    <view class='progress'>
+                        <progress percent="{{10 * (id + 1)}}" stroke-width='5' activeColor="rgba(187, 187, 187, 1)" backgroundColor="rgb(187, 187, 187) 100%" active="true" />
+                    </view>
+                    <view class='progress-time'>
+                        <text class="progress-time-each">08</text>
+                        <text class="progress-time-each">10</text>
+                        <text class="progress-time-each">12</text>
+                        <text class="progress-time-each">14</text>
+                        <text class="progress-time-each">16</text>
+                        <text class="progress-time-each">18</text>
+                        <text class="progress-time-each">20</text>
+                        <text class="progress-time-each">22</text>
+                    </view>
+                </view>
+
             </view>
         </view>
-    </view>
-
+    </scrollview>
 </view>

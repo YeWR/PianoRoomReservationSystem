@@ -41,14 +41,14 @@ Page({
         // TODO: add info in the checks
         let notEmptyCheck = function () {
             let ans = true;
-            if (!that.data._username) {
-                ans = false;
-                util.alertInfo("学号或者工号不能为空", "none", 1000);
-            }
-            else if (!that.data._password) {
-                ans = false;
-                util.alertInfo("密码不能为空", "none", 1000);
-            }
+            // if (!that.data._username) {
+            //     ans = false;
+            //     util.alertInfo("学号或者工号不能为空", "none", 1000);
+            // }
+            // else if (!that.data._password) {
+            //     ans = false;
+            //     util.alertInfo("密码不能为空", "none", 1000);
+            // }
             return ans;
         };
 
