@@ -12,11 +12,16 @@ const routers = router.post("/all", async (ctx, next) => {
     else
     {
         let pianolist = [];
-        for(p of result.data) {
+        for(let p of result.data) {
+            let timeList = [];
+            for(let i = 0; i<p.piano_list.data.length;i++)
+            {
+                timeList.push(p.piano_list.data[i] - 48);
+            }
             let info = {
                 "pianoId": p.piano_id,
                 "pianoType": p.piano_type,
-                "timeTable": p.piano_list,
+                "timeTable": timeList,
                 "pianoPlace": p.piano_room
             };
             pianolist.push(info);
@@ -41,8 +46,13 @@ const routers = router.post("/all", async (ctx, next) => {
             "society": result.data.piano_socvalue,
             "multi": result.data.piano_multivalue
         };
+        let timeList = [];
+        for(let i = 0; i<result.data.piano_list.length;i++)
+        {
+            timeList.push(result.data.piano_list[i] - '0');
+        }
         ctx.response.body = {
-            "timeTable": result.data.piano_list,
+            "timeTable": timeList,
             "pianoPrices": price,
             "pianoInfo": result.data.piano_info
         };
@@ -52,7 +62,7 @@ const routers = router.post("/all", async (ctx, next) => {
     console.log(ctx.request.body);
     let number = ctx.request.body.number;
     let pianoId = ctx.request.body.pianoId;
-    let reserveType = parseInt(ctx.request.body.reserveType);
+    let reserveType = parseInt(ctx.request.body.reservationType);
     let pianoPrice = parseInt(ctx.request.body.pianoPrice);
     let begTimeIndex = parseInt(ctx.request.body.begTimeIndex);
     let endTimeIndex = parseInt(ctx.request.body.endTimeIndex);
