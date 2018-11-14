@@ -9,14 +9,16 @@ const routers = router.post("/all", async (ctx, next) => {
     if(result.data === null)
     {
         ctx.response.body = {
+            "success": false,
             "pianoList": null,
-            "errorMsg":result.info
+            "info":result.info
         };
     }
     else
     {
         let pianolist = [];
-        for(let p of result.data) {
+        for(let p of result.data)
+        {
             let timeList = [];
             for(let i = 0; i<p.piano_list.data.length;i++)
             {
@@ -30,7 +32,10 @@ const routers = router.post("/all", async (ctx, next) => {
             };
             pianolist.push(info);
         }
-        ctx.response.body = {"pianoList": pianolist};
+        ctx.response.body = {
+            "success": true,
+            "pianoList": pianolist
+        };
     }
     //console.log(ctx.response.body);
 }).post("/detail", async (ctx, next) => {
@@ -42,10 +47,11 @@ const routers = router.post("/all", async (ctx, next) => {
     if(result.data === null)
     {
         ctx.response.body = {
+            "success": false,
             "tableTime": null,
             "pianoPrices": null,
             "pianoInfo": null,
-            "errorMsg":result.info
+            "info":result.info
         };
     }
     else {
@@ -61,6 +67,7 @@ const routers = router.post("/all", async (ctx, next) => {
             timeList.push(result.data.piano_list[i] - '0');
         }
         ctx.response.body = {
+            "success": true,
             "timeTable": timeList,
             "pianoPrices": price,
             "pianoInfo": result.data.piano_info
@@ -81,12 +88,6 @@ const routers = router.post("/all", async (ctx, next) => {
     let itemUuid = uuid.v1();
     let result = await dataBase.InsertItem(dateStr,number,pianoId,1,reserveType,pianoPrice,duration,begTimeIndex,itemUuid);
     ctx.response.body = result;
-    //console.log(ctx.response.body);
-}).post("/refund", async (ctx, next) => {
-    let itemId = ctx.request.body.reservationId;
-    //let result =
-    //let result = await dataBase.DeleteItem(dateStr,number,pianoId,1,reserveType,pianoPrice,duration,begTimeIndex);
-    //ctx.response.body = result;
     //console.log(ctx.response.body);
 });
 

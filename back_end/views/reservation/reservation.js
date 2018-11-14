@@ -6,21 +6,21 @@ function sortItem(a, b)
 {
     if(a.date > b.date)
     {
-        return 1;
+        return -1;
     }
     else if(a.date < b.date)
     {
-        return -1;
+        return 1;
     }
     else
     {
         if(a.begTimeIndex > b.begTimeIndex)
         {
-            return 1;
+            return -1;
         }
         else if(a.begTimeIndex < b.begTimeIndex)
         {
-            return -1;
+            return 1;
         }
         else
             return 0;
@@ -50,21 +50,11 @@ function getDateStr (date) {
     return dateStr;
 }
 
-function compTime(nowdate, date, endIndex)
-{
-    date.setHours(8+Math.floor(endIndex/6),10*(endIndex%6),0);
-    console.log("nowdate ", nowdate, "date ", date);
-    if(date.getTime() - nowdate.getTime() > 0)
-    {
-        return 1;
-    }
-    else
-    {
-        return 0;
-    }
-}
-
-const routers = router.post("/all", async (ctx, next) => {
+const routers = router.post("/refund", async (ctx, next) => {
+    let uuid = ctx.request.body.reservationId;
+    let result = dataBase.DeleteItem(uuid);
+    ctx.response.body = result;
+}).post("/all", async (ctx, next) => {
     let userId = ctx.request.body.number;
     let result = await dataBase.GetItem(userId);
     if(result.data === null)
@@ -85,30 +75,27 @@ const routers = router.post("/all", async (ctx, next) => {
         {
             if(p.item_type)
             {
-                if(compTime(nowDate, date, p.item_begin+p.item_duration))
+                for(let i of pianoInfo.data)
                 {
-                    for(let i of pianoInfo.data)
+                    if (i.piano_id === p.item_roomId)
                     {
-                        if (i.piano_id === p.item_roomId)
-                        {
-                            let date = new Date(p.item_date);
-                            let dateStr = getDateStr(date);
-                            let week = date.getDay();
-                            let info = {
-                                "pianoPlace": i.piano_room,
-                                "pianoType": i.piano_type,
-                                "pianoPrice": p.item_value,
-                                "reservationType": p.item_member,
-                                "reservationState": p.item_type,
-                                "reservationId": p.item_uuid,
-                                "date": dateStr,
-                                "weekday": weekStr[week],
-                                "begTimeIndex": p.item_begin,
-                                "endTimeIndex": p.item_begin + p.item_duration
-                            };
-                            reservationList.push(info);
-                            break;
-                        }
+                        let date = new Date(p.item_date);
+                        let dateStr = getDateStr(date);
+                        let week = date.getDay();
+                        let info = {
+                            "pianoPlace": i.piano_room,
+                            "pianoType": i.piano_type,
+                            "pianoPrice": p.item_value,
+                            "reservationType": p.item_member,
+                            "reservationState": p.item_type,
+                            "reservationId": p.item_uuid,
+                            "date": dateStr,
+                            "weekday": weekStr[week],
+                            "begTimeIndex": p.item_begin,
+                            "endTimeIndex": p.item_begin + p.item_duration
+                        };
+                        reservationList.push(info);
+                        break;
                     }
                 }
             }
@@ -119,7 +106,6 @@ const routers = router.post("/all", async (ctx, next) => {
             "reservationList": reservationList
         };
     }
-    console.log(ctx.response.body);
 });
 
 module.exports = routers;

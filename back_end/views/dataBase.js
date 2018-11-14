@@ -759,7 +759,7 @@ exports.InsertItem = InsertItem;            // 新增订单
 exports.UpdateItem = UpdateItem;            // 更新订单
 exports.GetItem = GetItem;                  // 获取某个人的订单信息
 exports.GetItemByUuid = GetItemByUuid;      // 获取订单信息，由uuid
-// 删除订单-需要改写琴房信息
+exports.DeleteItem = DeleteItem;// 删除订单-需要改写琴房信息
 
 // 琴房
 exports.GetPianoRoomInfo = GetPianoRoomInfo;// 获取单个琴房信息
