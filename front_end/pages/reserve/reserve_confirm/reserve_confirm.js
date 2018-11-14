@@ -11,6 +11,7 @@ Page({
     data: {
         _realName: "",
         _idNumber: "",
+        _idNumberHiden: "",
         _reservationType: "",
         _reservationTypeDiscription: "",
         _date: "",
@@ -58,6 +59,9 @@ Page({
                         that.toAlarm();
                     }, 500);
                 }
+                else{
+                    util.alertInfo(res.data.info, "none", 1000);
+                }
             },
             fail: function (res) {
                 util.alertInfo("预约失败，请检查网络设备是否正常。", "none", 1000);
@@ -81,6 +85,7 @@ Page({
         this.setData({
             _realName: app.globalData._username,
             _idNumber: app.globalData._idNumber,
+            _idNumberHiden: util.shwoHidenIdNumber(app.globalData._idNumber, app.globalData._userType),
 
             _reservationType: options.reservationType,
             _reservationTypeDiscription: util.setUserTypeDiscription(Number(options.reservationType)),

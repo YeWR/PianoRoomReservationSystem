@@ -128,7 +128,7 @@ Page({
                         cookie = cookie.replace(/httponly,/, "httponly;");
                         wx.setStorageSync("sessionid", cookie);
 
-                        app.globalData._username = res.data.realName;
+                        app.globalData._username = res.data.data;
                         app.globalData._userType = util.USERTYPE.SOCIAL;
                         app.globalData._idNumber = that.data._phoneNumber;
 

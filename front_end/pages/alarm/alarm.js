@@ -45,7 +45,8 @@ Page({
             let reservation = {};
             reservation.reservationId = e.reservationId;
 
-            reservation.reservationType = util.setUserTypeDiscription(e.reservationType);
+            reservation.reservationType = e.reservationType;
+            reservation.reservationState = e.reservationState;
             reservation.reservationStateDis = util.setRsvStateDiscription(e.reservationState);
 
             reservation.reservationDate = e.date;

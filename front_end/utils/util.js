@@ -376,7 +376,7 @@ const getEndTime = (begHour, begMinute, interval) => {
     let endHour = begHour + hour;
     let endMinute = begMinute + minute;
 
-    if(endMinute >= 60){
+    if (endMinute >= 60) {
         endMinute -= 60;
         endHour += 1;
     }
@@ -464,14 +464,14 @@ const getMinutesAvailable = (selectHour, begTimeIndex, timeTable) => {
     let index = (selectHour - BEGINHOUR) * interval;
 
     for (let i = 0; i < interval; ++i) {
-        if(index + i >= begTimeIndex){
-            if(timeTable[index + i] === 0){
+        if (index + i >= begTimeIndex) {
+            if (timeTable[index + i] === 0) {
                 minutes.push((i * TIMEINTERVAL));
             }
         }
     }
 
-    if(minutes.length === 0){
+    if (minutes.length === 0) {
         minutes = [ENDMINUTE];
     }
 
@@ -685,10 +685,36 @@ const drawQrCode = (id, url) => {
 };
 
 /*
- * get cookie
+ * show id number based on USERTYPE
  */
-const getCookie = (string, pat) => {
+const shwoHidenIdNumber = (idNumber, userType) => {
 
+    let showHidenPhoneNumber = (phoneNumber) => {
+        let number = "";
+        if (phoneNumber && phoneNumber.length === 11) {
+            number += phoneNumber.slice(0, 3);
+            number += "****";
+            number += phoneNumber.slice(7, 11);
+        }
+        return number;
+    };
+
+    let showHidenStuNumber = (stuNumber) => {
+        let number = "";
+        if (stuNumber) {
+            number += stuNumber.slice(0, 4);
+            number += "***";
+            number += stuNumber.slice(7, 10);
+        }
+        return number;
+    };
+
+    if (userType === USERTYPE.SOCIAL) {
+        return showHidenPhoneNumber(idNumber);
+    }
+    else {
+        return showHidenStuNumber(idNumber);
+    }
 };
 
 module.exports = {
@@ -723,4 +749,5 @@ module.exports = {
     TIMEINTERVAL: TIMEINTERVAL,
     getHoursAvailable: getHoursAvailable,
     getMinutesAvailable: getMinutesAvailable,
+    shwoHidenIdNumber: shwoHidenIdNumber,
 };

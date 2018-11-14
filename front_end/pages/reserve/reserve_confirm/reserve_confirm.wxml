@@ -4,10 +4,7 @@
     <view>
         <text>预约信息</text>
         <view>
-            <text>{{_realName}}
-                <text wx:if="{{_idNumber}}">
-                    ({{_idNumber}})
-                </text>
+            <text>{{_realName}} ({{_idNumberHiden}})
             </text>
             <text>{{_reservationTypeDiscription}}</text>
         </view>

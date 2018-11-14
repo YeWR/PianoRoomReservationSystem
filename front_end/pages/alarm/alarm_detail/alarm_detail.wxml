@@ -2,10 +2,7 @@
 <view>
     预约信息
     <view>
-        订单号: {{_reservationId}}
-    </view>
-    <view>
-        {{_reservationUser}} {{_reservationType}}
+        {{_reservationUser}} {{_reservationTypeDis}}
     </view>
     <view>
         {{_reservationDate}} {{_reservationWeekday}} {{_reservationBegTime}} - {{_reservationEndTime}}
@@ -20,7 +17,7 @@
         {{_userType}}
     </view>
     <view>
-        预约成功，{{_reservationState}}
+        预约成功，{{_reservationStateDis}}
     </view>
     <view>
         {{_reservationPianoPrice}}
@@ -28,5 +25,10 @@
     扫码验证使用琴房
     <canvas style="width: 200px; height: 200px;" canvas-id="reservationDetailQr">
     </canvas>
+
+    <!--登录-->
+    <view class="login_btn_view">
+        <button class="login_btn" disabled="{{_refundDisable}}" bindtap="bindRefund">退订</button>
+    </view>
 
 </view>

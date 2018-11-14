@@ -9,7 +9,61 @@ Page({
      * 页面的初始数据
      */
     data: {
-        _username: "",
+        _realName: "",
+        _idNumber: "",
+        _idNumberHiden: "",
+    },
+
+    /*
+     * log out
+     */
+    bindLogout: function (e) {
+        wx.clearStorageSync();
+        this.toLogin();
+    },
+
+    /*
+     * bind personal infomation
+     */
+    bindPersonalInfo: function (e) {
+
+    },
+
+    /*
+     * bind personal msg
+     */
+    bindPersonalMsg: function (e) {
+
+    },
+
+    /*
+     * bind all reservations
+     */
+    bindReservationAll: function (e) {
+
+    },
+
+    /*
+     * bind illegal reservations
+     */
+    bindReservationIllegal: function (e) {
+
+    },
+
+    /*
+     * bind help
+     */
+    bindHelp: function(e){
+
+    },
+
+    /*
+     * to login page
+     */
+    toLogin: function () {
+        wx.redirectTo({
+            url: "../login/login"
+        });
     },
 
     /**
@@ -17,7 +71,9 @@ Page({
      */
     onLoad: function (options) {
         this.setData({
-            _username: app.globalData._username,
+            _realName: app.globalData._username,
+            _idNumber: app.globalData._idNumber,
+            _idNumberHiden: util.shwoHidenIdNumber(app.globalData._idNumber, app.globalData._userType),
         });
     },
 

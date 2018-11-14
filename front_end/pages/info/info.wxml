@@ -1,5 +1,29 @@
 <!--pages/info/info.wxml-->
 
 <view class="container">
-    <view class="info"> {{_username}}，欢迎使用THU琴房预约</view>
+    <view class="info"> {{_realName}}</view>
+    <view>({{_idNumberHiden}})</view>
+
+    <view bindtap="bindPersonalInfo">
+        个人信息
+    </view>
+    <view bindtap="bindPersonalMsg">
+        我的消息
+    </view>
+
+    <view bindtap="bindReservationAll">
+        预约记录
+    </view>
+
+    <view bindtap="bindReservationIllegal">
+        违规记录
+    </view>
+
+    <view bindtap="bindHelp">
+        使用帮助
+    </view>
+    <view bindtap="bindLogout">
+        退出登录
+    </view>
+
 </view>
