@@ -167,6 +167,7 @@
             "pianoPlace":"琴房地点",
        		"pianoType":"钢琴简介信息",
         	"pianoPrice": "预约价格",
+        	"reservationId": "订单号",
         	"reservationType": "预约类别",
         	"reservationState":"预约状态（正在使用、未生效）",
         	"date":"预约日期(2018-11-14)",
