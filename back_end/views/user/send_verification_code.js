@@ -1,7 +1,7 @@
 const Router = require("koa-router");
 const router = new Router();
-const dataBase = require("../dataBase")
-const SMSClient = require('@alicloud/sms-sdk')
+const dataBase = require("../dataBase");
+const SMSClient = require('@alicloud/sms-sdk');
 const fs = require("fs");
 const configPath = "configs.json";
 const configs = JSON.parse(fs.readFileSync(configPath))
