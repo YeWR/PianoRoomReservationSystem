@@ -22,18 +22,18 @@ page{
     background-color: white;
     height: 45%;
     width: 86%;
-    line-height: 100rpx;
     text-align: center;
     border: 1px solid rgba(238, 238, 238, 1);
-    top:100%;
+
 }
 
 .input_view{
-    margin-top:5%;
     margin-left: 18%;
     width: 70%;
     height: 10%;
     display: flex;
+
+    margin-top:6%;
 }
 .input_icon{
     width: 50rpx;
@@ -48,9 +48,13 @@ page{
     font-family: Arial;
     border: 1px solid rgba(255, 255, 255, 1);
     border-bottom:1px solid rgba(187, 187, 187, 1);
+
+    text-align: left;
+    font-size: 28rpx;
 }
 
 .register_btn_view {
+    margin-top: 10%;
     text-align: center;
 }
 
@@ -65,8 +69,42 @@ page{
     border: 1px solid rgba(187, 187, 187, 1);
 }
 .register_btn_login{
+    margin-top: 3%;
     text-align: center;
     color: rgba(136, 136, 136, 1);
     font-size: 14px;
     font-family: Arial;
+}
+
+.Validate_btn{
+    position: absolute;
+    margin-top: 3%;
+    margin-left: 26%;
+    height: 6rpx;
+    width: 25%;
+    align-items: flex-end;
+}
+.login_btn_v{
+    font-size: 25rpx;
+}
+
+.Validate_view{
+    display: flex;
+    margin-left: 18%;
+    width: 70%;
+    height: 10%;
+}
+.fa-icon_v{
+    margin-top:8%;
+    color: rgba(102, 8, 116, 1);
+}
+.input_text_v{
+    margin-top:8%;
+    text-align: left;
+    margin-left: 6%;
+    color: rgba(136, 136, 136, 1);
+    font-size: 28rpx;
+    font-family: Arial;
+    border: 2rpx solid rgba(255, 255, 255, 1);
+    border-bottom:2rpx solid rgba(187, 187, 187, 1);
 }

@@ -8,22 +8,38 @@
 
 
     <view class="middle_board">
-        <view>
-            <image class="icon" mode="aspectFit" src="../../../images/icon/calendar.png"></image>
+
+        <view class="top_icon">
+            <view class="fa-icon-back-cal">
+                <text class="fa fa-calendar fa-lg"></text>
+            </view>
+
+            <view class="fa-icon-back">
+
+                <view class="caret_btn">
+                    <text class="fa fa-caret-left fa-lg" bindtap="bindChoosePreviousDay"
+                          wx:if="{{!_cannotPrevious}}"></text>
+                    <text wx:else></text>
+                </view>
+
+                <view class="caret_btn">
+                    <text class="fa fa-caret-right fa-lg" bindtap="bindChooseNextDay" wx:if="{{!_cannotNext}}"></text>
+                    <text wx:else></text>
+                </view>
+            </view>
         </view>
+
         <view class="date">
             {{_date}}
-        </view>
-        <view>
-            <button bindtap="bindChoosePreviousDay" disabled="{{_cannotPrevious}}">前一天</button>
-            <button bindtap="bindChooseNextDay" disabled="{{_cannotNext}}">后一天</button>
         </view>
 
         <view class="space"></view>
 
         <view class="select_time">
-            <image class="icon_time" mode="aspectFit" src="../../../images/icon/clock.png"></image>
-
+            <!--<image class="icon_time" mode="aspectFit" src="../../../images/icon/clock.png"></image>-->
+            <view class="fa-icon-clock">
+                <text class="fa fa-clock-o fa-lg"></text>
+            </view>
             <view class="select_time_board">
                 <!--<image class="icon_time" mode="aspectFit" src="../../../images/icon/clock.png"></image>-->
                 <picker mode="multiSelector" value="{{_begTimeIndex}}" range="{{_begTimeArray}}"
@@ -51,17 +67,21 @@
         </view>
 
         <view wx:if="{{_pianoIsAvailable}}">
+
             <scrollview class='preview' scroll-y="true" style="height: 50px;" wx:for="{{_pianoAvailable}}"
                         wx:for-index="id"
                         wx:for-item="piano" wx:key="pianoId">
+
                 <view class='"scroll-y'>
-                    <view class='card' data-id="{{id}}" bindtap='toReservePiano'>
+
+                    <view class='card'>
 
                         <view class='title-container'>
                             <text class='title'>{{piano.pianoType}}{{piano.pianoPlace}}</text>
                             <view class='detail'>
-                                <image class="icon_reserve" mode="aspectFit"
-                                       src="../../../images/icon/clock.png"></image>
+                                <view class="fa-icon" data-id="{{id}}" bindtap='toReservePiano'>
+                                    <text class="fa fa-location-arrow fa-lg"></text>
+                                </view>
                             </view>
                         </view>
 
@@ -91,10 +111,12 @@
                         </view>
 
                     </view>
+
                 </view>
             </scrollview>
         </view>
-        <view wx:else>
+
+        <view class="no_room" wx:else>
             此时间段无可用琴房哦~
         </view>
     </view>
