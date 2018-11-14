@@ -9,8 +9,8 @@ Page({
      * 页面的初始数据
      */
     data: {
-        _reservationUser: app.globalData._username,
-        _userType: app.globalData._userType,
+        _reservationUser: "",
+        _userType: "",
 
         _reservationId: "",
 
@@ -36,6 +36,9 @@ Page({
     onLoad: function (options) {
         // init data
         this.setData({
+            _reservationUser:app.globalData._username,
+            _userType: app.globalData._userType,
+
             _reservationId: options.reservationId,
 
             _reservationType: options.reservationType,

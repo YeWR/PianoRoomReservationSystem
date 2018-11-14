@@ -3,16 +3,16 @@
     <view wx:for="{{_reservationList}}" wx:for-index="id" wx:for-item="reservation" wx:key="reservationId">
         <view data-id="{{id}}" bindtap="bindReserveDetail">
             <view>
-                钢琴地点：{{reservation.pianoPlace}}
+                钢琴地点：{{reservation.reservationPianoPlace}}
             </view>
             <view>
-                钢琴信息：{{reservation.pianoType}}
+                钢琴信息：{{reservation.reservationPianoType}}
             </view>
             <view>
                 预约状态：{{reservation.reservationStateDis}}
             </view>
             <view>
-                预约时间：{{reservation.date}} {{reservation.weekday}} {{reservation.begTime}}-{{reservation.endTime}}
+                预约时间：{{reservation.reservationDate}} {{reservation.reservationWeekday}} {{reservation.reservationBegTime}}-{{reservation.reservationEndTime}}
             </view>
         </view>
     </view>

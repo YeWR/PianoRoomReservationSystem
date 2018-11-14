@@ -13,7 +13,7 @@ Page({
      * 页面的初始数据
      */
     data: {
-        _reservationList: [{}],
+        _reservationList: [],
     },
 
     /*
@@ -37,11 +37,12 @@ Page({
         let list = [];
         let scaleHour = util.BEGINHOUR;
         let scaleMinute = util.BEGINMINUTE;
-        reservationList.forEach((e) => {
+        for(let i = 0; i < reservationList.length; ++i){
+            const e = reservationList[i];
             let begTime = util.getEndTime(scaleHour, scaleMinute, e.begTimeIndex);
             let endTime = util.getEndTime(scaleHour, scaleMinute, e.endTimeIndex);
 
-            reservation = {};
+            let reservation = {};
             reservation.reservationId = e.reservationId;
 
             reservation.reservationType = util.setUserTypeDiscription(e.reservationType);
@@ -55,6 +56,12 @@ Page({
             reservation.reservationPianoPlace = e.pianoPlace;
             reservation.reservationPianoType = e.pianoType;
             reservation.reservationPianoPrice = e.pianoPrice;
+
+            list.push(reservation);
+        }
+
+        this.setData({
+            _reservationList: list
         });
     },
 
@@ -64,11 +71,8 @@ Page({
     initReserveInfo: function(){
         let that = this;
 
-        let number = app.globalData._phoneNumber;
-        if(app.globalData._userType !== util.USERTYPE.SOCIAL){
-            // stu id card
-            number = app.globalData._idNumber;
-        }
+        let number = app.globalData._idNumber;
+        console.log("number:", number);
 
         wx.request({
             url: "https://958107.iterator-traits.com/alarm/all",
@@ -106,7 +110,7 @@ Page({
      * 生命周期函数--监听页面显示
      */
     onShow: function () {
-
+        this.initReserveInfo();
     },
 
     /**

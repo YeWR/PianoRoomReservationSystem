@@ -41,7 +41,7 @@
         <view class="date-view">
             <image class="date-icon" mode="aspectFit" src="../../../images/icon/calendar.png"></image>
             <view class="date-text">
-                预约日期：
+                日期：
                 <!--<text class="fa fa-camera-retro fa-lg"></text>-->
             </view>
             <view class="date-info">
