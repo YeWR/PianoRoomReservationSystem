@@ -18,7 +18,7 @@ page{
     background-color: rgba(102, 8, 116, 0.9);
     font-size: 14rpx;
     text-align: center;
-    border: 1px solid rgba(187, 187, 187, 1);
+    border: 2rpx solid rgba(187, 187, 187, 1);
     z-index:1;
 }
 .login_img_img {
@@ -35,23 +35,23 @@ page{
 
 .login_btn_in_school {
     color: white;
-    font-size:15px;
-    border-radius: 6px;
+    font-size:30rpx;
+    border-radius: 12rpx;
     background-color: rgba(102, 8, 116, 0.9);
     text-align: center;
     font-family: Arial;
-    border: 1px solid rgba(187, 187, 187, 1);
+    border: 2rpx solid rgba(187, 187, 187, 1);
     top:7%;
 }
 
 .login_btn_out_school {
     color: white;
-    font-size:15px;
-    border-radius: 6px;
+    font-size:30rpx;
+    border-radius: 12rpx;
     background-color: rgba(102, 8, 116, 0.9);
     text-align: center;
     font-family: Arial;
-    border: 1px solid rgba(187, 187, 187, 1);
+    border: 2rpx solid rgba(187, 187, 187, 1);
     top:24%;
 }
 
