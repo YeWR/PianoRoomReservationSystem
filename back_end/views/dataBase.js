@@ -15,6 +15,8 @@ let db = new Db.Adapter({
 let redis = require("redis");
 let client = redis.createClient(config.redisPort,config.serverIp)
 
+let timeLength = 84;
+
 let GetSocietyUserInfo = async function(userId){
     let errorMsg = "";
     let userInfo = null;
@@ -315,7 +317,7 @@ let GetPianoRoomAll = async function(){
                 "info":errorMsg};
     }
 }
-// s = InsertItem('2018-11-13 08:00:00','wu',203,1,3,10,1,0)
+
 let getDateNum = function(itemDate){
     let item_date = new Date(itemDate);
     let now_date = new Date();
@@ -325,10 +327,7 @@ let getDateNum = function(itemDate){
     }
     else{
         item_date.setDate(item_date.getDate()-1);
-        //console.log(item_date);
-        //console.log(now_date);
         if(now_date>item_date){
-            //console.log('=-------------------1');
             return 1;
         }
         else{
@@ -356,7 +355,7 @@ let GetPianoRoomInfo = async function(pianoId, date) {
                     let _info = JSON.parse(_data);
                     pianoInfo = _info[0];
                     
-                    for(let i = num*84; i<(num+1)*84; i++){
+                    for(let i = num*timeLength; i<(num+1)*timeLength; i++){
                         if(pianoInfo.piano_list.data[i] == 48){
                             pianoList.push(0);
                         }
@@ -396,7 +395,7 @@ let GetPianoRoomInfo = async function(pianoId, date) {
 // 加上读写锁
 let preparePiano = async function(itemRoomId, itemBegin, itemDuration, itemDate){
     let errorMsg = "";
-    itemBegin = 84*getDateNum(itemDate)+itemBegin;
+    itemBegin = timeLength*getDateNum(itemDate)+itemBegin;
     let itemEnd = itemBegin+itemDuration;
     let test = function(){
         return new Promise(resolve =>{
@@ -445,7 +444,6 @@ let preparePiano = async function(itemRoomId, itemBegin, itemDuration, itemDate)
                 newList += '1';
             }
         }
-        //console.log(newList);
         let checkUpdate = function(){
             return new Promise(resolve =>{
                 db.where({piano_id: itemRoomId}).update('piano',{piano_list:newList},function(err){
@@ -534,8 +532,9 @@ let GetItem = async function(itemUsername){
     let test = function(){
         return new Promise(resolve =>{
             db.where({ item_username: itemUsername }).get('item', function (err, res, fields) {
-                let _data = JSON.stringify(res);
-                itemInfo = JSON.parse(_data);
+                let _data = JSON.stringify(_select);
+                let _info = JSON.parse(_data);
+                itemInfo = _info[0];
                 resolve(1);
             });
         });
@@ -547,8 +546,68 @@ let GetItem = async function(itemUsername){
                 "info":errorMsg};
     }
     if(flag == 1){
-        //console.log(itemInfo[0].item_date);
-        return {"data":itemInfo};
+        return {"data":itemInfo,
+                "info":errorMsg};
+    }
+}
+
+let GetItemByUuid = async function(itemUuid){
+    let errorMsg = "";
+    let itemInfo = null;
+    let test = function(){
+        return new Promise(resolve =>{
+            db.where({ item_uuid: itemUuid }).get('item', function (err, res, fields) {
+                if(res.length == 0){
+                    errorMsg = "订单不存在";
+                    resolve(0);
+                }
+                else{
+                    let _data = JSON.stringify(res);
+                    let _info = JSON.parse(_data);
+                    itemInfo = _info[0];
+                    resolve(1);
+                }
+            });
+        });
+    };
+    let flag = await test();
+    console.log(flag);
+    if(flag == 0){
+        return {"data":itemInfo,
+                "info":errorMsg};
+    }
+    if(flag == 1){
+        console
+        return {"data":itemInfo,
+                "info":errorMsg};
+    }
+}
+
+let DeleteItem = async function(itemUuid){
+    // 更改piano数据
+    let errorMsg = "";
+    let test = function(){
+        return new Promise(resolve =>{
+            db.where({ item_uuid: itemUuid }).delete('item', function (err) {
+                if(err == null){
+                    resolve(1);
+                }
+                else{
+                    errorMsg = "删除失败";
+                    resolve(0);
+                }
+            });
+        });
+    };
+    let flag = await test();
+    console.log(flag);
+    if(flag == 0){
+        return {"success":itemInfo,
+                "info":errorMsg};
+    }
+    if(flag == 1){
+        return {"success":itemInfo,
+                "info":errorMsg};
     }
 }
 
@@ -571,23 +630,56 @@ let GetNoticeAll = async function(){
                 "info":errorMsg};
     }
     if(flag == 1){
+        return {"data":noticeInfo,
+                "info":errorMsg};
+    }
+}
+
+let GetNoticeInfo = async function(noticeId){
+    let errorMsg = "";
+    let noticeInfo = null;
+    let test = function(){
+        return new Promise(resolve =>{
+            db.where({ notice_id: noticeId }).get('notice', function (err, res, fields) {
+                let _select = res;
+                if(_select.length == 0){
+                    errorMsg = "公告不存在";
+                    resolve(0);
+                }
+                else{
+                    let _data = JSON.stringify(_select);
+                    let _info = JSON.parse(_data);
+                    noticeInfo = _info[0]
+                    resolve(1);
+                }
+            });
+        });
+    };
+    let flag = await test();
+    console.log(flag);
+    if(flag == 0){
+        return {"data":noticeInfo,
+                "info":errorMsg};
+    }
+    if(flag == 1){
         console.log(noticeInfo);
         return {"data":noticeInfo,
                 "info":errorMsg};
     }
 }
 
-
 // 订单
 exports.InsertItem = InsertItem;            // 新增订单
 exports.UpdateItem = UpdateItem;            // 更新订单
 exports.GetItem = GetItem;                  // 获取某个人的订单信息
+exports.GetItemByUuid = GetItemByUuid;      // 获取订单信息，由uuid
 // 删除订单-需要改写琴房信息
 
 // 琴房
 exports.GetPianoRoomInfo = GetPianoRoomInfo;// 获取单个琴房信息
 exports.GetPianoRoomAll = GetPianoRoomAll;  // 获取所有琴房信息
 exports.InsertPiano = InsertPiano;          // 新增琴房
+// 每日更新琴房信息
 
 // 注册
 exports.SetRegisterMsg = SetRegisterMsg;    // 点击发送
@@ -601,6 +693,6 @@ exports.SocietyLogin = SocietyLogin;        // 点击登录
 exports.GetSocietyUserInfo = GetSocietyUserInfo;  // 获取某个校外用户的信息
 
 // 公告
-exports.GetNoticeAll = GetNoticeAll;
-
+exports.GetNoticeAll = GetNoticeAll;            // 获取所有公告
+exports.GetNoticeInfo = GetNoticeInfo;          // 获取一个公告，由notice_id
 
