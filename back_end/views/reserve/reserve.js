@@ -7,7 +7,10 @@ const routers = router.post("/all", async (ctx, next) => {
     let result = await dataBase.GetPianoRoomAll();
     if(result.data === null)
     {
-        ctx.response.body = {"pianoList": null, "errorMsg":result.info};
+        ctx.response.body = {
+            "pianoList": null,
+            "errorMsg":result.info
+        };
     }
     else
     {
@@ -28,7 +31,7 @@ const routers = router.post("/all", async (ctx, next) => {
         }
         ctx.response.body = {"pianoList": pianolist};
     }
-    console.log(ctx.response.body);
+    //console.log(ctx.response.body);
 }).post("/detail", async (ctx, next) => {
     console.log(ctx.request.body);
     let pianoId = ctx.request.body.pianoId;
@@ -37,7 +40,12 @@ const routers = router.post("/all", async (ctx, next) => {
     let result = await dataBase.GetPianoRoomInfo(pianoId, dateStr);
     if(result.data === null)
     {
-        ctx.response.body = {"tableTime": null, "pianoPrices": null, "pianoInfo": null, "errorMsg":result.info};
+        ctx.response.body = {
+            "tableTime": null,
+            "pianoPrices": null,
+            "pianoInfo": null,
+            "errorMsg":result.info
+        };
     }
     else {
         let price = {
@@ -49,7 +57,7 @@ const routers = router.post("/all", async (ctx, next) => {
         let timeList = [];
         for(let i = 0; i<result.data.piano_list.length;i++)
         {
-            timeList.push(result.data.piano_list[i] - '0');
+            timeList.push(result.data.piano_list[i] - 48);
         }
         ctx.response.body = {
             "timeTable": timeList,
@@ -57,7 +65,7 @@ const routers = router.post("/all", async (ctx, next) => {
             "pianoInfo": result.data.piano_info
         };
     }
-    console.log(ctx.response.body);
+    //console.log(ctx.response.body);
 }).post("/order", async (ctx, next) => {
     console.log(ctx.request.body);
     let number = ctx.request.body.number;
@@ -71,7 +79,7 @@ const routers = router.post("/all", async (ctx, next) => {
     let duration = endTimeIndex - begTimeIndex;
     let result = await dataBase.InsertItem(dateStr,number,pianoId,1,reserveType,pianoPrice,duration,begTimeIndex);
     ctx.response.body = result;
-    console.log(ctx.response.body);
+    //console.log(ctx.response.body);
 });
 
 module.exports = routers;

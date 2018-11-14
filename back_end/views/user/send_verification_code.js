@@ -28,19 +28,18 @@ const routers = router.post("/", async (ctx, next) => {
     }
     let sendsms = await smsClient.sendSMS({
         PhoneNumbers: tele,
-    SignName: configs.SignName,
-    TemplateCode: configs.TemplateCode,
-    TemplateParam: JSON.stringify({"code": code.toString()}),
+        SignName: configs.SignName,
+        TemplateCode: configs.TemplateCode,
+        TemplateParam: JSON.stringify({"code": code.toString()}),
     }).then(function (res) {
             let {Code}=res;
             if (Code === 'OK') {
-                console.log(Code);
+                console.log(res);
                 return {"success": true};
             }
         }, function (err) {
-            let {Code}= err;
-            console.log(Code);
-            return {"success": false, "info": Code};
+            console.log(err);
+            return {"success": false, "info": err};
         })
     console.log(sendsms);
     ctx.response.body = sendsms;

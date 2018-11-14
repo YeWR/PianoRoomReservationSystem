@@ -47,7 +47,7 @@ const routers = router.post("/outSchool", async (ctx, next) => {
     }
     else
     {
-        response.info = "无cookie或cookie过期";
+        response.info = "无cookie或cookie过期,请重新登录!";
     }
     ctx.response.body = response;
 });

@@ -200,7 +200,7 @@ let SocietyLogin = async function(socTele, socPassword) {
                     let _data = JSON.stringify(_select);
                     let _info = JSON.parse(_data);
                     user = _info[0];
-                    console.log(user);
+                    //console.log(user);
                     resolve(user.soc_realname);
                 }
             });
@@ -325,10 +325,10 @@ let getDateNum = function(itemDate){
     }
     else{
         item_date.setDate(item_date.getDate()-1);
-        console.log(item_date);
-        console.log(now_date);
+        //console.log(item_date);
+        //console.log(now_date);
         if(now_date>item_date){
-            console.log('=-------------------1');
+            //console.log('=-------------------1');
             return 1;
         }
         else{
@@ -445,7 +445,7 @@ let preparePiano = async function(itemRoomId, itemBegin, itemDuration, itemDate)
                 newList += '1';
             }
         }
-        console.log(newList);
+        //console.log(newList);
         let checkUpdate = function(){
             return new Promise(resolve =>{
                 db.where({piano_id: itemRoomId}).update('piano',{piano_list:newList},function(err){
