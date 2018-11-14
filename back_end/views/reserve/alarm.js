@@ -85,7 +85,7 @@ const routers = router.post("/all", async (ctx, next) => {
         {
             if(p.item_type)
             {
-                if(compTime(nowDate, date, p.item_begin+p.item_duration))
+                if(compTime(nowDate, p.item_date, p.item_begin+p.item_duration))
                 {
                     for(let i of pianoInfo.data)
                     {
