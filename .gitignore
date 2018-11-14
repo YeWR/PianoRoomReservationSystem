@@ -74,3 +74,5 @@ src/.serverless
 
 front_end/.idea
 back_end/.idea
+
+.idea
