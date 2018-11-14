@@ -538,7 +538,7 @@ let GetItem = async function(itemUsername){
             db.where({ item_username: itemUsername }).get('item', function (err, res, fields) {
                 let _data = JSON.stringify(res);
                 let _info = JSON.parse(_data);
-                itemInfo = _info[0];
+                itemInfo = _info;
                 resolve(1);
             });
         });
