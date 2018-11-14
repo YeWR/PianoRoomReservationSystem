@@ -52,7 +52,7 @@ function getDateStr (date) {
 
 const routers = router.post("/refund", async (ctx, next) => {
     let uuid = ctx.request.body.reservationId;
-    let result = dataBase.DeleteItem(uuid);
+    let result = await dataBase.DeleteItem(uuid);
     ctx.response.body = result;
 }).post("/all", async (ctx, next) => {
     //todo:30天内
