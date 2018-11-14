@@ -40,6 +40,7 @@ page{
 
 
 .input_text{
+
     text-align: left;
     margin-left: 6%;
     color: rgba(136, 136, 136, 1);
@@ -96,6 +97,7 @@ page{
     color: rgba(102, 8, 116, 1);
 }
 .input_text_v{
+    width: 30%;
     margin-top:8%;
     text-align: left;
     margin-left: 6%;

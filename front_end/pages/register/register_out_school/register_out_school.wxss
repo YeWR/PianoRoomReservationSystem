@@ -99,6 +99,7 @@ page{
     color: rgba(102, 8, 116, 1);
 }
 .input_text_v{
+    width: 30%;
     margin-top:8%;
     text-align: left;
     margin-left: 6%;
