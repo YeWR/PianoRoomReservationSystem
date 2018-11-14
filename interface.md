@@ -201,3 +201,30 @@
 }
 ```
 
+## 历史订单（所有订单信息）
+
+```json
+{
+    "url": "/item/all",
+    "data": {
+        "number":"号码（手机号/学号）"
+    },
+    "res": {
+        "success": "获取历史订单成功",
+        "info": "退订失败信息",
+        "reservationList"(可用订单信息列表，已使用，正在使用，未使用): [{
+            "pianoPlace":"琴房地点",
+       		"pianoType":"钢琴简介信息",
+        	"pianoPrice": "预约价格",
+        	"reservationId": "订单号",
+        	"reservationType": "预约类别",
+        	"reservationState":"预约状态（正在使用、未生效）",
+        	"date":"预约日期(2018-11-14)",
+        	"weekday": "星期几(星期三/周三)",
+        	"begTimeIndex":"开始时间index",
+        	"endTimeIndex":"结束时间index",
+        }]
+    }
+}
+```
+
