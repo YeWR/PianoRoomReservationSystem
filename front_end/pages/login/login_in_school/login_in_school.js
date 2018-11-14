@@ -65,11 +65,15 @@ Page({
                     "Content-Type": "application/x-www-form-urlencoded"
                 },
                 success: function (res) {
-                    util.alertInfo("成功", "success", 1000);
-                    wx.navigateTo({
-                        url: ""
-                    });
-                    // success
+                    if(res.data.success){
+                        util.alertInfo("成功", "success", 1000);
+                        wx.navigateTo({
+                            url: ""
+                        });
+                    }
+                    else{
+                        util.alertInfo(res.data.info, "none", 1000);
+                    }
                 },
                 fail: function (res) {
                     // fail

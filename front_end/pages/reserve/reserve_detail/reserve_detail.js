@@ -305,11 +305,15 @@ Page({
                 "Content-Type": "application/x-www-form-urlencoded"
             },
             success: function (res) {
-                that.setInfo(res.data, that);
+                if(res.data.success){
 
-                // init time array
-                that.initTime();
-
+                    that.setInfo(res.data, that);
+                    // init time array
+                    that.initTime();
+                }
+                else{
+                    util.alertInfo(res.data.info, "none", 1000);
+                }
             },
             fail: function (res) {
                 util.alertInfo("获取琴房信息失败，请检查网络设备是否正常。", "none", 1000);

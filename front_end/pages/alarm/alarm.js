@@ -85,7 +85,12 @@ Page({
                 "Content-Type": "application/x-www-form-urlencoded"
             },
             success: function (res) {
-                that.setReservationList(res.data.reservationList, that);
+                if(res.data.success){
+                    that.setReservationList(res.data.reservationList, that);
+                }
+                else{
+                    util.alertInfo(res.data.info, "none", 1000);
+                }
             },
             fail: function (res) {
                 util.alertInfo("预约信息查看失败，请检查网络设备是否正常。", "none", 1000);

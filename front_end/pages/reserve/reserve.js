@@ -421,9 +421,13 @@ Page({
                 "Content-Type": "application/x-www-form-urlencoded"
             },
             success: function (res) {
-                // set the piano list data
-                that.setPianoList(res.data.pianoList, that);
-                console.log("ggggggg");
+                if(res.data.success){
+                    // set the piano list data
+                    that.setPianoList(res.data.pianoList, that);
+                }
+                else{
+                    util.alertInfo(res.data.info, "none", 1000);
+                }
             },
             fail: function (res) {
                 util.alertInfo("获取琴房信息失败，请检查网络设备是否正常。", "none", 1000);
