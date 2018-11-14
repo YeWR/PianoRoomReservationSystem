@@ -93,11 +93,11 @@ const routers = router.post("/all", async (ctx, next) => {
                             "pianoPrice": p.item_value,
                             "reservationType": p.item_member,
                             "reservationState": p.item_type,
-                            "reservationId": p.item_id,
+                            "reservationId": p.item_uuid,
                             "date": dateStr,
                             "weekday": weekStr[week],
                             "begTimeIndex": p.item_begin,
-                            "endTimeIndex": p.item_begin + p.item_duration
+                            "endTimeIndex": p.item_begin + p.item_duration,
                         };
                         reservationList.push(info);
                     }

@@ -1,6 +1,7 @@
 const Router = require("koa-router");
 const router = new Router();
-const dataBase = require("../dataBase")
+const dataBase = require("../dataBase");
+const uuid = require("node-uuid");
 
 const routers = router.post("/all", async (ctx, next) => {
     console.log(ctx.request.body);
@@ -57,7 +58,7 @@ const routers = router.post("/all", async (ctx, next) => {
         let timeList = [];
         for(let i = 0; i<result.data.piano_list.length;i++)
         {
-            timeList.push(result.data.piano_list[i] - 48);
+            timeList.push(result.data.piano_list[i] - '0');
         }
         ctx.response.body = {
             "timeTable": timeList,
@@ -77,8 +78,14 @@ const routers = router.post("/all", async (ctx, next) => {
     let dateStr = ctx.request.body.date;
     dateStr.concat(" 08:00:00");
     let duration = endTimeIndex - begTimeIndex;
-    let result = await dataBase.InsertItem(dateStr,number,pianoId,1,reserveType,pianoPrice,duration,begTimeIndex);
+    let itemUuid = uuid.v1();
+    let result = await dataBase.InsertItem(dateStr,number,pianoId,1,reserveType,pianoPrice,duration,begTimeIndex,itemUuid);
     ctx.response.body = result;
+    //console.log(ctx.response.body);
+}).post("/delete", async (ctx, next) => {
+    let itemId = ctx.request.body.reservationId;
+    //let result = await dataBase.DeleteItem(dateStr,number,pianoId,1,reserveType,pianoPrice,duration,begTimeIndex);
+    //ctx.response.body = result;
     //console.log(ctx.response.body);
 });
 
