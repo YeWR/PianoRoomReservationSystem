@@ -85,13 +85,13 @@ const routers = router.post("/all", async (ctx, next) => {
         {
             if(p.item_type)
             {
-                if(compTime(nowDate, p.item_date, p.item_begin+p.item_duration))
+                let date = new Date(p.item_date);
+                if(compTime(nowDate, date, p.item_begin+p.item_duration))
                 {
                     for(let i of pianoInfo.data)
                     {
                         if (i.piano_id === p.item_roomId)
                         {
-                            let date = new Date(p.item_date);
                             let dateStr = getDateStr(date);
                             let week = date.getDay();
                             let info = {
