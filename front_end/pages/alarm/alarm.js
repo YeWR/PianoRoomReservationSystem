@@ -48,7 +48,7 @@ Page({
             reservation.reservationStateDis = util.setRsvStateDiscription(e.reservationState);
 
             reservation.reservationDate = e.date;
-            reservation.reservationWeekday = e.date.getDay();
+            reservation.reservationWeekday = e.weekday;
             reservation.reservationBegTime = util.getTimeDiscription(begTime[0], begTime[1]);
             reservation.reservationEndTime = util.getTimeDiscription(endTime[0], endTime[1]);
 

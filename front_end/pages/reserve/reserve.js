@@ -13,6 +13,7 @@ Page({
         _date: "",
         _pianoList: [],
         _pianoAvailable: [],
+        _pianoIsAvailable: false,
 
         _begTimeArray: [],
         _begTimeIndex: [],
@@ -220,6 +221,7 @@ Page({
     setPianoAvailable: function (that) {
         const tableLen = util.getTimeTableLen();
         let pianoAvailable = [];
+        let pianoIsAvailable = false;
         let curDate = new Date();
         let day = util.dateSub(that.data._jsDate, curDate);
 
@@ -233,11 +235,12 @@ Page({
                 pianoAvl.timeTable = timeTable.slice();
 
                 pianoAvailable.push(pianoAvl);
+                pianoIsAvailable = true;
             }
         }
-
         that.setData({
-            _pianoAvailable: pianoAvailable
+            _pianoAvailable: pianoAvailable,
+            _pianoIsAvailable: pianoIsAvailable
         });
     },
 

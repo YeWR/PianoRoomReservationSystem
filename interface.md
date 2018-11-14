@@ -169,7 +169,8 @@
         	"pianoPrice": "预约价格",
         	"reservationType": "预约类别",
         	"reservationState":"预约状态（正在使用、未生效）",
-        	"date":"预约时间",
+        	"date":"预约日期(2018-11-14)",
+        	"weekday": "星期几(星期三/周三)",
         	"begTimeIndex":"开始时间index",
         	"endTimeIndex":"结束时间index",
         }]

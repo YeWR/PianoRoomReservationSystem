@@ -15,6 +15,7 @@
 
         <!--姓名-->
         <view class="input_view">
+            <image class="input_icon" mode="aspectFit" src="../../../images/icon/calendar.png"></image>
             <input class="input_text" placeholder="姓名" bindinput="bindRealName"/>
         </view>
 

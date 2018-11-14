@@ -2,9 +2,9 @@
 <view class="container">
     <view class="login_icon">
         <image class="login-img" src="../../../images/bg/v2_phk4lz.png_t.png"></image>
-        <button class="login_btn" bindtap="login">
-            登录
-        </button>
+        <!--<button class="login_btn" bindtap="login">-->
+            <!--登录-->
+        <!--</button>-->
     </view>
     <!--<view class="login_from">-->
 

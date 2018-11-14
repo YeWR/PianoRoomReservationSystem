@@ -81,7 +81,7 @@ Page({
         if (notEmptyCheck()) {
             // TODO：暂时跳转到board界面
             // post();
-            that.toBoard();
+            // that.toBoard();
         }
 
     },

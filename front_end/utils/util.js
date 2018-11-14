@@ -87,8 +87,7 @@ const dateCompare = (date1, date2) => {
  */
 const dateSub = (date1, date2) => {
     let days = date1.getTime() - date2.getTime();
-    let day = Math.abs(parseInt(days / (1000 * 60 * 60 * 24)));
-    return day;
+    return Math.abs(parseInt(days / (1000 * 60 * 60 * 24)));
 };
 
 // alert an info
@@ -338,7 +337,7 @@ const md5 = (string) => {
  */
 const getIndexInTimeTable = (hour, minute) => {
     let index = (hour - BEGINHOUR) * parseInt(60 / TIMEINTERVAL);
-    index = index + parseInt((minute - BEGINMINUTE) / TIMEINTERVAL);
+    index = index + Math.ceil((minute - BEGINMINUTE) / TIMEINTERVAL);
     return index;
 };
 

@@ -20,7 +20,8 @@
         <view class='progress-days'>
 
             <view class='progress'>
-                <progress percent="{{50}}" stroke-width='5' activeColor="rgba(187, 187, 187, 1)" backgroundColor="rgb(187, 187, 187) 100%" active="true" />
+                <progress percent="{{50}}" stroke-width='5' activeColor="rgba(187, 187, 187, 1)"
+                          backgroundColor="rgb(187, 187, 187) 100%" active="true"/>
             </view>
 
             <view class='progress-time'>
@@ -47,47 +48,44 @@
                 {{_date}}
             </view>
         </view>
-        <!--<view class="select_time">-->
+        <view class="select_time_board">
+            时间 :
+            <picker mode="multiSelector" value="{{_begTimeIndex}}" range="{{_begTimeArray}}"
+                    bindcolumnchange="bindBegTimeChange">
+                <text wx:if="{{_begHour < 10}}">0{{_begHour}}</text>
+                <text wx:else>{{_begHour}}</text>
+                :
+                <text wx:if="{{_begMinute < 10}}">0{{_begMinute}}</text>
+                <text wx:else>{{_begMinute}}</text>
+            </picker>
 
-        <!--</view>-->
+            <picker mode="multiSelector" value="{{_endTimeIndex}}" range="{{_endTimeArray}}"
+                    bindcolumnchange="bindEndTimeChange">
+                <text wx:if="{{_endHour < 10}}">0{{_endHour}}</text>
+                <text wx:else>{{_endHour}}</text>
+                :
+                <text wx:if="{{_endMinute < 10}}">0{{_endMinute}}</text>
+                <text wx:else>{{_endMinute}}</text>
+            </picker>
+        </view>
+
+        <view wx:if="{{_chooseSingle}}">
+            人数：
+            <button bindtap="bindSingleUser" style="background-color: #660874">单人</button>
+            <button bindtap="bindMultiUsers" style="background-color: #ffffff">多人</button>
+        </view>
+        <view wx:if="{{!_chooseSingle}}">
+            人数：
+            <button bindtap="bindSingleUser" style="background-color: #ffffff">单人</button>
+            <button bindtap="bindMultiUsers" style="background-color: #660874">多人</button>
+        </view>
+
+        <view class="reserve_btn_view">
+            <button class="reserve_btn" bindtap="submitReservation">
+                提交
+            </button>
+        </view>
     </view>
 
-    <view class="select_time_board">
-        预约时间 :
-        <picker mode="multiSelector" value="{{_begTimeIndex}}" range="{{_begTimeArray}}"
-                bindcolumnchange="bindBegTimeChange">
-            <text wx:if="{{_begHour < 10}}">0{{_begHour}}</text>
-            <text wx:else>{{_begHour}}</text>
-            :
-            <text wx:if="{{_begMinute < 10}}">0{{_begMinute}}</text>
-            <text wx:else>{{_begMinute}}</text>
-        </picker>
-
-        <picker mode="multiSelector" value="{{_endTimeIndex}}" range="{{_endTimeArray}}"
-                bindcolumnchange="bindEndTimeChange" >
-            <text wx:if="{{_endHour < 10}}">0{{_endHour}}</text>
-            <text wx:else>{{_endHour}}</text>
-            :
-            <text wx:if="{{_endMinute < 10}}">0{{_endMinute}}</text>
-            <text wx:else>{{_endMinute}}</text>
-        </picker>
-    </view>
-
-    <view wx:if="{{_chooseSingle}}">
-        人数：
-        <button bindtap="bindSingleUser" style="background-color: #660874">单人</button>
-        <button bindtap="bindMultiUsers" style="background-color: #ffffff">多人</button>
-    </view>
-    <view wx:if="{{!_chooseSingle}}">
-        人数：
-        <button bindtap="bindSingleUser" style="background-color: #ffffff">单人</button>
-        <button bindtap="bindMultiUsers" style="background-color: #660874">多人</button>
-    </view>
-
-    <view class="reserve_btn_view">
-        <button class="reserve_btn" bindtap="submitReservation">
-            提交
-        </button>
-    </view>
 
 </view>
