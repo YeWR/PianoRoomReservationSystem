@@ -754,6 +754,74 @@ let GetNoticeInfo = async function(noticeId){
     }
 }
 
+let InsertNotice = async function(noticeTitle, noticeCont, noticeTime, noticeAuth, noticeType) {
+    let errorMsg = "";
+    let test = function(){
+        return new Promise(resolve =>{
+            db.where({ notice_title: noticeTitle }).get('notice', function (err, res, fields) {
+                let _select = res;
+                if(_select.length != 0){
+                    errorMsg = "公告已经存在";
+                    resolve(0);
+                }
+                else{
+                    let _info = {
+                        notice_title: noticeTitle,
+                        notice_cont: noticeCont,
+                        notice_time: noticeTime,
+                        notice_auth: noticeAuth,
+                        notice_type: noticeType
+                    }
+                    db.insert('notice', _info, function (err, info) { 
+                        if(err == null){
+                            resolve(1);
+                        }
+                        else{
+                            errorMsg = "新建公告失败";
+                            resolve(0);
+                        }
+                    });
+                }
+            });
+        });
+    };
+    let flag = await test();
+    console.log(flag);
+    if(flag == 0){
+        return {"success":false,
+                "info":errorMsg};
+    }
+    if(flag == 1){
+        return {"success":true};
+    }
+}
+
+let DeleteNotice = async function(noticeId) {
+    let errorMsg = "";
+    let test = function(){
+        return new Promise(resolve =>{
+            db.where({notice_id: noticeId }).update('notice', {notice_type: 0}, function (err) {
+                if(err == null){
+                    resolve(1);
+                }
+                else{
+                    errorMsg = "删除失败";
+                    resolve(0);
+                }
+            });
+        });
+    };
+    let flag = await test();
+    console.log(flag);
+    if(flag == 0){
+        return {"success":false,
+                "info":errorMsg};
+    }
+    if(flag == 1){
+        return {"success":true};
+    }
+}
+
 // 订单
 exports.InsertItem = InsertItem;            // 新增订单
 exports.UpdateItem = UpdateItem;            // 更新订单
@@ -781,4 +849,9 @@ exports.GetSocietyUserInfo = GetSocietyUserInfo;  // 获取某个校外用户的
 // 公告
 exports.GetNoticeAll = GetNoticeAll;            // 获取所有公告
 exports.GetNoticeInfo = GetNoticeInfo;          // 获取一个公告，由notice_id
+exports.InsertNotice = InsertNotice;            // 插入公告
+exports.DeleteNotice = DeleteNotice;            // 删除公告
+
+// 查询
+
 
