@@ -81,7 +81,7 @@ const routers = router.post("/all", async (ctx, next) => {
     let userId = await dataBase.GetSocietyUuidByTele(number);
     userId = userId.data;
     let userInfo = await dataBase.GetSocietyUserInfo(userId);
-    if(userInfo.soc_type)
+    if(userInfo.data.soc_type)
     {
         let pianoId = ctx.request.body.pianoId;
         let reserveType = parseInt(ctx.request.body.reservationType);
@@ -101,7 +101,7 @@ const routers = router.post("/all", async (ctx, next) => {
             "success": false,
             "info": "您已被加入黑名单，无法预约，请联系管理员!"
         }
-    }
+    }k
     //console.log(ctx.response.body);
 });
 
