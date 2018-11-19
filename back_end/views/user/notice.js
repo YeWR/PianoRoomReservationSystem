@@ -32,13 +32,28 @@ function getDateStr (date) {
     }
     if(day < 10)
     {
-        dateStr = dateStr + "0" + day.toString() + "-";
+        dateStr = dateStr + "0" + day.toString();
     }
     else
     {
-        dateStr = dateStr + day.toString() + "-";
+        dateStr = dateStr + day.toString();
     }
-    //dateStr = dateStr + " " + hour.toString() + ":" + minute.toString();
+    if(hour < 10)
+    {
+        dateStr = dateStr + " " + "0" + hour.toString();
+    }
+    else
+    {
+        dateStr = dateStr + " " + hour.toString();
+    }
+    if(minute < 10)
+    {
+        dateStr = dateStr + ":0" + minute.toString();
+    }
+    else
+    {
+        dateStr = dateStr + ":" + minute.toString();
+    }
     return dateStr;
 }
 
@@ -53,7 +68,7 @@ const routers = router.post("/all", async (ctx, next) => {
             let date = new Date(notice.notice_time);
             let dateStr = getDateStr(date);
             let noticeKey = "";
-            if(notice.notice_cont.length() > 10)
+            if(notice.notice_cont.length > 10)
             {
                 noticeKey = notice.notice_cont.substring(0,10) + "...";
             }
