@@ -21,36 +21,11 @@ Page({
 
         // init data
         that.setData({
-            _noticeId: options.noticeId
-        });
-
-        // get data from server
-        wx.request({
-            url: "https://958107.iterator-traits.com/notice/detail",
-            data: {
-                noticeId: that.data._noticeId
-            },
-            method: "POST",
-            header: {
-                "Content-Type": "application/x-www-form-urlencoded"
-            },
-            success: function (res) {
-                if(res.data.success){
-                    let notice = res.data.notice;
-                    that.setData({
-                        _noticeTitle: notice.noticeTitle,
-                        _noticeContent: notice.noticeContent,
-                        _noticeTime: notice.noticeTime,
-                        _noticeAuthor: notice.noticeAuthor,
-                    });
-                }
-                else{
-                    util.alertInfo(res.data.info, "none", 1000);
-                }
-            },
-            fail: function (res) {
-                util.alertInfo("公告信息查看失败，请检查网络设备是否正常。", "none", 1000);
-            }
+            _noticeId: options.noticeId,
+            _noticeTitle: options.noticeTitle,
+            _noticeContent: options.noticeContent,
+            _noticeTime: options.noticeTime,
+            _noticeAuthor: options.noticeAuthor,
         });
     },
 
