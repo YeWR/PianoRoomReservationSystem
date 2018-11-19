@@ -76,21 +76,31 @@ const routers = router.post("/all", async (ctx, next) => {
     //console.log(ctx.response.body);
 }).post("/order", async (ctx, next) => {
     //todo:一个用户不能同时使用多个琴房
-    //todo:黑名单
-    //
     console.log(ctx.request.body);
     let number = ctx.request.body.number;
-    let pianoId = ctx.request.body.pianoId;
-    let reserveType = parseInt(ctx.request.body.reservationType);
-    let pianoPrice = parseInt(ctx.request.body.pianoPrice);
-    let begTimeIndex = parseInt(ctx.request.body.begTimeIndex);
-    let endTimeIndex = parseInt(ctx.request.body.endTimeIndex);
-    let dateStr = ctx.request.body.date;
-    dateStr.concat(" 08:00:00");
-    let duration = endTimeIndex - begTimeIndex;
-    let itemUuid = uuid.v1();
-    let result = await dataBase.InsertItem(dateStr,number,pianoId,1,reserveType,pianoPrice,duration,begTimeIndex,itemUuid);
-    ctx.response.body = result;
+    let userId = dataBase.GetSocietyUuidByTele(number);
+    let userInfo = await dataBase.GetSocietyUserInfo(userId);
+    if(userInfo.soc_type)
+    {
+        let pianoId = ctx.request.body.pianoId;
+        let reserveType = parseInt(ctx.request.body.reservationType);
+        let pianoPrice = parseInt(ctx.request.body.pianoPrice);
+        let begTimeIndex = parseInt(ctx.request.body.begTimeIndex);
+        let endTimeIndex = parseInt(ctx.request.body.endTimeIndex);
+        let dateStr = ctx.request.body.date;
+        dateStr.concat(" 08:00:00");
+        let duration = endTimeIndex - begTimeIndex;
+        let itemUuid = uuid.v1();
+        let result = await dataBase.InsertItem(dateStr, userId, pianoId, 1, reserveType, pianoPrice, duration, begTimeIndex, itemUuid);
+        ctx.response.body = result;
+    }
+    else
+    {
+        ctx.response.body = {
+            "success": false,
+            "info": "您已被加入黑名单，无法预约，请联系管理员!"
+        }
+    }
     //console.log(ctx.response.body);
 });
 

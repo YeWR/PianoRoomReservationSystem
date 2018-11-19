@@ -12,18 +12,19 @@ const routers = router.post("/outSchool", async (ctx, next) => {
     //let result = {"success": true};
     if(result.success === true)
     {
-        ctx.session.userId = tele;
+        let useruuid = dataBase.GetSocietyUuidByTele(tele);
+        ctx.session.userId = useruuid;
         ctx.session.userType = constVariable.USERTYPE_OUTSCHOOL;
     }
     ctx.response.body = result;
 }).post("/cookie", async (ctx, next) => {
     let response = {
-        "success": 0,
+        "success": false,
         "userType": null,
         "realName": null,
         "idNumber": null,
         "info": null
-    }
+    };
     console.log(ctx.session);
     if(ctx.session.userId && ctx.session.userType)
     {
@@ -34,7 +35,7 @@ const routers = router.post("/outSchool", async (ctx, next) => {
             userInfo = await dataBase.GetSocietyUserInfo(ctx.session.userId);
             if(userInfo.data)
             {
-                response.success = 1;
+                response.success = true;
                 response.userType = constVariable.USERTYPE_OUTSCHOOL;
                 response.realName = userInfo.data.soc_realname;
                 response.idNumber = userInfo.data.soc_tele;
