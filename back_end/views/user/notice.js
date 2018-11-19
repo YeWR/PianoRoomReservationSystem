@@ -56,7 +56,8 @@ const routers = router.post("/all", async (ctx, next) => {
             "noticeTitle": notice.notice_title,
             "noticeTime": dateStr,
             "noticeAuthor": notice.notice_auth,
-            "noticeId": notice.notice_id
+            "noticeId": notice.notice_id,
+            "noticeContent": notice.notice_cont
             }
             noticeList.push(temp);
         }
