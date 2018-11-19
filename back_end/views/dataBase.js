@@ -17,12 +17,71 @@ let client = redis.createClient(config.redisPort,config.serverIp)
 
 let timeLength = 84;
 
-let GetSocietyUserInfo = async function(userId){
+let ChangeSocietyInfo = async function(userUuid, userTele){
+    let errorMsg = "";
+    let test = function(){
+        return new Promise(resolve =>{
+            db.where({soc_uuid: userUuid }).update('society_user', {soc_tele: userTele}, function (err) {
+                if(err == null){
+                    resolve(1);
+                }
+                else{
+                    errorMsg = "更改失败";
+                    resolve(0);
+                }
+            });
+        });
+    };
+    let flag = await test();
+    console.log(flag);
+    if(flag == 0){
+        return {"success":false,
+                "info":errorMsg};
+    }
+    if(flag == 1){
+        return {"success":true};
+    }
+}
+
+// uuid:改为使用uuid
+let GetSocietyUuidByTele = async function(userTele){
     let errorMsg = "";
     let userInfo = null;
     let test = function(){
         return new Promise(resolve =>{
-            db.where({ soc_tele: userId }).get('society_user', function (err, res, fields) {
+            db.where({ soc_tele: userTele }).get('society_user', function (err, res, fields) {
+                let _select = res;
+                if (_select.length == 0) {
+                    errorMsg = "用户不存在"; // to do
+                    resolve(0);
+                }
+                else {
+                    let _data = JSON.stringify(_select);
+                    let _info = JSON.parse(_data);
+                    userInfo = _info[0];
+                    resolve(1);
+                }
+            });
+        });
+    };
+    let flag = await test();
+    console.log(flag);
+    if(flag == 0){
+        return {"data":userInfo,
+            "info":errorMsg};
+    }
+    if(flag == 1){
+        return {"data":userInfo.soc_uuid};
+    }
+}
+
+// uuid:改为使用uuid
+let GetSocietyUserInfo = async function(userUuid){
+    let errorMsg = "";
+    let userInfo = null;
+    let test = function(){
+        return new Promise(resolve =>{
+            db.where({ soc_uuid: userUuid }).get('society_user', function (err, res, fields) {
                 let _select = res;
                 if (_select.length == 0) {
                     errorMsg = "用户不存在"; // to do
@@ -83,8 +142,8 @@ let SetRegisterMsg = async function(socTele, socPassword) {
         return {"success":true};
     }
 }
-
-let SocietyRegister = async function(socType, socId, socRealname, socTele, socPassword) {
+// uuid:增加参数uuid
+let SocietyRegister = async function(socType, socId, socRealname, socTele, socUuid,socPassword) {
     let errorMsg = "";
     let checkMsg = function(){
         return new Promise(resolve =>{
@@ -125,7 +184,8 @@ let SocietyRegister = async function(socType, socId, socRealname, socTele, socPa
                         soc_type: socType,
                         soc_id: socId,
                         soc_realname: socRealname,
-                        soc_tele: socTele
+                        soc_tele: socTele,
+                        soc_uuid: socUuid
                     };
                     db.insert('society_user', _info, function (err, info) {
                         if(err == null){
@@ -472,6 +532,7 @@ let preparePianoForInsert = async function(itemRoomId, itemBegin, itemDuration, 
     }
 }
 
+// uuid: itemUsername 传入uuid
 // begin is the begin index, duration is the length
 let InsertItem = async function(itemDate, itemUsername, itemRoomId, itemType, itemMember, itemValue, itemDuration, itemBegin, itemUuid){
     let errorMsg = "";
@@ -530,6 +591,7 @@ let UpdateItem = async function(itemTime, itemUsername, itemRoom, itemType, item
     // check lock
 }
 
+// uuid: 使用用户的uuid
 let GetItem = async function(itemUsername){
     let errorMsg = "";
     let itemInfo = null;
@@ -845,6 +907,9 @@ exports.SocietyLogin = SocietyLogin;        // 点击登录
 
 // 用户
 exports.GetSocietyUserInfo = GetSocietyUserInfo;  // 获取某个校外用户的信息
+exports.GetSocietyUuidByTele = GetSocietyUuidByTele; // 通过手机号获取uuid
+
+// 修改个人信息
 
 // 公告
 exports.GetNoticeAll = GetNoticeAll;            // 获取所有公告
