@@ -1,19 +1,41 @@
 <!--pages/alarm/alarm.wxml-->
 <view class="container">
-    <view wx:for="{{_reservationList}}" wx:for-index="id" wx:for-item="reservation" wx:key="reservationId">
-        <view data-id="{{id}}" bindtap="bindReserveDetail">
-            <view>
-                钢琴地点：{{reservation.reservationPianoPlace}}
+    <view class="up_board">
+        <text class="reserve_title">
+            预约提醒
+        </text>
+    </view>
+
+    <view class="middle_board">
+        <view class="middle_view">
+
+            <view class="left_icon">
+                <view class="top-fa-icon">
+                    <text class="fa fa-clock-o fa-lg"></text>
+                </view>
             </view>
-            <view>
-                钢琴信息：{{reservation.reservationPianoType}}
-            </view>
-            <view>
-                预约状态：{{reservation.reservationStateDis}}
-            </view>
-            <view>
-                预约时间：{{reservation.reservationDate}} {{reservation.reservationWeekday}} {{reservation.reservationBegTime}}-{{reservation.reservationEndTime}}
+
+            <view class="right_text">
+                <!--{{_date}}-->
+                F2-01使用中
             </view>
         </view>
+
     </view>
+    <!--<view wx:for="{{_reservationList}}" wx:for-index="id" wx:for-item="reservation" wx:key="reservationId">-->
+    <!--<view data-id="{{id}}" bindtap="bindReserveDetail">-->
+    <!--<view>-->
+    <!--钢琴地点：{{reservation.reservationPianoPlace}}-->
+    <!--</view>-->
+    <!--<view>-->
+    <!--钢琴信息：{{reservation.reservationPianoType}}-->
+    <!--</view>-->
+    <!--<view>-->
+    <!--预约状态：{{reservation.reservationStateDis}}-->
+    <!--</view>-->
+    <!--<view>-->
+    <!--预约时间：{{reservation.reservationDate}} {{reservation.reservationWeekday}} {{reservation.reservationBegTime}}-{{reservation.reservationEndTime}}-->
+    <!--</view>-->
+    <!--</view>-->
+    <!--</view>-->
 </view>

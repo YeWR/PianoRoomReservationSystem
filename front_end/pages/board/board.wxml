@@ -35,7 +35,7 @@
         <view class='new_bottom_title'>
             <view class='new_bottom_text'>
                 <!--TODO：最多18中字 + ...-->
-                <text class="new_bottom_time_text">因系统开发人员全部顺利毕业，本系统于...</text>
+                <text class="new_bottom_time_text">因系统开发人员全部顺利毕业，本系统于x年x月</text>
             </view>
 
             <view class='new_bottom_icon'>
