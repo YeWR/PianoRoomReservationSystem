@@ -111,6 +111,15 @@ Page({
     },
 
     /*
+     * to log in
+     */
+    toLogin: function(e){
+        wx.navigateBack({
+            delta: 1
+        });
+    },
+
+    /*
      * register
      */
     register: function (e) {

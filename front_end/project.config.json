@@ -36,19 +36,13 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 6,
+			"current": -1,
 			"list": [
 				{
 					"id": -1,
 					"name": "正常情况",
 					"pathName": "pages/login/login",
 					"query": ""
-				},
-				{
-					"id": 1,
-					"name": "免注册登录",
-					"pathName": "pages/board/board",
-					"query": "phoneNumber=18800123392&realName=牛顿&userType=2"
 				},
 				{
 					"id": 2,
@@ -60,24 +54,6 @@
 					"id": -1,
 					"name": "校外登录",
 					"pathName": "pages/login/login_out_school/login_out_school",
-					"query": ""
-				},
-				{
-					"id": -1,
-					"name": "注册",
-					"pathName": "pages/register/register_out_school/register_out_school",
-					"query": ""
-				},
-				{
-					"id": -1,
-					"name": "预约",
-					"pathName": "pages/reserve/reserve_detail/reserve_detail",
-					"query": ""
-				},
-				{
-					"id": -1,
-					"name": "预约信息",
-					"pathName": "pages/reserve/reserve_confirm/reserve_confirm",
 					"query": ""
 				}
 			]

@@ -69,11 +69,11 @@ Page({
         let cookie = wx.getStorageSync("sessionid");
         let that = this;
 
-        if(cookie){
+        if (cookie) {
+            let info = true;
             wx.request({
                 url: "https://958107.iterator-traits.com/login/cookie",
-                data: {
-                },
+                data: {},
                 method: "POST",
                 header: {
                     "Content-Type": "application/x-www-form-urlencoded",
@@ -83,7 +83,7 @@ Page({
                     // if success
                     if (res.data.success) {
 
-                        util.alertInfo("欢迎回来", "success", 1000);
+                        util.alertInfo("欢迎回来", "success", 500);
 
                         app.globalData._username = res.data.realName;
                         app.globalData._userType = res.data.userType;

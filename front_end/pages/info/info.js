@@ -75,6 +75,7 @@ Page({
             _idNumber: app.globalData._idNumber,
             _idNumberHiden: util.shwoHidenIdNumber(app.globalData._idNumber, app.globalData._userType),
         });
+        console.log(app.globalData);
     },
 
     /**

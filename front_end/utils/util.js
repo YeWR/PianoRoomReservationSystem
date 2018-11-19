@@ -554,7 +554,7 @@ const getValidateCode = (phoneNumber, state) => {
             success: function (res) {
                 // if success
                 if (res.data.success) {
-                    alertInfo("发送验证码成功，请等待", "success", 1000);
+                    alertInfo("发送成功，请等待", "success", 1000);
                 }
                 // if wrong
                 else {
