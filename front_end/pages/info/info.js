@@ -40,7 +40,9 @@ Page({
      * bind all reservations
      */
     bindReservationAll: function (e) {
-
+        wx.navigateTo({
+            url: "./reservation/reservation"
+        });
     },
 
     /*

@@ -1,8 +1,8 @@
 <!--pages/board/board.wxml-->
 
 <view class="container">
-    <view wx:if="{{_noticeList}}">
-        暂无预约信息~
+    <view wx:if="{{_noticeList.length == 0}}">
+        暂无公告~
     </view>
     <view wx:else>
         <view wx:for="{{_noticeList}}" wx:for-index="id" wx:for-item="notice" wx:key="noticeId">

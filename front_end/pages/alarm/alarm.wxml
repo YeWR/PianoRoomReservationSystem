@@ -1,6 +1,6 @@
 <!--pages/alarm/alarm.wxml-->
 <view class="container">
-    <view wx:if="{{_reservationList}}">
+    <view wx:if="{{_reservationList.length == 0}}">
         暂无预约信息~
     </view>
     <view wx:else>

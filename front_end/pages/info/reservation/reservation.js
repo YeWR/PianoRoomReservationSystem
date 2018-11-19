@@ -68,8 +68,18 @@ Page({
     initReserveInfo: function(){
         let that = this;
 
+
+    },
+
+    /*
+     * fresh reservation info
+     */
+    freshInfo: function () {
+        wx.showNavigationBarLoading();
+
+        let that = this;
+
         let number = app.globalData._idNumber;
-        console.log("number:", number);
 
         wx.request({
             url: "https://958107.iterator-traits.com/reservation/all",
@@ -87,8 +97,15 @@ Page({
                 else{
                     util.alertInfo(res.data.info, "none", 1000);
                 }
+
+                wx.hideNavigationBarLoading();
+                wx.stopPullDownRefresh();
             },
             fail: function (res) {
+
+                wx.hideNavigationBarLoading();
+                wx.stopPullDownRefresh();
+
                 util.alertInfo("预约信息查看失败，请检查网络设备是否正常。", "none", 1000);
             }
         });
@@ -112,7 +129,7 @@ Page({
      * 生命周期函数--监听页面显示
      */
     onShow: function () {
-
+        wx.startPullDownRefresh();
     },
 
     /**
@@ -133,7 +150,7 @@ Page({
      * 页面相关事件处理函数--监听用户下拉动作
      */
     onPullDownRefresh: function () {
-
+        this.freshInfo();
     },
 
     /**

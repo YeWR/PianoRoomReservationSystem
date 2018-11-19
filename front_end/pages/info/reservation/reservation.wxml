@@ -1,5 +1,8 @@
 <!--pages/alarm/alarm.wxml-->
 <view class="container">
+    <view wx:if="{{_reservationList.length == 0}}">
+        暂无预约记录~
+    </view>
     <view wx:for="{{_reservationList}}" wx:for-index="id" wx:for-item="reservation" wx:key="reservationId">
         <view data-id="{{id}}" bindtap="bindReserveDetail">
             <view>

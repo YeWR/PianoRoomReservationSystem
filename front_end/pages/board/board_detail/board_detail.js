@@ -26,7 +26,7 @@ Page({
 
         // get data from server
         wx.request({
-            url: "https://958107.iterator-traits.com/notice/all",
+            url: "https://958107.iterator-traits.com/notice/detail",
             data: {
                 noticeId: that.data._noticeId
             },
