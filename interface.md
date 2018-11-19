@@ -240,31 +240,11 @@
         "info": "获取失败信息",
         "noticeList"(所有公告信息，逆序排列): [{
             "noticeTitle": "公告标题",
+        	"noticeContent": "公告内容",
             "noticeTime": "公告时间",
             "noticeAuthor": "公告发布人",
             "noticeId": "公告唯一id",
         }]
-    }
-}
-```
-
-## 公告界面——获取单个公告
-
-```json
-{
-    "url": "/notice/detail",
-    "data": {
-        "noticeId": "公告唯一id"
-    },
-    "res": {
-        "success": "公告获取成功",
-        "info":"获取失败信息",
-        "notice":{
-            "noticeTitle": "公告标题",
-            "noticeContent": "公告内容",
-            "noticeTime": "公告发布时间",
-            "noticeAuthor": "公告发布人"
-        }
     }
 }
 ```
