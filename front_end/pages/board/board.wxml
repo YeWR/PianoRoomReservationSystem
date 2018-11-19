@@ -1,5 +1,137 @@
 <!--pages/board/board.wxml-->
 
 <view class="container">
-    <view class="info">暂无公告</view>
+    <view class="up_board">
+        <text class="new_board_title">
+            公告
+        </text>
+    </view>
+
+    <view class='new_card'>
+
+        <view class='new_up_title'>
+            <view class='new_up_icon'>
+                <view class="fa-icon-back" data-id="{{id}}" bindtap='toReservePiano'>
+                    <text class="fa fa-file-text-o fa-lg"></text>
+                </view>
+            </view>
+
+            <view class='new_up_text'>
+                <text class='new_title'>关于系统停止维护的通知</text>
+                <!--ToDo:11中字以内-->
+            </view>
+        </view>
+
+        <view class='new_middle_title'>
+            <view class='new_middle_time'>
+                <text class="new_middle_time_text">18-11-11 17:00</text>
+            </view>
+
+            <view class='new_middle_line'>
+                <view class='new_middle_line_text'></view>
+            </view>
+        </view>
+
+        <view class='new_bottom_title'>
+            <view class='new_bottom_text'>
+                <!--TODO：最多18中字 + ...-->
+                <text class="new_bottom_time_text">因系统开发人员全部顺利毕业，本系统于...</text>
+            </view>
+
+            <view class='new_bottom_icon'>
+                <view class="fa-icon-back" data-id="{{id}}">
+                    <text class="fa fa-chevron-right fa-lg"></text>
+                </view>
+            </view>
+        </view>
+
+    </view>
+
+    <scrollview class='preview' scroll-y="true" style="height: 200rpx;">
+
+        <view class='"scroll-y'>
+
+            <view class='card'>
+
+                <view class='up_title'>
+                    <view class='up_icon'>
+                        <view class="fa-icon" data-id="{{id}}" bindtap='toReservePiano'>
+                            <text class="fa fa-file-text-o fa-lg"></text>
+                        </view>
+                    </view>
+
+                    <view class='up_text'>
+                        <text class='title'>关于系统停止维护的通知</text>
+                        <!--ToDo:11中字以内-->
+                    </view>
+                </view>
+
+                <view class='middle_title'>
+                    <view class='middle_time'>
+                        <text class="middle_time_text">18-11-11 17:00</text>
+                    </view>
+
+                    <view class='middle_line'>
+                        <view class='middle_line_text'></view>
+                    </view>
+                </view>
+
+                <view class='bottom_title'>
+                    <view class='bottom_text'>
+                        <!--TODO：最多16中字 + ...-->
+                        <text class="bottom_time_text">因系统开发人员全部顺利毕业，本系...</text>
+                    </view>
+
+                    <view class='bottom_icon'>
+                        <view class="fa-icon" data-id="{{id}}">
+                            <text class="fa fa-chevron-right fa-lg"></text>
+                        </view>
+                    </view>
+                </view>
+
+            </view>
+
+            <view class='card'>
+
+                <view class='up_title'>
+                    <view class='up_icon'>
+                        <view class="fa-icon" data-id="{{id}}" bindtap='toReservePiano'>
+                            <text class="fa fa-file-text-o fa-lg"></text>
+                        </view>
+                    </view>
+
+                    <view class='up_text'>
+                        <text class='title'>关于系统停止维护的通知</text>
+                        <!--ToDo:11中字以内-->
+                    </view>
+                </view>
+
+                <view class='middle_title'>
+                    <view class='middle_time'>
+                        <text class="middle_time_text">18-11-11 17:00</text>
+                    </view>
+
+                    <view class='middle_line'>
+                        <view class='middle_line_text'></view>
+                    </view>
+                </view>
+
+                <view class='bottom_title'>
+                    <view class='bottom_text'>
+                        <!--TODO：最多16中字 + ...-->
+                        <text class="bottom_time_text">因系统开发人员全部顺利毕业，本系...</text>
+                    </view>
+
+                    <view class='bottom_icon'>
+                        <view class="fa-icon" data-id="{{id}}">
+                            <text class="fa fa-chevron-right fa-lg"></text>
+                        </view>
+                    </view>
+                </view>
+
+            </view>
+
+        </view>
+    </scrollview>
+
 </view>
