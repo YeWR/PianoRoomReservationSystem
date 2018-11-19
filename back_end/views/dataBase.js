@@ -908,8 +908,7 @@ exports.SocietyLogin = SocietyLogin;        // 点击登录
 // 用户
 exports.GetSocietyUserInfo = GetSocietyUserInfo;  // 获取某个校外用户的信息
 exports.GetSocietyUuidByTele = GetSocietyUuidByTele; // 通过手机号获取uuid
-
-// 修改个人信息
+exports.ChangeSocietyInfo = ChangeSocietyInfo;      // 更新用户数据
 
 // 公告
 exports.GetNoticeAll = GetNoticeAll;            // 获取所有公告
