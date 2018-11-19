@@ -44,9 +44,9 @@ function getDateStr (date) {
 
 const routers = router.post("/all", async (ctx, next) => {
     let result = await dataBase.GetNoticeAll();
-    result.sort(sortNotice);
+    result.data.sort(sortNotice);
     let noticeList = [];
-    for(let notice of result)
+    for(let notice of result.data)
     {
         if(notice.notice_type)
         {

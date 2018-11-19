@@ -101,7 +101,7 @@ const routers = router.post("/all", async (ctx, next) => {
             "success": false,
             "info": "您已被加入黑名单，无法预约，请联系管理员!"
         }
-    }k
+    }
     //console.log(ctx.response.body);
 });
 
