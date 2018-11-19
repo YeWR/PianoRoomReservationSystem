@@ -1,0 +1,14 @@
+<!--pages/board/board_detail/board_detail.wxml-->
+<view>
+    公告
+    <view>
+        {{_noticeTitle}} {{_noticeAuthor}}
+    </view>
+    <view>
+        {{_noticeTime}}
+    </view>
+    <view>
+        {{_noticeContent}}
+    </view>
+</view>
+
