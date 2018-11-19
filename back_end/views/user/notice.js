@@ -17,28 +17,28 @@ function sortNotice(a,b)
 }
 
 function getDateStr (date) {
-    let dateStr = date.getFullYear().toString() + "年";
+    let dateStr = date.getFullYear().toString() + "-";
     let month = date.getMonth()+1;
     let day = date.getDate();
     let hour = date.getHours();
     let minute = date.getMinutes();
     if(month < 10)
     {
-        dateStr = dateStr + "0" + month.toString() + "月";
+        dateStr = dateStr + "0" + month.toString() + "-";
     }
     else
     {
-        dateStr = dateStr + month.toString() + "月";
+        dateStr = dateStr + month.toString() + "-";
     }
     if(day < 10)
     {
-        dateStr = dateStr + "0" + day.toString() + "日";
+        dateStr = dateStr + "0" + day.toString() + "-";
     }
     else
     {
-        dateStr = dateStr + day.toString() + "日";
+        dateStr = dateStr + day.toString() + "-";
     }
-    dateStr = dateStr + " " + hour.toString() + ":" + minute.toString();
+    //dateStr = dateStr + " " + hour.toString() + ":" + minute.toString();
     return dateStr;
 }
 
@@ -52,13 +52,23 @@ const routers = router.post("/all", async (ctx, next) => {
         {
             let date = new Date(notice.notice_time);
             let dateStr = getDateStr(date);
+            let noticeKey = "";
+            if(notice.notice_cont.length() > 10)
+            {
+                noticeKey = notice.notice_cont.substring(0,10) + "...";
+            }
+            else
+            {
+                noticeKey = notice.notice_cont;
+            }
             let temp = {
             "noticeTitle": notice.notice_title,
             "noticeTime": dateStr,
             "noticeAuthor": notice.notice_auth,
             "noticeId": notice.notice_id,
+            "noticeKey": noticeKey,
             "noticeContent": notice.notice_cont
-            }
+            };
             noticeList.push(temp);
         }
     }
@@ -77,7 +87,7 @@ const routers = router.post("/all", async (ctx, next) => {
         "noticeTime": dateStr,
         "noticeAuthor": notice.notice_auth,
         "noticeContent": notice.notice_cont
-    }
+    };
     ctx.response.body = {
         "success": true,
         "notice": info

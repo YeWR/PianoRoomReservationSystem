@@ -4,12 +4,12 @@ const dataBase = require("../dataBase");
 const SMSClient = require('@alicloud/sms-sdk');
 const fs = require("fs");
 const configPath = "configs.json";
-const configs = JSON.parse(fs.readFileSync(configPath))
-// ACCESS_KEY_ID/ACCESS_KEY_SECRET 根据实际申请的账号信息进行替换
+const configs = JSON.parse(fs.readFileSync(configPath));
+
 const accessKeyId = configs.accessKeyId;
 const secretAccessKey = configs.secretAccessKey;
 //初始化sms_client
-let smsClient = new SMSClient({accessKeyId, secretAccessKey})
+let smsClient = new SMSClient({accessKeyId, secretAccessKey});
 
 const routers = router.post("/", async (ctx, next) => {
     console.log(ctx.request.body);
@@ -40,9 +40,9 @@ const routers = router.post("/", async (ctx, next) => {
         }, function (err) {
             console.log(err);
             return {"success": false, "info": err.data.Message};
-        })
+        });
     console.log(sendsms);
     ctx.response.body = sendsms;
-})
+});
 
 module.exports = routers;
