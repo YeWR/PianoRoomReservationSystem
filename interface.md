@@ -241,6 +241,7 @@
         "noticeList"(所有公告信息，逆序排列): [{
             "noticeTitle": "公告标题",
         	"noticeContent": "公告内容",
+        	"noticeKey": "公告简略内容",
             "noticeTime": "公告时间",
             "noticeAuthor": "公告发布人",
             "noticeId": "公告唯一id",
