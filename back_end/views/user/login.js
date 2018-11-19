@@ -12,7 +12,8 @@ const routers = router.post("/outSchool", async (ctx, next) => {
     //let result = {"success": true};
     if(result.success === true)
     {
-        let useruuid = dataBase.GetSocietyUuidByTele(tele);
+        let useruuid = await dataBase.GetSocietyUuidByTele(tele);
+        useruuid = useruuid.data;
         ctx.session.userId = useruuid;
         ctx.session.userType = constVariable.USERTYPE_OUTSCHOOL;
     }

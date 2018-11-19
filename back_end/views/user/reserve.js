@@ -78,7 +78,8 @@ const routers = router.post("/all", async (ctx, next) => {
     //todo:一个用户不能同时使用多个琴房
     console.log(ctx.request.body);
     let number = ctx.request.body.number;
-    let userId = dataBase.GetSocietyUuidByTele(number);
+    let userId = await dataBase.GetSocietyUuidByTele(number);
+    userId = userId.data;
     let userInfo = await dataBase.GetSocietyUserInfo(userId);
     if(userInfo.soc_type)
     {

@@ -66,7 +66,8 @@ function compTime(nowdate, date, endIndex)
 
 const routers = router.post("/all", async (ctx, next) => {
     let number = ctx.request.body.number;
-    let userId = dataBase.GetSocietyUuidByTele(number);
+    let userId = await dataBase.GetSocietyUuidByTele(number);
+    userId = userId.data;
     let result = await dataBase.GetItem(userId);
     if(result.data === null)
     {
