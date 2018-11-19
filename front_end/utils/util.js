@@ -86,8 +86,10 @@ const dateCompare = (date1, date2) => {
  * return the date1 - date2
  */
 const dateSub = (date1, date2) => {
-    let days = date1.getTime() - date2.getTime();
-    return Math.abs(parseInt(days / (1000 * 60 * 60 * 24)));
+    let d1 = new Date(formatDate(date1).replace(/-/g, "/"));
+    let d2 = new Date(formatDate(date2).replace(/-/g, "/"));
+    let days = d1.getTime() - d2.getTime();
+    return parseInt(days / (1000 * 60 * 60 * 24));
 };
 
 // alert an info
@@ -554,7 +556,7 @@ const getValidateCode = (phoneNumber, state) => {
             success: function (res) {
                 // if success
                 if (res.data.success) {
-                    alertInfo("发送成功，请等待", "success", 1000);
+                    alertInfo("发送成功", "success", 1000);
                 }
                 // if wrong
                 else {

@@ -73,7 +73,6 @@ Page({
         let that = this;
 
         let number = app.globalData._idNumber;
-        console.log("number:", number);
 
         wx.request({
             url: "https://958107.iterator-traits.com/alarm/all",

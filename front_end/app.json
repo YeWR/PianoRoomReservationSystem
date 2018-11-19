@@ -13,13 +13,15 @@
     "pages/reserve/reserve_confirm/reserve_confirm",
     "pages/alarm/alarm_detail/alarm_detail",
     "pages/info/reservation/reservation",
-    "pages/info/reservation/reservation_detail/reservation_detail"
+    "pages/info/reservation/reservation_detail/reservation_detail",
+    "pages/board/board_detail/board_detail"
   ],
   "window": {
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#fff",
     "navigationBarTitleText": "THU琴房预约",
-    "navigationBarTextStyle": "black"
+    "navigationBarTextStyle": "black",
+    "enablePullDownRefresh": true
   },
   "tabBar": {
     "color": "#a9b7b7",

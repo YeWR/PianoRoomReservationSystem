@@ -1,5 +1,22 @@
 <!--pages/board/board.wxml-->
 
 <view class="container">
-    <view class="info">暂无公告</view>
+    <view wx:if="{{_noticeList}}">
+        暂无预约信息~
+    </view>
+    <view wx:else>
+        <view wx:for="{{_noticeList}}" wx:for-index="id" wx:for-item="notice" wx:key="noticeId">
+            <view data-id="{{id}}" bindtap="bindNoticeDetail">
+                <view>
+                    公告标题：{{notice.noticeTitle}}
+                </view>
+                <view>
+                    公告发布时间：{{notice.noticeTime}}
+                </view>
+                <view>
+                    公告发布者：{{notice.noticeAuthor}}
+                </view>
+            </view>
+        </view>
+    </view>
 </view>

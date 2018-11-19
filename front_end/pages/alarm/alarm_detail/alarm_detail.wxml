@@ -27,7 +27,7 @@
     </canvas>
 
     <!--登录-->
-    <view class="login_btn_view">
+    <view class="login_btn_view" wx:if="{{!_refundDisable}}">
         <button class="login_btn" disabled="{{_refundDisable}}" bindtap="bindRefund">退订</button>
     </view>
 

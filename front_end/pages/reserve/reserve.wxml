@@ -71,7 +71,6 @@
             <scrollview class='preview' scroll-y="true" style="height: 50px;" wx:for="{{_pianoAvailable}}"
                         wx:for-index="id"
                         wx:for-item="piano" wx:key="pianoId">
-
                 <view class='"scroll-y'>
 
                     <view class='card'>

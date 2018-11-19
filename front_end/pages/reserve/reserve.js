@@ -65,7 +65,7 @@ Page({
             currentMinute = util.ENDMINUTE;
         }
 
-        if (util.dateCompare(this.data._jsDate, curDate) > 0) {
+        if (util.dateSub(this.data._jsDate, curDate) > 0) {
             currentHours = util.BEGINHOUR;
             currentMinute = util.BEGINMINUTE;
         }
@@ -172,7 +172,7 @@ Page({
      * [begDay, endDay]
      */
     setPreNextDay: function (begDay, endDay) {
-        if (util.dateCompare(this.data._jsDate, begDay) === 1) {
+        if (util.dateSub(this.data._jsDate, begDay) > 0) {
             this.setData({
                 _cannotPrevious: false
             })
@@ -183,7 +183,7 @@ Page({
             })
         }
 
-        if (util.dateCompare(this.data._jsDate, endDay) === -1) {
+        if (util.dateSub(this.data._jsDate, endDay) < 0) {
             this.setData({
                 _cannotNext: false
             });
@@ -242,6 +242,8 @@ Page({
             _pianoAvailable: pianoAvailable,
             _pianoIsAvailable: pianoIsAvailable
         });
+
+        console.log("aval: ", that.data._pianoAvailable);
     },
 
     /*
@@ -252,8 +254,8 @@ Page({
         let lastDate = new Date();
         lastDate.setDate(lastDate.getDate() + util.DATELEN);
 
-        if (util.dateCompare(this.data._jsDate, curDate) === 1 &&
-            util.dateCompare(this.data._jsDate, lastDate) <= 0) {
+        if (util.dateSub(this.data._jsDate, curDate) > 0 &&
+            util.dateSub(this.data._jsDate, lastDate) <= 0) {
 
             let date = this.data._jsDate;
             date.setDate(date.getDate() - 1);
@@ -277,8 +279,8 @@ Page({
         let lastDate = new Date();
         lastDate.setDate(lastDate.getDate() + util.DATELEN);
 
-        if (util.dateCompare(this.data._jsDate, lastDate) === -1 &&
-            util.dateCompare(this.data._jsDate, curDate) >= 0) {
+        if (util.dateSub(this.data._jsDate, lastDate) < 0 &&
+            util.dateSub(this.data._jsDate, curDate) >= 0) {
 
             let date = this.data._jsDate;
             date.setDate(date.getDate() + 1);
@@ -312,7 +314,7 @@ Page({
             currentMinute = util.ENDMINUTE;
         }
 
-        if (util.dateCompare(this.data._jsDate, curDate) > 0) {
+        if (util.dateSub(this.data._jsDate, curDate) > 0) {
             currentHours = util.BEGINHOUR;
             currentMinute = util.BEGINMINUTE;
         }
@@ -345,8 +347,8 @@ Page({
     /*
      * init data
      */
-    initData: function () {
-        this.setData({
+    initData: function (that) {
+        that.setData({
             _pianoList: [],
             _pianoAvailable: [],
 
@@ -368,11 +370,12 @@ Page({
     },
 
     setPianoList: function (list, that) {
+        // set the piano Available
         that.setData({
             _pianoList: list
+        }, function () {
+            that.setPianoAvailable(that)
         });
-        // set the piano Available
-        that.setPianoAvailable(that);
     },
 
     /*
@@ -392,6 +395,66 @@ Page({
         });
     },
 
+    /*
+     * fresh reservation info
+     */
+    freshInfo: function () {
+        wx.showNavigationBarLoading();
+
+        // get the date
+        let date = new Date();
+        if (this.data._jsDate !== "") {
+            date = this.data._jsDate;
+        }
+        let that = this;
+
+        that.setData({
+            _jsDate: date,
+            _date: util.formatDate(date),
+        });
+
+        // init data
+        that.initData(that);
+
+        // set previous next avail
+        let curDate = new Date();
+        let lastDate = new Date();
+        lastDate.setDate(lastDate.getDate() + util.DATELEN);
+        that.setPreNextDay(curDate, lastDate);
+
+        // init time array
+        that.initTime();
+
+        // get the piano list
+        wx.request({
+            url: "https://958107.iterator-traits.com/reserve/all",
+            method: "POST",
+            header: {
+                "Content-Type": "application/x-www-form-urlencoded"
+            },
+            success: function (res) {
+                if (res.data.success) {
+                    // set the piano list data
+                    that.setPianoList(res.data.pianoList, that);
+                }
+                else {
+                    util.alertInfo(res.data.info, "none", 1000);
+                }
+                console.log("res: ", res.data.pianoList);
+                console.log("aval0: ", that.data._pianoAvailable);
+                wx.hideNavigationBarLoading();
+                wx.stopPullDownRefresh();
+            },
+            fail: function (res) {
+
+                wx.hideNavigationBarLoading();
+                wx.stopPullDownRefresh();
+
+                util.alertInfo("获取琴房信息失败，请检查网络设备是否正常。", "none", 1000);
+            }
+        });
+    },
+
     /**
      * 生命周期函数--监听页面初次渲染完成
      */
@@ -403,43 +466,14 @@ Page({
      * 生命周期函数--监听页面显示
      */
     onShow: function () {
-        // get the date
-        let date = new Date();
-        let that = this;
-        this.setData({
-            _jsDate: date,
-            _date: util.formatDate(date),
-        });
-        // init time array
-        this.initTime();
-
-        // get the piano list
-        wx.request({
-            url: "https://958107.iterator-traits.com/reserve/all",
-            method: "POST",
-            header: {
-                "Content-Type": "application/x-www-form-urlencoded"
-            },
-            success: function (res) {
-                if(res.data.success){
-                    // set the piano list data
-                    that.setPianoList(res.data.pianoList, that);
-                }
-                else{
-                    util.alertInfo(res.data.info, "none", 1000);
-                }
-            },
-            fail: function (res) {
-                util.alertInfo("获取琴房信息失败，请检查网络设备是否正常。", "none", 1000);
-            }
-        });
+        wx.startPullDownRefresh();
     },
 
     /**
      * 生命周期函数--监听页面隐藏
      */
     onHide: function () {
-        this.initData();
+        this.initData(this);
     },
 
     /**
@@ -453,7 +487,7 @@ Page({
      * 页面相关事件处理函数--监听用户下拉动作
      */
     onPullDownRefresh: function () {
-
+        this.freshInfo();
     },
 
     /**

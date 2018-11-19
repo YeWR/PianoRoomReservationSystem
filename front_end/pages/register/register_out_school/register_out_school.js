@@ -163,11 +163,12 @@ Page({
                 },
                 success: function (res) {
                     // if success
+                    console.log("res:", res);
                     if (res.data.success) {
                         util.alertInfo("注册成功", "success", 1000);
                         app.globalData._username = that.data._realName;
                         app.globalData._userType = util.USERTYPE.SOCIAL;
-                        app.globalData._phoneNumber = that.data._phoneNumber;
+                        app.globalData._idNumber = that.data._phoneNumber;
                         that.toBoard();
                     }
                     // if wrong
