@@ -14,7 +14,9 @@
     "pages/alarm/alarm_detail/alarm_detail",
     "pages/info/reservation/reservation",
     "pages/info/reservation/reservation_detail/reservation_detail",
-    "pages/board/board_detail/board_detail"
+    "pages/board/board_detail/board_detail",
+    "pages/info/individual_info/individual_info",
+    "pages/info/help/help"
   ],
   "window": {
     "backgroundTextStyle": "light",
