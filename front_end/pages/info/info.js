@@ -68,16 +68,32 @@ Page({
         });
     },
 
+    /*
+     * redirect to login
+     * this is a bug in wechat, so we have to fix it.
+     */
+    reLogin: function(){
+        wx.redirectTo({
+            url: '../login/login'
+        });
+    },
+
     /**
      * 生命周期函数--监听页面加载
      */
     onLoad: function (options) {
+
+        let user = app.globalData._username;
+        if(!user){
+            this.reLogin();
+        }
+
         this.setData({
             _realName: app.globalData._username,
             _idNumber: app.globalData._idNumber,
             _idNumberHiden: util.shwoHidenIdNumber(app.globalData._idNumber, app.globalData._userType),
         });
-        console.log(app.globalData);
+
     },
 
     /**

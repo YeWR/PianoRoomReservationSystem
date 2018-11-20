@@ -362,11 +362,24 @@ Page({
         });
     },
 
+    /*
+     * redirect to login
+     * this is a bug in wechat, so we have to fix it.
+     */
+    reLogin: function(){
+        wx.redirectTo({
+            url: '../login/login'
+        });
+    },
+
     /**
      * 生命周期函数--监听页面加载
      */
     onLoad: function (options) {
-
+        let user = app.globalData._username;
+        if(!user){
+            this.reLogin();
+        }
     },
 
     setPianoList: function (list, that) {
