@@ -178,19 +178,8 @@ Page({
         this.setData({
             _endTimeArray: [endHours, endMinutes]
         });
-        // reset end time
-        if (this.shouldResetEndTime()) {
-            this.setData({
-                _endHour: this.data._begHour,
-                _endMinute: this.data._begMinute
-            });
-        }
-        // reset the index
-        let hourIndex = endHours.indexOf(this.data._endHour);
-        let minuteIndex = endMinutes.indexOf(this.data._endMinute);
-        this.setData({
-            _endTimeIndex: [hourIndex, minuteIndex]
-        });
+
+        this.chooseAdaptEndTime(this.data._begHour, this.data._begMinute, 6);
     },
 
     /*
@@ -243,6 +232,125 @@ Page({
         });
     },
 
+    /*
+     * set the begin time value after time table box is fixed
+     * while changing the view / index
+     */
+    chooseBegTime: function (begHour, begMinute) {
+        const hours = this.data._begTimeArray[0];
+        const minutes = this.data._begTimeArray[1];
+        let hourIndex = hours.indexOf(begHour);
+        let minuteIndex = minutes.indexOf(begMinute);
+
+        if (hourIndex !== -1 && minuteIndex !== -1) {
+            this.setData({
+                _begTimeIndex: [hourIndex, minuteIndex]
+            });
+
+            return true;
+        }
+
+        return false;
+    },
+
+    /*
+     * set the end time value after time table box is fixed
+     * while changing the view / index
+     */
+    chooseEndTime: function (endHour, endMinute) {
+        const hours = this.data._endTimeArray[0];
+        const minutes = this.data._endTimeArray[1];
+        let hourIndex = hours.indexOf(endHour);
+        let minuteIndex = minutes.indexOf(endMinute);
+
+        if (hourIndex !== -1 && minuteIndex !== -1) {
+            this.setData({
+                _endTimeIndex: [hourIndex, minuteIndex]
+            });
+
+            return true;
+        }
+
+        return false;
+    },
+
+    /*
+     * choose adapt end time:
+     * given beg time 8:00
+     * return 8:00 + interval if possible (here interval is 6 x 10)
+     * or return the longest time if possible
+     */
+    chooseAdaptEndTime: function (begHour, begMinute, interval) {
+        let begIndex = util.getIndexInTimeTable(begHour, begMinute);
+        let inter = 0;
+        const table = this.data._timeTable;
+        const tableLen = table.length;
+        for (let i = begIndex; i < tableLen; ++i) {
+            // is free
+            if (table[i] === 0 && inter < util.MAXTIMEINTERVAL) {
+                inter++;
+            }
+            else {
+                break;
+            }
+        }
+
+        inter = Math.min(inter, interval);
+
+        let endTime = util.getEndTime(begHour, begMinute, inter);
+
+        // reset end time
+
+        this.setData({
+            _endHour: endTime[0],
+            _endMinute: endTime[1]
+        });
+        this.chooseEndTime(endTime[0], endTime[1]);
+
+    },
+
+    /*
+     * fresh reservation info
+     */
+    freshInfo: function () {
+        wx.showNavigationBarLoading();
+
+        let that = this;
+
+        wx.request({
+            url: "https://958107.iterator-traits.com/reserve/detail",
+            data: {
+                pianoId: that.data._pianoId,
+                date: that.data._date
+            },
+            method: "POST",
+            header: {
+                "Content-Type": "application/x-www-form-urlencoded"
+            },
+            success: function (res) {
+                if (res.data.success) {
+
+                    that.setInfo(res.data, that);
+                    // init time array
+                    that.initTime();
+                }
+                else {
+                    util.alertInfo(res.data.info, "none", 1000);
+                }
+
+                wx.hideNavigationBarLoading();
+                wx.stopPullDownRefresh();
+            },
+            fail: function (res) {
+
+                wx.hideNavigationBarLoading();
+                wx.stopPullDownRefresh();
+
+                util.alertInfo("获取琴房信息失败，请检查网络设备是否正常。", "none", 1000);
+            }
+        });
+    },
+
     /* init time
      * begin time -> current time
      * end time -> current time
@@ -282,43 +390,9 @@ Page({
         this.setEndTime(endHours, endMinutes, this.data._begHour);
         this.setData({
             _endTimeArray: [endHours, endMinutes],
-            _endHour: endHours[0],
-            _endMinute: endMinutes[0]
-        });
-    },
-
-    /*
-     * post
-     * get the info needed
-     */
-    initInfo: function () {
-        let that = this;
-        wx.request({
-            url: "https://958107.iterator-traits.com/reserve/detail",
-            data: {
-                pianoId: that.data._pianoId,
-                date: that.data._date
-            },
-            method: "POST",
-            header: {
-                "Content-Type": "application/x-www-form-urlencoded"
-            },
-            success: function (res) {
-                if(res.data.success){
-
-                    that.setInfo(res.data, that);
-                    // init time array
-                    that.initTime();
-                }
-                else{
-                    util.alertInfo(res.data.info, "none", 1000);
-                }
-            },
-            fail: function (res) {
-                util.alertInfo("获取琴房信息失败，请检查网络设备是否正常。", "none", 1000);
-            }
         });
 
+        this.chooseAdaptEndTime(this.data._begHour, this.data._begMinute, 6);
     },
 
     /*
@@ -343,8 +417,6 @@ Page({
             _pianoPlace: options.pianoPlace,
             _reservationType: app.globalData._userType
         });
-        // init piano infos
-        this.initInfo();
     },
 
     /**
@@ -357,7 +429,7 @@ Page({
      * 生命周期函数--监听页面显示
      */
     onShow: function () {
-
+        wx.startPullDownRefresh();
     },
 
     /**
@@ -378,7 +450,7 @@ Page({
      * 页面相关事件处理函数--监听用户下拉动作
      */
     onPullDownRefresh: function () {
-
+        this.freshInfo();
     },
 
     /**

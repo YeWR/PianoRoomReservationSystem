@@ -748,6 +748,7 @@ module.exports = {
     getTimeDiscription: getTimeDiscription,
     drawQrCode: drawQrCode,
     MINTIMEINTERVAL: MINTIMEINTERVAL,
+    MAXTIMEINTERVAL: MAXTIMEINTERVAL,
     TIMEINTERVAL: TIMEINTERVAL,
     getHoursAvailable: getHoursAvailable,
     getMinutesAvailable: getMinutesAvailable,
