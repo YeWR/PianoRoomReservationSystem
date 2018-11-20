@@ -19,11 +19,11 @@
     "pages/info/help/help"
   ],
   "window": {
+    "enablePullDownRefresh": true,
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#fff",
     "navigationBarTitleText": "THU琴房预约",
-    "navigationBarTextStyle": "black",
-    "enablePullDownRefresh": true
+    "navigationBarTextStyle": "black"
   },
   "tabBar": {
     "color": "#a9b7b7",
@@ -52,7 +52,7 @@
         "selectedIconPath": "images/nav/info_select.png",
         "iconPath": "images/nav/info.png",
         "pagePath": "pages/info/info",
-        "text": "我的"
+        "text": "个人中心"
       }
     ]
   },

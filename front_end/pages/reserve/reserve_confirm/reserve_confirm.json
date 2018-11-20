@@ -1,1 +1,7 @@
-{}
+{
+  "enablePullDownRefresh": false,
+  "backgroundTextStyle": "light",
+  "navigationBarBackgroundColor": "#fff",
+  "navigationBarTitleText": "预约确认",
+  "navigationBarTextStyle": "black"
+}

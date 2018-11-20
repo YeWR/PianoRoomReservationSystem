@@ -1,1 +1,7 @@
-{}
+{
+  "enablePullDownRefresh": false,
+  "backgroundTextStyle": "light",
+  "navigationBarBackgroundColor": "#fff",
+  "navigationBarTitleText": "校外注册",
+  "navigationBarTextStyle": "black"
+}
