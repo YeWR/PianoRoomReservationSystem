@@ -6,13 +6,15 @@
 
   * 对于web端接口：
 
-    * `url`表示post的url
-    * `data`表示post的dict的内容
+    * `url`表示请求的url
+    * `method`表示使用的http方法
+    * `data`表示请求的dict的内容
     * `res`表示返回的值
 
     ```json
     {
         "url": "",
+        "method": "",
         "data": {
             
         },
@@ -28,7 +30,8 @@
 
 ``` json
 {
-    "url": "/validate",
+    "url": "/user/code",
+    "method": "POST",
     "data":{
         "phoneNumber": "电话号码",
         "state": "代表注册/登录/更改信息等(0/1/2/...)"
@@ -44,7 +47,8 @@
 
 ```json
 {
-    "url": "/register",
+    "url": "/user/registration",
+    "method": "POST",
     "data": {
         "phoneNumber": "电话号码",
         "validateCode": "验证码",
@@ -62,7 +66,8 @@
 
 ```json
 {
-    "url": "/login/cookie",
+    "url": "/user/cookie",
+    "method": "GET",
     "data": {
         
     },
@@ -80,7 +85,8 @@
 
 ```json
 {
-    "url": "/login/outSchool",
+    "url": "/user/login/outSchool",
+    "method": "POST",
     "data": {
         "phoneNumber": "电话号码",
         "validateCode": "验证码"
@@ -99,7 +105,8 @@
 
 ```json
 {
-    "url": "/reserve/all",
+    "url": "/piano/all",
+    "method": "GET",
     "data": {
         
     },
@@ -122,7 +129,8 @@
 
 ``` json
 {
-    "url": "/reserve/detail",
+    "url": "/piano/detail",
+    "method": "GET",
     "data": {
         "pianoId": "琴房号",
         "date": "日期"
@@ -141,7 +149,8 @@
 
 ```json
 {
-    "url": "/reserve/order",
+    "url": "/reservation/order",
+    "method": "POST",
     "data": {
         "number":"号码（手机号/学号）",
         "reservationType": "预约类别(校内学生，校内老师，校外单人，多人)",
@@ -163,7 +172,8 @@
 
 ```json
 {
-    "url": "/alarm/all",
+    "url": "/reservation/alarm",
+    "method": "GET",
     "data": {
         "number":"号码（手机号/学号）"
     },
@@ -190,7 +200,8 @@
 
 ```json
 {
-    "url": "/reservation/refund",
+    "url": "/reservation/refundment",
+    "method": "POST",
     "data": {
         "reservationId": "订单号"
     },
@@ -206,6 +217,7 @@
 ```json
 {
     "url": "/reservation/all",
+    "method": "GET",
     "data": {
         "number":"号码（手机号/学号）"
     },
@@ -233,6 +245,7 @@
 ```json
 {
     "url": "/notice/all",
+    "method": "GET",
     "data": {
     },
     "res": {

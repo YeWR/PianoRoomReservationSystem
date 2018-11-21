@@ -76,3 +76,4 @@ front_end/.idea
 back_end/.idea
 
 .idea
+back_end/configs.json
