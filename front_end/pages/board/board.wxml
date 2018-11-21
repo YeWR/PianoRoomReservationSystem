@@ -55,7 +55,7 @@
 
         <view class="scroll-y">
 
-            <view class="card" wx:for="{{_noticeList}}" wx:for-index="id" wx:for-item="notice" wx:key="noticeId">
+            <view class="card" wx:for="{{_noticeList}}" wx:for-index="id" wx:for-item="notice" wx:key="noticeId" data-id="{{id}}" bindtap= "bindNoticeDetail">
 
                 <view class="up_title" wx:if="{{id > 0}}">
                     <view class="up_icon">
