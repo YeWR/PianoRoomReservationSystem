@@ -28,24 +28,24 @@ function sortItem(a, b)
 }
 
 function getDateStr (date) {
-    let dateStr = date.getFullYear().toString() + "年";
+    let dateStr = date.getFullYear().toString() + "-";
     let month = date.getMonth()+1;
     let day = date.getDate();
     if(month < 10)
     {
-        dateStr = dateStr + "0" + month.toString() + "月";
+        dateStr = dateStr + "0" + month.toString() + "-";
     }
     else
     {
-        dateStr = dateStr + month.toString() + "月";
+        dateStr = dateStr + month.toString() + "-";
     }
     if(day < 10)
     {
-        dateStr = dateStr + "0" + day.toString() + "日";
+        dateStr = dateStr + "0" + day.toString();
     }
     else
     {
-        dateStr = dateStr + day.toString() + "日";
+        dateStr = dateStr + day.toString();
     }
     return dateStr;
 }
