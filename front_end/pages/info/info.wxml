@@ -1,6 +1,105 @@
 <!--pages/info/info.wxml-->
 
 <view class="container">
+    <view class="up_board">
+        <text class="info_title">
+            个人信息
+        </text>
+    </view>
+
+    <view class="top_board">
+
+    </view>
+
+    <view class="info_main_card">
+
+        <view class="info_main_card_line1">
+            <view class = "info_main_card_line1_left">
+                    <text class="fa fa-user fa-lg"></text>
+            </view>
+            <view class = "info_main_card_line1_right">
+                <view class = "card_line1_right1">
+                    <text >贝多芬</text>
+                </view>
+                <view class = "card_line1_right2">
+                    <text >20160132**</text>
+                </view>
+            </view>
+        </view>
+
+        <view class='info-cut'>
+            <view class='info-cutline'></view>
+        </view>
+
+        <view class = "info_main_card_line2">
+            <view class = "info_main_card_line2_left">
+                <text class = "info_main_card_line2_left_text">个人信息</text>
+            </view>
+            <view class = "info_main_card_line2_middle">
+            </view>
+            <view class = "info_main_card_line2_right">
+                <text class = "info_main_card_line2_left_text">我的消息</text>
+            </view>
+        </view>
+
+    </view>
+
+    <view class = "card">
+        <view class = "card_up">
+            <view class = "card_up_left">
+                <text class="fa fa-stack-overflow fa-lg"></text>
+            </view>
+            <view class = "card_up_middle">
+                <text>预约记录</text>
+            </view>
+            <view class = "card_up_right">
+                <text class="fa fa-location-arrow fa-lg"></text>
+            </view>
+        </view>
+        <view class = "card_middle">
+
+        </view>
+        <view class = "card_down">
+            <view class = "card_down_left">
+                <text class="fa fa-exclamation-circle fa-lg"></text>
+            </view>
+            <view class = "card_down_middle">
+                <text>违规记录</text>
+            </view>
+            <view class = "card_down_right">
+                <text class="fa fa-location-arrow fa-lg"></text>
+            </view>
+        </view>
+    </view>
+
+    <view class = "card2">
+        <view class = "card_up">
+            <view class = "card_up_left">
+                <text class="fa fa-question-circle-o fa-lg"></text>
+            </view>
+            <view class = "card_up_middle">
+                <text>使用帮助</text>
+            </view>
+            <view class = "card_up_right">
+                <text class="fa fa-location-arrow fa-lg"></text>
+            </view>
+        </view>
+        <view class = "card_middle">
+
+        </view>
+        <view class = "card_down">
+            <view class = "card_down_left">
+                <text class="fa fa-external-link fa-lg"></text>
+            </view>
+            <view class = "card_down_middle">
+                <text>退出登录</text>
+            </view>
+            <view class = "card_down_right">
+                <text class="fa fa-location-arrow fa-lg"></text>
+            </view>
+        </view>
+    </view>
+
     <view class="info"> {{_realName}}</view>
     <view>({{_idNumberHiden}})</view>
 
