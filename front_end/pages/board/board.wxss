@@ -9,6 +9,8 @@
     flex-direction: column;
     align-items: center;
     border-radius: 10rpx;
+
+
 }
 
 .new_up_title{
@@ -71,6 +73,10 @@
     width: 90%;
     font-size: 30rpx;
     font-family: SFUIText-regular;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
 }
 
 .new_bottom_icon{
