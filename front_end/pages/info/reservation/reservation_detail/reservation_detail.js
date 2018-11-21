@@ -29,6 +29,8 @@ Page({
 
         _reservationTypeDis: "",
         _reservationStateDis: "",
+        _userTypeDis: "",
+        _reservationIdDis: "",
 
         _canvasId: "reservationDetailQr",
     },
@@ -56,8 +58,10 @@ Page({
             _reservationPianoType: options.reservationPianoType,
             _reservationPianoPrice: options.reservationPianoPrice,
 
-            _reservationTypeDis: util.setUserTypeDiscription(Number(options.reservationType)),
+            _reservationTypeDis: util.setReservationTypeDiscription(Number(options.reservationType)),
             _reservationStateDis: options.reservationStateDis,
+            _userTypeDis: util.setUserTypeDiscription(app.globalData._userType),
+            _reservationIdDis: util.showHidenId(options.reservationId, 3, 4, 32),
         });
         // draw Qr code
         util.drawQrCode(this.data._canvasId, this.data._reservationId);

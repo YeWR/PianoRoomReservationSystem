@@ -170,8 +170,8 @@
 }
 
 .card_right_text_line4_1{
-    height: 100%;
-    width: 25%;
+    height: 10%;
+    width: 50%;
     font-size: 80%;
 
     overflow: hidden;
@@ -179,19 +179,19 @@
     white-space: nowrap;
 }
 
-.card_right_text_line4_2{
-    height: 100%;
-    width: 28%;
-    font-size: 80%;
+/*.card_right_text_line4_2{*/
+    /*height: 100%;*/
+    /*width: 28%;*/
+    /*font-size: 80%;*/
 
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-}
+    /*overflow: hidden;*/
+    /*text-overflow: ellipsis;*/
+    /*white-space: nowrap;*/
+/*}*/
 
 .card_right_text_line4_3{
     height: 100%;
-    width: 30%;
+    width: 40%;
     font-size: 80%;
 
     overflow: hidden;

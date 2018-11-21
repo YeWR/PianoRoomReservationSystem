@@ -18,7 +18,7 @@
                 </view>
                 <view class="line_right">
                     <view class="line_right_view">
-                        <text class="line_right_text">订单号：12********3</text>
+                        <text class="line_right_text">订单号：{{_reservationIdDis}}</text>
                     </view>
                 </view>
             </view>
@@ -29,7 +29,7 @@
                 </view>
                 <view class="line_right">
                     <view class="line_right_view">
-                        <text class="line_right_text">贝多芬（***）  单人</text>
+                        <text class="line_right_text">用户：{{_reservationUser}} ({{_userTypeDis}})</text>
                     </view>
                 </view>
             </view>
@@ -40,7 +40,7 @@
                 </view>
                 <view class="line_right">
                     <view class="line_right_view">
-                        <text class="line_right_text">11月3日 星期三 10:00-11:00</text>
+                        <text class="line_right_text">时间：{{_reservationDate}} {{_reservationWeekday}} {{_reservationBegTime}} - {{_reservationEndTime}}</text>
                     </view>
                 </view>
             </view>
@@ -51,7 +51,7 @@
                 </view>
                 <view class="line_right">
                     <view class="line_right_view">
-                        <text class="line_right_text">清华大学蒙民伟楼（二楼）F2-01</text>
+                        <text class="line_right_text">房间号：{{_reservationPianoPlace}}</text>
                     </view>
                 </view>
             </view>
@@ -62,7 +62,7 @@
                 </view>
                 <view class="line_right">
                     <view class="line_right_view">
-                        <text class="line_right_text">星海钢琴</text>
+                        <text class="line_right_text">钢琴类型：{{_reservationPianoType}}</text>
                     </view>
                 </view>
             </view>
@@ -73,7 +73,7 @@
                 </view>
                 <view class="line_right">
                     <view class="line_right_view">
-                        <text class="line_right_text">校内教职工</text>
+                        <text class="line_right_text">订单类型：{{_reservationTypeDis}}</text>
                     </view>
                 </view>
             </view>
@@ -84,7 +84,7 @@
                 </view>
                 <view class="line_right">
                     <view class="line_right_view">
-                        <text class="line_right_text">预约成功 未生效</text>
+                        <text class="line_right_text">预约成功，{{_reservationStateDis}}</text>
                     </view>
                 </view>
             </view>
@@ -95,7 +95,7 @@
                 </view>
                 <view class="line3_right">
                     <view class="line3_right_view">
-                        <text class="line3_right_text">15.00</text>
+                        <text class="line3_right_text">{{_reservationPianoPrice}}</text>
                     </view>
                 </view>
             </view>
@@ -109,68 +109,9 @@
         </view>
     </view>
 
-    <view class="bottom">
-        <button class="bottom_btn" bindtap="">
+    <view class="bottom" wx:if="{{!_refundDisable}}">
+        <button class="bottom_btn" disabled="{{_refundDisable}}" bindtap="bindRefund">
             退订
         </button>
     </view>
-    <!--<view>-->
-    <!--订单号: {{_reservationId}}-->
-    <!--</view>-->
-    <!--<view>-->
-    <!--{{_reservationUser}} {{_reservationType}}-->
-    <!--</view>-->
-    <!--<view>-->
-    <!--{{_reservationDate}} {{_reservationWeekday}} {{_reservationBegTime}} - {{_reservationEndTime}}-->
-    <!--</view>-->
-    <!--<view>-->
-    <!--{{_reservationPianoPlace}}-->
-    <!--</view>-->
-    <!--<view>-->
-    <!--{{_reservationPianoType}}-->
-    <!--</view>-->
-    <!--<view>-->
-    <!--{{_userType}}-->
-    <!--</view>-->
-    <!--<view>-->
-    <!--预约成功，{{_reservationState}}-->
-    <!--</view>-->
-    <!--<view>-->
-    <!--{{_reservationPianoPrice}}-->
-    <!--</view>-->
-    <!--扫码验证使用琴房-->
-    <!--<canvas style="width: 200px; height: 200px;" canvas-id="reservationDetailQr">-->
-    <!--</canvas>-->
-<view>
-    预约信息
-    <view>
-        {{_reservationUser}} {{_reservationTypeDis}}
-    </view>
-    <view>
-        {{_reservationDate}} {{_reservationWeekday}} {{_reservationBegTime}} - {{_reservationEndTime}}
-    </view>
-    <view>
-        {{_reservationPianoPlace}}
-    </view>
-    <view>
-        {{_reservationPianoType}}
-    </view>
-    <view>
-        {{_userType}}
-    </view>
-    <view>
-        预约成功，{{_reservationStateDis}}
-    </view>
-    <view>
-        {{_reservationPianoPrice}}
-    </view>
-    扫码验证使用琴房
-    <canvas style="width: 200px; height: 200px;" canvas-id="reservationDetailQr">
-    </canvas>
-
-    <!--登录-->
-    <view class="login_btn_view" wx:if="{{!_refundDisable}}">
-        <button class="login_btn" disabled="{{_refundDisable}}" bindtap="bindRefund">退订</button>
-    </view>
-
 </view>

@@ -11,8 +11,8 @@
     </view>
 
 
-    <view class="middle_board" wx:if="{{_reservationList.length > 0}}">
-        <view class="middle_view" data-id="{{0}}" bindtap= "bindReserveDetail">
+    <view class="middle_board" wx:if="{{_reservationList.length > 0}}" data-id="{{0}}" bindtap= "bindReserveDetail">
+        <view class="middle_view">
 
             <view class="left_icon">
                 <view class="top-fa-icon">
@@ -26,7 +26,7 @@
                 </view>
 
                 <view class="line2">
-                    <text class="line2_text"></text>
+                    <text class="line2_text"> </text>
                 </view>
 
                 <view class="line3">

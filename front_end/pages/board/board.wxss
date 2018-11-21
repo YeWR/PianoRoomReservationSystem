@@ -45,7 +45,7 @@
 }
 
 .new_middle_time{
-    width: 37%;
+    width: 50%;
 }
 
 .new_middle_time_text{
@@ -54,7 +54,7 @@
 }
 
 .new_middle_line{
-    width: 50%;
+    width: 40%;
 }
 
 .new_middle_line_text{
@@ -134,7 +134,7 @@
 }
 
 .middle_time{
-    width: 37%;
+    width: 50%;
 }
 
 .middle_time_text{
@@ -143,7 +143,7 @@
 }
 
 .middle_line{
-    width: 50%;
+    width: 40%;
 }
 
 .middle_line_text{

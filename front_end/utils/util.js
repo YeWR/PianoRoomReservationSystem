@@ -624,13 +624,32 @@ const setUserTypeDiscription = (userType) => {
     let dis = "信息获取错误";
     switch (userType) {
         case USERTYPE.STUDENT:
-            dis = "单人（学生）";
+            dis = "学生";
             break;
         case USERTYPE.TEACHER:
-            dis = "单人（教职工）";
+            dis = "教职工";
             break;
         case USERTYPE.SOCIAL:
-            dis = "单人（校外人士）";
+            dis = "校外人士";
+            break;
+        case USERTYPE.MULTI:
+            dis = "多人";
+            break
+    }
+    return dis;
+};
+
+const setReservationTypeDiscription = (reservationType) => {
+    let dis = "信息获取错误";
+    switch (reservationType) {
+        case USERTYPE.STUDENT:
+            dis = "单人(学生)";
+            break;
+        case USERTYPE.TEACHER:
+            dis = "单人(教职工)";
+            break;
+        case USERTYPE.SOCIAL:
+            dis = "单人(校外人士)";
             break;
         case USERTYPE.MULTI:
             dis = "多人";
@@ -687,28 +706,43 @@ const drawQrCode = (id, url) => {
 };
 
 /*
+ * show hiden id based on front, middle and back
+ * eg: 123456789, front = 2, middle = 3, back = 1
+ * return 12***9
+ */
+const showHidenId = (itemId, front, middle, back) => {
+    let number = "";
+
+    number += itemId.slice(0, front);
+    for(let i = 0; i < middle; ++i){
+        number += "*";
+    }
+    number += itemId.slice(back, itemId.length);
+
+    return number;
+};
+
+/*
  * show id number based on USERTYPE
  */
 const shwoHidenIdNumber = (idNumber, userType) => {
 
     let showHidenPhoneNumber = (phoneNumber) => {
-        let number = "";
         if (phoneNumber && phoneNumber.length === 11) {
-            number += phoneNumber.slice(0, 3);
-            number += "****";
-            number += phoneNumber.slice(7, 11);
+            return showHidenId(phoneNumber, 3, 4, 7);
         }
-        return number;
+        else{
+            return null;
+        }
     };
 
     let showHidenStuNumber = (stuNumber) => {
-        let number = "";
         if (stuNumber) {
-            number += stuNumber.slice(0, 4);
-            number += "***";
-            number += stuNumber.slice(7, 10);
+            return showHidenId(stuNumber, 4, 3, 7)
         }
-        return number;
+        else{
+            return null;
+        }
     };
 
     if (userType === USERTYPE.SOCIAL) {
@@ -743,6 +777,7 @@ module.exports = {
     checkIdNumber: checkIdNumber,
     USERTYPE: USERTYPE,
     setUserTypeDiscription: setUserTypeDiscription,
+    setReservationTypeDiscription: setReservationTypeDiscription,
     RESERVATIONSTATE: RESERVATIONSTATE,
     setRsvStateDiscription: setRsvStateDiscription,
     getTimeDiscription: getTimeDiscription,
@@ -753,4 +788,5 @@ module.exports = {
     getHoursAvailable: getHoursAvailable,
     getMinutesAvailable: getMinutesAvailable,
     shwoHidenIdNumber: shwoHidenIdNumber,
+    showHidenId, showHidenId
 };

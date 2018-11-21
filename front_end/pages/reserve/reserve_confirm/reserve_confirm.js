@@ -88,7 +88,7 @@ Page({
             _idNumberHiden: util.shwoHidenIdNumber(app.globalData._idNumber, app.globalData._userType),
 
             _reservationType: options.reservationType,
-            _reservationTypeDiscription: util.setUserTypeDiscription(Number(options.reservationType)),
+            _reservationTypeDiscription: util.setReservationTypeDiscription(Number(options.reservationType)),
             _date: options.date,
             _begTime: options.begTime,
             _endTime: options.endTime,
