@@ -16,26 +16,68 @@
             </view>
 
             <view class="right_text">
-                <!--{{_date}}-->
-                F2-01使用中
+                <view class="line1">
+                    <text class="line1_text">F2-01使用中</text>
+                </view>
+
+                <view class="line2">
+                    <text class="line2_text"></text>
+                </view>
+
+                <view class="line3">
+                    <text class="line3_text">11/01 星期一</text>
+                </view>
+
+                <view class="line4">
+                    <text class="line4_text">17:00-18:00</text>
+                </view>
             </view>
         </view>
 
     </view>
-    <!--<view wx:for="{{_reservationList}}" wx:for-index="id" wx:for-item="reservation" wx:key="reservationId">-->
-    <!--<view data-id="{{id}}" bindtap="bindReserveDetail">-->
-    <!--<view>-->
-    <!--钢琴地点：{{reservation.reservationPianoPlace}}-->
-    <!--</view>-->
-    <!--<view>-->
-    <!--钢琴信息：{{reservation.reservationPianoType}}-->
-    <!--</view>-->
-    <!--<view>-->
-    <!--预约状态：{{reservation.reservationStateDis}}-->
-    <!--</view>-->
-    <!--<view>-->
-    <!--预约时间：{{reservation.reservationDate}} {{reservation.reservationWeekday}} {{reservation.reservationBegTime}}-{{reservation.reservationEndTime}}-->
-    <!--</view>-->
-    <!--</view>-->
-    <!--</view>-->
+
+
+    <scrollview class='preview' scroll-y="true" style="height: 600rpx;">
+        <view class="scroll-y">
+            <view class='card'>
+
+                <view class='card_left_icon'>
+                    <view class="card_left_icon_view">
+                        <text class="fa fa-calendar-check-o fa-lg"></text>
+                    </view>
+                </view>
+
+                <view class='card_right_text'>
+
+                    <view class="card_right_text_line1">
+                        <text class="card_right_text_line1_text">F2-01 已预约</text>
+                    </view>
+
+                    <view class="card_right_text_line2">
+                        <text class="card_right_text_line2_text">雅马哈三角钢琴 位于蒙民伟楼二层</text>
+                    </view>
+
+                    <view class="card_right_text_line3">
+                        <text class="card_right_text_line3_text"></text>
+                    </view>
+
+                    <view class="card_right_text_line4">
+                        <view class="card_right_text_line4_1">
+                            <text class="card_right_text_line4_1_text">11/02</text>
+                        </view>
+                        <view class="card_right_text_line4_2">
+                            <text class="card_right_text_line4_2_text">星期二</text>
+                        </view>
+                        <view class="card_right_text_line4_3">
+                            <text class="card_right_text_line4_3_text">17:00-18:00</text>
+                        </view>
+                    </view>
+
+                </view>
+
+            </view>
+
+        </view>
+    </scrollview>
+
 </view>
