@@ -152,7 +152,7 @@
 
 .card_right_text_line3{
     width: 100%;
-    height: 7%;
+    margin-top: 2%;
     border-bottom: 2rpx solid rgba(187, 187, 187, 1);
 }
 .card_right_text_line3_text{
@@ -160,7 +160,7 @@
 }
 
 .card_right_text_line4{
-    margin-top: 2%;
+    margin-top: 1%;
     width: 100%;
     height: 30%;
     display: flex;
@@ -173,16 +173,28 @@
     height: 100%;
     width: 25%;
     font-size: 80%;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .card_right_text_line4_2{
     height: 100%;
     width: 28%;
     font-size: 80%;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .card_right_text_line4_3{
     height: 100%;
     width: 30%;
     font-size: 80%;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
