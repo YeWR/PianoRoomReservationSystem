@@ -36,7 +36,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": -1,
+			"current": 5,
 			"list": [
 				{
 					"id": -1,
@@ -55,6 +55,23 @@
 					"name": "校外登录",
 					"pathName": "pages/login/login_out_school/login_out_school",
 					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "公告",
+					"pathName": "pages/board/board",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "公告详情",
+					"pathName": "pages/board/board_detail/board_detail",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "注册",
+					"pathName": "pages/register/register_out_school/register_out_school"
 				}
 			]
 		}

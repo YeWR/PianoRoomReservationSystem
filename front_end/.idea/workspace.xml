@@ -2,8 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5988fa3c-1bd5-4ca7-b8a3-85fd28da31c3" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/pages/info/info.wxml" beforeDir="false" afterPath="$PROJECT_DIR$/pages/info/info.wxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/info/info.wxss" beforeDir="false" afterPath="$PROJECT_DIR$/pages/info/info.wxss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/board/board_detail/board_detail.wxml" beforeDir="false" afterPath="$PROJECT_DIR$/pages/board/board_detail/board_detail.wxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/board/board_detail/board_detail.wxss" beforeDir="false" afterPath="$PROJECT_DIR$/pages/board/board_detail/board_detail.wxss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/register/register_out_school/register_out_school.wxss" beforeDir="false" afterPath="$PROJECT_DIR$/pages/register/register_out_school/register_out_school.wxss" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/project.config.json" beforeDir="false" afterPath="$PROJECT_DIR$/project.config.json" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -19,28 +21,29 @@
     <session id="-910766585">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="9" />
+          <entry key="project.closed" value="11" />
+          <entry key="project.open.time.10" value="1" />
           <entry key="project.open.time.11" value="1" />
           <entry key="project.open.time.12" value="1" />
           <entry key="project.open.time.14" value="2" />
           <entry key="project.open.time.6" value="1" />
           <entry key="project.open.time.7" value="1" />
-          <entry key="project.open.time.8" value="3" />
-          <entry key="project.opened" value="9" />
+          <entry key="project.open.time.8" value="4" />
+          <entry key="project.opened" value="11" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
           <entry key="js" value="6" />
           <entry key="json" value="6" />
-          <entry key="wxml" value="30" />
-          <entry key="wxss" value="33" />
+          <entry key="wxml" value="32" />
+          <entry key="wxss" value="35" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="CSS" value="33" />
-          <entry key="HTML" value="30" />
+          <entry key="CSS" value="35" />
+          <entry key="HTML" value="32" />
           <entry key="JSON" value="6" />
           <entry key="JavaScript" value="6" />
         </counts>
@@ -48,14 +51,14 @@
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="js" value="6" />
-          <entry key="wxml" value="2585" />
-          <entry key="wxss" value="3144" />
+          <entry key="wxml" value="2697" />
+          <entry key="wxss" value="3175" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="CSS" value="3144" />
-          <entry key="HTML" value="2585" />
+          <entry key="CSS" value="3175" />
+          <entry key="HTML" value="2697" />
           <entry key="JavaScript" value="6" />
         </counts>
       </usages-collector>
@@ -63,38 +66,38 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/pages/board/board_detail/board_detail.wxss">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="133">
+              <caret line="13" column="10" lean-forward="true" selection-start-line="13" selection-start-column="10" selection-end-line="13" selection-end-column="10" />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/pages/info/info.wxml">
+        <entry file="file://$PROJECT_DIR$/pages/register/register_out_school/register_out_school.wxss">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="331">
-              <caret line="94" column="26" selection-start-line="94" selection-start-column="26" selection-end-line="94" selection-end-column="26" />
+            <state relative-caret-position="300">
+              <caret line="67" column="23" selection-start-line="67" selection-start-column="23" selection-end-line="67" selection-end-column="23" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/pages/alarm/alarm.wxml">
+        <entry file="file://$PROJECT_DIR$/pages/register/register_out_school/register_out_school.wxml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="298">
-              <caret line="70" column="60" selection-start-line="70" selection-start-column="37" selection-end-line="70" selection-end-column="60" />
+            <state relative-caret-position="236">
+              <caret line="54" column="34" lean-forward="true" selection-start-line="54" selection-start-column="34" selection-end-line="54" selection-end-column="34" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/pages/reserve/reserve_detail/reserve_detail.wxss">
+        <entry file="file://$PROJECT_DIR$/pages/board/board_detail/board_detail.wxml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="158">
-              <caret line="27" selection-start-line="27" selection-end-line="39" selection-end-column="1" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/pages/alarm/alarm.wxss">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="437">
-              <caret line="194" column="19" lean-forward="true" selection-start-line="194" selection-start-column="19" selection-end-line="194" selection-end-column="19" />
+            <state relative-caret-position="684">
+              <caret line="36" column="11" selection-start-line="36" selection-start-column="11" selection-end-line="36" selection-end-column="11" />
             </state>
           </provider>
         </entry>
@@ -103,7 +106,7 @@
         <entry file="file://$PROJECT_DIR$/pages/reserve/reserve.wxml">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="323">
-              <caret line="17" lean-forward="true" selection-start-line="17" selection-end-line="17" />
+              <caret line="17" selection-start-line="17" selection-end-line="17" />
               <folding>
                 <element signature="n#style#0;n#scrollview#0;n#view#4;n#view#1;n#view#0;n#!!top" expanded="true" />
               </folding>
@@ -115,7 +118,7 @@
         <entry file="file://$PROJECT_DIR$/pages/reserve/reserve_detail/reserve_detail.wxml">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="152">
-              <caret line="8" column="54" lean-forward="true" selection-start-line="8" selection-start-column="12" selection-end-line="8" selection-end-column="54" />
+              <caret line="8" column="54" selection-start-line="8" selection-start-column="12" selection-end-line="8" selection-end-column="54" />
             </state>
           </provider>
         </entry>
@@ -124,7 +127,7 @@
         <entry file="file://$PROJECT_DIR$/pages/reserve/reserve.wxss">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="228">
-              <caret line="12" column="1" lean-forward="true" selection-start-line="12" selection-start-column="1" selection-end-line="12" selection-end-column="1" />
+              <caret line="12" column="1" selection-start-line="12" selection-start-column="1" selection-end-line="12" selection-end-column="1" />
             </state>
           </provider>
         </entry>
@@ -132,7 +135,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/pages/info/info.wxss">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="331">
+            <state relative-caret-position="3534">
               <caret line="186" column="17" selection-start-line="186" selection-start-column="17" selection-end-line="186" selection-end-column="17" />
             </state>
           </provider>
@@ -147,7 +150,7 @@
         <entry file="file://$PROJECT_DIR$/app.wxss">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="209">
-              <caret line="11" column="24" lean-forward="true" selection-start-line="10" selection-start-column="4" selection-end-line="11" selection-end-column="24" />
+              <caret line="11" column="24" selection-start-line="10" selection-start-column="4" selection-end-line="11" selection-end-column="24" />
             </state>
           </provider>
         </entry>
@@ -200,7 +203,6 @@
         <option value="$PROJECT_DIR$/pages/reserve/reserve_confirm/reserve_confirm.wxml" />
         <option value="$PROJECT_DIR$/pages/login/login_in_school/login_in_school.wxss" />
         <option value="$PROJECT_DIR$/pages/login/login.wxss" />
-        <option value="$PROJECT_DIR$/pages/register/register_out_school/register_out_school.wxss" />
         <option value="$PROJECT_DIR$/pages/reserve/reserve.wxss" />
         <option value="$PROJECT_DIR$/pages/reserve/reserve_detail/reserve_detail.wxss" />
         <option value="$PROJECT_DIR$/pages/reserve/reserve_confirm/reserve_confirm.wxss" />
@@ -215,6 +217,9 @@
         <option value="$PROJECT_DIR$/pages/alarm/alarm_detail/alarm_detail.wxss" />
         <option value="$PROJECT_DIR$/pages/info/info.wxss" />
         <option value="$PROJECT_DIR$/pages/info/info.wxml" />
+        <option value="$PROJECT_DIR$/pages/board/board_detail/board_detail.wxml" />
+        <option value="$PROJECT_DIR$/pages/board/board_detail/board_detail.wxss" />
+        <option value="$PROJECT_DIR$/pages/register/register_out_school/register_out_school.wxss" />
       </list>
     </option>
   </component>
@@ -224,10 +229,10 @@
     <detection-done>true</detection-done>
     <sorting>DEFINITION_ORDER</sorting>
   </component>
-  <component name="ProjectFrameBounds">
-    <option name="x" value="607" />
-    <option name="width" value="1322" />
-    <option name="height" value="1031" />
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="912" />
+    <option name="width" value="1017" />
+    <option name="height" value="1032" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -251,7 +256,14 @@
               <item name="front_end" type="b2602c69:ProjectViewProjectNode" />
               <item name="front_end" type="462c0819:PsiDirectoryNode" />
               <item name="pages" type="462c0819:PsiDirectoryNode" />
-              <item name="info" type="462c0819:PsiDirectoryNode" />
+              <item name="register" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="front_end" type="b2602c69:ProjectViewProjectNode" />
+              <item name="front_end" type="462c0819:PsiDirectoryNode" />
+              <item name="pages" type="462c0819:PsiDirectoryNode" />
+              <item name="register" type="462c0819:PsiDirectoryNode" />
+              <item name="register_out_school" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -295,16 +307,18 @@
       <workItem from="1542693092438" duration="270000" />
       <workItem from="1542803521919" duration="1994000" />
       <workItem from="1542805756863" duration="12766000" />
+      <workItem from="1542819164734" duration="224000" />
+      <workItem from="1542819615144" duration="1123000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="50848000" />
+    <option name="totallyTimeSpent" value="52195000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="405" y="0" width="881" height="687" extended-state="0" />
+    <frame x="609" y="0" width="678" height="687" extended-state="0" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.23550296" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.41588786" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -370,13 +384,6 @@
         <state relative-caret-position="-399" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/pages/register/register_out_school/register_out_school.wxml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="57">
-          <caret line="3" column="25" selection-start-line="3" selection-start-column="17" selection-end-line="3" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/pages/reserve/reserve_confirm/reserve_confirm.json">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -391,13 +398,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="158">
           <caret line="24" column="16" selection-start-line="24" selection-start-column="14" selection-end-line="24" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pages/register/register_out_school/register_out_school.wxss">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="874">
-          <caret line="46" column="20" selection-start-line="46" selection-start-column="18" selection-end-line="46" selection-end-column="20" />
         </state>
       </provider>
     </entry>
@@ -509,72 +509,100 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/pages/reserve/reserve.wxss">
+    <entry file="file://$PROJECT_DIR$/pages/info/info.wxml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="228">
-          <caret line="12" column="1" lean-forward="true" selection-start-line="12" selection-start-column="1" selection-end-line="12" selection-end-column="1" />
+        <state relative-caret-position="1862">
+          <caret line="98" column="19" lean-forward="true" selection-start-line="97" selection-start-column="31" selection-end-line="98" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pages/alarm/alarm.wxml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1444">
+          <caret line="76" column="60" selection-start-line="76" selection-start-column="60" selection-end-line="76" selection-end-column="60" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pages/reserve/reserve_detail/reserve_detail.wxss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="513">
+          <caret line="27" selection-start-line="27" selection-end-line="39" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pages/alarm/alarm.wxss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3686">
+          <caret line="194" column="19" selection-start-line="194" selection-start-column="19" selection-end-line="194" selection-end-column="19" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/pages/reserve/reserve.wxml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="323">
-          <caret line="17" lean-forward="true" selection-start-line="17" selection-end-line="17" />
+          <caret line="17" selection-start-line="17" selection-end-line="17" />
           <folding>
             <element signature="n#style#0;n#scrollview#0;n#view#4;n#view#1;n#view#0;n#!!top" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app.wxss">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="209">
-          <caret line="11" column="24" lean-forward="true" selection-start-line="10" selection-start-column="4" selection-end-line="11" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/pages/reserve/reserve_detail/reserve_detail.wxml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="152">
-          <caret line="8" column="54" lean-forward="true" selection-start-line="8" selection-start-column="12" selection-end-line="8" selection-end-column="54" />
+          <caret line="8" column="54" selection-start-line="8" selection-start-column="12" selection-end-line="8" selection-end-column="54" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/pages/reserve/reserve_detail/reserve_detail.wxss">
+    <entry file="file://$PROJECT_DIR$/pages/reserve/reserve.wxss">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="158">
-          <caret line="27" selection-start-line="27" selection-end-line="39" selection-end-column="1" />
+        <state relative-caret-position="228">
+          <caret line="12" column="1" selection-start-line="12" selection-start-column="1" selection-end-line="12" selection-end-column="1" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/pages/alarm/alarm.wxml">
+    <entry file="file://$PROJECT_DIR$/pages/info/info.wxss">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="298">
-          <caret line="70" column="60" selection-start-line="70" selection-start-column="37" selection-end-line="70" selection-end-column="60" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pages/alarm/alarm.wxss">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="437">
-          <caret line="194" column="19" lean-forward="true" selection-start-line="194" selection-start-column="19" selection-end-line="194" selection-end-column="19" />
+        <state relative-caret-position="3534">
+          <caret line="186" column="17" selection-start-line="186" selection-start-column="17" selection-end-line="186" selection-end-column="17" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/pages/info/info.json">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/pages/info/info.wxss">
+    <entry file="file://$PROJECT_DIR$/app.wxss">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="331">
-          <caret line="186" column="17" selection-start-line="186" selection-start-column="17" selection-end-line="186" selection-end-column="17" />
+        <state relative-caret-position="209">
+          <caret line="11" column="24" selection-start-line="10" selection-start-column="4" selection-end-line="11" selection-end-column="24" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/pages/info/info.wxml">
+    <entry file="file://$PROJECT_DIR$/pages/board/board_detail/board_detail.wxml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="331">
-          <caret line="94" column="26" selection-start-line="94" selection-start-column="26" selection-end-line="94" selection-end-column="26" />
+        <state relative-caret-position="684">
+          <caret line="36" column="11" selection-start-line="36" selection-start-column="11" selection-end-line="36" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pages/board/board_detail/board_detail.wxss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="133">
+          <caret line="13" column="10" lean-forward="true" selection-start-line="13" selection-start-column="10" selection-end-line="13" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pages/register/register_out_school/register_out_school.wxml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="236">
+          <caret line="54" column="34" lean-forward="true" selection-start-line="54" selection-start-column="34" selection-end-line="54" selection-end-column="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pages/register/register_out_school/register_out_school.wxss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="300">
+          <caret line="67" column="23" selection-start-line="67" selection-start-column="23" selection-end-line="67" selection-end-column="23" />
         </state>
       </provider>
     </entry>

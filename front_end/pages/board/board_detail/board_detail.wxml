@@ -9,6 +9,7 @@
     <view class='card'>
 
         <view class='up_title'>
+
             <view class='up_icon'>
                 <view class="fa-icon" data-id="{{id}}">
                     <text class="fa fa-file-text-o fa-lg"></text>

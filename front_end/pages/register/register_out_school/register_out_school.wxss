@@ -66,7 +66,6 @@ page{
     border-radius: 12rpx;
     background-color: rgba(102, 8, 116, 0.9);
     font-family: Arial;
-    border: 12rpx solid rgba(187, 187, 187, 1);
 }
 .register_btn_login{
     margin-top: 3%;
