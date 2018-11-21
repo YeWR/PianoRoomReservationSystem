@@ -1,32 +1,145 @@
 <!--pages/alarm/alarm_detail/alarm_detail.wxml-->
-<view>
-    预约信息
-    <view>
-        订单号: {{_reservationId}}
+<view class="container">
+    <view class="up_board">
+        <text class="reserve_title">
+            预约信息
+        </text>
     </view>
-    <view>
-        {{_reservationUser}} {{_reservationType}}
+    <view class="top">
+        <view class="top_background">
+
+            <view class="top_line1">
+                <text class="top_line1_text">预约信息</text>
+            </view>
+
+            <view class="top_line">
+                <view class="line_left">
+                    <text class="fa fa-file-text-o fa-lg"></text>
+                </view>
+                <view class="line_right">
+                    <view class="line_right_view">
+                        <text class="line_right_text">订单号：12********3</text>
+                    </view>
+                </view>
+            </view>
+
+            <view class="top_line">
+                <view class="line_left">
+                    <text class="fa fa-user fa-lg"></text>
+                </view>
+                <view class="line_right">
+                    <view class="line_right_view">
+                        <text class="line_right_text">贝多芬（***）  单人</text>
+                    </view>
+                </view>
+            </view>
+
+            <view class="top_line">
+                <view class="line_left">
+                    <text class="fa fa-clock-o fa-lg"></text>
+                </view>
+                <view class="line_right">
+                    <view class="line_right_view">
+                        <text class="line_right_text">11月3日 星期三 10:00-11:00</text>
+                    </view>
+                </view>
+            </view>
+
+            <view class="top_line">
+                <view class="line_left">
+                    <text class="fa fa-map-marker fa-lg"></text>
+                </view>
+                <view class="line_right">
+                    <view class="line_right_view">
+                        <text class="line_right_text">清华大学蒙民伟楼（二楼）F2-01</text>
+                    </view>
+                </view>
+            </view>
+
+            <view class="top_line">
+                <view class="line_left">
+                    <text class="fa fa-music fa-lg"></text>
+                </view>
+                <view class="line_right">
+                    <view class="line_right_view">
+                        <text class="line_right_text">星海钢琴</text>
+                    </view>
+                </view>
+            </view>
+
+            <view class="top_line">
+                <view class="line_left">
+                    <text class="fa fa-address-book-o fa-lg"></text>
+                </view>
+                <view class="line_right">
+                    <view class="line_right_view">
+                        <text class="line_right_text">校内教职工</text>
+                    </view>
+                </view>
+            </view>
+
+            <view class="top_line">
+                <view class="line_left">
+                    <text class="fa fa-check-square-o fa-lg"></text>
+                </view>
+                <view class="line_right">
+                    <view class="line_right_view">
+                        <text class="line_right_text">预约成功 未生效</text>
+                    </view>
+                </view>
+            </view>
+
+            <view class="top_line3">
+                <view class="line3_left">
+                    <text class="fa fa-jpy fa-lg"></text>
+                </view>
+                <view class="line3_right">
+                    <view class="line3_right_view">
+                        <text class="line3_right_text">15.00</text>
+                    </view>
+                </view>
+            </view>
+
+        </view>
     </view>
-    <view>
-        {{_reservationDate}} {{_reservationWeekday}} {{_reservationBegTime}} - {{_reservationEndTime}}
+
+    <view class="middle">
+        <view class = "middle_image">
+            <canvas class = "middle_image_QRcode"  canvas-id="reservationDetailQr"></canvas>
+        </view>
     </view>
-    <view>
-        {{_reservationPianoPlace}}
+
+    <view class="bottom">
+        <button class="bottom_btn" bindtap="">
+            退订
+        </button>
     </view>
-    <view>
-        {{_reservationPianoType}}
-    </view>
-    <view>
-        {{_userType}}
-    </view>
-    <view>
-        预约成功，{{_reservationState}}
-    </view>
-    <view>
-        {{_reservationPianoPrice}}
-    </view>
-    扫码验证使用琴房
-    <canvas style="width: 200px; height: 200px;" canvas-id="reservationDetailQr">
-    </canvas>
+    <!--<view>-->
+    <!--订单号: {{_reservationId}}-->
+    <!--</view>-->
+    <!--<view>-->
+    <!--{{_reservationUser}} {{_reservationType}}-->
+    <!--</view>-->
+    <!--<view>-->
+    <!--{{_reservationDate}} {{_reservationWeekday}} {{_reservationBegTime}} - {{_reservationEndTime}}-->
+    <!--</view>-->
+    <!--<view>-->
+    <!--{{_reservationPianoPlace}}-->
+    <!--</view>-->
+    <!--<view>-->
+    <!--{{_reservationPianoType}}-->
+    <!--</view>-->
+    <!--<view>-->
+    <!--{{_userType}}-->
+    <!--</view>-->
+    <!--<view>-->
+    <!--预约成功，{{_reservationState}}-->
+    <!--</view>-->
+    <!--<view>-->
+    <!--{{_reservationPianoPrice}}-->
+    <!--</view>-->
+    <!--扫码验证使用琴房-->
+    <!--<canvas style="width: 200px; height: 200px;" canvas-id="reservationDetailQr">-->
+    <!--</canvas>-->
 
 </view>

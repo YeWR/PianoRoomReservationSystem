@@ -677,8 +677,8 @@ Object.freeze(RESERVATIONSTATE);
  */
 const drawQrCode = (id, url) => {
     drawQrcode({
-        width: 200,
-        height: 200,
+        width: 150,
+        height: 150,
         canvasId: id,
         text: url
     });
