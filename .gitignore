@@ -48,7 +48,7 @@ src/.eslintcache
 # Optional REPL history
 src/.node_repl_history
 
-# Output of 'npm pack'
+# Output of "npm pack"
 src/*.tgz
 
 # Yarn Integrity file

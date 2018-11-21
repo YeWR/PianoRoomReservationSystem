@@ -4,18 +4,18 @@
         暂无预约记录~
     </view>
 
-    <scrollview class='preview' scroll-y="true" style="height: 600rpx;" wx:if="{{_reservationList.length > 0}}">
+    <scrollview class="preview" scroll-y="true" style="height: 600rpx;" wx:if="{{_reservationList.length > 0}}">
         <view class="scroll-y">
-            <view class='card' wx:for="{{_reservationList}}" wx:for-index="id" wx:for-item="reservation"
-                  wx:key="reservationId">
+            <view class="card" wx:for="{{_reservationList}}" wx:for-index="id" wx:for-item="reservation"
+                  wx:key="reservationId"  data-id="{{id}}" bindtap="bindReserveDetail">
 
-                <view class='card_left_icon'>
+                <view class="card_left_icon">
                     <view class="card_left_icon_view">
                         <text class="fa fa-calendar-check-o fa-lg"></text>
                     </view>
                 </view>
 
-                <view class='card_right_text' data-id="{{id}}" bindtap= "bindReserveDetail">
+                <view class="card_right_text">
 
                     <view class="card_right_text_line1">
                         <text class="card_right_text_line1_text">{{reservation.reservationPianoPlace}} {{reservation.reservationStateDis}}</text>

@@ -114,7 +114,7 @@ Page({
      */
     reLogin: function(){
         wx.redirectTo({
-            url: '../login/login'
+            url: "../login/login"
         });
     },
 

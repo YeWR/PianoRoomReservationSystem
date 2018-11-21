@@ -42,18 +42,18 @@
     </view>
 
 
-    <scrollview class='preview' scroll-y="true" style="height: 600rpx;" wx:if="{{_reservationList.length > 1}}">
+    <scrollview class="preview" scroll-y="true" style="height: 600rpx;" wx:if="{{_reservationList.length > 1}}">
         <view class="scroll-y">
-            <view class='card' wx:for="{{_reservationList}}" wx:for-index="id" wx:for-item="reservation"
+            <view class="card" wx:for="{{_reservationList}}" wx:for-index="id" wx:for-item="reservation"
                   wx:key="reservationId">
 
-                <view class='card_left_icon' wx:if="{{id > 0}}">
+                <view class="card_left_icon" wx:if="{{id > 0}}">
                     <view class="card_left_icon_view">
                         <text class="fa fa-calendar-check-o fa-lg"></text>
                     </view>
                 </view>
 
-                <view class='card_right_text' wx:if="{{id > 0}}" data-id="{{id}}" bindtap= "bindReserveDetail">
+                <view class="card_right_text" wx:if="{{id > 0}}" data-id="{{id}}" bindtap= "bindReserveDetail">
 
                     <view class="card_right_text_line1">
                         <text class="card_right_text_line1_text">{{reservation.reservationPianoPlace}} {{reservation.reservationStateDis}}</text>

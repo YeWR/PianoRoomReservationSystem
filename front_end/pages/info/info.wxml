@@ -27,8 +27,8 @@
             </view>
         </view>
 
-        <view class='info-cut'>
-            <view class='info-cutline'></view>
+        <view class="info-cut">
+            <view class="info-cutline"></view>
         </view>
 
         <view class = "info_main_card_line2">

@@ -13,18 +13,18 @@
             蒙民伟楼 F1-0{{_pianoId}}
         </view>
 
-        <view class='reserve-info-cut'>
-            <view class='reserve-info-cutline'></view>
+        <view class="reserve-info-cut">
+            <view class="reserve-info-cutline"></view>
         </view>
 
-        <view class='progress-days'>
+        <view class="progress-days">
 
-            <view class='progress'>
-                <progress percent="{{50}}" stroke-width='5' activeColor="rgba(187, 187, 187, 1)"
+            <view class="progress">
+                <progress percent="{{50}}" stroke-width="5" activeColor="rgba(187, 187, 187, 1)"
                           backgroundColor="rgb(187, 187, 187) 100%" active="true"/>
             </view>
 
-            <view class='progress-time'>
+            <view class="progress-time">
                 <text class="progress-time-each">08</text>
                 <text class="progress-time-each">10</text>
                 <text class="progress-time-each">12</text>
