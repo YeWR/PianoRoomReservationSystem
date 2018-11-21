@@ -8,11 +8,11 @@ function sortNotice(a,b)
     b_date = new Date(b.notice_time);
     if(a_date.getTime() - b_date.getTime() > 0)
     {
-        return 1;
+        return -1;
     }
     else
     {
-        return -1;
+        return 1;
     }
 }
 
