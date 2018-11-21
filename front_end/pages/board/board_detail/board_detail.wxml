@@ -1,6 +1,11 @@
 <!--pages/board/board_detail/board_detail.wxml-->
 <view>
-    公告
+    <view class="up_board">
+        <text class="new_board_title">
+            公告详情
+        </text>
+    </view>
+
     <view>
         {{_noticeTitle}} {{_noticeAuthor}}
     </view>

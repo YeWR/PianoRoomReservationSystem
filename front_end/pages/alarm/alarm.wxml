@@ -6,8 +6,13 @@
         </text>
     </view>
 
-    <view class="middle_board">
-        <view class="middle_view">
+    <view wx:if="{{_reservationList.length == 0}}">
+        暂无预约信息~
+    </view>
+
+
+    <view class="middle_board" wx:if="{{_reservationList.length > 0}}">
+        <view class="middle_view" data-id="{{0}}" bindtap= "bindReserveDetail">
 
             <view class="left_icon">
                 <view class="top-fa-icon">
@@ -17,7 +22,7 @@
 
             <view class="right_text">
                 <view class="line1">
-                    <text class="line1_text">F2-01使用中</text>
+                    <text class="line1_text">{{_reservationList[0].reservationPianoPlace}} {{_reservationList[0].reservationStateDis}}</text>
                 </view>
 
                 <view class="line2">
@@ -25,11 +30,11 @@
                 </view>
 
                 <view class="line3">
-                    <text class="line3_text">11/01 星期一</text>
+                    <text class="line3_text">{{_reservationList[0].reservationDate}} {{_reservationList[0].reservationWeekday}}</text>
                 </view>
 
                 <view class="line4">
-                    <text class="line4_text">17:00-18:00</text>
+                    <text class="line4_text">{{_reservationList[0].reservationBegTime}}-{{_reservationList[0].reservationEndTime}}</text>
                 </view>
             </view>
         </view>
@@ -37,24 +42,25 @@
     </view>
 
 
-    <scrollview class='preview' scroll-y="true" style="height: 600rpx;">
+    <scrollview class='preview' scroll-y="true" style="height: 600rpx;" wx:if="{{_reservationList.length > 1}}">
         <view class="scroll-y">
-            <view class='card'>
+            <view class='card' wx:for="{{_reservationList}}" wx:for-index="id" wx:for-item="reservation"
+                  wx:key="reservationId">
 
-                <view class='card_left_icon'>
+                <view class='card_left_icon' wx:if="{{id > 0}}">
                     <view class="card_left_icon_view">
                         <text class="fa fa-calendar-check-o fa-lg"></text>
                     </view>
                 </view>
 
-                <view class='card_right_text'>
+                <view class='card_right_text' wx:if="{{id > 0}}" data-id="{{id}}" bindtap= "bindReserveDetail">
 
                     <view class="card_right_text_line1">
-                        <text class="card_right_text_line1_text">F2-01 已预约</text>
+                        <text class="card_right_text_line1_text">{{reservation.reservationPianoPlace}} {{reservation.reservationStateDis}}</text>
                     </view>
 
                     <view class="card_right_text_line2">
-                        <text class="card_right_text_line2_text">雅马哈三角钢琴 位于蒙民伟楼二层</text>
+                        <text class="card_right_text_line2_text">{{reservation.reservationPianoType}}</text>
                     </view>
 
                     <view class="card_right_text_line3">
@@ -63,13 +69,13 @@
 
                     <view class="card_right_text_line4">
                         <view class="card_right_text_line4_1">
-                            <text class="card_right_text_line4_1_text">11/02</text>
+                            <text class="card_right_text_line4_1_text">{{reservation.reservationDate}} {{reservation.reservationWeekday}}</text>
                         </view>
                         <view class="card_right_text_line4_2">
-                            <text class="card_right_text_line4_2_text">星期二</text>
+                            <text class="card_right_text_line4_2_text"></text>
                         </view>
                         <view class="card_right_text_line4_3">
-                            <text class="card_right_text_line4_3_text">17:00-18:00</text>
+                            <text class="card_right_text_line4_3_text">{{reservation.reservationBegTime}}-{{reservation.reservationEndTime}}</text>
                         </view>
                     </view>
 
@@ -80,26 +86,6 @@
         </view>
     </scrollview>
 
-    <view wx:if="{{_reservationList.length == 0}}">
-        暂无预约信息~
-    </view>
-    <view wx:else>
-        <view wx:for="{{_reservationList}}" wx:for-index="id" wx:for-item="reservation" wx:key="reservationId">
-            <view data-id="{{id}}" bindtap="bindReserveDetail">
-                <view>
-                    钢琴地点：{{reservation.reservationPianoPlace}}
-                </view>
-                <view>
-                    钢琴信息：{{reservation.reservationPianoType}}
-                </view>
-                <view>
-                    预约状态：{{reservation.reservationStateDis}}
-                </view>
-                <view>
-                    预约时间：{{reservation.reservationDate}} {{reservation.reservationWeekday}}
-                    {{reservation.reservationBegTime}}-{{reservation.reservationEndTime}}
-                </view>
-            </view>
-        </view>
-    </view>
+
+
 </view>
