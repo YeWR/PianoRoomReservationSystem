@@ -36,7 +36,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 8,
+			"current": 10,
 			"list": [
 				{
 					"id": -1,
@@ -89,7 +89,19 @@
 				{
 					"id": -1,
 					"name": "预约细节",
-					"pathName": "pages/alarm/alarm_detail/alarm_detail"
+					"pathName": "pages/alarm/alarm_detail/alarm_detail",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "个人信息",
+					"pathName": "pages/info/info",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "个人信息",
+					"pathName": "pages/info/info"
 				}
 			]
 		}
