@@ -37,4 +37,30 @@
 
 > `src`目录下说明
 
+## 管理端前端Vue配置说明
+
+> 使用vue cli 3脚手架
+
+> 环境配置
+
+```shell
+npm install -g @vue/cli
+npm install -g @vue/cli-service-global
+```
+
+> setup
+
+```shell
+# install dependencies
+npm install
+
+# serve with hot reload at localhost:8989
+npm run serve
+
+# build for production with minification
+npm run build
+
+# build for production and view the bundle analyzer report
+npm run build --report
+```
 
