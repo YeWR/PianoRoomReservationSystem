@@ -5,6 +5,7 @@ const views = require("./views/views");
 const views_manage = require("./views/views_manage");
 const session = require("koa-session");
 const sessionStore = require("koa-mysql-session");
+const cors = require("koa2-cors");
 let file = require("fs");
 let dbconfigFile = "mysqlConfig.json";
 let dbconfig = JSON.parse(file.readFileSync(dbconfigFile));
@@ -16,7 +17,7 @@ app.use(session({
     maxAge: configs.expire_day *24*60*60*1000,
 },app));
 
-
+app.use(cors());
 app.use(bodyParser());
 
 app.use(views.routes()).use(views.allowedMethods());
