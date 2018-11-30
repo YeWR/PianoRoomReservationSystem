@@ -44,40 +44,55 @@
         },
         methods: {
             doLogin() {
+
+                let that = this;
+
                 console.log(this.userInfo.userType);
-                if (!this.userInfo.userName) {
+                if (!that.userInfo.userName) {
                     alert("用户名不能为空");
                     return false
                 }
-                if (!this.userInfo.password) {
+                if (!that.userInfo.password) {
                     alert("密码名不能为空");
                     return false
                 }
-                axios.post("/manager/login", JSON.stringify(this.userInfo))
+
+
+                axios.post("/manager/login", this.userInfo)
                     .then(res => {
                         console.log(res);
                         if (res.status === 200) {
-                            // this.$store.commit(utils.LOGIN, window.localStorage.getItem("token"));
-                            // localStorage.userName = this.userInfo.userName;
-                            // localStorage.token_expire = res.data.expire;
-                            // localStorage.token = res.data.token;
-                            this.$notify({
+                            this.$store.commit(utils.LOGIN, window.localStorage.getItem("token"));
+                            localStorage.token_expire = res.data.expire;
+
+                            that.$notify({
+                                group: "infoPlace",
                                 title: "提示信息",
-                                message: "登录成功",
+                                text: "登录成功",
                                 type: "success"
                             });
+
+                            localStorage.token = res.data.token;
                             localStorage.realName = res.data.realName;
-                            this.$router.push({path: "/"})
+
+                            that.$router.push({path: "/index"});
                         } else {
-                            this.$notify({
+                            that.$notify({
+                                group: "infoPlace",
                                 title: "提示信息",
-                                message: res.info,
+                                text: res.data.info,
                                 type: "error"
                             });
                         }
                     })
                     .catch(err => {
-                        console.log(err)
+                        console.log(err);
+                        that.$notify({
+                            group: "infoPlace",
+                            title: "提示信息",
+                            text: err.info,
+                            type: "error"
+                        });
                     })
             }
         },

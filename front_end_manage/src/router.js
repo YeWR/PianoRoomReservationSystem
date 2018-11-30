@@ -15,6 +15,10 @@ const routes = [
     },
     {
         path: "/",
+        redirect : "/index",
+    },
+    {
+        path: "/index",
         name: "index",
         meta: {
             requireAuth: true //需要登录验证
