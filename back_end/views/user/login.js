@@ -33,4 +33,6 @@ const routers = router.post("/outSchool", async (ctx, next) => {
         ctx.session.userType = constVariable.USERTYPE_OUTSCHOOL;
     }
     ctx.response.body = result;
-})
+});
+
+module.exports = routers;
