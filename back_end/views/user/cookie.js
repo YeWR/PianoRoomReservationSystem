@@ -3,7 +3,7 @@ const router = new Router();
 const dataBase = require("../dataBase");
 const constVariable = require("../const");
 
-const routers = router.post("/", async (ctx, next) => {
+const routers = router.get("/", async (ctx, next) => {
     let response = {
         "success": false,
         "userType": null,

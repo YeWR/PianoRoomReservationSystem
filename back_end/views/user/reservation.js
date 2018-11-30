@@ -94,7 +94,7 @@ const routers = router.post("/refundment", async (ctx, next) => {
     let uuid = ctx.request.body.reservationId;
     let result = await dataBase.DeleteItem(uuid);
     ctx.response.body = result;
-}).post("/all", async (ctx, next) => {
+}).get("/all", async (ctx, next) => {
     let number = ctx.request.body.number;
     let userId = await dataBase.GetSocietyUuidByTele(number);
     userId = userId.data;
@@ -152,7 +152,7 @@ const routers = router.post("/refundment", async (ctx, next) => {
             "reservationList": reservationList
         };
     }
-}).post("/alarm", async (ctx, next) => {
+}).get("/alarm", async (ctx, next) => {
     let number = ctx.request.body.number;
     let userId = await dataBase.GetSocietyUuidByTele(number);
     userId = userId.data;

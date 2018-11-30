@@ -57,7 +57,7 @@ function getDateStr (date) {
     return dateStr;
 }
 
-const routers = router.post("/all", async (ctx, next) => {
+const routers = router.get("/all", async (ctx, next) => {
     let result = await dataBase.GetNoticeAll();
     result.data.sort(sortNotice);
     let noticeList = [];
