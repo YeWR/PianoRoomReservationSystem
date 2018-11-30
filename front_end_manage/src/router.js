@@ -1,29 +1,53 @@
 import Vue from "vue";
 import Router from "vue-router";
 import Login from "./views/Login.vue";
+import Index from "./views/Index"
+import store from "./store"
 
 Vue.use(Router);
 
-export default new Router({
-    routes: [
-        {
-            path: "/",
-            name: "login",
-            component: Login
+const routes = [
+    {
+        path: "/login",
+        name: "login",
+        component: Login
+    },
+    {
+        path: "/",
+        name: "index",
+        meta: {
+            requireAuth: true //需要登录验证
         },
-        {
-            path: "/login",
-            name: "login",
-            component: Login
-        },
-        {
-            path: "/index",
-            name: "index",
-            // route level code-splitting
-            // this generates a separate chunk (about.[hash].js) for this route
-            // which is lazy-loaded when the route is visited.
-            component: () =>
-                import(/* webpackChunkName: "about" */ "./views/Index.vue")
-        }
-    ]
+        component: Index
+    }
+];
+
+/*
+ * 页面刷新时，重新赋值token
+ */
+if (window.localStorage.getItem('token')) {
+    store.commit(types.LOGIN, window.localStorage.getItem('token'))
+}
+
+const router = new Router({
+    routes
 });
+
+router.beforeEach((to, from, next) => {
+    if (to.matched.some(r => r.meta.requireAuth)) {
+        if (store.state.token) {
+            next();
+        }
+        else {
+            next({
+                path: '/login',
+                query: {redirect: to.fullPath}
+            })
+        }
+    }
+    else {
+        next();
+    }
+});
+
+export default router;
