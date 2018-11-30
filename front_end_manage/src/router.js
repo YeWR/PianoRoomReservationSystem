@@ -3,6 +3,7 @@ import Router from "vue-router";
 import Login from "./views/Login.vue";
 import Index from "./views/Index"
 import store from "./store"
+import * as utils from "./js/utils"
 
 Vue.use(Router);
 
@@ -25,8 +26,8 @@ const routes = [
 /*
  * 页面刷新时，重新赋值token
  */
-if (window.localStorage.getItem('token')) {
-    store.commit(types.LOGIN, window.localStorage.getItem('token'))
+if (window.localStorage.getItem("token")) {
+    store.commit(utils.LOGIN, window.localStorage.getItem("token"))
 }
 
 const router = new Router({
@@ -40,7 +41,7 @@ router.beforeEach((to, from, next) => {
         }
         else {
             next({
-                path: '/login',
+                path: "/login",
                 query: {redirect: to.fullPath}
             })
         }
