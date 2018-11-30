@@ -5,6 +5,7 @@ const constVariable = require("../const");
 const fs = require("fs");
 const configPath = "configs.json";
 const configs = JSON.parse(fs.readFileSync(configPath));
+const jwt = require("koa-jwt");
 
 const routers = router.post("/", async (ctx, next) => {
     let username = ctx.request.body.userName,
@@ -14,10 +15,17 @@ const routers = router.post("/", async (ctx, next) => {
     {
         if(username === manager.name && password === manager.password && usertype === manager.type)
         {
-            ctx.session.userId = username;
-            ctx.session.userType = usertype;
             ctx.response.status = 200;
-            ctx.response.body = {"realName": manager.realName};
+            const userToken = {
+                "userId": username,
+                "userType": usertype
+            };
+            const secret = configs.app_key[0];
+            const token = jwt.sign(userToken,secret);
+            ctx.response.body = {
+                "realName": manager.realName,
+                "token": token
+            };
             return;
         }
     }
