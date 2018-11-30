@@ -5,7 +5,7 @@ const constVariable = require("../const");
 const fs = require("fs");
 const configPath = "configs.json";
 const configs = JSON.parse(fs.readFileSync(configPath));
-const jwt = require("koa-jwt");
+const jwt = require("jsonwebtoken");
 
 const routers = router.post("/", async (ctx, next) => {
     let username = ctx.request.body.userName,
