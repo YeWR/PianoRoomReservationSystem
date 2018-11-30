@@ -1,22 +1,21 @@
 const Router = require("koa-router");
 const router = new Router();
 
-const register = require("./user/register_out_school");
+const register = require("./user/register");
 const login = require("./user/login");
-const reserve = require("./user/reserve");
-const send_verification_code = require("./user/send_verification_code");
-const alarm = require("./user/alarm");
+const send_verification_code = require("./user/verification_code");
+const cookie = require("./user/cookie");
 const notice = require("./user/notice");
+const piano = require("./user/piano");
 const reservation = require("./user/reservation");
-const manage_login = require("./manage/manage_login");
 
-router.use("/register", register.routes(), register.allowedMethods());
-router.use("/alarm", alarm.routes(), alarm.allowedMethods());
-router.use("/login", login.routes(), login.allowedMethods());
-router.use("/reserve", reserve.routes(), reserve.allowedMethods());
-router.use("/validate", send_verification_code.routes(), send_verification_code.allowedMethods());
-router.use("/reservation", reservation.routes(), reservation.allowedMethods());
-router.use("/notice", notice.routes(), notice.allowedMethods());
 
-router.use("/manage/login", manage_login.routes(), manage_login.allowedMethods());
+router.use("/user/registration", register.routes(), register.allowedMethods());
+router.use("/user/code", send_verification_code.routes(), send_verification_code.allowedMethods());
+router.use("/user/login", login.routes(), login.allowedMethods());
+router.use("/user/cookie", cookie.routes(), cookie.allowedMethods());
+router.use("/user/piano", piano.routes(), piano.allowedMethods());
+router.use("/user/reservation", reservation.routes(), reservation.allowedMethods());
+router.use("/user/notice", notice.routes(), notice.allowedMethods());
+
 module.exports = router;
