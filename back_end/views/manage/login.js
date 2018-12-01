@@ -21,7 +21,7 @@ const routers = router.post("/", async (ctx, next) => {
                 "userType": usertype
             };
             const secret = configs.app_key[0];
-            const token = jwt.sign(userToken,secret, {"expiresIn": 10*24*60*60*1});   // 10天过期
+            const token = jwt.sign(userToken,secret, {"expiresIn": 10*60*1});   // 10分钟过期
             ctx.response.body = {
                 "realName": manager.realName,
                 "token": token
