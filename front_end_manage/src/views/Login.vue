@@ -49,21 +49,29 @@
 
                 console.log(this.userInfo.userType);
                 if (!that.userInfo.userName) {
-                    alert("用户名不能为空");
-                    return false
+                    that.$notify({
+                        group: "infoPlace",
+                        title: "提示信息",
+                        text: "用户名不能为空",
+                        type: "warning"
+                    });
+                    return false;
                 }
                 if (!that.userInfo.password) {
-                    alert("密码名不能为空");
-                    return false
+                    that.$notify({
+                        group: "infoPlace",
+                        title: "提示信息",
+                        text: "密码不能为空",
+                        type: "warning"
+                    });
+                    return false;
                 }
-
 
                 axios.post("/manager/login", this.userInfo)
                     .then(res => {
                         console.log(res);
                         if (res.status === 200) {
-                            this.$store.commit(utils.LOGIN, window.localStorage.getItem("token"));
-                            localStorage.token_expire = res.data.expire;
+                            this.$store.commit(utils.LOGIN, res.data.token);
 
                             that.$notify({
                                 group: "infoPlace",
