@@ -8,22 +8,28 @@ const configs = JSON.parse(fs.readFileSync(configPath));
 const jwt = require("jsonwebtoken");
 
 const routers = router.post("/", async (ctx, next) => {
-    let username = ctx.request.body.userName,
-        usertype = ctx.request.body.userType,
-        password = ctx.request.body.password;
+    let token = ctx.request.body;
+    const secret = configs.app_key[0];
+    try
+    {
+        token = jwt.verify(token, secret);
+    }
+    catch(err)
+    {
+        ctx.response.status = 401;
+        ctx.response.body = {
+            "info": "Invalid token"
+        };
+        return
+    }
     for(let manager of configs.managerInfo)
     {
-        if(username === manager.name && password === manager.password && usertype === manager.type)
+        if(token.userId === manager.name && token.userType === manager.type)
         {
             ctx.response.status = 200;
-            const userToken = {
-                "userId": username,
-                "userType": usertype
-            };
-            const secret = configs.app_key[0];
-            const token = jwt.sign(userToken,secret, {"expiresIn": 10*60*1});   // 10分钟过期
             ctx.response.body = {
-                "token": token
+                "realName": manager.realName,
+                "userType": "admin"
             };
             return;
         }
