@@ -283,7 +283,7 @@ export const asyncRouterMap = [
     name: 'Item',
     meta: {
       title: 'itemManagement',
-      icon: 'item'
+      icon: 'table'
     },
     children: [
       {
