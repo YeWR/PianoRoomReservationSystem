@@ -28,8 +28,8 @@ const routers = router.get("/", async (ctx, next) => {
         {
             ctx.response.status = 200;
             ctx.response.body = {
-                "realName": manager.realName,
-                "userType": "admin"
+                "name": manager.realName,
+                "roles": ["admin"]
             };
             return;
         }
