@@ -7,8 +7,8 @@ const configPath = "configs.json";
 const configs = JSON.parse(fs.readFileSync(configPath));
 const jwt = require("jsonwebtoken");
 
-const routers = router.get(":token", async (ctx, next) => {
-    let token = ctx.params.token;
+const routers = router.get("/", async (ctx, next) => {
+    let token = ctx.query.token;
     const secret = configs.app_key[0];
     try
     {
