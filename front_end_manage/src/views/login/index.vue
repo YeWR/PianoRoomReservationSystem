@@ -8,6 +8,16 @@
         <lang-select class="set-language"/>
       </div>
 
+      <el-form-item prop="usertype">
+        <span class="svg-container">
+          <svg-icon icon-class="user" />
+        </span>
+        <select v-model="loginForm.usertype">
+          <option value="0">管理员</option>
+          <option value="1">审核人员</option>
+        </select>
+      </el-form-item>
+
       <el-form-item prop="username">
         <span class="svg-container">
           <svg-icon icon-class="user" />

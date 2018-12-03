@@ -63,9 +63,18 @@ service.interceptors.response.use(
   //   }
   // },
   error => {
-    console.log('err' + error) // for debug
+    let msg = error.message
+    if (msg.indexOf('401')){
+      msg = '账号密码错误或无权限访问'
+    }
+    else if (msg.indexOf('404')){
+      msg = '网络错误或服务器异常'
+    }
+    else {
+      //
+    }
     Message({
-      message: error.message,
+      message: msg,
       type: 'error',
       duration: 5 * 1000
     })
