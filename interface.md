@@ -305,10 +305,26 @@
     "res": {
         "status": "状态码，200 -> 成功",
         "data": {
-            "token": 
+            "token": "cookie"
         }
     }
 }
 ```
 
-### 
+### 获取管理员信息
+```
+{
+    "url": "/manager/info",
+    "method": "GET",
+    "data": {
+        "token": "cookie"
+    },
+    "res": {
+        "status": "状态码，200 -> 成功",
+        "data": {
+            "name": "姓名",
+            "roles": [(权限)]
+        }
+    }
+}
+``` 

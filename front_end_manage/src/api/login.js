@@ -15,14 +15,14 @@ export function loginByUsername(userType, userName, password) {
 
 export function logout() {
   return request({
-    url: '/login/logout',
+    url: '/manager/logout',
     method: 'post'
   })
 }
 
 export function getUserInfo(token) {
   return request({
-    url: '/user/info',
+    url: '/manager/info',
     method: 'get',
     params: { token }
   })
