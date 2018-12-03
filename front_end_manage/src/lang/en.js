@@ -62,7 +62,12 @@ export default {
     theme: 'Theme',
     clipboardDemo: 'Clipboard',
     i18n: 'I18n',
-    externalLink: 'External Link'
+    externalLink: 'External Link',
+
+    itemManagement: 'Item Management',
+    itemList: 'Item List',
+    ordinaryItem: 'Item of Ordinary User',
+    LongtermItem: 'Item of Long Term'
   },
   navbar: {
     logOut: 'Log Out',

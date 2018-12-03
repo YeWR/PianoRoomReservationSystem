@@ -62,7 +62,12 @@ export default {
     theme: '换肤',
     clipboardDemo: 'Clipboard',
     i18n: '国际化',
-    externalLink: '外链'
+    externalLink: '外链',
+
+    itemManagement: '订单管理',
+    itemList: '订单列表',
+    ordinaryItem: '普通预约订单',
+    LongtermItem: '长期预约订单'
   },
   navbar: {
     logOut: '退出登录',
