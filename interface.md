@@ -343,3 +343,38 @@
     }
 }
 ``` 
+
+### 获取订单信息
+```
+{
+    "url": "/manager/item/list",
+    "method": "GET",
+    "data": {
+        "query": {
+            "page": "页码",
+            "limit": "每页最多个数",
+            "idNumber": "手机号/证号",
+            "room": "琴房号",
+            "itemType": "订单类型",
+            "status": "订单状态"
+            "timeSort": "+代表顺序,-代表逆序"
+        }
+    },
+    "res": {
+        "status": "状态码，200 -> 成功",
+        "data": {
+            list: [{
+                "idNumber": "手机号/证号",
+                "room": "琴房号",
+                "itemType": "订单类型"
+                "userType": "用户类型",
+                "pianoType": "钢琴类型",
+                "price": "钢琴价格",
+                "status": "订单状态",
+                "time": "订单时间"
+            }]
+            total: "总条数"
+        }
+    }
+}
+``` 

@@ -108,10 +108,6 @@
           <el-input :autosize="{ minRows: 2, maxRows: 4}" v-model="temp.remark" type="textarea" placeholder="Please input"/>
         </el-form-item>
       </el-form>
-      <div slot="footer" class="dialog-footer">
-        <el-button @click="dialogFormVisible = false">{{ $t('table.cancel') }}</el-button>
-        <el-button type="primary" @click="dialogStatus==='create'?createData():updateData()">{{ $t('table.confirm') }}</el-button>
-      </div>
     </el-dialog>
 
     <el-dialog :visible.sync="dialogPvVisible" title="Reading statistics">
@@ -194,8 +190,7 @@ export default {
       dialogFormVisible: false,
       dialogStatus: '',
       textMap: {
-        update: 'Edit',
-        create: 'Create'
+        update: this.$t('detail'),
       },
       dialogPvVisible: false,
       pvData: [],
@@ -206,9 +201,6 @@ export default {
       },
       downloadLoading: false
     }
-  },
-  created() {
-    this.getList()
   },
   methods: {
     getList() {
@@ -258,32 +250,6 @@ export default {
         status: 'published',
         type: ''
       }
-    },
-    handleCreate() {
-      this.resetTemp()
-      this.dialogStatus = 'create'
-      this.dialogFormVisible = true
-      this.$nextTick(() => {
-        this.$refs['dataForm'].clearValidate()
-      })
-    },
-    createData() {
-      this.$refs['dataForm'].validate((valid) => {
-        if (valid) {
-          this.temp.id = parseInt(Math.random() * 100) + 1024 // mock a id
-          this.temp.author = 'vue-element-admin'
-          createArticle(this.temp).then(() => {
-            this.list.unshift(this.temp)
-            this.dialogFormVisible = false
-            this.$notify({
-              title: '成功',
-              message: '创建成功',
-              type: 'success',
-              duration: 2000
-            })
-          })
-        }
-      })
     },
     handleUpdate(row) {
       this.temp = Object.assign({}, row) // copy obj
