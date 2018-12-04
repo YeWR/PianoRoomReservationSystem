@@ -18,7 +18,7 @@
       </el-select>
 
       <el-select v-model="listQuery.timeSort" style="width: 180px" class="filter-item" @change="handleFilter">
-        <el-option v-for="item in timeSortOptions" :key="item.key" :label="item.label" :value="item.key"/>
+        <el-option v-for="item in timeSortOptions()" :key="item.key" :label="item.label" :value="item.key"/>
       </el-select>
 
       <el-button v-waves class="filter-item" style="width: 100px" type="primary" icon="el-icon-search"
@@ -67,7 +67,7 @@
       </el-table-column>
       <el-table-column :label="$t('item.actions')" align="center" width="300px" class-name="small-padding fixed-width">
         <template slot-scope="scope">
-          <el-button type="primary" size="mini" @click="handleView(scope.row)">{{ $t('item.view') }}</el-button>
+          <el-button type="primary" size="mini" @click="handleView(scope.row)">{{ $t('item.detail') }}</el-button>
           <el-button type="danger" size="mini" @click="handleModifyStatus(scope.row,'deleted')">{{ $t('item.delete') }}
           </el-button>
         </template>
@@ -149,16 +149,18 @@
           status: 0,
           timeSort: '+'
         },
-        timeSortOptions: [{label: 'Time Ascending', key: '+'}, {label: 'Time Descending', key: '-'}],
+        timeSortOptions: () => {
+          return [{label: this.$t('item.timeAsc'), key: '+'}, {label: this.$t('item.timeDes'), key: '-'}]
+        },
         itemTypeSortOptions: () => {
           let ans = []
           ans.push({
-            label: this.$t('item.itemType') + ': ' +  this.toItemType(''),
+            label: this.$t('item.itemType') + ': ' + this.toItemType(''),
             key: ''
           })
           for (let i = 0; i < 4; ++i) {
             ans.push({
-              label: this.$t('item.itemType') + ': ' +  this.toItemType(i),
+              label: this.$t('item.itemType') + ': ' + this.toItemType(i),
               key: i
             })
           }
@@ -167,12 +169,12 @@
         statusSortOptions: () => {
           let ans = []
           ans.push({
-            label: this.$t('item.status') + ': ' +  this.toItemStatus(''),
+            label: this.$t('item.status') + ': ' + this.toItemStatus(''),
             key: ''
           })
           for (let i = 0; i < 5; ++i) {
             ans.push({
-              label: this.$t('item.status') + ': ' +  this.toItemStatus(i),
+              label: this.$t('item.status') + ': ' + this.toItemStatus(i),
               key: i
             })
           }
@@ -181,7 +183,7 @@
         statusOptions: ['published', 'draft', 'deleted'],
         temp: {
           itemId: '12345678948646846846f8asd4f68sa4d86sa4fds864ff',
-          idNumber: '110',
+          idNumber: '18800123392',
           room: 'F2-201',
           userType: 0,
           itemType: 3,
@@ -228,11 +230,12 @@
         this.getList()
       },
       handleModifyStatus(row, status) {
+        // TODO: request
         this.$message({
           message: '操作成功',
           type: 'success'
         })
-        row.status = status
+        // row.status = status
       },
       sortChange(data) {
         const {prop, order} = data
@@ -259,8 +262,12 @@
       handleDownload() {
         this.downloadLoading = true
         import('@/vendor/Export2Excel').then(excel => {
-          const tHeader = ['timestamp', 'title', 'type', 'importance', 'status']
-          const filterVal = ['timestamp', 'title', 'type', 'importance', 'status']
+          const tHeader = [this.$t('item.itemId'), this.$t('item.idNumber'), this.$t('item.userType'),
+            this.$t('item.time'), this.$t('item.room'), this.$t('item.pianoType'), this.$t('item.itemType'),
+            this.$t('item.status'), this.$t('item.price')]
+          const filterVal = ['itemId', 'idNumber', 'userType',
+            'time', 'room', 'pianoType', 'itemType',
+            'status', 'item.price']
           const data = this.formatJson(filterVal, this.list)
           excel.export_json_to_excel({
             header: tHeader,
@@ -272,11 +279,7 @@
       },
       formatJson(filterVal, jsonData) {
         return jsonData.map(v => filterVal.map(j => {
-          if (j === 'timestamp') {
-            return parseTime(v[j])
-          } else {
-            return v[j]
-          }
+          return v[j]
         }))
       },
       toItemType(type) {
@@ -285,9 +288,6 @@
       toItemStatus(status) {
         return this.$t('item.status_' + status)
       },
-      toT(s) {
-        return this.$t(s)
-      }
     }
   }
 </script>

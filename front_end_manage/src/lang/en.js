@@ -100,8 +100,8 @@ export default {
     status_3: 'long term item with paid',
     status_4: 'long term item used',
 
-    notUsed: '',
-    used: 'used already',
+    timeAsc: 'Time Ascending',
+    timeDes: 'Time Descending'
   },
   navbar: {
     logOut: 'Log Out',
