@@ -2,20 +2,6 @@ const Router = require("koa-router");
 const router = new Router();
 const dataBase = require("../dataBase");
 
-function sortNotice(a,b)
-{
-    a_date = new Date(a.notice_time);
-    b_date = new Date(b.notice_time);
-    if(a_date.getTime() - b_date.getTime() > 0)
-    {
-        return -1;
-    }
-    else
-    {
-        return 1;
-    }
-}
-
 function getDateStr (date) {
     let dateStr = date.getFullYear().toString() + "-";
     let month = date.getMonth()+1;
@@ -59,7 +45,6 @@ function getDateStr (date) {
 
 const routers = router.get("/all", async (ctx, next) => {
     let result = await dataBase.GetNoticeAll();
-    result.data.sort(sortNotice);
     let noticeList = [];
     for(let notice of result.data)
     {
@@ -87,6 +72,7 @@ const routers = router.get("/all", async (ctx, next) => {
             noticeList.push(temp);
         }
     }
+    noticeList.reverse();
     ctx.response.body = {
         "success": true,
         "noticeList": noticeList
