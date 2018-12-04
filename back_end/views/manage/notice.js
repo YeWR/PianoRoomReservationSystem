@@ -53,8 +53,8 @@ const routers = router.get("/list", async (ctx, next) => {
         let dateStr = getDateStr(date);
         let temp = {
             "title": notice.notice_title,
-            "type": notice.notice_type,
             "date": dateStr,
+            "author": notice.notice_auth,
             "id": notice.notice_id,
         };
         noticeList.push(temp);
@@ -65,13 +65,29 @@ const routers = router.get("/list", async (ctx, next) => {
         "items": noticeList,
         "total": noticeList.length
     }
-}).post("/add", async (ctx, next) => {
-    //let info = ctx.request.body;
+}).post("/create", async (ctx, next) => {
+    let info = ctx.request.body;
     //let title = "123";
     //let content = "123";
     //let time =
     //let result = await dataBase.InsertNotice(title,content,time,auth,1);
     ctx.response.status = 200;
+}).post("/delete", async (ctx, next) => {
+    let id = ctx.request.body.id;
+    let result = await dataBase.DeleteNotice(id);
+    ctx.response.status = 200;
+}).get("/detail", async (ctx, next) => {
+    let id = ctx.params.id;
+    let result = await dataBase.GetNoticeInfo(id);
+    let date = new Date(result.data.notice_time);
+    let dateStr = getDateStr(date);
+    ctx.response.status = 200;
+    ctx.response.body = {
+        "title": result.data.notice_title,
+        "date": dateStr,
+        "author": result.data.notice_auth,
+        "content": result.data.notice_cont
+    }
 });
 
 module.exports = routers;

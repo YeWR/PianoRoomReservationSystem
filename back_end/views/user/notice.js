@@ -48,29 +48,26 @@ const routers = router.get("/all", async (ctx, next) => {
     let noticeList = [];
     for(let notice of result.data)
     {
-        if(notice.notice_type)
+        let date = new Date(notice.notice_time);
+        let dateStr = getDateStr(date);
+        let noticeKey = "";
+        if(notice.notice_cont.length > 10)
         {
-            let date = new Date(notice.notice_time);
-            let dateStr = getDateStr(date);
-            let noticeKey = "";
-            if(notice.notice_cont.length > 10)
-            {
-                noticeKey = notice.notice_cont.substring(0,10) + "...";
-            }
-            else
-            {
-                noticeKey = notice.notice_cont;
-            }
-            let temp = {
-            "noticeTitle": notice.notice_title,
-            "noticeTime": dateStr,
-            "noticeAuthor": notice.notice_auth,
-            "noticeId": notice.notice_id,
-            "noticeKey": noticeKey,
-            "noticeContent": notice.notice_cont
-            };
-            noticeList.push(temp);
+            noticeKey = notice.notice_cont.substring(0,10) + "...";
         }
+        else
+        {
+            noticeKey = notice.notice_cont;
+        }
+        let temp = {
+        "noticeTitle": notice.notice_title,
+        "noticeTime": dateStr,
+        "noticeAuthor": notice.notice_auth,
+        "noticeId": notice.notice_id,
+        "noticeKey": noticeKey,
+        "noticeContent": notice.notice_cont
+        };
+        noticeList.push(temp);
     }
     noticeList.reverse();
     ctx.response.body = {
