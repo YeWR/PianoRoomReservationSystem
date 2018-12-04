@@ -5,8 +5,8 @@ const constVariable = require("../const");
 
 const routers = router.post("/outSchool", async (ctx, next) => {
     console.log(ctx.request.body);
-    let tele = ctx.request.body.phoneNumber,
-        code = ctx.request.body.validateCode;
+    let tele = ctx.query.phoneNumber,
+        code = ctx.query.validateCode;
     console.log(`login with tele: ${tele}`);
     let result = await dataBase.SocietyLogin(tele,code);
     //let result = {"success": true};

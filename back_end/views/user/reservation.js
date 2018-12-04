@@ -153,7 +153,7 @@ const routers = router.post("/refundment", async (ctx, next) => {
         };
     }
 }).get("/alarm", async (ctx, next) => {
-    let number = ctx.request.body.number;
+    let number = ctx.query.number;
     let userId = await dataBase.GetSocietyUuidByTele(number);
     userId = userId.data;
     let result = await dataBase.GetItem(userId);

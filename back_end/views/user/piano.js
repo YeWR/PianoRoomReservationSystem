@@ -39,9 +39,9 @@ const routers = router.get("/all", async (ctx, next) => {
     }
     //console.log(ctx.response.body);
 }).get("/detail", async (ctx, next) => {
-    console.log(ctx.request.body);
-    let pianoId = ctx.request.body.pianoId;
-    let dateStr = ctx.request.body.date;
+    console.log(ctx.query);
+    let pianoId = ctx.query.pianoId;
+    let dateStr = ctx.query.date;
     dateStr.concat(" 08:00:00");
     let result = await dataBase.GetPianoRoomInfo(pianoId, dateStr);
     if(result.data === null)

@@ -92,7 +92,7 @@ const routers = router.get("/all", async (ctx, next) => {
         "noticeList": noticeList
     }
 }).post("/detail", async (ctx, next) => {
-    let noticeId = ctx.request.body.noticeId;
+    let noticeId = ctx.query.noticeId;
     let result = await dataBase.GetNoticeInfo(noticeId);
     let notice = result.data;
     let date = new Date(notice.notice_time);
