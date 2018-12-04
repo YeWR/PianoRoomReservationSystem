@@ -764,7 +764,7 @@ let GetNoticeAll = async function(){
     let noticeInfo = null;
     let test = function(){
         return new Promise(resolve =>{
-            db.get('notice', function(err, rows, fields) { 
+            db.where({notice_type: 1}).get('notice', function(err, rows, fields) {
                 let _data = JSON.stringify(rows);
                 noticeInfo = JSON.parse(_data);
                 resolve(1);

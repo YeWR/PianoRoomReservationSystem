@@ -65,6 +65,13 @@ const routers = router.get("/list", async (ctx, next) => {
         "items": noticeList,
         "total": noticeList.length
     }
+}).post("/add", async (ctx, next) => {
+    let info = ctx.request.body;
+    let title = "123";
+    let content = "123";
+    let time =
+    let result = await dataBase.InsertNotice(title,content,time,auth,1);
+    ctx.response.status = 200;
 });
 
 module.exports = routers;
