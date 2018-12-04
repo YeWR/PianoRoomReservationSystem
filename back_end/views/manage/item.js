@@ -107,7 +107,8 @@ const routers = router.get("/list", async (ctx, next) => {
                     "pianoType": i.piano_type,
                     "price": p.item_value,
                     "status": p.item_type,
-                    "time": dateStr
+                    "time": dateStr,
+                    "itemId": p.item_uuid
                 };
                 reservationList.push(info);
                 break;
@@ -119,6 +120,10 @@ const routers = router.get("/list", async (ctx, next) => {
         "list": reservationList,
         "total": result.count
     };
+}).post("/refundment", async (ctx, next) => {
+    let uuid = ctx.request.body.reservationId;
+    let result = await dataBase.DeleteItem(uuid);
+    ctx.response.body = result;
 });
 
 module.exports = routers;
