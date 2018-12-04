@@ -82,11 +82,11 @@ Page({
         let number = app.globalData._idNumber;
 
         wx.request({
-            url: "https://958107.iterator-traits.com/reservation/all",
+            url: "https://958107.iterator-traits.com/user/reservation/all",
             data: {
                 number: number
             },
-            method: "POST",
+            method: "GET",
             header: {
                 "Content-Type": "application/x-www-form-urlencoded"
             },

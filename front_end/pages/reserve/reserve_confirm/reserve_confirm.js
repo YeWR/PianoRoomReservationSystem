@@ -38,7 +38,7 @@ Page({
         }
 
         wx.request({
-            url: "https://958107.iterator-traits.com/reserve/order",
+            url: "https://958107.iterator-traits.com/user/reservation/order",
             data: {
                 number: number,
                 reservationType: that.data._reservationType,

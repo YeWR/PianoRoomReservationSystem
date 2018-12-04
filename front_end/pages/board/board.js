@@ -44,10 +44,10 @@ Page({
         let that = this;
 
         wx.request({
-            url: "https://958107.iterator-traits.com/notice/all",
+            url: "https://958107.iterator-traits.com/user/notice/all",
             data: {
             },
-            method: "POST",
+            method: "GET",
             header: {
                 "Content-Type": "application/x-www-form-urlencoded"
             },

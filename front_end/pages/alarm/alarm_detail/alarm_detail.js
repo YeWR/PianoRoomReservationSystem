@@ -52,7 +52,7 @@ Page({
         let that = this;
 
         wx.request({
-            url: "https://958107.iterator-traits.com/reservation/refund",
+            url: "https://958107.iterator-traits.com/user/reservation/refundment",
             data: {
                 reservationId: that.data._reservationId
             },
