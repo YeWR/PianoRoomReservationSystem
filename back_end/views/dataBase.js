@@ -617,6 +617,65 @@ let GetItem = async function(itemUsername){
     }
 }
 
+let SearchItem = async function(count, offset, username, roomId, member, type, order){
+    let errorMsg = "";
+    let itemInfo = null;
+    let itemCount = 0;
+    let query = { item_username: username, item_roomId: roomId, item_member: member};
+    for(let q in query)
+    {
+        if(typeof(query[q]) === 'undefined' || query[q] === null)
+        {
+            delete query[q];
+        }
+    }
+    let sortOrder = null;
+    if(order === '+')
+    {
+        sortOrder = ['item_time desc', 'item_begin desc']
+    }
+    else
+    {
+        sortOrder = ['item_time asc', 'item_begin asc']
+    }
+    let test = function(){
+        return new Promise(resolve =>{
+            db.where(query)
+                .where('item_type', type)
+                .limit(count, offset)
+                .order_by(sortOrder)
+                .get('item', function (err, res, fields) {
+                let _data = JSON.stringify(res);
+                let _info = JSON.parse(_data);
+                itemInfo = _info;
+                resolve(1);
+            });
+        });
+    };
+    let getItemCount = function(){
+        return new Promise(resolve =>{
+            db.where(query)
+                .where('item_type', type)
+                .count('item', function (err, res, fields) {
+                    itemCount = res;
+                    resolve(1);
+                });
+        });
+    };
+    let flag = await test();
+    let flagCount = await getItemCount();
+    if(flag == 0){
+        return {"data":itemInfo,
+            "count": itemCount,
+            "info":errorMsg};
+    }
+    if(flag == 1){
+        return {"data":itemInfo,
+            "count": itemCount,
+            "info":errorMsg};
+    }
+};
+
 let GetItemByUuid = async function(itemUuid){
     let errorMsg = "";
     let itemInfo = null;
@@ -888,6 +947,7 @@ let DeleteNotice = async function(noticeId) {
 exports.InsertItem = InsertItem;            // 新增订单
 exports.UpdateItem = UpdateItem;            // 更新订单
 exports.GetItem = GetItem;                  // 获取某个人的订单信息
+exports.SearchItem = SearchItem;
 exports.GetItemByUuid = GetItemByUuid;      // 获取订单信息，由uuid
 exports.DeleteItem = DeleteItem;            // 删除订单-需要改写琴房信息
 

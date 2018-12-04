@@ -67,10 +67,11 @@ const routers = router.get("/list", async (ctx, next) => {
     }
 }).post("/create", async (ctx, next) => {
     let info = ctx.request.body;
-    //let title = "123";
-    //let content = "123";
-    //let time =
-    //let result = await dataBase.InsertNotice(title,content,time,auth,1);
+    let title = "123";
+    let content = "123";
+    let time = "2018-12-05 08:00";
+    let auth = "zzh";
+    let result = await dataBase.InsertNotice(title,content,time,auth,1);
     ctx.response.status = 200;
 }).post("/delete", async (ctx, next) => {
     let id = ctx.request.body.id;
