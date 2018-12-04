@@ -95,7 +95,7 @@ const routers = router.post("/refundment", async (ctx, next) => {
     let result = await dataBase.DeleteItem(uuid);
     ctx.response.body = result;
 }).get("/all", async (ctx, next) => {
-    let number = ctx.request.body.number;
+    let number = ctx.query.number;
     let userId = await dataBase.GetSocietyUuidByTele(number);
     userId = userId.data;
     let result = await dataBase.GetItem(userId);
