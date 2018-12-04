@@ -77,7 +77,7 @@ const routers = router.get("/list", async (ctx, next) => {
     let result = await dataBase.DeleteNotice(id);
     ctx.response.status = 200;
 }).get("/detail", async (ctx, next) => {
-    let id = ctx.params.id;
+    let id = ctx.query.id;
     let result = await dataBase.GetNoticeInfo(id);
     let date = new Date(result.data.notice_time);
     let dateStr = getDateStr(date);
