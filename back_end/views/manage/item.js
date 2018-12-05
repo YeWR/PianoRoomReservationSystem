@@ -23,9 +23,9 @@ function getDateStr (date, p) {
         dateStr = dateStr + day.toString() + " ";
     }
     let startHour = 8 + Math.floor(p.item_begin / 6);
-    let startMinute = 10 * p.item_begin % 6;
+    let startMinute = 10 * (p.item_begin % 6);
     let endHour = 8 + Math.floor((p.item_begin + p.item_duration) / 6);
-    let endMinute = 10 * (p.item_begin + p.item_duration) % 6;
+    let endMinute = 10 * ((p.item_begin + p.item_duration) % 6);
     if(startHour < 10)
     {
         dateStr = dateStr + "0" + startHour.toString() + ":";

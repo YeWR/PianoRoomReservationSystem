@@ -20,7 +20,7 @@ const routers = router.get("/list", async (ctx, next) => {
     };
 }).post("/blacklist/set", async (ctx, next) => {
     let uuid = ctx.request.body.userId;
-    let result = await dataBase.DeleteItem(uuid);
+    let result = await dataBase.UpdateItem(uuid);
     ctx.response.body = result;
 }).post("/blacklist/remove", async (ctx, next) => {
     let uuid = ctx.request.body.userId;

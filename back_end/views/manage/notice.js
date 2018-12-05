@@ -70,6 +70,7 @@ const routers = router.get("/list", async (ctx, next) => {
     let content = ctx.request.body.content;
     let time = ctx.request.body.time;
     let auth = ctx.request.body.author;
+    console.log(ctx.request.body);
     let result = await dataBase.InsertNotice(title,content,time,auth,1);
     ctx.response.status = 200;
 }).post("/delete", async (ctx, next) => {
