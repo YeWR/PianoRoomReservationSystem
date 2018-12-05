@@ -75,6 +75,54 @@ let GetSocietyUuidByTele = async function(userTele){
     }
 }
 
+let SearchSocietyUser = async function(count,offset,soc_tele, soc_realname, soc_id, soc_type){
+    let errorMsg = "";
+    let userInfo = null;
+    let userCount = 0;
+    let query = { soc_tele: soc_tele, soc_realname: soc_realname, soc_id: soc_id, soc_type: soc_type};
+    for(let q in query)
+    {
+        if(typeof(query[q]) === 'undefined' || query[q] === null)
+        {
+            delete query[q];
+        }
+    }
+
+    let test = function(){
+        return new Promise(resolve =>{
+            db.where(query)
+                .limit(count,offset)
+                .get('society_user', function (err, res, fields) {
+                let _select = res;
+                    let _data = JSON.stringify(_select);
+                    let _info = JSON.parse(_data);
+                    userInfo = _info;
+                    resolve(1);
+            });
+        });
+    };
+    let getUserCount = function(){
+        return new Promise(resolve =>{
+            db.where(query)
+                .count('society_user', function (err, res, fields) {
+                    userCount = res;
+                    resolve(1);
+                });
+        });
+    };
+    let flag = await test();
+    console.log(flag);
+    if(flag == 0){
+        return {"data":userInfo,
+            "count": userCount,
+            "info":errorMsg};
+    }
+    if(flag == 1){
+        return {"data":userInfo,
+        "count": userCount};
+    }
+}
+
 // uuid:改为使用uuid
 let GetSocietyUserInfo = async function(userUuid){
     let errorMsg = "";
@@ -354,6 +402,32 @@ let InsertPiano = async function(pianoList, pianoId, pianoRoom, pianoPicurl, pia
     }
 }
 
+let UpdatePianoInfo = async function(pianoList, pianoId, pianoRoom, pianoPicurl, pianoInfo, pianoStuvalue, pianoTeavalue, pianoSocvalue, pianoMultivalue, pianoType) {
+    let errorMsg = "";
+    let test = function(){
+        return new Promise(resolve =>{
+            db.where({ piano_id: pianoId }).update('piano', {}, function (err, res, fields) {
+                if(err === null)
+                    resolve(1);
+                else
+                {
+                    errorMsg = "修改琴房信息失败";
+                    resolve(0);
+                }
+            });
+        });
+    };
+    let flag = await test();
+    console.log(flag);
+    if(flag == 0){
+        return {"success":false,
+            "info":errorMsg};
+    }
+    if(flag == 1){
+        return {"success":true};
+    }
+}
+
 let GetPianoRoomAll = async function(){
     let errorMsg = "";
     let pianoInfo = null;
@@ -624,7 +698,7 @@ let SearchItem = async function(count, offset, username, roomId, member, type, o
     let query = { item_username: username, item_roomId: roomId, item_member: member};
     for(let q in query)
     {
-        if(typeof(query[q]) === 'undefined' || query[q] === null)
+        if(!query[q])
         {
             delete query[q];
         }
@@ -646,7 +720,6 @@ let SearchItem = async function(count, offset, username, roomId, member, type, o
                 .order_by(sortOrder)
                 .get('item', function (err, res, fields) {
                 let _data = JSON.stringify(res);
-                console.log(_data);
                 let _info = JSON.parse(_data);
                 itemInfo = _info;
                 resolve(1);
@@ -948,7 +1021,7 @@ let DeleteNotice = async function(noticeId) {
 exports.InsertItem = InsertItem;            // 新增订单
 exports.UpdateItem = UpdateItem;            // 更新订单
 exports.GetItem = GetItem;                  // 获取某个人的订单信息
-exports.SearchItem = SearchItem;
+exports.SearchItem = SearchItem;            // 查询订单(管理端)
 exports.GetItemByUuid = GetItemByUuid;      // 获取订单信息，由uuid
 exports.DeleteItem = DeleteItem;            // 删除订单-需要改写琴房信息
 
@@ -956,11 +1029,13 @@ exports.DeleteItem = DeleteItem;            // 删除订单-需要改写琴房�
 exports.GetPianoRoomInfo = GetPianoRoomInfo;// 获取单个琴房信息
 exports.GetPianoRoomAll = GetPianoRoomAll;  // 获取所有琴房信息
 exports.InsertPiano = InsertPiano;          // 新增琴房
+exports.UpdatePianoInfo = UpdatePianoInfo;
 // 每日更新琴房信息
 
 // 注册
 exports.SetRegisterMsg = SetRegisterMsg;    // 点击发送
 exports.SocietyRegister = SocietyRegister;  // 点击注册
+//exports.CampusRegister = SocietyRegister;
 
 // 登录
 exports.SetLoginMsg = SetLoginMsg;          // 点击发送
@@ -970,6 +1045,7 @@ exports.SocietyLogin = SocietyLogin;        // 点击登录
 exports.GetSocietyUserInfo = GetSocietyUserInfo;  // 获取某个校外用户的信息
 exports.GetSocietyUuidByTele = GetSocietyUuidByTele; // 通过手机号获取uuid
 exports.ChangeSocietyInfo = ChangeSocietyInfo;      // 更新用户数据
+exports.SearchSocietyUser = SearchSocietyUser;
 
 // 公告
 exports.GetNoticeAll = GetNoticeAll;            // 获取所有公告
