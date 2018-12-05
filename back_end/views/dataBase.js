@@ -632,11 +632,11 @@ let SearchItem = async function(count, offset, username, roomId, member, type, o
     let sortOrder = null;
     if(order === '+')
     {
-        sortOrder = ['item_time desc', 'item_begin desc']
+        sortOrder = ['\'item_time\' desc', '\'item_begin\' desc']
     }
     else
     {
-        sortOrder = ['item_time asc', 'item_begin asc']
+        sortOrder = ['\'item_time\' asc', '\'item_begin\' asc']
     }
     let test = function(){
         return new Promise(resolve =>{
@@ -646,6 +646,7 @@ let SearchItem = async function(count, offset, username, roomId, member, type, o
                 .order_by(sortOrder)
                 .get('item', function (err, res, fields) {
                 let _data = JSON.stringify(res);
+                console.log(_data);
                 let _info = JSON.parse(_data);
                 itemInfo = _info;
                 resolve(1);

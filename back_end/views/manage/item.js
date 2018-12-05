@@ -80,7 +80,7 @@ const routers = router.get("/list", async (ctx, next) => {
 
     let query = ctx.query;
     let page = query.page;
-    let limit = query.limit;
+    let limit = parseInt(query.limit);
     if(typeof(query.status) === 'undefined' || query.status === null)
     {
         query.status = [1,2,-1,-2,-3];

@@ -66,11 +66,10 @@ const routers = router.get("/list", async (ctx, next) => {
         "total": noticeList.length
     }
 }).post("/create", async (ctx, next) => {
-    let info = ctx.request.body;
-    let title = "123";
-    let content = "123";
-    let time = "2018-12-05 08:00";
-    let auth = "zzh";
+    let title = ctx.request.body.title;
+    let content = ctx.request.body.content;
+    let time = ctx.request.body.time;
+    let auth = ctx.request.body.author;
     let result = await dataBase.InsertNotice(title,content,time,auth,1);
     ctx.response.status = 200;
 }).post("/delete", async (ctx, next) => {
