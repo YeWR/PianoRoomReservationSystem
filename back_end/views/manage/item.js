@@ -77,13 +77,16 @@ const routers = router.get("/list", async (ctx, next) => {
             "price": "钢琴价格",
             "status": "订单状态",
             "time": "订单时间"*/
-
     let query = ctx.query;
     let page = query.page;
     let limit = parseInt(query.limit);
     if(!query.status)
     {
         query.status = [1,2,-1,-2,-3];
+    }
+    else
+    {
+        query.status = parseInt(query.status) - 3;
     }
     let userId = await dataBase.GetSocietyUuidByTele(ctx.query.idNumber);
     userId = userId.data;
@@ -106,7 +109,7 @@ const routers = router.get("/list", async (ctx, next) => {
                     "userType": 2,
                     "pianoType": i.piano_type,
                     "price": p.item_value,
-                    "status": p.item_type,
+                    "status": parseInt(p.item_type) + 3,
                     "time": dateStr,
                     "itemId": p.item_uuid
                 };

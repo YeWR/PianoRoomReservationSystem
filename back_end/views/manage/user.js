@@ -6,7 +6,7 @@ const routers = router.get("/list", async (ctx, next) => {
     let query = ctx.query;
     let page = query.page;
     let limit = parseInt(query.limit);
-    let result = await dataBase.SearchSocietyUser(limit, (page-1)*limit,soc_tele, soc_realname, soc_id, soc_type);
+    let result = await dataBase.SearchSocietyUser(limit, (page-1)*limit,query.telephone, query.id, soc_id, soc_type);
     let userList = [];
     for(let p of result.data)
     {

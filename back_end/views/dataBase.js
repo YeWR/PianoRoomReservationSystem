@@ -953,29 +953,20 @@ let InsertNotice = async function(noticeTitle, noticeCont, noticeTime, noticeAut
     let errorMsg = "";
     let test = function(){
         return new Promise(resolve =>{
-            db.where({ notice_title: noticeTitle }).get('notice', function (err, res, fields) {
-                let _select = res;
-                if(_select.length != 0){
-                    errorMsg = "公告已经存在";
-                    resolve(0);
+            let _info = {
+                notice_title: noticeTitle,
+                notice_cont: noticeCont,
+                notice_time: noticeTime,
+                notice_auth: noticeAuth,
+                notice_type: noticeType
+            }
+            db.insert('notice', _info, function (err, info) {
+                if(err == null){
+                    resolve(1);
                 }
                 else{
-                    let _info = {
-                        notice_title: noticeTitle,
-                        notice_cont: noticeCont,
-                        notice_time: noticeTime,
-                        notice_auth: noticeAuth,
-                        notice_type: noticeType
-                    }
-                    db.insert('notice', _info, function (err, info) { 
-                        if(err == null){
-                            resolve(1);
-                        }
-                        else{
-                            errorMsg = "新建公告失败";
-                            resolve(0);
-                        }
-                    });
+                    errorMsg = "新建公告失败";
+                    resolve(0);
                 }
             });
         });
