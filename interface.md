@@ -379,3 +379,48 @@
     }
 }
 ``` 
+
+### 获取订单速览
+```
+{
+    "url": "/manager/item/scan",
+    "method": "GET",
+    "data": {
+    },
+    "res": {
+        "status": "状态码，200 -> 成功",
+        "data": {
+            list: [{
+                "itemId": "订单id",
+                "idNumber": "手机号/证号",
+                "room": "琴房号",
+                "itemType": "订单类型"
+                "userType": "用户类型",
+                "pianoType": "钢琴类型",
+                "price": "钢琴价格",
+                "status": "订单状态",
+                "time": "订单时间"
+            }](今日所有订单)
+        }
+    }
+}
+``` 
+
+###管理员删除退订
+
+```json
+{
+    "url": "/manager/item/refundment",
+    "method": "POST",
+    "data": {
+        "itemId": "订单号"
+    },
+    "res": {
+        "data": {
+            "success": "退订成功",
+            "info": "退订失败信息"
+        }
+    }
+}
+```
+

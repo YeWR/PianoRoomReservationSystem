@@ -7,3 +7,19 @@ export function getItemList(query) {
     params: query
   })
 }
+
+export function getItemScan() {
+  return request({
+    url: '/manager/item/scan',
+    method: 'get'
+  })
+}
+
+export function deleteItem(itemId) {
+  const data = {'itemId': itemId}
+  return request({
+    url: '/manager/item/refundment',
+    method: 'post',
+    data
+  })
+}

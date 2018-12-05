@@ -74,6 +74,12 @@
       </el-table-column>
     </el-table>
 
+    <!--<el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">-->
+    <!--<el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="200px"-->
+    <!--style="width: 400px; margin-left:50px;">-->
+    <!--</el-form>-->
+    <!--</el-dialog>-->
+
     <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit"
                 @pagination="getList"/>
 
@@ -105,7 +111,7 @@
           <span><el-tag>{{ toItemStatus(temp.status) }}</el-tag></span>
         </el-form-item>
         <el-form-item :label="$t('item.price')">
-          <span><el-tag>{{ temp.price }}</el-tag></span>
+          <span><el-tag>￥{{ temp.price }}</el-tag></span>
         </el-form-item>
       </el-form>
     </el-dialog>
@@ -114,8 +120,7 @@
 </template>
 
 <script>
-  import {fetchList, fetchPv, createArticle, updateArticle} from '@/api/article'
-  import {getItemList} from "../../api/item";
+  import {getItemList, deleteItem} from "@/api/item"
   import waves from '@/directive/waves' // Waves directive
   import {parseTime} from '@/utils'
   import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
@@ -124,16 +129,6 @@
     name: 'ItemAll',
     components: {Pagination},
     directives: {waves},
-    filters: {
-      statusFilter(status) {
-        const statusMap = {
-          published: 'success',
-          draft: 'info',
-          deleted: 'danger'
-        }
-        return statusMap[status]
-      },
-    },
     data() {
       return {
         tableKey: 0,
@@ -143,14 +138,14 @@
         listQuery: {
           page: 1,
           limit: 20,
-          idNumber: undefined,
-          room: undefined,
+          idNumber: '',
+          room: '',
           itemType: '',
-          status: 0,
+          status: '',
           timeSort: '+'
         },
         timeSortOptions: () => {
-          return [{label: this.$t('item.timeAsc'), key: '+'}, {label: this.$t('item.timeDes'), key: '-'}]
+          return [{label: this.$t('item.timeDes'), key: '+'}, {label: this.$t('item.timeAsc'), key: '-'}]
         },
         itemTypeSortOptions: () => {
           let ans = []
@@ -172,7 +167,7 @@
             label: this.$t('item.status') + ': ' + this.toItemStatus(''),
             key: ''
           })
-          for (let i = 0; i < 5; ++i) {
+          for (let i = 0; i <= 5; ++i) {
             ans.push({
               label: this.$t('item.status') + ': ' + this.toItemStatus(i),
               key: i
@@ -182,14 +177,14 @@
         },
         statusOptions: ['published', 'draft', 'deleted'],
         temp: {
-          itemId: '12345678948646846846f8asd4f68sa4d86sa4fds864ff',
-          idNumber: '18800123392',
-          room: 'F2-201',
+          itemId: '',
+          idNumber: '',
+          room: '',
           userType: 0,
-          itemType: 3,
-          pianoType: 'Xing Hai piano',
-          price: '￥10',
-          time: '2018 12/5 10:00 - 11:00',
+          itemType: 0,
+          pianoType: '',
+          price: '10',
+          time: '',
           status: 0,
         },
         dialogFormVisible: false,
@@ -212,28 +207,29 @@
     },
     methods: {
       getList() {
-        this.listLoading = false
-        this.list = [this.temp]// response.data.items
-        this.total = 1 // response.data.total
-        // getItemList(this.listQuery).then(response => {
-        //   this.list = [temp]// response.data.items
-        //   this.total = 1 // response.data.total
-        //
-        //   // Just to simulate the time of the request
-        //   setTimeout(() => {
-        //     this.listLoading = false
-        //   }, 1.5 * 1000)
-        // })
+        this.listLoading = true
+        getItemList(this.listQuery).then(response => {
+          this.list = response.data.list
+          this.total = response.data.total
+          // Just to simulate the time of the request
+          setTimeout(() => {
+            this.listLoading = false
+          }, 0.5 * 1000)
+        })
+
       },
       handleFilter() {
         this.listQuery.page = 1
         this.getList()
       },
       handleModifyStatus(row, status) {
-        // TODO: request
-        this.$message({
-          message: '操作成功',
-          type: 'success'
+        deleteItem(row.itemId).then(response => {
+          this.$message({
+            message: this.$t('item.success'),
+            type: 'success'
+          })
+
+          this.getList()
         })
         // row.status = status
       },
@@ -267,7 +263,7 @@
             this.$t('item.status'), this.$t('item.price')]
           const filterVal = ['itemId', 'idNumber', 'userType',
             'time', 'room', 'pianoType', 'itemType',
-            'status', 'item.price']
+            'status', 'price']
           const data = this.formatJson(filterVal, this.list)
           excel.export_json_to_excel({
             header: tHeader,
@@ -279,6 +275,15 @@
       },
       formatJson(filterVal, jsonData) {
         return jsonData.map(v => filterVal.map(j => {
+          if (j === 'userType' || j === 'itemType') {
+            return this.toItemType(v[j])
+          }
+          else if (j === 'status') {
+            return this.toItemStatus(v[j])
+          }
+          else if (j === 'price') {
+            return '￥' + v[j]
+          }
           return v[j]
         }))
       },
@@ -286,6 +291,9 @@
         return this.$t('item.item_' + type)
       },
       toItemStatus(status) {
+        if (status === '') {
+          status = 'all'
+        }
         return this.$t('item.status_' + status)
       },
     }

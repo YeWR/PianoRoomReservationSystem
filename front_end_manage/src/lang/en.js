@@ -66,8 +66,7 @@ export default {
 
     itemManagement: 'Item Management',
     itemList: 'Item List',
-    ordinaryItem: 'Item of Ordinary User',
-    LongtermItem: 'Item of Long Term'
+    itemScan: 'Item Scan',
   },
   item: {
     idNumber: 'User Id Number',
@@ -86,6 +85,7 @@ export default {
     search: 'Search',
     export: 'Export Excel',
     detail: 'Detail',
+    success: 'success!',
 
     item_: 'all',
     item_0: 'student',
@@ -93,12 +93,13 @@ export default {
     item_2: 'non-school person',
     item_3: 'multi users',
 
-    status_: 'all',
-    status_0: 'not used',
-    status_1: 'used already',
+    status_all: 'all',
+    status_3: 'refunded',
+    status_4: 'not used',
+    status_5: 'used already',
     status_2: 'long term item without paid',
-    status_3: 'long term item with paid',
-    status_4: 'long term item used',
+    status_1: 'long term item with paid',
+    status_0: 'long term item used',
 
     timeAsc: 'Time Ascending',
     timeDes: 'Time Descending'
