@@ -632,11 +632,11 @@ let SearchItem = async function(count, offset, username, roomId, member, type, o
     let sortOrder = null;
     if(order === '-')
     {
-        sortOrder = ['\'item_date\' asc', '\'item_begin\' asc']
+        sortOrder = ['`item_date` asc', '`item_begin` asc']
     }
     else
     {
-        sortOrder = ['\'item_date\' desc', '\'item_begin\' desc']
+        sortOrder = ['`item_date` desc', '`item_begin` desc']
     }
     let test = function(){
         return new Promise(resolve =>{
