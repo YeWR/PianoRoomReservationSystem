@@ -121,7 +121,7 @@ const routers = router.get("/list", async (ctx, next) => {
         "total": result.count
     };
 }).post("/refundment", async (ctx, next) => {
-    let uuid = ctx.request.body.reservationId;
+    let uuid = ctx.request.body.itemId;
     let result = await dataBase.DeleteItem(uuid);
     ctx.response.body = result;
 });
