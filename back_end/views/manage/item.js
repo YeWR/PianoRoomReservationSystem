@@ -22,7 +22,7 @@ function getDateStr (date, p) {
     {
         dateStr = dateStr + day.toString();
     }
-    if(!p)
+    if(p)
     {
         dateStr += " ";
         let startHour = 8 + Math.floor(p.item_begin / 6);

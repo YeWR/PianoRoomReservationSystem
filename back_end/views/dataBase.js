@@ -696,7 +696,7 @@ let SearchItem = async function(count, offset, username, roomId, member, type, o
     let itemInfo = null;
     let itemCount = 0;
     let dateQuery = "item_date IS NOT NULL";
-    if(!date)
+    if(date)
     {
         dateQuery = "DATE_FORMAT(item_date, \'%Y%m%d\') = \'" + date + "\'";
     }
