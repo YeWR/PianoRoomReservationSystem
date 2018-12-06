@@ -4,7 +4,7 @@ export function fetchList(query) {
   return request({
     url: '/manager/notice/list',
     method: 'get',
-    params: query
+    query
   })
 }
 
