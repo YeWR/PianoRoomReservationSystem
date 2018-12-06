@@ -75,19 +75,18 @@ let GetSocietyUuidByTele = async function(userTele){
     }
 }
 
-let SearchSocietyUser = async function(count,offset,soc_tele, soc_realname, soc_id, soc_type){
+let SearchSocietyUser = async function(count, offset, soc_tele, soc_realname, soc_id, soc_type){
     let errorMsg = "";
     let userInfo = null;
     let userCount = 0;
     let query = { soc_tele: soc_tele, soc_realname: soc_realname, soc_id: soc_id, soc_type: soc_type};
     for(let q in query)
     {
-        if(typeof(query[q]) === 'undefined' || query[q] === null)
+        if(!query[q])
         {
             delete query[q];
         }
     }
-
     let test = function(){
         return new Promise(resolve =>{
             db.where(query)
