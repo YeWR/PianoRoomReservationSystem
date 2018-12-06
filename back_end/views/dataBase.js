@@ -698,7 +698,7 @@ let SearchItem = async function(count, offset, username, roomId, member, type, o
     let dateQuery = "item_date IS NOT NULL";
     if(date)
     {
-        dateQuery = "DATE_FORMAT(item_date, \'%Y%m%d\') = \'" + date + "\'";
+        dateQuery = "DATE_FORMAT(item_date, \'%Y-%m-%d\') = \'" + date + "\'";
     }
     let query = { item_username: username, item_roomId: roomId, item_member: member};
     for(let q in query)
@@ -711,11 +711,11 @@ let SearchItem = async function(count, offset, username, roomId, member, type, o
     let sortOrder = null;
     if(order === '-')
     {
-        sortOrder = ['`item_date` asc', '`item_begin` asc']
+        sortOrder = ['`item_date` asc', '`item_begin` asc'];
     }
     else
     {
-        sortOrder = ['`item_date` desc', '`item_begin` desc']
+        sortOrder = ['`item_date` desc', '`item_begin` desc'];
     }
     let test = function(){
         return new Promise(resolve =>{
@@ -922,6 +922,58 @@ let GetNoticeAll = async function(){
     }
 }
 
+let SearchNotice = async function(count, offset, title, author, order){
+    let errorMsg = "";
+    let noticeInfo = null;
+    let noticeCount = 0;
+    let query = { notice_title: title, notice_auth: author};
+    for(let q in query)
+    {
+        if(!query[q])
+        {
+            delete query[q];
+        }
+    }
+    let sortOrder = null;
+    if(order === '-')
+    {
+        sortOrder = ['`notice_time` asc'];
+    }
+    else
+    {
+        sortOrder = ['`notice_time` desc'];
+    }
+    let test = function(){
+        return new Promise(resolve =>{
+            db.where(query)
+                .where({notice_type: 1})
+                .limit(count, offset)
+                .order_by(sortOrder)
+                .get('notice', function(err, rows, fields) {
+                let _data = JSON.stringify(rows);
+                noticeInfo = JSON.parse(_data);
+                resolve(1);
+            });
+        });
+    };
+    let getNoticeCount = function(){
+        return new Promise(resolve =>{
+            db.where(query)
+                .where({notice_type: 1})
+                .count('notice', function (err, res, fields) {
+                    noticeCount = res;
+                    resolve(1);
+                });
+        });
+    };
+    let flag = await test();
+    let flagCount = await getNoticeCount();
+    console.log(flag);
+    return {"data":noticeInfo,
+        "count": noticeCount,
+        "info":errorMsg};
+};
+
 let GetNoticeInfo = async function(noticeId){
     let errorMsg = "";
     let noticeInfo = null;
@@ -1049,7 +1101,7 @@ exports.GetNoticeAll = GetNoticeAll;            // 获取所有公告
 exports.GetNoticeInfo = GetNoticeInfo;          // 获取一个公告，由notice_id
 exports.InsertNotice = InsertNotice;            // 插入公告
 exports.DeleteNotice = DeleteNotice;            // 删除公告
-exports.SearchNotice = GetNoticeAll;
+exports.SearchNotice = SearchNotice;
 
 // 查询
 

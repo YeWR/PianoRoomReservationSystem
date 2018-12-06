@@ -45,8 +45,13 @@ function getDateStr (date) {
 }
 
 const routers = router.get("/list", async (ctx, next) => {
-    //todo:查询条件
-    let result = await dataBase.GetNoticeAll();
+    let query = ctx.query;
+    let page = query.page;
+    let limit = parseInt(query.limit);
+    let title = query.title;
+    let author = query.author;
+    let order = query.dateSort;
+    let result = await dataBase.SearchNotice(limit, (page-1)*limit, title, author, order);
     let noticeList = [];
     for(let notice of result.data)
     {
@@ -64,7 +69,7 @@ const routers = router.get("/list", async (ctx, next) => {
     ctx.response.status = 200;
     ctx.response.body = {
         "items": noticeList,
-        "total": noticeList.length
+        "total": result.count
     }
 }).post("/create", async (ctx, next) => {
     let title = ctx.request.body.title;
