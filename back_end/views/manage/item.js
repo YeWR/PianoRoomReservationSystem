@@ -16,47 +16,43 @@ function getDateStr (date, p) {
     }
     if(day < 10)
     {
-        dateStr = dateStr + "0" + day.toString() + " ";
+        dateStr = dateStr + "0" + day.toString();
     }
     else
     {
-        dateStr = dateStr + day.toString() + " ";
+        dateStr = dateStr + day.toString();
     }
-    let startHour = 8 + Math.floor(p.item_begin / 6);
-    let startMinute = 10 * (p.item_begin % 6);
-    let endHour = 8 + Math.floor((p.item_begin + p.item_duration) / 6);
-    let endMinute = 10 * ((p.item_begin + p.item_duration) % 6);
-    if(startHour < 10)
+    if(!p)
     {
-        dateStr = dateStr + "0" + startHour.toString() + ":";
-    }
-    else
-    {
-        dateStr = dateStr + startHour.toString() + ":";
-    }
-    if(startMinute < 10)
-    {
-        dateStr = dateStr + "0" + startMinute.toString() + "-";
-    }
-    else
-    {
-        dateStr = dateStr + startMinute.toString() + "-";
-    }
-    if(endHour < 10)
-    {
-        dateStr = dateStr + "0" + endHour.toString() + ":";
-    }
-    else
-    {
-        dateStr = dateStr + endHour.toString() + ":";
-    }
-    if(endMinute < 10)
-    {
-        dateStr = dateStr + "0" + endMinute.toString();
-    }
-    else
-    {
-        dateStr = dateStr + endMinute.toString();
+        dateStr += " ";
+        let startHour = 8 + Math.floor(p.item_begin / 6);
+        let startMinute = 10 * (p.item_begin % 6);
+        let endHour = 8 + Math.floor((p.item_begin + p.item_duration) / 6);
+        let endMinute = 10 * ((p.item_begin + p.item_duration) % 6);
+        if (startHour < 10) {
+            dateStr = dateStr + "0" + startHour.toString() + ":";
+        }
+        else {
+            dateStr = dateStr + startHour.toString() + ":";
+        }
+        if (startMinute < 10) {
+            dateStr = dateStr + "0" + startMinute.toString() + "-";
+        }
+        else {
+            dateStr = dateStr + startMinute.toString() + "-";
+        }
+        if (endHour < 10) {
+            dateStr = dateStr + "0" + endHour.toString() + ":";
+        }
+        else {
+            dateStr = dateStr + endHour.toString() + ":";
+        }
+        if (endMinute < 10) {
+            dateStr = dateStr + "0" + endMinute.toString();
+        }
+        else {
+            dateStr = dateStr + endMinute.toString();
+        }
     }
     return dateStr;
 }
@@ -90,7 +86,7 @@ const routers = router.get("/list", async (ctx, next) => {
     }
     let userId = await dataBase.GetSocietyUuidByTele(ctx.query.idNumber);
     userId = userId.data;
-    let result = await dataBase.SearchItem(limit, (page-1)*limit, userId, query.room, query.itemType, query.status, query.timeSort);
+    let result = await dataBase.SearchItem(limit, (page-1)*limit, userId, query.room, query.itemType, query.status, query.timeSort, null);
     let reservationList = [];
     let pianoInfo = await dataBase.GetPianoRoomAll();
     for(let p of result.data)
@@ -127,6 +123,41 @@ const routers = router.get("/list", async (ctx, next) => {
     let uuid = ctx.request.body.itemId;
     let result = await dataBase.DeleteItem(uuid);
     ctx.response.body = result;
+}).get("/scan", async (ctx, next) => {
+    let dateToday = new Date();
+    let queryDateStr = getDateStr(dateToday, null);
+    let result = await dataBase.SearchItem(2147483647, 0, null, null, null, 1, '-', queryDateStr);
+    let reservationList = [];
+    let pianoInfo = await dataBase.GetPianoRoomAll();
+    for(let p of result.data)
+    {
+        for(let i of pianoInfo.data)
+        {
+            if (i.piano_id === p.item_roomId)
+            {
+                let date = new Date(p.item_date);
+                let dateStr = getDateStr(date, p);
+                let userInfo = await dataBase.GetSocietyUserInfo(p.item_username);
+                let info = {
+                    "idNumber": userInfo.data.soc_tele,
+                    "room": i.piano_room,
+                    "itemType": p.item_member,
+                    "userType": 2,
+                    "pianoType": i.piano_type,
+                    "price": p.item_value,
+                    "status": parseInt(p.item_type) + 3,
+                    "time": dateStr,
+                    "itemId": p.item_uuid
+                };
+                reservationList.push(info);
+                break;
+            }
+        }
+    }
+    ctx.response.status = 200;
+    ctx.response.body = {
+        "list": reservationList
+    };
 });
 
 module.exports = routers;

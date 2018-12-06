@@ -45,6 +45,7 @@ function getDateStr (date) {
 }
 
 const routers = router.get("/list", async (ctx, next) => {
+    //todo:查询条件
     let result = await dataBase.GetNoticeAll();
     let noticeList = [];
     for(let notice of result.data)

@@ -691,10 +691,15 @@ let GetItem = async function(itemUsername){
     }
 }
 
-let SearchItem = async function(count, offset, username, roomId, member, type, order){
+let SearchItem = async function(count, offset, username, roomId, member, type, order, date){
     let errorMsg = "";
     let itemInfo = null;
     let itemCount = 0;
+    let dateQuery = "item_date IS NOT NULL";
+    if(!date)
+    {
+        dateQuery = "DATE_FORMAT(item_date, \'%Y%m%d\') = \'" + date + "\'";
+    }
     let query = { item_username: username, item_roomId: roomId, item_member: member};
     for(let q in query)
     {
@@ -715,6 +720,7 @@ let SearchItem = async function(count, offset, username, roomId, member, type, o
     let test = function(){
         return new Promise(resolve =>{
             db.where(query)
+                .where(dateQuery)
                 .where('item_type', type)
                 .limit(count, offset)
                 .order_by(sortOrder)
@@ -1043,6 +1049,7 @@ exports.GetNoticeAll = GetNoticeAll;            // 获取所有公告
 exports.GetNoticeInfo = GetNoticeInfo;          // 获取一个公告，由notice_id
 exports.InsertNotice = InsertNotice;            // 插入公告
 exports.DeleteNotice = DeleteNotice;            // 删除公告
+exports.SearchNotice = GetNoticeAll;
 
 // 查询
 
