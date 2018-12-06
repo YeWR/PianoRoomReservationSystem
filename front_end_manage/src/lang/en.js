@@ -66,7 +66,8 @@ export default {
 
     itemManagement: 'Item Management',
     itemList: 'Item List',
-    itemScan: 'Item Scan',
+    itemScan: 'Item Scan Today',
+    itemDetail: 'Item Detail',
   },
   item: {
     idNumber: 'User Id Number',

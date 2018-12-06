@@ -1,7 +1,23 @@
 <template>
   <div class="components-container board">
-    <CardSlot v-loading="listLoading" :key="1" :list="itemList" :options="options" class="kanban todo"/>
-    <Card v-loading="listLoading" :key="2" :temp="temp" :options="options" class="kanban todo"/>
+    <div v-loading="listLoading" class="kanban todo">
+      <div class="board-column">
+        <div class="board-column-header">
+          {{$t('route.itemScan')}}
+        </div>
+        <div
+          :list="list"
+          class="board-column-content">
+          <div v-for="item in list" :key="item.id" class="board-item" v-on:click="setTemp(item)">
+            {{$t('item.idNumber')}}: {{ item.idNumber }} | {{$t('item.time')}}: {{ item.time }} |
+            {{$t('item.room')}}: {{
+            item.room }}
+          </div>
+        </div>
+      </div>
+    </div>
+    <Card v-loading="tempLoading" :key="2" :temp="temp" :headerText="itemDetail" :options="options"
+          class="kanban todo"/>
   </div>
 </template>
 <script>
@@ -20,7 +36,7 @@
         options: {
           group: 'mission'
         },
-        itemList: [],
+        list: [],
         temp: {
           itemId: '',
           idNumber: '',
@@ -32,7 +48,9 @@
           time: '',
           status: 0,
         },
+        itemDetail: '',
         listLoading: true,
+        tempLoading: true
       }
     },
     created() {
@@ -40,17 +58,28 @@
     },
     methods: {
       getList() {
+        this.itemDetail = this.$t('route.itemDetail')
         this.listLoading = true
-        this.list = []
-        this.listLoading = false
         getItemScan().then(response => {
           this.list = response.data.list
+          if (this.list.length > 0) {
+            this.temp = this.list[0]
+          }
+          console.log('gg', this.list)
           // Just to simulate the time of the request
           setTimeout(() => {
             this.listLoading = false
+            this.tempLoading = false
           }, 0.5 * 1000)
         })
       },
+      setTemp(item){
+        this.temp = item
+        this.tempLoading = true
+        setTimeout(() => {
+          this.tempLoading = false
+        }, 0.5 * 1000)
+      }
     }
   }
 </script>

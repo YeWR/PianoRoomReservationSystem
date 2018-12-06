@@ -65,7 +65,7 @@ service.interceptors.response.use(
   error => {
     let msg = error.message
     if (msg.indexOf('401')){
-      msg = '账号密码错误或无权限访问'
+      msg = '账号密码错误或当前登录已失效'
     }
     else if (msg.indexOf('404')){
       msg = '网络错误或服务器异常'
@@ -75,7 +75,7 @@ service.interceptors.response.use(
     }
     Message({
       message: msg,
-      type: 'error',
+      type: 'warning',
       duration: 5 * 1000
     })
     return Promise.reject(error)

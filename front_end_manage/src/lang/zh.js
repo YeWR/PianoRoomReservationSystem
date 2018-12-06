@@ -66,7 +66,8 @@ export default {
 
     itemManagement: '订单管理',
     itemList: '订单列表',
-    itemScan: '订单速览',
+    itemScan: '今日订单速览',
+    itemDetail: '订单信息',
   },
   item: {
     idNumber: '手机号/证件号',
