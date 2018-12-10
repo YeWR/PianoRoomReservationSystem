@@ -1127,6 +1127,7 @@ exports.GetPianoRoomAll = GetPianoRoomAll;  // 获取所有琴房信息
 exports.SearchPiano = SearchPiano;
 exports.InsertPiano = InsertPiano;          // 新增琴房
 exports.UpdatePianoInfo = UpdatePianoInfo;
+exports.preparePianoForInsert = preparePianoForInsert;
 // 每日更新琴房信息
 
 // 注册
