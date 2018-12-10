@@ -51,7 +51,7 @@
 
       <el-table-column :label="$t('table.actions')" align="center" width="280" class-name="small-padding fixed-width">
         <template slot-scope="scope">
-          <el-button   style="width:100px;"   type="primary" @click="handleFilter">{{ $t('user.detail') }}
+          <el-button   style="width:100px;"   type="primary" @click="checkList(scope.row.telephone)">{{ $t('user.detail') }}
           </el-button>
           <el-button  style="width:100px;" type="danger"@click="toBlack(scope.row.userId)" >{{ $t('user.blackList') }}
           </el-button>
@@ -95,6 +95,7 @@
         list: null,
         total: 0,
         listLoading: true,
+        redirect: '/item/all',
 
         listQuery: {
           page: 1,
@@ -164,12 +165,18 @@
           }
         }))
       },
+
       toUserType(type) {
         return this.$t('user.type_' + type)
       },
+
       toBlack(id){
         joinToBlacklist(id)
         this.getList()
+      },
+      checkList(telephone){
+        this.$router.push({ path: this.redirect + '?telephone=' + telephone})
+
       }
     }
   }
