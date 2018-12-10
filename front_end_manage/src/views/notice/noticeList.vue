@@ -3,7 +3,7 @@
     <div class="filter-container">
       <el-input :placeholder="$t('table.title')" v-model="listQuery.title" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter"/>
       <el-input :placeholder="$t('table.author')" v-model="listQuery.author" style="width: 140px;" class="filter-item" @keyup.enter.native="handleFilter"/>
-      <el-select v-model="listQuery.sort" style="width: 140px" class="filter-item" @change="handleFilter">
+      <el-select v-model="listQuery.sort" style="width: 180px" class="filter-item" @change="handleFilter">
         <el-option v-for="item in sortOptions" :key="item.key" :label="item.label" :value="item.key"/>
       </el-select>
       <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">{{ $t('table.search') }}</el-button>
@@ -82,6 +82,10 @@
         <textarea placeholder="请输入内容" style="width: 450px; margin-top:10px; font-size:16px;font-family:'微软雅黑';" rows="10" v-model="temp.content"></textarea>
         </el-form-item>
       </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="newFormVisible = false">{{ $t('table.cancel') }}</el-button>
+        <el-button type="primary" @click="dialogStatus==='create'?createData():updateData()">{{ $t('table.confirm') }}</el-button>
+      </div>
     </el-dialog>
   </div>
 </template>
@@ -112,11 +116,11 @@ export default {
       listLoading: true,
       listQuery: {
         page: 1,  // 第几页
-        limit: 20,      // 一页的个数
+        limit: 10,      // 一页的个数
         title: '',
         author: '', // 没有则为空
-        sort: 'Date Descending', // 后端不用管这个 
-        dateSort: '-' // -表示减，表示加
+        sort: 'date', // 后端不用管这个 
+        dateSort: '+' // -表示减，+表示加
       },
       sortOptions: [{ label: 'Date Ascending', key: 'date' }, { label: 'Date Descending', key: '-date' }],
       temp: {
@@ -131,7 +135,8 @@ export default {
       newFormVisible: false, 
       dialogStatus: '',
       textMap: {
-        update: this.$t('detail'),
+        detail: 'Detail',
+        create: 'Create',
       },
       rules: {
         type: [{ required: true, message: 'type is required', trigger: 'change' }],
@@ -141,16 +146,19 @@ export default {
       downloadLoading: false
     }
   },
+  created() {
+    this.getList()
+  },
   methods: {
     getList() {
       this.listLoading = true;
       fetchList(this.listQuery).then(response => {
+        console.log(response.data)
         let tmp_items = response.data.items
-        console.log(response.data.items)
         this.total = response.data.total
-        console.log(response.data.total)
         let tmp = []
-        for(let i = 0; i<this.total; i++){
+        for(let i = 0; i<tmp_items.length; i++){
+          console.log(tmp_items[i].id)
           tmp.push({
             id:tmp_items[i].id,
             timestamp:new Date(Date.parse(tmp_items[i].date)),
@@ -160,13 +168,18 @@ export default {
           })
         }
         this.list = tmp
-        console.log(this.list)
         setTimeout(() => {
           this.listLoading = false
         }, 1.5 * 1000)
       })
     },
     handleFilter() {
+      if(this.listQuery.sort == 'date'){
+        this.listQuery.dateSort = '+'
+      }
+      else{
+        this.listQuery.dateSort = '-'
+      }
       this.listQuery.page = 1
       this.getList()
     },
@@ -198,31 +211,27 @@ export default {
         type: ''
       }
     },
-    handleUpdate(row) {
-      this.temp = Object.assign({}, row) // copy obj
-      this.temp.timestamp = new Date(this.temp.timestamp)
-      this.dialogStatus = 'update'
-      this.dialogFormVisible = true
+    handleCreate() {
+      this.resetTemp()
+      this.dialogStatus = 'create';
+      this.newFormVisible = true;
       this.$nextTick(() => {
         this.$refs['dataForm'].clearValidate()
       })
     },
-    updateData() {
-      this.$refs['dataForm'].validate((valid) => {
-        if (valid) {
-          const tempData = Object.assign({}, this.temp)
-          tempData.timestamp = +new Date(tempData.timestamp) // change Thu Nov 30 2017 16:41:05 GMT+0800 (CST) to 1512031311464
-          updateArticle(tempData).then(() => {
-            for (const v of this.list) {
-              if (v.id === this.temp.id) {
-                const index = this.list.indexOf(v)
-                this.list.splice(index, 1, this.temp)
-                break
-              }
+    createData() {
+        this.$confirm('此操作将发布此公告, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+            let data = {
+              title: this.temp.title,
+              time: this.temp.timestamp.getFullYear()+'-'+(this.temp.timestamp.getMonth()+1)+'-'+this.temp.timestamp.getDate()+' '+this.temp.timestamp.getHours()+':'+this.temp.timestamp.getMinutes()+':'+this.temp.timestamp.getSeconds(),
+              author: this.temp.author,
+              content: this.temp.content
             }
-            console.log(data)
             createNotice(data).then(response => {
-              console.log(response)
               if(response.status == 200){
                     this.$notify({
                       title: '成功',
@@ -257,10 +266,8 @@ export default {
       this.listLoading = true;
       this.dialogStatus = 'detail';
       fetchDetail(row.id).then(response => {
-        console.log(response.data)
         this.temp = Object.assign({}, row) // copy obj
         this.temp.content = response.data.content
-        console.log(this.temp.content)
         this.dialogFormVisible = true
         setTimeout(() => {
           this.listLoading = false
@@ -273,13 +280,11 @@ export default {
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-          console.log(row)
           this.listLoading = true;
           let data = {
             id: row.id
           }
           DeleteNotice(data).then(response => {
-            console.log(response.status);
             if(response.status == 200){
               this.$notify({
                 title: '成功',
@@ -290,7 +295,6 @@ export default {
               const index = this.list.indexOf(row);
               this.list.splice(index, 1);
               this.total = this.total -1;
-              console.log(this.list)
             }
             else{
               this.$notify({
