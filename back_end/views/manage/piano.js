@@ -77,7 +77,7 @@ const routers = router.get("/list", async (ctx, next) => {
             "teaValue": piano.piano_teavalue,
             "socValue": piano.piano_socvalue,
             "multiValue": piano.piano_multivalue,
-            "disabled": piano_rule,
+            "disabled": piano.piano_rule,
             "info":piano.piano_info
         };
         pianoList.push(temp);
