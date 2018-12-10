@@ -103,7 +103,11 @@ export default {
     status_0: '长期已使用',
 
     timeAsc: '时间顺序',
-    timeDes: '时间倒序'
+    timeDes: '时间倒序',
+
+    confirm: '确定',
+    warning: '警告',
+    cancel: '取消',
   },
   navbar: {
     logOut: '退出登录',

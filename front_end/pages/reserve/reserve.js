@@ -454,7 +454,7 @@ Page({
             const RectX = 0;
             const RectY = 0;
             const blockHeight = 5;
-            const blockWidth = 3;
+            const blockWidth = 3.2;
 
             let x1 = RectX + begIndex * blockWidth;
             let x2 = (endIndex - begIndex) * blockWidth;

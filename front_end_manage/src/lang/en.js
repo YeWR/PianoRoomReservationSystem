@@ -103,7 +103,11 @@ export default {
     status_0: 'long term item used',
 
     timeAsc: 'Time Ascending',
-    timeDes: 'Time Descending'
+    timeDes: 'Time Descending',
+
+    confirm: 'Confirm ',
+    warning: 'Warning',
+    cancel: 'Cancel',
   },
   navbar: {
     logOut: 'Log Out',

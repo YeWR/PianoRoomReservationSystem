@@ -68,7 +68,7 @@
       <el-table-column :label="$t('item.actions')" align="center" width="300px" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button type="primary" size="mini" @click="handleView(scope.row)">{{ $t('item.detail') }}</el-button>
-          <el-button type="danger" size="mini" @click="handleModifyStatus(scope.row,'deleted')">{{ $t('item.delete') }}
+          <el-button type="danger" size="mini" @click="handleDeleteItem(scope.row)">{{ $t('item.delete') }}
           </el-button>
         </template>
       </el-table-column>
@@ -222,14 +222,23 @@
         this.listQuery.page = 1
         this.getList()
       },
-      handleModifyStatus(row, status) {
-        deleteItem(row.itemId).then(response => {
-          this.$message({
-            message: this.$t('item.success'),
-            type: 'success'
-          })
+      handleDeleteItem(row) {
 
-          this.getList()
+        let that = this
+        that.$confirm(that.$t('item.confirm') + that.$t('item.delete') + '?', that.$t('item.warning'), {
+          confirmButtonText: that.$t('item.confirm'),
+          cancelButtonText: that.$t('item.cancel'),
+          type: 'warning'
+        }).then(() => {
+          deleteItem(row.itemId).then(response => {
+            that.$message({
+              message: that.$t('item.success'),
+              type: 'success'
+            })
+
+            that.getList()
+          })
+        }).catch(() => {
         })
         // row.status = status
       },
