@@ -17,11 +17,11 @@ let client = redis.createClient(config.redisPort,config.serverIp)
 
 let timeLength = 84;
 
-let ChangeSocietyInfo = async function(userUuid, userTele){
+let ChangeSocietyType = async function(userUuid, userType){
     let errorMsg = "";
     let test = function(){
         return new Promise(resolve =>{
-            db.where({soc_uuid: userUuid }).update('society_user', {soc_tele: userTele}, function (err) {
+            db.where({soc_uuid: userUuid }).update('society_user', {soc_type: userType}, function (err) {
                 if(err == null){
                     resolve(1);
                 }
@@ -110,6 +110,7 @@ let SearchSocietyUser = async function(count, offset, soc_tele, soc_realname, so
         });
     };
     let flag = await test();
+    let flagCount = await getUserCount();
     console.log(flag);
     if(flag == 0){
         return {"data":userInfo,
@@ -450,6 +451,53 @@ let GetPianoRoomAll = async function(){
                 "info":errorMsg};
     }
 }
+
+let SearchPiano = async function(count, offset, piano_room, piano_type){
+    let errorMsg = "";
+    let pianoInfo = null;
+    let pianoCount = 0;
+    let query = { piano_room: piano_room, piano_type: piano_type};
+    for(let q in query)
+    {
+        if(!query[q])
+        {
+            delete query[q];
+        }
+    }
+    let test = function(){
+        return new Promise(resolve =>{
+            db.where(query)
+                .limit(count,offset)
+                .get('piano', function(err, rows, fields) {
+                let _data = JSON.stringify(rows);
+                pianoInfo = JSON.parse(_data);
+                resolve(1);
+            });
+        });
+    };
+    let getPianoCount = function(){
+        return new Promise(resolve =>{
+            db.where(query)
+                .count('piano', function (err, res, fields) {
+                    pianoCount = res;
+                    resolve(1);
+                });
+        });
+    };
+    let flag = await test();
+    let flagCount = await getPianoCount();
+    console.log(flag);
+    if(flag == 0){
+        return {"data":pianoInfo,
+            "count": pianoCount,
+            "info":errorMsg};
+    }
+    if(flag == 1){
+        return {"data":pianoInfo,
+            "count": pianoCount,
+            "info":errorMsg};
+    }
+};
 
 let getDateNum = function(itemDate){
     let item_date = new Date(itemDate);
@@ -1076,6 +1124,7 @@ exports.DeleteItem = DeleteItem;            // 删除订单-需要改写琴房�
 // 琴房
 exports.GetPianoRoomInfo = GetPianoRoomInfo;// 获取单个琴房信息
 exports.GetPianoRoomAll = GetPianoRoomAll;  // 获取所有琴房信息
+exports.SearchPiano = SearchPiano;
 exports.InsertPiano = InsertPiano;          // 新增琴房
 exports.UpdatePianoInfo = UpdatePianoInfo;
 // 每日更新琴房信息
@@ -1092,7 +1141,7 @@ exports.SocietyLogin = SocietyLogin;        // 点击登录
 // 用户
 exports.GetSocietyUserInfo = GetSocietyUserInfo;  // 获取某个校外用户的信息
 exports.GetSocietyUuidByTele = GetSocietyUuidByTele; // 通过手机号获取uuid
-exports.ChangeSocietyInfo = ChangeSocietyInfo;      // 更新用户数据
+exports.ChangeSocietyType = ChangeSocietyType;      // 更新用户数据
 exports.SearchSocietyUser = SearchSocietyUser;
 
 // 公告

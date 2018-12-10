@@ -86,7 +86,7 @@ const routers = router.get("/list", async (ctx, next) => {
     }
     let userId = await dataBase.GetSocietyUuidByTele(ctx.query.idNumber);
     userId = userId.data;
-    let result = await dataBase.SearchItem(limit, (page-1)*limit, userId, query.room, query.itemType, query.status, query.timeSort, null);
+    let result = await dataBase.SearchItem(limit, (page-1)*limit, userId, query.room, query.userType, query.status, query.timeSort, null);
     let reservationList = [];
     let pianoInfo = await dataBase.GetPianoRoomAll();
     for(let p of result.data)

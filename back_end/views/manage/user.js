@@ -230,7 +230,6 @@ const routers = router.get("/list", async (ctx, next) => {
         let info = {
             "id": p.soc_realname,
             "telephone": p.soc_tele,
-            "IDnumber": "",
             "type": p.soc_type,
             "userId": p.soc_uuid
         };
@@ -243,11 +242,11 @@ const routers = router.get("/list", async (ctx, next) => {
     };
 }).post("/blacklist/set", async (ctx, next) => {
     let uuid = ctx.request.body.userId;
-    let result = await dataBase.UpdateItem(uuid);
+    let result = await dataBase.ChangeSocietyType(uuid, 0);
     ctx.response.body = result;
 }).post("/blacklist/remove", async (ctx, next) => {
     let uuid = ctx.request.body.userId;
-    let result = await dataBase.DeleteItem(uuid);
+    let result = await dataBase.ChangeSocietyType(uuid, 1);
     ctx.response.body = result;
 });
 
