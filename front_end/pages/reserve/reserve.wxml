@@ -92,14 +92,14 @@
                         </view>
 
                         <view class="progress-days">
-                            <!--<view class="progress">-->
-                                <!--<canvas canvas-id="{{piano.pianoId}}" width="100rpx" height="20rpx"></canvas>-->
-                            <!--</view>-->
                             <view class="progress">
-                                <progress percent="{{10 * (id + 1)}}" stroke-width="5"
-                                          activeColor="rgba(187, 187, 187, 1)"
-                                          backgroundColor="rgb(187, 187, 187) 100%" active="true"/>
+                                <canvas canvas-id="{{'piano' + piano.pianoId}}"></canvas>
                             </view>
+                            <!--<view class="progress">-->
+                                <!--<progress percent="{{10 * (id + 1)}}" stroke-width="5"-->
+                                          <!--activeColor="rgba(187, 187, 187, 1)"-->
+                                          <!--backgroundColor="rgb(187, 187, 187) 100%" active="true"/>-->
+                            <!--</view>-->
                             <view class="progress-time">
                                 <text class="progress-time-each">08</text>
                                 <text class="progress-time-each">10</text>

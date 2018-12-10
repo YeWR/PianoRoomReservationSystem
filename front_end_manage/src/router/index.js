@@ -174,6 +174,7 @@ export const asyncRouterMap = [
   {
     path: '/notice',
     component: Layout,
+    alwaysShow: true,
     redirect: '/notice/list',
     name: 'notice',
     meta: {
