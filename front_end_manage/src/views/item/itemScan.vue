@@ -1,35 +1,39 @@
 <template>
-  <div class="components-container board">
-    <div v-loading="listLoading" class="kanban todo">
-      <div class="board-column">
-        <div class="board-column-header">
-          {{$t('route.itemScan')}}
+  <div>
+    <div>
+      <el-row :gutter="40" v-loading="listLoading" class="panel-group" :list="list">
+        <div v-for="item in list" :key="item.id" class="board-item" v-on:click="setTemp(item)">
+          <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
+            <div class="card-panel">
+              <div class="card-panel-icon-wrapper icon-people">
+                <svg-icon icon-class="peoples" class-name="card-panel-icon"/>
+              </div>
+              <div class="card-panel-description">
+                <div class="card-panel-text">{{$t('item.time')}}: {{ item.time }}</div>
+                <div class="card-panel-num">{{$t('item.room')}}: {{ item.room }}</div>
+              </div>
+            </div>
+          </el-col>
         </div>
-        <div
-          :list="list"
-          class="board-column-content">
-          <div v-for="item in list" :key="item.id" class="board-item" v-on:click="setTemp(item)">
-            {{$t('item.idNumber')}}: {{ item.idNumber }} | {{$t('item.time')}}: {{ item.time }} |
-            {{$t('item.room')}}: {{
-            item.room }}
-          </div>
-        </div>
-      </div>
+      </el-row>
     </div>
-    <Card v-loading="tempLoading" :key="2" :temp="temp" :headerText="itemDetail" :options="options"
-          class="kanban todo"/>
+    <div style="top: 30px; right: 30px">
+      <el-col :xs="{span: 24}" :sm="{span: 12}" :md="{span: 12}" :lg="{span: 6}" :xl="{span: 6}"
+              style="margin-bottom:30px; ">
+        <BoxCard v-loading="tempLoading" :key="2" :temp="temp" :headerText="itemDetail" :options="options"
+                 class="kanban todo"/>
+      </el-col>
+    </div>
   </div>
 </template>
 <script>
-  import CardSlot from './components/CardSlot'
-  import Card from './components/Card'
+  import BoxCard from './components/BoxCard'
   import {getItemScan} from '@/api/item'
 
   export default {
     name: 'ItemScan',
     components: {
-      CardSlot,
-      Card
+      BoxCard,
     },
     data() {
       return {
@@ -73,7 +77,7 @@
           }, 0.5 * 1000)
         })
       },
-      setTemp(item){
+      setTemp(item) {
         this.temp = item
         this.tempLoading = true
         setTimeout(() => {
@@ -107,6 +111,79 @@
     &.done {
       .board-column-header {
         background: #2ac06d;
+      }
+    }
+  }
+
+  .panel-group {
+    margin-top: 18px;
+    .card-panel-col {
+      margin-bottom: 32px;
+    }
+    .card-panel {
+      height: 108px;
+      cursor: pointer;
+      font-size: 12px;
+      position: relative;
+      overflow: hidden;
+      color: #666;
+      background: #fff;
+      box-shadow: 4px 4px 40px rgba(0, 0, 0, .05);
+      border-color: rgba(0, 0, 0, .05);
+      &:hover {
+        .card-panel-icon-wrapper {
+          color: #fff;
+        }
+        .icon-people {
+          background: #40c9c6;
+        }
+        .icon-message {
+          background: #36a3f7;
+        }
+        .icon-money {
+          background: #f4516c;
+        }
+        .icon-shopping {
+          background: #34bfa3
+        }
+      }
+      .icon-people {
+        color: #40c9c6;
+      }
+      .icon-message {
+        color: #36a3f7;
+      }
+      .icon-money {
+        color: #f4516c;
+      }
+      .icon-shopping {
+        color: #34bfa3
+      }
+      .card-panel-icon-wrapper {
+        float: left;
+        margin: 14px 0 0 14px;
+        padding: 16px;
+        transition: all 0.38s ease-out;
+        border-radius: 6px;
+      }
+      .card-panel-icon {
+        float: left;
+        font-size: 48px;
+      }
+      .card-panel-description {
+        float: right;
+        font-weight: bold;
+        margin: 26px;
+        margin-left: 0px;
+        .card-panel-text {
+          line-height: 18px;
+          color: rgba(0, 0, 0, 0.45);
+          font-size: 16px;
+          margin-bottom: 12px;
+        }
+        .card-panel-num {
+          font-size: 20px;
+        }
       }
     }
   }
