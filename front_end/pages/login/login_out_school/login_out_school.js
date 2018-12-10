@@ -109,7 +109,7 @@ Page({
         // register POST
         let post = function () {
             wx.request({
-                url: "https://958107.iterator-traits.com/login/outSchool",
+                url: "https://958107.iterator-traits.com/user/login/outSchool",
                 data: {
                     phoneNumber: that.data._phoneNumber,
                     validateCode: that.data._validateCode

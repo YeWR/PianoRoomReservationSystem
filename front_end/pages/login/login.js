@@ -72,9 +72,9 @@ Page({
         if (cookie) {
             let info = true;
             wx.request({
-                url: "https://958107.iterator-traits.com/login/cookie",
+                url: "https://958107.iterator-traits.com/user/cookie",
                 data: {},
-                method: "POST",
+                method: "GET",
                 header: {
                     "Content-Type": "application/x-www-form-urlencoded",
                     cookie: cookie

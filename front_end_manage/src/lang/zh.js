@@ -66,8 +66,44 @@ export default {
 
     itemManagement: '订单管理',
     itemList: '订单列表',
-    ordinaryItem: '普通预约订单',
-    LongtermItem: '长期预约订单'
+    itemScan: '今日订单速览',
+    itemDetail: '订单信息',
+  },
+  item: {
+    idNumber: '手机号/证件号',
+    room: '琴房号',
+    userType: '用户类型',
+    pianoType: '钢琴类型',
+    itemType: '预约类型',
+    time: '预约时间',
+    status: '预约状态',
+    actions: '操作',
+    view: '查看预约信息',
+    delete: '删除',
+    itemId: '订单号',
+    price: '价格',
+
+    search: '搜索',
+    export: '导出为Excel',
+    detail: '查看',
+    success: '操作成功！',
+
+    item_: '所有类型',
+    item_0: '学生',
+    item_1: '教职工',
+    item_2: '校外人士',
+    item_3: '多人',
+
+    status_all: '所有类型',
+    status_3: '已退订',
+    status_4: '未使用',
+    status_5: '已使用',
+    status_2: '长期未缴费',
+    status_1: '长期已缴费',
+    status_0: '长期已使用',
+
+    timeAsc: '时间顺序',
+    timeDes: '时间倒序'
   },
   navbar: {
     logOut: '退出登录',

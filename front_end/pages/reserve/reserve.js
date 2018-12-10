@@ -440,8 +440,8 @@ Page({
 
         // get the piano list
         wx.request({
-            url: "https://958107.iterator-traits.com/reserve/all",
-            method: "POST",
+            url: "https://958107.iterator-traits.com/user/piano/all",
+            method: "GET",
             header: {
                 "Content-Type": "application/x-www-form-urlencoded"
             },

@@ -145,7 +145,8 @@ export const asyncRouterMap = [
   {
     path: '/item',
     component: Layout,
-    redirect: '/item/all',
+    alwaysShow: true,
+    redirect: '/item/scan',
     name: 'Item',
     meta: {
       title: 'itemManagement',
@@ -153,23 +154,23 @@ export const asyncRouterMap = [
     },
     children: [
       {
+        path: 'scan',
+        component: () => import('@/views/item/itemScan'),
+        name: 'itemScan',
+        meta: { title: 'itemScan' }
+      },
+      {
         path: 'all',
         component: () => import('@/views/item/itemAll'),
         name: 'itemAll',
         meta: { title: 'itemList' }
-      },
-      {
-        path: 'ordinary',
-        component: () => import('@/views/item/itemOrdinary'),
-        name: 'itemOrdinary',
-        meta: { title: 'ordinaryItem' }
-      },
-      {
-        path: 'longterm',
-        component: () => import('@/views/item/itemLongterm'),
-        name: 'itemLongterm',
-        meta: { title: 'LongtermItem' }
       }
+      // {
+      //   path: 'longterm',
+      //   component: () => import('@/views/item/itemLongterm'),
+      //   name: 'itemLongterm',
+      //   meta: { title: 'LongtermItem' }
+      // }
     ]
   },
   {

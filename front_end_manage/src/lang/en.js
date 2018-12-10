@@ -66,8 +66,44 @@ export default {
 
     itemManagement: 'Item Management',
     itemList: 'Item List',
-    ordinaryItem: 'Item of Ordinary User',
-    LongtermItem: 'Item of Long Term'
+    itemScan: 'Item Scan Today',
+    itemDetail: 'Item Detail',
+  },
+  item: {
+    idNumber: 'User Id Number',
+    room: 'Romm Id',
+    userType: 'User Type',
+    pianoType: 'Piano Type',
+    itemType: 'Item Type',
+    time: 'Date Time',
+    status: 'Item Status',
+    actions: 'Item Actions',
+    view: 'View',
+    delete: 'Delete',
+    itemId: 'Item Id',
+    price: 'Price',
+
+    search: 'Search',
+    export: 'Export Excel',
+    detail: 'Detail',
+    success: 'success!',
+
+    item_: 'all',
+    item_0: 'student',
+    item_1: 'teacher',
+    item_2: 'non-school person',
+    item_3: 'multi users',
+
+    status_all: 'all',
+    status_3: 'refunded',
+    status_4: 'not used',
+    status_5: 'used already',
+    status_2: 'long term item without paid',
+    status_1: 'long term item with paid',
+    status_0: 'long term item used',
+
+    timeAsc: 'Time Ascending',
+    timeDes: 'Time Descending'
   },
   navbar: {
     logOut: 'Log Out',
