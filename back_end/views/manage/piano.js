@@ -40,7 +40,7 @@ const routers = router.get("/list", async (ctx, next) => {
     {
         limit = parseInt(query.limit);
     }
-    let result = await dataBase.SearchPiano(limit, (page-1)*limit, query.room, query.roomType);
+    let result = await dataBase.SearchPiano(limit, (page-1)*limit, query.room, query.roomType, null);
     let pianoList = [];
     for(let piano of result.data)
     {
@@ -62,9 +62,31 @@ const routers = router.get("/list", async (ctx, next) => {
         "items": pianoList,
         "total": result.count
     }
-}).get("/deatil", async (ctx, next) => {
-    let query = ctx.query.id;
+}).get("/detail", async (ctx, next) => {
+    let id = ctx.query.id;
+    let result = await dataBase.SearchPiano(1, 0, null, null, id);
+    let pianoList = [];
+    for(let piano of result.data)
+    {
+        let temp = {
+            "id": piano.piano_id,
+            "room": piano.piano_room,
+            "type": piano.piano_type,
+            "status": piano.piano_status,
+            "stuValue": piano.piano_stuvalue,
+            "teaValue": piano.piano_teavalue,
+            "socValue": piano.piano_socvalue,
+            "multiValue": piano.piano_multivalue,
+            "disabled": piano_rule,
+            "info":piano.piano_info
+        };
+        pianoList.push(temp);
+    }
     ctx.response.status = 200;
+    ctx.response.body = {
+        "items": pianoList,
+        "total": result.count
+    }
 }).post("/update", async (ctx, next) => {
     let id = ctx.request.body.id;
     let result = await dataBase.DeleteNotice(id);

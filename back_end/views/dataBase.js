@@ -452,11 +452,11 @@ let GetPianoRoomAll = async function(){
     }
 }
 
-let SearchPiano = async function(count, offset, piano_room, piano_type){
+let SearchPiano = async function(count, offset, piano_room, piano_type, piano_id){
     let errorMsg = "";
     let pianoInfo = null;
     let pianoCount = 0;
-    let query = { piano_room: piano_room, piano_type: piano_type};
+    let query = { piano_room: piano_room, piano_type: piano_type, piano_id: piano_id};
     for(let q in query)
     {
         if(!query[q])
