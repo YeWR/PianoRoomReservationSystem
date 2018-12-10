@@ -62,7 +62,7 @@ const routers = router.get("/list", async (ctx, next) => {
         "limit": "每页最多个数",
         "idNumber": "手机号/证号",
         "room": "琴房号",
-        "userType": "单人/多人",
+        "itemType": "单人/多人",
         "status": "订单状态"
     "timeSort": "+代表顺序,-代表逆序"
     "idNumber": "手机号/证号",
@@ -86,7 +86,7 @@ const routers = router.get("/list", async (ctx, next) => {
     }
     let userId = await dataBase.GetSocietyUuidByTele(ctx.query.idNumber);
     userId = userId.data;
-    let result = await dataBase.SearchItem(limit, (page-1)*limit, userId, query.room, query.userType, query.status, query.timeSort, null);
+    let result = await dataBase.SearchItem(limit, (page-1)*limit, userId, query.room, query.itemType, query.status, query.timeSort, null);
     let reservationList = [];
     let pianoInfo = await dataBase.GetPianoRoomAll();
     for(let p of result.data)
