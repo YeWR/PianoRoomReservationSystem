@@ -17,17 +17,19 @@ export function fetchUserList(query) {
 // }
 //
 export function joinToBlacklist(id) {
+  const data = {'userId': id}
   return request({
-    url: '/blacklist/set',
+    url: 'manager/user/blacklist/set',
     method: 'post',
-    id
+    data
   })
 }
 export function outOfBlacklist(id) {
+  const data = {'userId': id}
   return request({
-    url: '/blacklist/delete',
+    url: 'manager/user/blacklist/remove',
     method: 'post',
-    id
+    data
   })
 }
 
