@@ -28,7 +28,9 @@ Page({
         _lastMinute: util.ENDMINUTE,
 
         _cannotPrevious: true,
-        _cannotNext: false
+        _cannotNext: false,
+
+        _canvasId: "timeTabelBar"
     },
 
     /*
@@ -241,6 +243,8 @@ Page({
         that.setData({
             _pianoAvailable: pianoAvailable,
             _pianoIsAvailable: pianoIsAvailable
+        }, function () {
+            that.drawTimeTable(that, pianoAvailable);
         });
 
         console.log("aval: ", that.data._pianoAvailable);
@@ -366,7 +370,7 @@ Page({
      * redirect to login
      * this is a bug in wechat, so we have to fix it.
      */
-    reLogin: function(){
+    reLogin: function () {
         wx.redirectTo({
             url: "../login/login"
         });
@@ -377,8 +381,18 @@ Page({
      */
     onLoad: function (options) {
         let user = app.globalData._username;
-        if(!user){
+        if (!user) {
             this.reLogin();
+        }
+    },
+
+    /*
+     * draw time table progress bar
+     */
+    drawTimeTable: function (that, pianoList) {
+        for (let piano of pianoList) {
+            const ctx = wx.createCanvasContext(piano.pianoId, that);
+
         }
     },
 
