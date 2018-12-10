@@ -102,7 +102,8 @@ export default {
   filters: {
     statusFilter(status) {
       const statusMap = {
-        deleted: 'danger'
+        close: 'danger',
+        edit: 'info'
       }
       return statusMap[status]
     },
@@ -119,7 +120,7 @@ export default {
         limit: 20,      // 一页的个数
         title: '',
         author: '', // 没有则为空
-        sort: 'Date Descending', // 后端不用管这个 
+        sort: 'Date Descending', // 后端不用管这个
         dateSort: '-' // -表示减，表示加
       },
       sortOptions: [{ label: 'Date Ascending', key: 'date' }, { label: 'Date Descending', key: '-date' }],
