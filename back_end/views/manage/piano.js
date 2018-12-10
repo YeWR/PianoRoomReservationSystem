@@ -69,9 +69,9 @@ const routers = router.get("/list", async (ctx, next) => {
     for(let piano of result.data)
     {
         let ruleList = [];
-        for(let i = 0; i< piano.piano_rule.length;i++)
+        for(let i = 0; i< piano.piano_rule.data.length;i++)
         {
-            ruleList.push(piano.piano_rule[i] - '0');
+            ruleList.push(piano.piano_rule.data[i] - 48);
         }
         let temp = {
             "id": piano.piano_id,

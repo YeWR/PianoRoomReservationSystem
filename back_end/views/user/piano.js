@@ -61,14 +61,9 @@ const routers = router.get("/all", async (ctx, next) => {
             "society": result.data.piano_socvalue,
             "multi": result.data.piano_multivalue
         };
-        let timeList = [];
-        for(let i = 0; i<result.data.piano_list.length;i++)
-        {
-            timeList.push(result.data.piano_list[i] - '0');
-        }
         ctx.response.body = {
             "success": true,
-            "timeTable": timeList,
+            "timeTable": result.data.piano_list,
             "pianoPrices": price,
             "pianoInfo": result.data.piano_info
         };
