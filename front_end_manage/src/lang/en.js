@@ -168,7 +168,18 @@ export default {
     delete: 'Delete',
     cancel: 'Cancel',
     confirm: 'Confirm',
-    content: 'Content'
+    content: 'Content',
+    room:'Room',
+    roomType:'Room Type',
+    status:'Status',
+    stuvalue:'student',
+    teavalue:'teacher',
+    socvalue:'society',
+    multivalue:'multi-member',
+    open: 'Open',
+    close: 'Close',
+    info:'Info',
+    value: 'Value'
   },
   errorLog: {
     tips: 'Please click the bug icon in the upper right corner',

@@ -4,7 +4,7 @@ export function fetchList(query) {
   return request({
     url: '/manager/room/list',
     method: 'get',
-    query
+    params: { query }
   })
 }
 

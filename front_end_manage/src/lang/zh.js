@@ -162,7 +162,7 @@ export default {
     date: '时间',
     author: '作者',
     readings: '阅读数',
-    status: '状态',
+    status: '状  态',
     actions: '操作',
     edit: '编辑',
     publish: '发布',
@@ -170,7 +170,17 @@ export default {
     delete: '删除',
     cancel: '取 消',
     confirm: '确 定',
-    content:'详 情'
+    content:'详 情',
+    room:'房  间',
+    roomType:'琴房类型',
+    stuvalue:'学生价格',
+    teavalue:'教师价格',
+    socvalue:'校外价格',
+    multivalue:'多人价格',
+    open: '开放',
+    close: '关闭',
+    info: '简  介',
+    value: '价  格'
   },
   errorLog: {
     tips: '请点击右上角bug小图标',

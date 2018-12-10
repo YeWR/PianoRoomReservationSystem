@@ -1,11 +1,8 @@
 <template>
   <div class="app-container">
     <div class="filter-container">
-      <el-input :placeholder="$t('table.title')" v-model="listQuery.title" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter"/>
-      <el-input :placeholder="$t('table.author')" v-model="listQuery.author" style="width: 140px;" class="filter-item" @keyup.enter.native="handleFilter"/>
-      <el-select v-model="listQuery.sort" style="width: 140px" class="filter-item" @change="handleFilter">
-        <el-option v-for="item in sortOptions" :key="item.key" :label="item.label" :value="item.key"/>
-      </el-select>
+      <el-input :placeholder="$t('table.room')" v-model="listQuery.room" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter"/>
+      <el-input :placeholder="$t('table.roomType')" v-model="listQuery.roomType" style="width: 140px;" class="filter-item" @keyup.enter.native="handleFilter"/>
       <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">{{ $t('table.search') }}</el-button>
       <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="handleCreate">{{ $t('table.add') }}</el-button>
       <el-button v-waves :loading="downloadLoading" class="filter-item" type="primary" icon="el-icon-download" @click="handleDownload">{{ $t('table.export') }}</el-button>
@@ -20,29 +17,52 @@
       highlight-current-row
       style="width: 100%;"
       @sort-change="sortChange">
-      <el-table-column :label="$t('table.id')" align="center" width="65">
+      <el-table-column :label="$t('table.id')" align="center" width="70">
         <template slot-scope="scope">
           <span>{{ scope.row.id }}</span>
         </template>
       </el-table-column>
-      <el-table-column :label="$t('table.date')" prop="date" sortable="custom" width="150px" align="center">
+      <el-table-column :label="$t('table.room')" prop="date" width="150px" align="center">
         <template slot-scope="scope">
-          <span>{{ scope.row.timestamp | parseTime('{y}-{m}-{d} {h}:{i}') }}</span>
+          <span class="link-type" @click="handleDetail(scope.row)">{{ scope.row.room }}</span>
         </template>
       </el-table-column>
-      <el-table-column :label="$t('table.title')" min-width="150px">
+      <el-table-column :label="$t('table.type')" min-width="100px">
         <template slot-scope="scope">
-          <span class="link-type" @click="handleDetail(scope.row)">{{ scope.row.title }}</span>
+          <span>{{ scope.row.type }}</span>
         </template>
       </el-table-column>
-      <el-table-column :label="$t('table.author')" width="110px" align="center">
+      <el-table-column :label="$t('table.status')" width="150px" align="center">
         <template slot-scope="scope">
-          <span>{{ scope.row.author }}</span>
+          <el-tag>{{ scope.row.status }}</el-tag>
+        </template>
+      </el-table-column>
+      <el-table-column :label="$t('table.stuvalue')" width="100px" align="center">
+        <template slot-scope="scope">
+          <span>{{ scope.row.stuValue }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column :label="$t('table.teavalue')" width="100px" align="center">
+        <template slot-scope="scope">
+          <span>{{ scope.row.teaValue }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column :label="$t('table.socvalue')" width="100px" align="center">
+        <template slot-scope="scope">
+          <span>{{ scope.row.socValue }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column :label="$t('table.multivalue')" width="100px" align="center">
+        <template slot-scope="scope">
+          <span>{{ scope.row.multiValue }}</span>
         </template>
       </el-table-column>
       <el-table-column :label="$t('table.actions')" align="center" width="230" class-name="small-padding fixed-width">
         <template slot-scope="scope">
-          <el-button v-if="scope.row.status!='deleted'" size="mini" type="danger" @click="handleDelete(scope.row)">{{ $t('table.delete') }}
+          <el-button type="primary" size="mini" @click="handleUpdate(scope.row)">{{ $t('table.edit') }}</el-button>
+          <el-button v-if="scope.row.status!='开放中'" size="mini" type="success">{{ $t('table.open') }}
+          </el-button>
+          <el-button v-if="scope.row.status!='已关闭'" size="mini" type="danger">{{ $t('table.close') }}
           </el-button>
         </template>
       </el-table-column>
@@ -52,17 +72,17 @@
 
     <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
       <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="70px" style="width: 450px; margin-left:50px;">
-        <el-form-item :label="$t('table.title')" prop="title">
-          <el-input v-model="temp.title" disabled = "disabled"/>
+        <el-form-item :label="$t('table.room')" prop="room">
+          <el-tag>{{temp.room}} --- {{temp.type}}</el-tag>
         </el-form-item>
-        <el-form-item :label="$t('table.author')" prop="author">
-          <el-input v-model="temp.author" disabled = "disabled"/>
+        <el-form-item :label="$t('table.status')" prop="status">
+          <el-tag>{{temp.status}}</el-tag>
         </el-form-item>
-        <el-form-item :label="$t('table.date')" prop="timestamp">
-          <el-input v-model="temp.timestamp.getFullYear()+'-'+(temp.timestamp.getMonth()+1)+'-'+temp.timestamp.getDate()" disabled = "disabled"/>
+        <el-form-item :label="$t('table.info')" prop="info">
+          <el-input v-model="temp.info" disabled = "disabled"/>
         </el-form-item>
-        <el-form-item :label="$t('table.content')">
-        <textarea style="width: 450px; margin-top:10px; font-size:16px;font-family:'微软雅黑';" rows="10" v-model="temp.content" disabled = "disabled"></textarea>
+        <el-form-item :label="$t('table.value')" prop="value">
+          <el-tag>学生：{{ temp.stuValue }} 教师：{{ temp.teaValue }} 校外：{{ temp.socValue }} 多人：{{ temp.multiValue }}</el-tag>
         </el-form-item>
       </el-form>
     </el-dialog>
@@ -74,9 +94,6 @@
         </el-form-item>
         <el-form-item :label="$t('table.author')" prop="author">
           <el-input v-model="temp.author"/>
-        </el-form-item>
-        <el-form-item :label="$t('table.date')" prop="timestamp">
-          <el-input v-model="temp.timestamp.getFullYear()+'-'+(temp.timestamp.getMonth()+1)+'-'+temp.timestamp.getDate()"/>
         </el-form-item>
         <el-form-item :label="$t('table.content')">
         <textarea placeholder="请输入内容" style="width: 450px; margin-top:10px; font-size:16px;font-family:'微软雅黑';" rows="10" v-model="temp.content"></textarea>
@@ -108,7 +125,6 @@ export default {
       return statusMap[status]
     },
   },
-  // to do sort & query
   data() {
     return {
       tableKey: 0,
@@ -118,19 +134,20 @@ export default {
       listQuery: {
         page: 1,  // 第几页
         limit: 20,      // 一页的个数
-        title: '',
-        author: '', // 没有则为空
-        sort: 'Date Descending', // 后端不用管这个
-        dateSort: '-' // -表示减，表示加
+        room: '',
+        roomType: '' // 没有则为空
       },
-      sortOptions: [{ label: 'Date Ascending', key: 'date' }, { label: 'Date Descending', key: '-date' }],
       temp: {
-        id: '',
-        timestamp: new Date(),
-        title: '',
-        type: '1',
-        author:'',
-        content: ''
+        id: '',         // 琴房id
+        room: '',       // 房间号
+        type: '',       // 琴房类型
+        status: '',       // 是否显示
+        stuValue: 10,    // 学生价格
+        teaValue: 15,     // 老师价格
+        socValue: 20,     // 社会人价格
+        multiValue:20,    // 多人价格
+        disabled:undefined,  // 不可以使用的时间，在detail中有
+        info:''
       },
       dialogFormVisible: false,
       newFormVisible: false, 
@@ -161,13 +178,25 @@ export default {
         console.log(response.data.total)
         let tmp = []
         for(let i = 0; i<this.total; i++){
-          tmp.push({
+          let data = {
             id:tmp_items[i].id,
-            timestamp:new Date(Date.parse(tmp_items[i].date)),
-            author:tmp_items[i].author,
-            title:tmp_items[i].title,
-            content:undefined
-          })
+            room: tmp_items[i].room,
+            status:tmp_items[i].status,
+            type:tmp_items[i].type,
+            stuValue:tmp_items[i].stuValue,
+            teaValue:tmp_items[i].teaValue,
+            socValue:tmp_items[i].socValue,
+            multiValue:tmp_items[i].multiValue,
+            disabled:undefined,
+            info: ''
+          }
+          if(data.status == '1'){
+            data.status = '开放中'
+          }
+          else{
+            data.status = '已关闭'
+          }
+          tmp.push(data)
         }
         this.list = tmp
         console.log(this.list)
@@ -224,7 +253,6 @@ export default {
         }).then(() => {
             let data = {
               title: this.temp.title,
-              time: this.temp.timestamp.getFullYear()+'-'+(this.temp.timestamp.getMonth()+1)+'-'+this.temp.timestamp.getDate()+' '+this.temp.timestamp.getHours()+':'+this.temp.timestamp.getMinutes()+':'+this.temp.timestamp.getSeconds(),
               author: this.temp.author,
               content: this.temp.content
             }
@@ -274,6 +302,9 @@ export default {
           this.listLoading = false
         }, 1.5 * 1000)
       })
+    },
+    handleEdit(row){
+
     },
     handleDelete(row){
         this.$confirm('此操作将删除此公告, 是否继续?', '提示', {
