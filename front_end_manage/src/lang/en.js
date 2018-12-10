@@ -68,6 +68,10 @@ export default {
     itemList: 'Item List',
     itemScan: 'Item Scan Today',
     itemDetail: 'Item Detail',
+
+    userManagement: 'User Management',
+    userList: 'User List',
+    blackList: 'Black List'
   },
   item: {
     idNumber: 'User Id Number',
@@ -169,6 +173,20 @@ export default {
     cancel: 'Cancel',
     confirm: 'Confirm'
   },
+
+  user:{
+    name: 'Userame',
+    telephone: 'Phone Number',
+    IDnumber: 'ID Number',
+    type: 'User Type',
+    detail: 'List Details',
+    blackList: 'Black List',
+    blackListOut: 'Move Out',
+    type_: 'All',
+    type_0: 'In School',
+    type_1: 'Out Of School'
+  },
+
   errorLog: {
     tips: 'Please click the bug icon in the upper right corner',
     description: 'Now the management system are basically the form of the spa, it enhances the user experience, but it also increases the possibility of page problems, a small negligence may lead to the entire page deadlock. Fortunately Vue provides a way to catch handling exceptions, where you can handle errors or report exceptions.',

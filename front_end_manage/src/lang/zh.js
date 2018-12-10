@@ -68,6 +68,10 @@ export default {
     itemList: '订单列表',
     itemScan: '今日订单速览',
     itemDetail: '订单信息',
+
+    userManagement: '用户管理',
+    userList: '用户列表',
+    blackList: '黑名单'
   },
   item: {
     idNumber: '手机号/证件号',
@@ -168,6 +172,17 @@ export default {
     delete: '删除',
     cancel: '取 消',
     confirm: '确 定'
+  },
+  user:{
+    name: '姓名',
+    telephone: '手机号码',
+    IDnumber: '证件号码',
+    type: '用户类型',
+    detail: '订单详情',
+    blackList: '加入黑名单',
+    blackListOut: '移出黑名单',
+    type_0: '校内用户',
+    type_1: '校外用户'
   },
   errorLog: {
     tips: '请点击右上角bug小图标',

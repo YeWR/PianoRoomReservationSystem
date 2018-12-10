@@ -375,6 +375,30 @@ export const asyncRouterMap = [
   //     }
   //   ]
   // },
+  {
+    path: '/user',
+    component: Layout,
+    redirect: '/user/all',
+    name: 'User',
+    meta: {
+      title: 'userManagement',
+      icon: 'people'
+    },
+    children: [
+      {
+        path: 'all',
+        component: () => import('@/views/user/userAll'),
+        name: 'userAll',
+        meta: { title: 'userList' }
+      },
+      {
+        path: 'black',
+        component: () => import('@/views/user/blackLIST'),
+        name: 'blackLIST',
+        meta: { title: 'blackList' }
+      },
+    ]
+  },
 
   { path: '*', redirect: '/404', hidden: true }
 ]
