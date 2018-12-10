@@ -219,7 +219,7 @@ const routers = router.get("/list", async (ctx, next) => {
     let query = ctx.query;
     let page = query.page;
     let limit = parseInt(query.limit);
-    if(query.IDnumber.length > 10)
+    if(query.IDnumber && query.IDnumber.length > 10)
     {
         query.IDnumber = md5(query.IDnumber);
     }
