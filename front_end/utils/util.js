@@ -544,7 +544,7 @@ const setTimeTemplate = (hours, minutes, currentHours, currentMinute, lastHour, 
 const getValidateCode = (phoneNumber, state) => {
     let post = function () {
         wx.request({
-            url: "https://958107.iterator-traits.com/validate",
+            url: "https://958107.iterator-traits.com/user/code",
             data: {
                 phoneNumber: phoneNumber,
                 state: state

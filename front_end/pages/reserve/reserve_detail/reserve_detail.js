@@ -318,12 +318,12 @@ Page({
         let that = this;
 
         wx.request({
-            url: "https://958107.iterator-traits.com/reserve/detail",
+            url: "https://958107.iterator-traits.com/user/piano/detail",
             data: {
                 pianoId: that.data._pianoId,
                 date: that.data._date
             },
-            method: "POST",
+            method: "GET",
             header: {
                 "Content-Type": "application/x-www-form-urlencoded"
             },
