@@ -68,6 +68,11 @@ const routers = router.get("/list", async (ctx, next) => {
     let pianoList = [];
     for(let piano of result.data)
     {
+        let ruleList = [];
+        for(let i = 0; i< piano.piano_rule.length;i++)
+        {
+            ruleList.push(piano.piano_rule[i] - '0');
+        }
         let temp = {
             "id": piano.piano_id,
             "room": piano.piano_room,
@@ -77,7 +82,7 @@ const routers = router.get("/list", async (ctx, next) => {
             "teaValue": piano.piano_teavalue,
             "socValue": piano.piano_socvalue,
             "multiValue": piano.piano_multivalue,
-            "disabled": piano.piano_rule,
+            "disabled": ruleList,
             "info":piano.piano_info
         };
         pianoList.push(temp);
