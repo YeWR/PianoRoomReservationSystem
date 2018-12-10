@@ -176,7 +176,7 @@ export const asyncRouterMap = [
     path: '/notice',
     component: Layout,
     redirect: '/notice/list',
-    name: 'Notice',
+    name: 'notice',
     meta: {
       title: 'Notice',
       icon: 'table'
@@ -187,6 +187,24 @@ export const asyncRouterMap = [
         component: () => import('@/views/notice/noticeList'),
         name: 'Notice',
         meta: { title: 'Notice' }
+      }
+    ]
+  },
+  {
+    path: '/room',
+    component: Layout,
+    redirect: '/room/list',
+    name: 'room',
+    meta: {
+      title: 'Room',
+      icon: 'table'
+    },
+    children: [
+      {
+        path: 'list',
+        component: () => import('@/views/room/roomList'),
+        name: 'Room',
+        meta: { title: 'Room' }
       }
     ]
   },

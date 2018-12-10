@@ -3,7 +3,7 @@
     <div class="filter-container">
       <el-input :placeholder="$t('table.title')" v-model="listQuery.title" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter"/>
       <el-input :placeholder="$t('table.author')" v-model="listQuery.author" style="width: 140px;" class="filter-item" @keyup.enter.native="handleFilter"/>
-      <el-select v-model="listQuery.sort" style="width: 180px" class="filter-item" @change="handleFilter">
+      <el-select v-model="listQuery.sort" style="width: 140px" class="filter-item" @change="handleFilter">
         <el-option v-for="item in sortOptions" :key="item.key" :label="item.label" :value="item.key"/>
       </el-select>
       <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">{{ $t('table.search') }}</el-button>
@@ -91,7 +91,7 @@
 </template>
 
 <script>
-import { fetchList, fetchPv, createNotice,fetchDetail,DeleteNotice} from '@/api/notice'
+import { fetchList, fetchPv, createRoom,fetchDetail,DeleteRoom} from '@/api/room'
 import waves from '@/directive/waves' // Waves directive
 import { parseTime } from '@/utils'
 import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
@@ -116,11 +116,11 @@ export default {
       listLoading: true,
       listQuery: {
         page: 1,  // 第几页
-        limit: 10,      // 一页的个数
+        limit: 20,      // 一页的个数
         title: '',
         author: '', // 没有则为空
-        sort: 'date', // 后端不用管这个 
-        dateSort: '+' // -表示减，+表示加
+        sort: 'Date Descending', // 后端不用管这个 
+        dateSort: '-' // -表示减，表示加
       },
       sortOptions: [{ label: 'Date Ascending', key: 'date' }, { label: 'Date Descending', key: '-date' }],
       temp: {
@@ -155,10 +155,11 @@ export default {
       fetchList(this.listQuery).then(response => {
         console.log(response.data)
         let tmp_items = response.data.items
+        console.log(response.data.items)
         this.total = response.data.total
+        console.log(response.data.total)
         let tmp = []
-        for(let i = 0; i<tmp_items.length; i++){
-          console.log(tmp_items[i].id)
+        for(let i = 0; i<this.total; i++){
           tmp.push({
             id:tmp_items[i].id,
             timestamp:new Date(Date.parse(tmp_items[i].date)),
@@ -168,18 +169,13 @@ export default {
           })
         }
         this.list = tmp
+        console.log(this.list)
         setTimeout(() => {
           this.listLoading = false
         }, 1.5 * 1000)
       })
     },
     handleFilter() {
-      if(this.listQuery.sort == 'date'){
-        this.listQuery.dateSort = '+'
-      }
-      else{
-        this.listQuery.dateSort = '-'
-      }
       this.listQuery.page = 1
       this.getList()
     },
@@ -231,7 +227,9 @@ export default {
               author: this.temp.author,
               content: this.temp.content
             }
-            createNotice(data).then(response => {
+            console.log(data)
+            createRoom(data).then(response => {
+              console.log(response)
               if(response.status == 200){
                     this.$notify({
                       title: '成功',
@@ -266,8 +264,10 @@ export default {
       this.listLoading = true;
       this.dialogStatus = 'detail';
       fetchDetail(row.id).then(response => {
+        console.log(response.data)
         this.temp = Object.assign({}, row) // copy obj
         this.temp.content = response.data.content
+        console.log(this.temp.content)
         this.dialogFormVisible = true
         setTimeout(() => {
           this.listLoading = false
@@ -280,11 +280,13 @@ export default {
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
+          console.log(row)
           this.listLoading = true;
           let data = {
             id: row.id
           }
-          DeleteNotice(data).then(response => {
+          DeleteRoom(data).then(response => {
+            console.log(response.status);
             if(response.status == 200){
               this.$notify({
                 title: '成功',
@@ -295,6 +297,7 @@ export default {
               const index = this.list.indexOf(row);
               this.list.splice(index, 1);
               this.total = this.total -1;
+              console.log(this.list)
             }
             else{
               this.$notify({
