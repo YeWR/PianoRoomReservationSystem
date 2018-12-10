@@ -211,7 +211,6 @@ const routers = router.post("/refundment", async (ctx, next) => {
     }
     console.log(ctx.response.body);
 }).post("/order", async (ctx, next) => {
-    //todo:一个用户不能同时使用多个琴房
     console.log(ctx.request.body);
     let number = ctx.request.body.number;
     let userId = await dataBase.GetSocietyUuidByTele(number);
