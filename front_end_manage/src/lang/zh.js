@@ -68,6 +68,8 @@ export default {
     itemList: '订单列表',
     itemScan: '今日订单速览',
     itemDetail: '订单信息',
+    Notice: '公告管理',
+    Room:'琴房管理',
   },
   item: {
     idNumber: '手机号/证件号',
