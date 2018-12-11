@@ -6,8 +6,9 @@ const request = supertest(app.listen());
 
 describe('#dataBase',()=>{
     describe('GetSocietyUuidByTele',()=>{
-        it('should return 5 when 2 + 3',async () =>{
+        it('demo',async () =>{
             let result = await dataBase.GetSocietyUuidByTele("13220167398");
+            console.log(result);
             expect(result.success).to.have.property('data');
         });
     })

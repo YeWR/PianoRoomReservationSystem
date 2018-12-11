@@ -788,10 +788,72 @@ let InsertItem = async function(itemDate, itemUsername, itemRoomId, itemType, it
     }
 }
 
-let UpdateItem = async function(itemTime, itemUsername, itemRoom, itemType, itemMember, itemValue, itemDuration){
-    // to do 
-    // check lock
-}
+let ItemCheckin = async function(itemUuid){
+    let errorMsg = "";
+    let itemInfo = null;
+    let test = function(){
+        return new Promise(resolve =>{
+            db.where({ item_uuid: itemUuid }).get('item', function (err, res, fields) {
+                let _select = res;
+                if(_select.length == 0)
+                {
+                    errorMsg = "订单不存在";
+                    resolve(0);
+                }
+                else
+                {
+                    let _data = JSON.stringify(_select);
+                    let _info = JSON.parse(_data);
+                    itemInfo = _info[0];
+                    if(itemInfo.item_type === 2)
+                    {
+                        errorMsg = "订单已使用";
+                        resolve(0);
+                    }
+                    else if(itemInfo.item_type === 0)
+                    {
+                        errorMsg = "订单已取消";
+                        resolve(0);
+                    }
+                    else
+                    {
+                        resolve(1);
+                    }
+                }
+            });
+        });
+    };
+    let checkin = function(){
+        return new Promise(resolve =>{
+            db.where({ item_uuid: itemUuid }).update('item',{item_type:2},function(err){
+                if(err){
+                    errorMsg = "检票失败";
+                    resolve(0);
+                }
+                else{
+                    resolve(1);
+                }
+            });
+        });
+    };
+    let flag = await test();
+    console.log(flag);
+    if(flag == 0){
+        return {"success": false,
+            "info":errorMsg};
+    }
+    if(flag == 1){
+        flag = await checkin();
+        if(flag == 0){
+            return {"success": false,
+                "info":errorMsg};
+        }
+        if(flag == 1){
+            return {"data":itemInfo,
+                "success": true};
+        }
+    }
+};
 
 // uuid: 使用用户的uuid
 let GetItem = async function(itemUsername){
@@ -1200,7 +1262,7 @@ let DeleteNotice = async function(noticeId) {
 
 // 订单
 exports.InsertItem = InsertItem;            // 新增订单
-exports.UpdateItem = UpdateItem;            // 更新订单
+exports.ItemCheckin = ItemCheckin;            // 更新订单
 exports.GetItem = GetItem;                  // 获取某个人的订单信息
 exports.SearchItem = SearchItem;            // 查询订单(管理端)
 exports.GetItemByUuid = GetItemByUuid;      // 获取订单信息，由uuid
