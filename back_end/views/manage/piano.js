@@ -130,7 +130,7 @@ const routers = router.get("/list", async (ctx, next) => {
         ctx.response.status = 400;
 }).post("/status", async (ctx, next) => {
     let request = ctx.request.body;
-    if(request.status === 0)
+    if(request.status == 0)
     {
         for(let i = 0; i <= 2; i++)
         {
@@ -145,10 +145,11 @@ const routers = router.get("/list", async (ctx, next) => {
             }
         }
     }
-    let result = await dataBase.UpdatePianoInfo(request.id,null,null,null,null,null,null,null,request.status);
+    let result = await dataBase.UpdatePianoInfo(request.id,null,null,null,null,null,null,null,request.status.toString());
     ctx.response.status = 200;
 }).post("/rule", async (ctx, next) => {
     let request = ctx.request.body;
+    console.log(request);
     let startIndex = request.rule.start;
     let endIndex = request.rule.end;
     let day = dayCheck(request.rule.week);
@@ -167,6 +168,7 @@ const routers = router.get("/list", async (ctx, next) => {
         }
     }
     result = await dataBase.ChangePianoRule(request.id,startIndex, endIndex - startIndex,request.type);
+    console.log(result);
     ctx.response.status = 200;
 });
 
