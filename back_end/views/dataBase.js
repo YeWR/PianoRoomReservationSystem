@@ -592,6 +592,7 @@ let preparePianoForInsert = async function(itemRoomId, itemBegin, itemDuration, 
     let errorMsg = "";
     itemBegin = timeLength*getDateNum(itemDate)+itemBegin;
     let itemEnd = itemBegin+itemDuration;
+    let pianoInfo = null;
     let test = function(){
         return new Promise(resolve =>{
             db.where({ piano_id: itemRoomId }).get('piano', function (err, res, fields) {
@@ -667,6 +668,7 @@ let ChangePianoRule = async function(itemRoomId, itemBegin, itemDuration, itemDa
     let errorMsg = "";
     itemBegin = timeLength*itemDay+itemBegin;
     let itemEnd = itemBegin+itemDuration;
+    let pianoInfo = null;
     let test = function(){
         return new Promise(resolve =>{
             db.where({ piano_id: itemRoomId }).get('piano', function (err, res, fields) {
@@ -675,7 +677,11 @@ let ChangePianoRule = async function(itemRoomId, itemBegin, itemDuration, itemDa
                     errorMsg = "琴房不存在";
                     resolve(0);
                 }
-                else{
+                else
+                {
+                    let _data = JSON.stringify(_select);
+                    let _info = JSON.parse(_data);
+                    pianoInfo = _info[0];
                     resolve(1);
                 }
             });
@@ -697,7 +703,7 @@ let ChangePianoRule = async function(itemRoomId, itemBegin, itemDuration, itemDa
                     continue;
                 }
             }
-            if(pianoInfo.piano_list.data[i] == '0' || pianoInfo.piano_list.data[i] == 48){
+            if(pianoInfo.piano_rule.data[i] == '0' || pianoInfo.piano_rule.data[i] == 48){
                 newList += '0';
             }
             else{
