@@ -150,12 +150,12 @@ const routers = router.get("/list", async (ctx, next) => {
 }).post("/rule", async (ctx, next) => {
     let request = ctx.request.body;
     console.log(request);
-    let startIndex = request.rule.start;
-    let endIndex = request.rule.end;
-    let day = dayCheck(request.rule.week);
+    let startIndex = request.start;
+    let endIndex = request.end;
+    let day = dayCheck(request.week);
     console.log("day:" + day.toString());
     let result = null;
-    if (day >= 0)
+    if (day >= 0 && request.type == 1)
     {
         let date = new Date();
         date.setDate(date.getDate() + day);
