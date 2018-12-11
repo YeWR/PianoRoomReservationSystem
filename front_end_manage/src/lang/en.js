@@ -68,6 +68,7 @@ export default {
     itemList: 'Item List',
     itemScan: 'Item Scan Today',
     itemDetail: 'Item Detail',
+    CheckTicket: 'Check Ticket',
   },
   item: {
     idNumber: 'User Id Number',
@@ -189,7 +190,8 @@ export default {
     ruleEdit: 'time edit',
     start:'Start Time',
     end:'End Time',
-    week:'Week'
+    week:'Week',
+    checkin:'please input id'
   },
   errorLog: {
     tips: 'Please click the bug icon in the upper right corner',
