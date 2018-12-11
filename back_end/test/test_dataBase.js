@@ -1,6 +1,6 @@
 const {should,expect,assert} = require('chai');
 const supertest = require('supertest');
-const dataBase = require('./views/dataBase');
+const dataBase = require('../views/dataBase');
 const app = require('./app');
 const request = supertest(app.listen());
 
