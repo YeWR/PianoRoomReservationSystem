@@ -26,3 +26,5 @@ app.use(views_manage.routes()).use(views_manage.allowedMethods());
 
 app.listen(3000);
 console.log("listen on 3000");
+
+module.exports = app;
