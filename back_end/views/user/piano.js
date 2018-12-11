@@ -57,12 +57,12 @@ const routers = router.get("/all", async (ctx, next) => {
         };
     }
     else {
-        let price = {
-            "student": result.data.piano_stuvalue,
-            "teacher": result.data.piano_teavalue,
-            "society": result.data.piano_socvalue,
-            "multi": result.data.piano_multivalue
-        };
+        let price = [
+            result.data.piano_stuvalue,
+            result.data.piano_teavalue,
+            result.data.piano_socvalue,
+            result.data.piano_multivalue
+        ];
         ctx.response.body = {
             "success": true,
             "timeTable": result.data.piano_list,
