@@ -70,6 +70,7 @@ export default {
     itemDetail: '订单信息',
     Notice: '公告管理',
     Room:'琴房管理',
+    CheckTicket: '检票',
   },
   item: {
     idNumber: '手机号/证件号',

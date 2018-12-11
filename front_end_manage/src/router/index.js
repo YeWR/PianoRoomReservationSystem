@@ -208,5 +208,23 @@ export const asyncRouterMap = [
       }
     ]
   },
+  {
+    path: '/check',
+    component: Layout,
+    redirect: '/check/ticket',
+    name: 'checkTicket',
+    meta: {
+      title: 'CheckTicket',
+      icon: 'table'
+    },
+    children: [
+      {
+        path: 'ticket',
+        component: () => import('@/views/check/checkTicket'),
+        name: 'CheckTicket',
+        meta: { title: 'CheckTicket' }
+      }
+    ]
+  },
   { path: '*', redirect: '/404', hidden: true }
 ]
