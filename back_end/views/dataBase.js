@@ -395,10 +395,9 @@ let InsertPiano = async function(pianoRoom, pianoInfo, pianoStuvalue, pianoTeava
     }
 }
 
-let UpdatePianoInfo = async function(pianoList, pianoId, pianoRoom, pianoInfo, pianoStuvalue, pianoTeavalue, pianoSocvalue, pianoMultivalue, pianoType, pianoStatus, pianoRule) {
+let UpdatePianoInfo = async function(pianoId, pianoRoom, pianoInfo, pianoStuvalue, pianoTeavalue, pianoSocvalue, pianoMultivalue, pianoType, pianoStatus) {
     let errorMsg = "";
     let info = {
-        piano_list: pianoList,
         piano_room: pianoRoom,
         piano_info: pianoInfo,
         piano_stuvalue: pianoStuvalue,
@@ -407,7 +406,6 @@ let UpdatePianoInfo = async function(pianoList, pianoId, pianoRoom, pianoInfo, p
         piano_multivalue: pianoMultivalue,
         piano_type: pianoType,
         piano_status: pianoStatus,
-        piano_rule: pianoRule
     };
     for(let i in info)
     {
@@ -665,6 +663,71 @@ let preparePianoForInsert = async function(itemRoomId, itemBegin, itemDuration, 
     }
 }
 
+let ChangePianoRule = async function(itemRoomId, itemBegin, itemDuration, itemDay, ruleType){
+    let errorMsg = "";
+    itemBegin = timeLength*itemDay+itemBegin;
+    let itemEnd = itemBegin+itemDuration;
+    let test = function(){
+        return new Promise(resolve =>{
+            db.where({ piano_id: itemRoomId }).get('piano', function (err, res, fields) {
+                let _select = res;
+                if(_select.length == 0){
+                    errorMsg = "琴房不存在";
+                    resolve(0);
+                }
+                else{
+                    resolve(1);
+                }
+            });
+        });
+    };
+    let flag = await test();
+    console.log(flag);
+    if(flag == 0){
+        return {"success":false,
+            "info":errorMsg};
+    }
+    if(flag == 1){
+        let newList = "";
+        let len = pianoInfo.piano_rule.data.length;
+        for(let i = 0; i<len; i++){
+            if(i < itemEnd){
+                if(i >= itemBegin){
+                    newList += ruleType.toString();
+                    continue;
+                }
+            }
+            if(pianoInfo.piano_list.data[i] == '0' || pianoInfo.piano_list.data[i] == 48){
+                newList += '0';
+            }
+            else{
+                newList += '1';
+            }
+        }
+        let checkUpdate = function(){
+            return new Promise(resolve =>{
+                db.where({piano_id: itemRoomId}).update('piano',{piano_rule:newList},function(err){
+                    if(err){
+                        resolve(0);
+                    }
+                    else{
+                        resolve(1);
+                    }
+                });
+            });
+        };
+        let check = await checkUpdate()
+        if(check == 0){
+            errorMsg = "更新失败";
+            return {"success":false,
+                "info":errorMsg};
+        }
+        else{
+            return {"success":true};
+        }
+    }
+}
+
 // uuid: itemUsername 传入uuid
 // begin is the begin index, duration is the length
 let InsertItem = async function(itemDate, itemUsername, itemRoomId, itemType, itemMember, itemValue, itemDuration, itemBegin, itemUuid){
@@ -755,9 +818,13 @@ let SearchItem = async function(count, offset, username, roomId, member, type, o
     let itemInfo = null;
     let itemCount = 0;
     let dateQuery = "item_date IS NOT NULL";
-    if(date)
+    if(typeof date === 'string')
     {
         dateQuery = "DATE_FORMAT(item_date, \'%Y-%m-%d\') = \'" + date + "\'";
+    }
+    else if(typeof date === 'number')
+    {
+        dateQuery = "DATE_SUB(CURDATE(), INTERVAL " + date.toString() + " DAY) <= date(item_date)";
     }
     let query = { item_username: username, item_roomId: roomId, item_member: member};
     for(let q in query)
@@ -1140,6 +1207,8 @@ exports.SearchPiano = SearchPiano;
 exports.InsertPiano = InsertPiano;          // 新增琴房
 exports.UpdatePianoInfo = UpdatePianoInfo;
 exports.preparePianoForInsert = preparePianoForInsert;
+exports.preparePianoForDel = preparePianoForDel;
+exports.ChangePianoRule = ChangePianoRule;
 // 每日更新琴房信息
 
 // 注册

@@ -19,18 +19,20 @@ const routers = router.get("/all", async (ctx, next) => {
         let pianolist = [];
         for(let p of result.data)
         {
-            let timeList = [];
-            for(let i = 0; i<p.piano_list.data.length;i++)
+            if(p.status)
             {
-                timeList.push(p.piano_list.data[i] - 48);
+                let timeList = [];
+                for (let i = 0; i < p.piano_list.data.length; i++) {
+                    timeList.push(p.piano_list.data[i] - 48);
+                }
+                let info = {
+                    "pianoId": p.piano_id,
+                    "pianoType": p.piano_type,
+                    "timeTable": timeList,
+                    "pianoPlace": p.piano_room
+                };
+                pianolist.push(info);
             }
-            let info = {
-                "pianoId": p.piano_id,
-                "pianoType": p.piano_type,
-                "timeTable": timeList,
-                "pianoPlace": p.piano_room
-            };
-            pianolist.push(info);
         }
         ctx.response.body = {
             "success": true,

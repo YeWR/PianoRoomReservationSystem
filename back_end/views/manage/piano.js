@@ -121,24 +121,49 @@ const routers = router.get("/list", async (ctx, next) => {
         ctx.response.status = 200;
     else
         ctx.response.status = 400;
-}).post("/set", async (ctx, next) => {
-    let week = ctx.request.body.week;
-    let id = ctx.request.body.id;
-    let startIndex = 0;
-    let endIndex = 0;
-    let day = dayCheck(week);
-    if(day >= 0)
+}).post("/info", async (ctx, next) => {
+    let request = ctx.request.body;
+    let result = await dataBase.UpdatePianoInfo(request.id,request.room,request.info,request.stuValue,request.teaValue,request.socValue,request.multiValue,request.type,null);
+    ctx.response.status = 200;
+}).post("/status", async (ctx, next) => {
+    let request = ctx.request.body;
+    if(request.status === 0)
+    {
+        for(let i = 0; i <= 2; i++)
+        {
+            let itemDate = new Date();
+            itemDate.setDate(itemDate.getDate() - i);
+            let result = await dataBase.SearchItem(1, 0, null, request.id, null,1,"+",getDateStr(itemDate));
+            if(result.count !== 0)
+            {
+                ctx.response.status = 400;
+                ctx.response.body = {"info": "该琴房仍有未生效订单，请联系用户处理！"};
+                return;
+            }
+        }
+    }
+    let result = await dataBase.UpdatePianoInfo(request.id,null,null,null,null,null,null,null,request.status);
+    ctx.response.status = 200;
+}).post("/rule", async (ctx, next) => {
+    let request = ctx.request.body;
+    let startIndex = request.rule.start;
+    let endIndex = request.rule.end;
+    let day = dayCheck(request.rule.week);
+    console.log("day:" + day.toString());
+    let result = null;
+    if (day >= 0)
     {
         let date = new Date();
         date.setDate(date.getDate() + day);
         let dateStr = getDateStr(date);
-        let result = await dataBase.preparePianoForInsert(id, startIndex, endIndex - startIndex, dateStr);
-        if(!result.success) {
+        result = await dataBase.preparePianoForInsert(request.id, startIndex, endIndex - startIndex, dateStr);
+        if (!result.success) {
             ctx.response.status = 400;
+            ctx.response.body = {"info": "与现有订单冲突，请联系用户处理！"};
             return;
         }
     }
-
+    result = await dataBase.ChangePianoRule(request.id,startIndex, endIndex - startIndex,request.type);
     ctx.response.status = 200;
 });
 
