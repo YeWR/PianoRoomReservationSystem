@@ -753,6 +753,16 @@ const shwoHidenIdNumber = (idNumber, userType) => {
     }
 };
 
+/*
+ * compute money need to pay
+ * money * ceil(interval / UNIT)
+ */
+const moneyToPay = (money, interval, UNIT) => {
+    let quant = Math.ceil(interval / UNIT);
+    return quant * money;
+};
+
+
 module.exports = {
     alertInfo: alertInfo,
     formatTime: formatTime,
@@ -788,5 +798,6 @@ module.exports = {
     getHoursAvailable: getHoursAvailable,
     getMinutesAvailable: getMinutesAvailable,
     shwoHidenIdNumber: shwoHidenIdNumber,
-    showHidenId, showHidenId
+    showHidenId: showHidenId,
+    moneyToPay: moneyToPay,
 };

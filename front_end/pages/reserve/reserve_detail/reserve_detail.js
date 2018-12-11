@@ -14,6 +14,7 @@ Page({
         _pianoId: 0,
         _timeTable: [],
         _pianoPrices: [],
+        _pianoPrice: 0,
         _pianoPlace: "",
         _pianoInfo: "",
 
@@ -130,7 +131,7 @@ Page({
         paras["pianoId"] = this.data._pianoId;
         // TODO: price should be determined by the settings of reserveType
         // paras["pianoPrice"] = this.data._pianoPrices;
-        paras["pianoPrice"] = 10;
+        paras["pianoPrice"] = this.getPrice(this);
 
         let url = util.setUrl("../reserve_confirm/reserve_confirm", paras);
         wx.navigateTo({
@@ -180,6 +181,10 @@ Page({
         });
 
         this.chooseAdaptEndTime(this.data._begHour, this.data._begMinute, 6);
+
+        this.setData({
+            _pianoPrice: this.getPrice(this)
+        });
     },
 
     /*
@@ -210,15 +215,35 @@ Page({
                 _endMinute: endTimeArray[column][value]
             });
         }
+
+        this.setData({
+            _pianoPrice: this.getPrice(this)
+        });
+    },
+
+    /*
+     * get money need to pay
+     */
+    getPrice: function (that) {
+        let price = that.data._pianoPrices[that.data._reservationType];
+        let begIndex = util.getIndexInTimeTable(that.data._begHour, that.data._begMinute);
+        let endIndex = util.getIndexInTimeTable(that.data._endHour, that.data._endMinute);
+        const UNIT = 6;
+        return util.moneyToPay(price, endIndex - begIndex, UNIT);
     },
 
     /*
      * bind choose single user
      */
     bindSingleUser: function (e) {
-        this.setData({
+        let that = this;
+        that.setData({
             _chooseSingle: true,
-            _reservationType: app.globalData._userType
+            _reservationType: app.globalData._userType,
+        }, function () {
+            that.setData({
+                _pianoPrice: that.getPrice(that)
+            })
         });
     },
 
@@ -226,9 +251,14 @@ Page({
      * bind choose multi users
      */
     bindMultiUsers: function (e) {
-        this.setData({
+        let that = this;
+        that.setData({
             _chooseSingle: false,
-            _reservationType: util.USERTYPE.MULTI
+            _reservationType: util.USERTYPE.MULTI,
+        }, function () {
+            that.setData({
+                _pianoPrice: that.getPrice(that)
+            })
         });
     },
 
@@ -316,7 +346,6 @@ Page({
         wx.showNavigationBarLoading();
 
         let that = this;
-
         wx.request({
             url: "https://958107.iterator-traits.com/user/piano/detail",
             data: {
@@ -393,6 +422,10 @@ Page({
         });
 
         this.chooseAdaptEndTime(this.data._begHour, this.data._begMinute, 6);
+
+        this.setData({
+            _pianoPrice: this.getPrice(this)
+        });
     },
 
     /*

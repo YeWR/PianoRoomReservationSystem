@@ -25,6 +25,10 @@ Page({
     },
 
     /*
+     *
+     */
+
+    /*
      * confirm reservation
      * TODO: do not foret to pay for the reservation and check
      */
@@ -36,6 +40,20 @@ Page({
             // stu id card
             number = app.globalData._idNumber;
         }
+
+        // wx.requestPayment({
+        //     'timeStamp': '',
+        //     'nonceStr': '',
+        //     'package': '',
+        //     'signType': 'MD5',
+        //     'paySign': '',
+        //     'success': function (res) {
+        //     },
+        //     'fail': function (res) {
+        //     },
+        //     'complete': function (res) {
+        //     }
+        // });
 
         wx.request({
             url: "https://958107.iterator-traits.com/user/reservation/order",
@@ -59,7 +77,7 @@ Page({
                         that.toAlarm();
                     }, 500);
                 }
-                else{
+                else {
                     util.alertInfo(res.data.info, "none", 1000);
                 }
             },

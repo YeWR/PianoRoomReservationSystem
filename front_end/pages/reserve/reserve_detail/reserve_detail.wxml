@@ -114,7 +114,7 @@
             </view>
 
             <view class="money-info">
-                10元
+                {{_pianoPrice}}元
             </view>
         </view>
 
