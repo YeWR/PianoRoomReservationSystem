@@ -2,6 +2,28 @@ const Router = require("koa-router");
 const router = new Router();
 const dataBase = require("../dataBase");
 
+function getDateStr (date) {
+    let dateStr = date.getFullYear().toString() + "-";
+    let month = date.getMonth()+1;
+    let day = date.getDate();
+    if(month < 10)
+    {
+        dateStr = dateStr + "0" + month.toString() + "-";
+    }
+    else
+    {
+        dateStr = dateStr + month.toString() + "-";
+    }
+    if(day < 10)
+    {
+        dateStr = dateStr + "0" + day.toString();
+    }
+    else
+    {
+        dateStr = dateStr + day.toString();
+    }
+    return dateStr;
+}
 
 function dayCheck(day) {
     let today = new Date().getDay();
@@ -92,23 +114,31 @@ const routers = router.get("/list", async (ctx, next) => {
         "items": pianoList,
         "total": result.count
     }
-}).post("/update", async (ctx, next) => {
-    let id = ctx.request.body.id;
-    let result = await dataBase.DeleteNotice(id);
-    ctx.response.status = 200;
+}).post("/create", async (ctx, next) => {
+    let info = ctx.request.body;
+    let result = await dataBase.InsertPiano(info.room, info.info, info.stuValue, info.teaValue, info.socValue, info.multiValue, info.type, info.status);
+    if(result.success)
+        ctx.response.status = 200;
+    else
+        ctx.response.status = 400;
 }).post("/set", async (ctx, next) => {
     let week = ctx.request.body.week;
     let id = ctx.request.body.id;
     let startIndex = 0;
     let endIndex = 0;
     let day = dayCheck(week);
-    //if(day > 0)
-    //{
-    //    let date = new Date();
-    //    date
-    //    let result = await dataBase.preparePianoForInsert(id, startIndex, endIndex - startIndex, date)
-    //}
-    let result = await dataBase.DeleteNotice(id);
+    if(day >= 0)
+    {
+        let date = new Date();
+        date.setDate(date.getDate() + day);
+        let dateStr = getDateStr(date);
+        let result = await dataBase.preparePianoForInsert(id, startIndex, endIndex - startIndex, dateStr);
+        if(!result.success) {
+            ctx.response.status = 400;
+            return;
+        }
+    }
+
     ctx.response.status = 200;
 });
 

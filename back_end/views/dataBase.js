@@ -355,38 +355,31 @@ let SocietyLogin = async function(socTele, socPassword) {
     }
 }
 
-let InsertPiano = async function(pianoList, pianoId, pianoRoom, pianoPicurl, pianoInfo, pianoStuvalue, pianoTeavalue, pianoSocvalue, pianoMultivalue, pianoType) {
+let InsertPiano = async function(pianoRoom, pianoInfo, pianoStuvalue, pianoTeavalue, pianoSocvalue, pianoMultivalue, pianoType, pianoStatus) {
     let errorMsg = "";
+    let pianoList = "0".repeat(84*3);
+    let pianoRule = "0".repeat(84*7);
     let test = function(){
         return new Promise(resolve =>{
-            db.where({ piano_id: pianoId }).get('piano', function (err, res, fields) {
-                let _select = res;
-                if(_select.length != 0){
-                    errorMsg = "琴房已经存在";
-                    resolve(0);
+            let _info = {
+                piano_list: pianoList,
+                piano_room: pianoRoom,
+                piano_info: pianoInfo,
+                piano_stuvalue: pianoStuvalue,
+                piano_socvalue: pianoSocvalue,
+                piano_teavalue: pianoTeavalue,
+                piano_multivalue: pianoMultivalue,
+                piano_type: pianoType,
+                piano_status: pianoStatus,
+                piano_rule: pianoRule
+            };
+            db.insert('piano', _info, function (err, info) {
+                if(err == null){
+                    resolve(1);
                 }
                 else{
-                    let _info = {
-                        piano_list: pianoList,
-                        piano_id: pianoId,
-                        piano_room: pianoRoom,
-                        piano_picurl: pianoPicurl,
-                        piano_info: pianoInfo,
-                        piano_stuvalue: pianoStuvalue,
-                        piano_socvalue: pianoSocvalue,
-                        piano_teavalue: pianoTeavalue,
-                        piano_multivalue: pianoMultivalue,
-                        piano_type: pianoType
-                    }
-                    db.insert('piano', _info, function (err, info) { 
-                        if(err == null){
-                            resolve(1);
-                        }
-                        else{
-                            errorMsg = "新建琴房失败";
-                            resolve(0);
-                        }
-                    });
+                    errorMsg = "新建琴房失败";
+                    resolve(0);
                 }
             });
         });
@@ -402,11 +395,30 @@ let InsertPiano = async function(pianoList, pianoId, pianoRoom, pianoPicurl, pia
     }
 }
 
-let UpdatePianoInfo = async function(pianoList, pianoId, pianoRoom, pianoPicurl, pianoInfo, pianoStuvalue, pianoTeavalue, pianoSocvalue, pianoMultivalue, pianoType) {
+let UpdatePianoInfo = async function(pianoList, pianoId, pianoRoom, pianoInfo, pianoStuvalue, pianoTeavalue, pianoSocvalue, pianoMultivalue, pianoType, pianoStatus, pianoRule) {
     let errorMsg = "";
+    let info = {
+        piano_list: pianoList,
+        piano_room: pianoRoom,
+        piano_info: pianoInfo,
+        piano_stuvalue: pianoStuvalue,
+        piano_socvalue: pianoSocvalue,
+        piano_teavalue: pianoTeavalue,
+        piano_multivalue: pianoMultivalue,
+        piano_type: pianoType,
+        piano_status: pianoStatus,
+        piano_rule: pianoRule
+    };
+    for(let i in info)
+    {
+        if(!info[i])
+        {
+            delete info[i];
+        }
+    }
     let test = function(){
         return new Promise(resolve =>{
-            db.where({ piano_id: pianoId }).update('piano', {}, function (err, res, fields) {
+            db.where({ piano_id: pianoId }).update('piano', info, function (err, res, fields) {
                 if(err === null)
                     resolve(1);
                 else
@@ -426,7 +438,7 @@ let UpdatePianoInfo = async function(pianoList, pianoId, pianoRoom, pianoPicurl,
     if(flag == 1){
         return {"success":true};
     }
-}
+};
 
 let GetPianoRoomAll = async function(){
     let errorMsg = "";
@@ -450,7 +462,7 @@ let GetPianoRoomAll = async function(){
         return {"data":pianoInfo,
                 "info":errorMsg};
     }
-}
+};
 
 let SearchPiano = async function(count, offset, piano_room, piano_type, piano_id){
     let errorMsg = "";
