@@ -19,7 +19,7 @@ const routers = router.get("/all", async (ctx, next) => {
         let pianolist = [];
         for(let p of result.data)
         {
-            if(p.status)
+            if(p.piano_status)
             {
                 let timeList = [];
                 for (let i = 0; i < p.piano_list.data.length; i++) {
