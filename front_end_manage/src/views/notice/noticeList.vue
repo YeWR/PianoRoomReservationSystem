@@ -62,7 +62,7 @@
           <el-input v-model="temp.timestamp.getFullYear()+'-'+(temp.timestamp.getMonth()+1)+'-'+temp.timestamp.getDate()" disabled = "disabled"/>
         </el-form-item>
         <el-form-item :label="$t('table.content')">
-        <textarea style="width: 450px; margin-top:10px; font-size:16px;font-family:'微软雅黑';" rows="10" v-model="temp.content" disabled = "disabled"></textarea>
+        <el-input :autosize="{ minRows: 2, maxRows: 10}" v-model="temp.content" type="textarea" disabled = "disabled" />
         </el-form-item>
       </el-form>
     </el-dialog>
@@ -79,7 +79,7 @@
           <el-input v-model="temp.timestamp.getFullYear()+'-'+(temp.timestamp.getMonth()+1)+'-'+temp.timestamp.getDate()"/>
         </el-form-item>
         <el-form-item :label="$t('table.content')">
-        <textarea placeholder="请输入内容" style="width: 450px; margin-top:10px; font-size:16px;font-family:'微软雅黑';" rows="10" v-model="temp.content"></textarea>
+        <el-input :autosize="{ minRows: 2, maxRows: 5}" v-model="temp.content" type="textarea"/>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -153,12 +153,10 @@ export default {
     getList() {
       this.listLoading = true;
       fetchList(this.listQuery).then(response => {
-        console.log(response.data)
         let tmp_items = response.data.items
         this.total = response.data.total
         let tmp = []
         for(let i = 0; i<tmp_items.length; i++){
-          console.log(tmp_items[i].id)
           tmp.push({
             id:tmp_items[i].id,
             timestamp:new Date(Date.parse(tmp_items[i].date)),
@@ -184,7 +182,6 @@ export default {
       this.getList()
     },
     sortChange(data) {
-      console.log(data)
       const { prop, order } = data
       if (prop === 'date') {
         this.sortByID(order)

@@ -179,7 +179,13 @@ export default {
     open: 'Open',
     close: 'Close',
     info:'Info',
-    value: 'Value'
+    value: 'Value',
+    claim: 'unavailable',
+    infoEdit: 'info edit',
+    ruleEdit: 'time edit',
+    start:'Start Time',
+    end:'End Time',
+    week:'Week'
   },
   errorLog: {
     tips: 'Please click the bug icon in the upper right corner',

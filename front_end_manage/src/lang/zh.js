@@ -152,7 +152,7 @@ export default {
     dragTips2: '拖拽后顺序',
     title: '标题',
     importance: '重要性',
-    type: '类型',
+    type: '类  型',
     remark: '点评',
     search: '搜索',
     add: '添加',
@@ -180,7 +180,13 @@ export default {
     open: '开放',
     close: '关闭',
     info: '简  介',
-    value: '价  格'
+    value: '价  格',
+    claim: '琴房不可用时间列表',
+    infoEdit: '编辑信息',
+    ruleEdit: '编辑时间',
+    start:'开始时间',
+    end:'结束时间',
+    week:'星  期'
   },
   errorLog: {
     tips: '请点击右上角bug小图标',
