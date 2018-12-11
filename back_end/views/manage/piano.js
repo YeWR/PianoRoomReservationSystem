@@ -167,7 +167,7 @@ const routers = router.get("/list", async (ctx, next) => {
             return;
         }
     }
-    result = await dataBase.ChangePianoRule(request.id,startIndex, endIndex - startIndex,request.type);
+    result = await dataBase.ChangePianoRule(request.id,startIndex, endIndex - startIndex,request.type.toString());
     console.log(result);
     ctx.response.status = 200;
 });
