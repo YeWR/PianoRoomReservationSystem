@@ -9,7 +9,7 @@ describe('#dataBase',()=>{
         it('demo',async () =>{
             let result = await dataBase.GetSocietyUuidByTele("13220167398");
             console.log(result);
-            expect(result.success).to.have.property('data');
+            expect(result).to.have.property('data');
         });
     })
 });
