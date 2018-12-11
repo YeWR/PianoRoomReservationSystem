@@ -124,7 +124,10 @@ const routers = router.get("/list", async (ctx, next) => {
 }).post("/info", async (ctx, next) => {
     let request = ctx.request.body;
     let result = await dataBase.UpdatePianoInfo(request.id,request.room,request.info,request.stuValue,request.teaValue,request.socValue,request.multiValue,request.type,null);
-    ctx.response.status = 200;
+    if(result.success)
+        ctx.response.status = 200;
+    else
+        ctx.response.status = 400;
 }).post("/status", async (ctx, next) => {
     let request = ctx.request.body;
     if(request.status === 0)
