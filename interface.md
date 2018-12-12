@@ -166,6 +166,7 @@
     "url": "/user/reservation/order",
     "method": "POST",
     "data": {
+        "openid": "用户的openid",
         "number":"号码（手机号/学号）",
         "reservationType": "预约类别(校内学生，校内老师，校外单人，多人)",
         "pianoId":"琴房id",
@@ -176,9 +177,14 @@
     },
     "res": {
         "data": {
-            "success": "预约成功",
-            "info": "失败信息",
-            "info": "预约失败信息（已被预约等）"
+            "success": "下单成功，需要为支付准备",
+            "info": "预约失败信息（已被预约等）",
+            "sign": {
+                "timeStamp": "时间戳",
+                "nonceStr": "随机串",
+                "package": "package",
+                "paySign": "paySign"
+            }
         }
     }
 }
