@@ -3,6 +3,7 @@ const router = new Router();
 const dataBase = require("../dataBase");
 const uuid = require("node-uuid");
 const configPath = "configs.json";
+let fs = require("fs");
 const configs = JSON.parse(fs.readFileSync(configPath));
 const request = require('request');
 const parseString = require('xml2js').parseString;
