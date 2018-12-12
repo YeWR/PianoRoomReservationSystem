@@ -3,11 +3,11 @@ node_js: stable
 branches:
     only:
     - master
-# cache:
-#     apt: true
-#     directories:
-#         - back_end/node_modules
-#         - front_end_manage/node_modules
+cache:
+    apt: true
+    directories:
+        - back_end/node_modules
+        - front_end_manage/node_modules
 before_install:
     - cd front_end_manage
     - export TZ='Asia/Shanghai' # 更改时区
