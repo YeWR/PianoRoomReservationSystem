@@ -86,7 +86,7 @@
   }, {})
 
   export default {
-    name: 'ComplexTable',
+    name: 'userAll',
     components: { Pagination },
     directives: { waves },
     data() {
