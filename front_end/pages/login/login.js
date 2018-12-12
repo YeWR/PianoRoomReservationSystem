@@ -30,9 +30,10 @@ Page({
      * to board
      * after login success
      */
+    /*todo*/
     toBoard: function () {
         wx.switchTab({
-            url: "../board/board"
+            url: "../reserve/reserve"
         });
     },
 
