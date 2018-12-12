@@ -171,6 +171,97 @@ export const asyncRouterMap = [
       // }
     ]
   },
+  // {
+  //   path: '/zip',
+  //   component: Layout,
+  //   redirect: '/zip/download',
+  //   alwaysShow: true,
+  //   meta: {title: 'zip', icon: 'zip'},
+  //   children: [
+  //     {
+  //       path: 'download',
+  //       component: () => import('@/views/zip/index'),
+  //       name: 'ExportZip',
+  //       meta: {title: 'exportZip'}
+  //     }
+  //   ]
+  // },
+
+  // {
+  //   path: '/theme',
+  //   component: Layout,
+  //   redirect: 'noredirect',
+  //   children: [
+  //     {
+  //       path: 'index',
+  //       component: () => import('@/views/theme/index'),
+  //       name: 'Theme',
+  //       meta: {title: 'theme', icon: 'theme'}
+  //     }
+  //   ]
+  // },
+
+  // {
+  //   path: '/clipboard',
+  //   component: Layout,
+  //   redirect: 'noredirect',
+  //   children: [
+  //     {
+  //       path: 'index',
+  //       component: () => import('@/views/clipboard/index'),
+  //       name: 'ClipboardDemo',
+  //       meta: {title: 'clipboardDemo', icon: 'clipboard'}
+  //     }
+  //   ]
+  // },
+
+  // {
+  //   path: '/i18n',
+  //   component: Layout,
+  //   children: [
+  //     {
+  //       path: 'index',
+  //       component: () => import('@/views/i18n-demo/index'),
+  //       name: 'I18n',
+  //       meta: {title: 'i18n', icon: 'international'}
+  //     }
+  //   ]
+  // },
+
+  // {
+  //   path: 'external-link',
+  //   component: Layout,
+  //   children: [
+  //     {
+  //       path: 'https://github.com/PanJiaChen/vue-element-admin',
+  //       meta: {title: 'externalLink', icon: 'link'}
+  //     }
+  //   ]
+  // },
+  {
+    path: '/user',
+    component: Layout,
+    redirect: '/user/all',
+    name: 'User',
+    meta: {
+      title: 'userManagement',
+      icon: 'people'
+    },
+    children: [
+      {
+        path: 'all',
+        component: () => import('@/views/user/userAll'),
+        name: 'userAll',
+        meta: { title: 'userList' }
+      },
+      {
+        path: 'black',
+        component: () => import('@/views/user/blackLIST'),
+        name: 'blackLIST',
+        meta: { title: 'blackList' }
+      },
+    ]
+  },
   {
     path: '/notice',
     component: Layout,

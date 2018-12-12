@@ -120,15 +120,15 @@
 </template>
 
 <script>
-  import {getItemList, deleteItem} from "@/api/item"
+  import { getItemList, deleteItem } from '@/api/item'
   import waves from '@/directive/waves' // Waves directive
-  import {parseTime} from '@/utils'
+  import { parseTime } from '@/utils'
   import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
 
   export default {
     name: 'ItemAll',
-    components: {Pagination},
-    directives: {waves},
+    components: { Pagination },
+    directives: { waves },
     data() {
       return {
         tableKey: 0,
@@ -144,8 +144,9 @@
           status: '',
           timeSort: '+'
         },
+
         timeSortOptions: () => {
-          return [{label: this.$t('item.timeDes'), key: '+'}, {label: this.$t('item.timeAsc'), key: '-'}]
+          return [{ label: this.$t('item.timeDes'), key: '+' }, { label: this.$t('item.timeAsc'), key: '-' }]
         },
         itemTypeSortOptions: () => {
           let ans = []
@@ -185,25 +186,28 @@
           pianoType: '',
           price: '10',
           time: '',
-          status: 0,
+          status: 0
         },
         dialogFormVisible: false,
         dialogStatus: '',
         textMap: {
-          update: this.$t('item.view'),
+          update: this.$t('item.view')
         },
         dialogPvVisible: true,
         pvData: [],
         rules: {
-          type: [{required: true, message: 'type is required', trigger: 'change'}],
-          timestamp: [{type: 'date', required: true, message: 'timestamp is required', trigger: 'change'}],
-          title: [{required: true, message: 'title is required', trigger: 'blur'}]
+          type: [{ required: true, message: 'type is required', trigger: 'change' }],
+          timestamp: [{ type: 'date', required: true, message: 'timestamp is required', trigger: 'change' }],
+          title: [{ required: true, message: 'title is required', trigger: 'blur' }]
         },
         downloadLoading: false
       }
     },
+
     created() {
       this.getList()
+      this.listQuery.idNumber = this.$route.query.telephone
+      console.log('query:', this.$route, this.$route.params)
     },
     methods: {
       getList() {
@@ -244,7 +248,7 @@
         // row.status = status
       },
       sortChange(data) {
-        const {prop, order} = data
+        const { prop, order } = data
         if (prop === 'time') {
           this.sortByID(order)
         }
@@ -305,7 +309,7 @@
           status = 'all'
         }
         return this.$t('item.status_' + status)
-      },
+      }
     }
   }
 </script>
