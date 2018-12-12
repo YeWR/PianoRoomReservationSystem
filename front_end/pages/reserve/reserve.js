@@ -28,7 +28,9 @@ Page({
         _lastMinute: util.ENDMINUTE,
 
         _cannotPrevious: true,
-        _cannotNext: false
+        _cannotNext: false,
+
+        _canvasId: "timeTabelBar"
     },
 
     /*
@@ -241,6 +243,8 @@ Page({
         that.setData({
             _pianoAvailable: pianoAvailable,
             _pianoIsAvailable: pianoIsAvailable
+        }, function () {
+            that.drawTimeTable(that, pianoAvailable);
         });
 
         console.log("aval: ", that.data._pianoAvailable);
@@ -366,7 +370,7 @@ Page({
      * redirect to login
      * this is a bug in wechat, so we have to fix it.
      */
-    reLogin: function(){
+    reLogin: function () {
         wx.redirectTo({
             url: "../login/login"
         });
@@ -377,8 +381,107 @@ Page({
      */
     onLoad: function (options) {
         let user = app.globalData._username;
-        if(!user){
+        if (!user) {
             this.reLogin();
+        }
+    },
+
+    /*
+     * draw time table progress bar
+     */
+    drawTimeTable: function (that, pianoList) {
+
+        let getFirstBegIndex = (tableList) => {
+
+            let ans = -1;
+            for (let i = 0; i < tableList.length; ++i) {
+                if (tableList[i] === 0) {
+                    ans = i;
+                    break;
+                }
+            }
+
+            return ans;
+        };
+
+        let getNextBegIndex = (endIndex, tableList) => {
+
+            let ans = -1;
+            if (endIndex === -1 || endIndex >= tableList.length) {
+                return ans;
+            }
+
+            for (let i = endIndex + 1; i < tableList.length; ++i) {
+                if (tableList[i] === 0) {
+                    ans = i;
+                    break;
+                }
+            }
+
+            if(ans === -1){
+                ans = tableList.length;
+            }
+
+            return ans;
+        };
+
+        let getThisEndIndex = (begIndex, tableList) => {
+
+            let ans = -1;
+            if (begIndex === -1 || begIndex >= tableList.length) {
+                return ans;
+            }
+
+            for (let i = begIndex; i < tableList.length; ++i) {
+                if (tableList[i] === 1) {
+                    ans = i;
+                    break;
+                }
+            }
+
+            if(ans === -1){
+                ans = tableList.length;
+            }
+
+            return ans;
+        };
+
+        let drawRect = (begIndex, endIndex, ctx, color) => {
+
+            if (begIndex === -1 || endIndex === -1) {
+                return;
+            }
+            const RectX = 0;
+            const RectY = 0;
+            const blockHeight = 5;
+            const blockWidth = 3.2;
+
+            let x1 = RectX + begIndex * blockWidth;
+            let x2 = (endIndex - begIndex) * blockWidth;
+
+            ctx.setFillStyle(color);
+            ctx.fillRect(x1, RectY, x2, blockHeight);
+            ctx.stroke();
+
+        };
+
+        for (let piano of pianoList) {
+
+            const ctx = wx.createCanvasContext('piano' + piano.pianoId, that);
+            const tableList = piano.timeTable;
+
+            drawRect(0, tableList.length, ctx, 'grey');
+
+            let begIndex = getFirstBegIndex(tableList);
+            let endIndex = begIndex;
+
+            while (begIndex !== -1 && endIndex !== -1) {
+
+                endIndex = getThisEndIndex(begIndex, tableList);
+                drawRect(begIndex, endIndex, ctx, 'red');
+                begIndex = getNextBegIndex(endIndex, tableList);
+            }
+            ctx.draw();
         }
     },
 

@@ -68,10 +68,12 @@ export default {
     itemList: '订单列表',
     itemScan: '今日订单速览',
     itemDetail: '订单信息',
-
     userManagement: '用户管理',
     userList: '用户列表',
-    blackList: '黑名单'
+    blackList: '黑名单',
+    Notice: '公告管理',
+    Room:'琴房管理',
+    CheckTicket: '检票',
   },
   item: {
     idNumber: '手机号/证件号',
@@ -107,7 +109,11 @@ export default {
     status_0: '长期已使用',
 
     timeAsc: '时间顺序',
-    timeDes: '时间倒序'
+    timeDes: '时间倒序',
+
+    confirm: '确定',
+    warning: '警告',
+    cancel: '取消',
   },
   navbar: {
     logOut: '退出登录',
@@ -154,7 +160,7 @@ export default {
     dragTips2: '拖拽后顺序',
     title: '标题',
     importance: '重要性',
-    type: '类型',
+    type: '类  型',
     remark: '点评',
     search: '搜索',
     add: '添加',
@@ -164,14 +170,31 @@ export default {
     date: '时间',
     author: '作者',
     readings: '阅读数',
-    status: '状态',
+    status: '状  态',
     actions: '操作',
     edit: '编辑',
     publish: '发布',
     draft: '草稿',
     delete: '删除',
     cancel: '取 消',
-    confirm: '确 定'
+    confirm: '确 定',
+    content:'详 情',
+    room:'房  间',
+    roomType:'琴房类型',
+    stuvalue:'学生价格',
+    teavalue:'教师价格',
+    socvalue:'校外价格',
+    multivalue:'多人价格',
+    open: '开放',
+    close: '关闭',
+    info: '简  介',
+    value: '价  格',
+    claim: '琴房不可用时间列表',
+    infoEdit: '编辑信息',
+    ruleEdit: '编辑时间',
+    start:'开始时间',
+    end:'结束时间',
+    week:'星  期'
   },
   user:{
     name: '姓名',

@@ -16,6 +16,11 @@ const MAXTIMEINTERVAL = 2 * 6;
 // 30 min
 const MINTIMEINTERVAL = 3;
 
+// pay app id
+const PAYAPPID = "wx715248ea60f61941";
+// pay secret id
+const PAYSECRETID = "b0e72051903b19032968b7b586aa8e61";
+
 const formatNumber = (n) => {
     n = n.toString();
     return n[1] ? n : "0" + n
@@ -753,6 +758,30 @@ const shwoHidenIdNumber = (idNumber, userType) => {
     }
 };
 
+/*
+ * compute money need to pay
+ * money * ceil(interval / UNIT)
+ */
+const moneyToPay = (money, interval, UNIT) => {
+    let quant = Math.ceil(interval / UNIT);
+    return quant * money;
+};
+
+/*
+ * get random string
+ * TODO: use uuid
+ */
+const randomString = () => {
+    let chars = "ABCDEFGHJKMNPQRSTWXYZabcdefhijkmnprstwxyz2345678";
+    let maxPos = chars.length;
+    let pwd = '';
+    for (let i = 0; i < 32; i++) {
+        pwd += chars.charAt(Math.floor(Math.random() * maxPos));
+    }
+    return pwd;
+};
+
+
 module.exports = {
     alertInfo: alertInfo,
     formatTime: formatTime,
@@ -788,5 +817,9 @@ module.exports = {
     getHoursAvailable: getHoursAvailable,
     getMinutesAvailable: getMinutesAvailable,
     shwoHidenIdNumber: shwoHidenIdNumber,
-    showHidenId, showHidenId
+    showHidenId: showHidenId,
+    moneyToPay: moneyToPay,
+    PAYAPPID: PAYAPPID,
+    PAYSECRETID: PAYSECRETID,
+    randomString: randomString
 };

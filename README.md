@@ -1,4 +1,5 @@
 # PianoRoomReservationSystem
+* [![Build Status](https://travis-ci.com/YeWR/PianoRoomReservationSystem.svg?token=uJujS3v93YqFPXfQnm9M&branch=master)](https://travis-ci.com/YeWR/PianoRoomReservationSystem)
 * AppID:	wx9af8ee119208bf4e
 ## `github`使用说明
 

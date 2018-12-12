@@ -68,10 +68,10 @@ export default {
     itemList: 'Item List',
     itemScan: 'Item Scan Today',
     itemDetail: 'Item Detail',
-
     userManagement: 'User Management',
     userList: 'User List',
-    blackList: 'Black List'
+    blackList: 'Black List',
+    CheckTicket: 'Check Ticket',
   },
   item: {
     idNumber: 'User Id Number',
@@ -107,7 +107,11 @@ export default {
     status_0: 'long term item used',
 
     timeAsc: 'Time Ascending',
-    timeDes: 'Time Descending'
+    timeDes: 'Time Descending',
+
+    confirm: 'Confirm ',
+    warning: 'Warning',
+    cancel: 'Cancel',
   },
   navbar: {
     logOut: 'Log Out',
@@ -171,7 +175,26 @@ export default {
     draft: 'Draft',
     delete: 'Delete',
     cancel: 'Cancel',
-    confirm: 'Confirm'
+    confirm: 'Confirm',
+    content: 'Content',
+    room:'Room',
+    roomType:'Room Type',
+    status:'Status',
+    stuvalue:'student',
+    teavalue:'teacher',
+    socvalue:'society',
+    multivalue:'multi-member',
+    open: 'Open',
+    close: 'Close',
+    info:'Info',
+    value: 'Value',
+    claim: 'unavailable',
+    infoEdit: 'info edit',
+    ruleEdit: 'time edit',
+    start:'Start Time',
+    end:'End Time',
+    week:'Week',
+    checkin:'please input id'
   },
 
   user:{

@@ -9,7 +9,6 @@ import Layout from '@/views/layout/Layout'
 /* Router Modules */
 // import componentsRouter from './modules/components'
 // import chartsRouter from './modules/charts'
-import tableRouter from './modules/table'
 // import nestedRouter from './modules/nested'
 
 /** note: Submenu only appear when children.length>=1
@@ -110,141 +109,6 @@ export default new Router({
 })
 
 export const asyncRouterMap = [
-  // {
-  //   path: '/permission',
-  //   component: Layout,
-  //   redirect: '/permission/index',
-  //   alwaysShow: true, // will always show the root menu
-  //   meta: {
-  //     title: 'permission',
-  //     icon: 'lock',
-  //     roles: ['admin', 'editor'] // you can set roles in root nav
-  //   },
-  //   children: [
-  //     {
-  //       path: 'page',
-  //       component: () => import('@/views/permission/page'),
-  //       name: 'PagePermission',
-  //       meta: {
-  //         title: 'pagePermission',
-  //         roles: ['admin'] // or you can only set roles in sub nav
-  //       }
-  //     },
-  //     {
-  //       path: 'directive',
-  //       component: () => import('@/views/permission/directive'),
-  //       name: 'DirectivePermission',
-  //       meta: {
-  //         title: 'directivePermission'
-  //         // if do not set roles, means: this page does not require permission
-  //       }
-  //     }
-  //   ]
-  // },
-  //
-  // {
-  //   path: '/icon',
-  //   component: Layout,
-  //   children: [
-  //     {
-  //       path: 'index',
-  //       component: () => import('@/views/svg-icons/index'),
-  //       name: 'Icons',
-  //       meta: {title: 'icons', icon: 'icon', noCache: true}
-  //     }
-  //   ]
-  // },
-
-  /** When your routing table is too long, you can split it into small modules**/
-  // componentsRouter,
-  // chartsRouter,
-  // nestedRouter,
-  tableRouter,
-
-  // {
-  //   path: '/example',
-  //   component: Layout,
-  //   redirect: '/example/list',
-  //   name: 'Example',
-  //   meta: {
-  //     title: 'example',
-  //     icon: 'example'
-  //   },
-  //   children: [
-  //     {
-  //       path: 'create',
-  //       component: () => import('@/views/example/create'),
-  //       name: 'CreateArticle',
-  //       meta: {title: 'createArticle', icon: 'edit'}
-  //     },
-  //     {
-  //       path: 'edit/:id(\\d+)',
-  //       component: () => import('@/views/example/edit'),
-  //       name: 'EditArticle',
-  //       meta: {title: 'editArticle', noCache: true},
-  //       hidden: true
-  //     },
-  //     {
-  //       path: 'list',
-  //       component: () => import('@/views/example/list'),
-  //       name: 'ArticleList',
-  //       meta: {title: 'articleList', icon: 'list'}
-  //     }
-  //   ]
-  // },
-
-  // {
-  //   path: '/tab',
-  //   component: Layout,
-  //   children: [
-  //     {
-  //       path: 'index',
-  //       component: () => import('@/views/tab/index'),
-  //       name: 'Tab',
-  //       meta: {title: 'tab', icon: 'tab'}
-  //     }
-  //   ]
-  // },
-
-  // {
-  //   path: '/error',
-  //   component: Layout,
-  //   redirect: 'noredirect',
-  //   name: 'ErrorPages',
-  //   meta: {
-  //     title: 'errorPages',
-  //     icon: '404'
-  //   },
-  //   children: [
-  //     {
-  //       path: '401',
-  //       component: () => import('@/views/errorPage/401'),
-  //       name: 'Page401',
-  //       meta: {title: 'page401', noCache: true}
-  //     },
-  //     {
-  //       path: '404',
-  //       component: () => import('@/views/errorPage/404'),
-  //       name: 'Page404',
-  //       meta: {title: 'page404', noCache: true}
-  //     }
-  //   ]
-  // },
-
-  // {
-  //   path: '/error-log',
-  //   component: Layout,
-  //   redirect: 'noredirect',
-  //   children: [
-  //     {
-  //       path: 'log',
-  //       component: () => import('@/views/errorLog/index'),
-  //       name: 'ErrorLog',
-  //       meta: {title: 'errorLog', icon: 'bug'}
-  //     }
-  //   ]
-  // },
-
   {
     path: '/excel',
     component: Layout,
@@ -307,7 +171,6 @@ export const asyncRouterMap = [
       // }
     ]
   },
-
   // {
   //   path: '/zip',
   //   component: Layout,
@@ -399,6 +262,60 @@ export const asyncRouterMap = [
       },
     ]
   },
-
+  {
+    path: '/notice',
+    component: Layout,
+    alwaysShow: true,
+    redirect: '/notice/list',
+    name: 'notice',
+    meta: {
+      title: 'Notice',
+      icon: 'table'
+    },
+    children: [
+      {
+        path: 'list',
+        component: () => import('@/views/notice/noticeList'),
+        name: 'Notice',
+        meta: { title: 'Notice' }
+      }
+    ]
+  },
+  {
+    path: '/room',
+    component: Layout,
+    redirect: '/room/list',
+    name: 'room',
+    meta: {
+      title: 'Room',
+      icon: 'table'
+    },
+    children: [
+      {
+        path: 'list',
+        component: () => import('@/views/room/roomList'),
+        name: 'Room',
+        meta: { title: 'Room' }
+      }
+    ]
+  },
+  {
+    path: '/check',
+    component: Layout,
+    redirect: '/check/ticket',
+    name: 'checkTicket',
+    meta: {
+      title: 'CheckTicket',
+      icon: 'table'
+    },
+    children: [
+      {
+        path: 'ticket',
+        component: () => import('@/views/check/checkTicket'),
+        name: 'CheckTicket',
+        meta: { title: 'CheckTicket' }
+      }
+    ]
+  },
   { path: '*', redirect: '/404', hidden: true }
 ]

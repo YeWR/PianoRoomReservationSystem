@@ -63,16 +63,11 @@ service.interceptors.response.use(
   //   }
   // },
   error => {
-    let msg = error.message
-    if (msg.indexOf('401')){
-      msg = '账号密码错误或当前登录已失效'
-    }
-    else if (msg.indexOf('404')){
+    let msg = error.response.data.info
+    if (!msg){
       msg = '网络错误或服务器异常'
     }
-    else {
-      //
-    }
+  
     Message({
       message: msg,
       type: 'warning',

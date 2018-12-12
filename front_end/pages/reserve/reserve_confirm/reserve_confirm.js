@@ -25,11 +25,34 @@ Page({
     },
 
     /*
-     * confirm reservation
-     * TODO: do not foret to pay for the reservation and check
+     * get open id
      */
-    confirmReservation: function (e) {
-        let that = this;
+    getOpenId: function (that, code) {
+        let params = {};
+        params["appid"] = util.PAYAPPID;
+        params["secret"] = util.PAYSECRETID;
+        params["js_code"] = code;
+        params["grant_type"] = "authorization_code";
+
+        let url = util.setUrl("https://api.weixin.qq.com/sns/jscode2session", params);
+
+        wx.request({
+            url: url,
+            method: 'GET',
+            success: function (res) {
+                that.pay(that, res.data.openid)
+            },
+            fail: function () {
+            },
+            complete: function () {
+            }
+        })
+    },
+
+    /*
+     * pay
+     */
+    pay: function (that, openid) {
 
         let number = app.globalData._idNumber;
         if (app.globalData._userType !== util.USERTYPE.SOCIAL) {
@@ -40,6 +63,7 @@ Page({
         wx.request({
             url: "https://958107.iterator-traits.com/user/reservation/order",
             data: {
+                openid: openid,
                 number: number,
                 reservationType: that.data._reservationType,
                 pianoId: that.data._pianoId,
@@ -54,17 +78,49 @@ Page({
             },
             success: function (res) {
                 if (res.data.success) {
-                    util.alertInfo("预约成功！", "success", 500);
-                    setTimeout(() => {
-                        that.toAlarm();
-                    }, 500);
+                    let payModel = res.data.sign;
+                    console.log("payModel: ", payModel);
+                    wx.requestPayment({
+                        timeStamp: payModel.timeStamp,
+                        nonceStr: payModel.nonceStr,
+                        package: payModel.package,
+                        signType: "MD5",
+                        paySign: payModel.paySign,
+                        success: function (res) {
+                            util.alertInfo("预约成功！", "success", 500);
+                            setTimeout(() => {
+                                that.toAlarm();
+                            }, 500);
+                        },
+                        fail: function (res) {
+                            util.alertInfo("支付失败", "none", 1000);
+                        }
+                    })
                 }
-                else{
+                else {
                     util.alertInfo(res.data.info, "none", 1000);
                 }
             },
-            fail: function (res) {
-                util.alertInfo("预约失败，请检查网络设备是否正常。", "none", 1000);
+            fail: function () {
+                util.alertInfo("网络异常", "none", 1000);
+            }
+        });
+    },
+
+
+    /*
+     * confirm reservation
+     * TODO: do not forget to pay for the reservation and check
+     */
+    confirmReservation: function (e) {
+        let that = this;
+        wx.login({
+            success: function (res) {
+                console.log("login: ", res);
+                that.getOpenId(that, res.code)
+            },
+            fail: function () {
+                util.alertInfo("微信登录失败", "none", 1000);
             }
         });
     },
