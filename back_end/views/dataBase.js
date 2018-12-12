@@ -740,10 +740,12 @@ let InsertItem = async function(itemDate, itemUsername, itemRoomId, itemType, it
     let errorMsg = "";
     // 修改可预约时间段。
     let result = await preparePianoForInsert(itemRoomId, itemBegin, itemDuration, itemDate);
-    if(result.success == false){
+    if (result.success === false) {
         errorMsg = "预约失败";
-        return {"success":false,
-                "info":errorMsg};
+        return {
+            "success": false,
+            "info": errorMsg
+        };
     }
     // 插入订单
     let test = function(){
@@ -782,6 +784,69 @@ let InsertItem = async function(itemDate, itemUsername, itemRoomId, itemType, it
     if(flag == 0){
         return {"success":false,
                 "info":errorMsg};
+    }
+    if(flag == 1){
+        return {"success":true};
+    }
+}
+
+//使用redis存储未支付订单
+let InsertTempItem = async function(itemDate, itemUsername, itemRoomId, itemType, itemMember, itemValue, itemDuration, itemBegin, itemUuid){
+    let errorMsg = "";
+    // 插入订单
+    let test = function(){
+        return new Promise(resolve =>{
+            try{
+                let _info = {
+                    item_date: itemDate,
+                    item_username: itemUsername,
+                    item_roomId: itemRoomId,
+                    item_type: itemType,
+                    item_member: itemMember,
+                    item_value: itemValue,
+                    item_duration: itemDuration,
+                    item_begin: itemBegin,
+                    item_uuid: itemUuid
+                }
+                client.set(itemUuid, JSON.stringify(_info));
+                resolve(1);
+            }
+            catch{
+                errorMsg = "预约失败";
+                resolve(0);
+            }
+        });
+    };
+    let flag = await test();
+    console.log(flag);
+    if(flag == 0){
+        return {"success":false,
+            "info":errorMsg};
+    }
+    if(flag == 1){
+        return {"success":true};
+    }
+}
+
+let DeleteTempItem = async function(itemUuid){
+    let errorMsg = "";
+    // 插入订单
+    let test = function(){
+        return new Promise(resolve =>{
+            try{
+                client.del(itemUuid, function (err, reply) {});
+                resolve(1);
+            }
+            catch{
+                resolve(0);
+            }
+        });
+    };
+    let flag = await test();
+    console.log(flag);
+    if(flag == 0){
+        return {"success":false,
+            "info":errorMsg};
     }
     if(flag == 1){
         return {"success":true};
@@ -979,6 +1044,35 @@ let GetItemByUuid = async function(itemUuid){
         console
         return {"data":itemInfo,
                 "info":errorMsg};
+    }
+}
+
+let GetTempItemByUuid = async function(itemUuid){
+    let errorMsg = "";
+    let itemInfo = null;
+    let test = function(){
+        return new Promise(resolve =>{
+            client.get(itemUuid, function(err, reply){
+                if(reply){
+                    itemInfo = JSON.parse(reply);
+                    resolve(1);
+                }
+                else{
+                    errorMsg = "无此订单";
+                    resolve(0);
+                }
+            });
+        });
+    };
+    let flag = await test();
+    console.log(flag);
+    if(flag == 0){
+        return {"data":itemInfo,
+            "info":errorMsg};
+    }
+    if(flag == 1){
+        return {"data":itemInfo,
+            "info":errorMsg};
     }
 }
 
@@ -1267,6 +1361,9 @@ exports.GetItem = GetItem;                  // 获取某个人的订单信息
 exports.SearchItem = SearchItem;            // 查询订单(管理端)
 exports.GetItemByUuid = GetItemByUuid;      // 获取订单信息，由uuid
 exports.DeleteItem = DeleteItem;            // 删除订单-需要改写琴房信息
+exports.InsertTempItem = InsertTempItem;
+exports.DeleteTempItem = DeleteTempItem;
+exports.GetTempItemByUuid = GetTempItemByUuid;
 
 // 琴房
 exports.GetPianoRoomInfo = GetPianoRoomInfo;// 获取单个琴房信息
