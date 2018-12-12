@@ -79,3 +79,7 @@ front_end/.idea
 front_end_manage/.idea
 back_end/.idea
 back_end/configs.json
+back_end/package.json
+back_end/mysqlTestConfig.json
+back_end/mysqlConfig.json
+back_end/package.json
