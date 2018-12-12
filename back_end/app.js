@@ -1,5 +1,5 @@
 const Koa = require("koa");
-const app = new Koa();
+const app = module.exports = new Koa();
 const bodyParser = require("koa-bodyparser");
 const views = require("./views/views");
 const views_manage = require("./views/views_manage");
@@ -23,7 +23,9 @@ app.use(views.routes()).use(views.allowedMethods());
 
 app.use(views_manage.routes()).use(views_manage.allowedMethods());
 
-app.listen(3000);
-console.log("listen on 3000");
+if(!module.parent)
+{
+    app.listen(3000);
+    console.log("listen on 3000");
+}
 
-module.exports = app;

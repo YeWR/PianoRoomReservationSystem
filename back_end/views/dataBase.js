@@ -809,6 +809,7 @@ let InsertTempItem = async function(itemDate, itemUsername, itemRoomId, itemType
                     item_uuid: itemUuid
                 }
                 client.set(itemUuid, JSON.stringify(_info));
+                client.expire(itemUuid, 3600);
                 resolve(1);
             }
             catch{
