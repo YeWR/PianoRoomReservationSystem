@@ -4,7 +4,6 @@ const bodyParser = require("koa-bodyparser");
 const views = require("./views/views");
 const views_manage = require("./views/views_manage");
 const session = require("koa-session");
-const sessionStore = require("koa-mysql-session");
 const cors = require("koa2-cors");
 let file = require("fs");
 let dbconfigFile = "mysqlConfig.json";

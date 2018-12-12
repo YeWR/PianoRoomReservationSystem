@@ -4,7 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha"
   },
   "author": "",
   "license": "MIT",
@@ -12,6 +12,20 @@
     "koa": "*",
     "koa-router": "*",
     "koa-bodyparser": "*",
-    "mysql-activerecord": "*"
+    "mysql-activerecord": "*",
+    "koa2-cors": "*",
+    "jsonwebtoken": "*",
+    "request": "*",
+    "@alicloud/sms-sdk": "*",
+    "xml2js": "*",
+    "node-uuid": "*",
+    "crypto": "*",
+    "redis": "*",
+    "koa-session": "*"
+  },
+  "devDependencies": {
+    "mocha": "*",
+    "chai": "*",
+    "supertest": "*"
   }
 }
