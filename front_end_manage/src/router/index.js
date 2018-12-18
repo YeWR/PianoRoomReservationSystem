@@ -103,43 +103,118 @@ export const constantRouterMap = [
 ]
 
 export default new Router({
-  // mode: 'history', // require service support
   scrollBehavior: () => ({ y: 0 }),
   routes: constantRouterMap
 })
 
 export const asyncRouterMap = [
   {
-    path: '/excel',
+    path: '/item',
     component: Layout,
-    redirect: '/excel/export-excel',
-    name: 'Excel',
+    alwaysShow: true,
+    redirect: '/item/scan',
+    name: 'Item',
     meta: {
-      title: 'excel',
-      icon: 'excel'
+      title: 'itemManagement',
+      icon: 'component'
     },
     children: [
       {
-        path: 'export-excel',
-        component: () => import('@/views/excel/exportExcel'),
-        name: 'ExportExcel',
-        meta: { title: 'exportExcel' }
+        path: 'scan',
+        component: () => import('@/views/item/itemScan'),
+        name: 'itemScan',
+        meta: { title: 'itemScan' }
       },
       {
-        path: 'export-selected-excel',
-        component: () => import('@/views/excel/selectExcel'),
-        name: 'SelectExcel',
-        meta: { title: 'selectExcel' }
-      },
-      {
-        path: 'upload-excel',
-        component: () => import('@/views/excel/uploadExcel'),
-        name: 'UploadExcel',
-        meta: { title: 'uploadExcel' }
+        path: 'all',
+        component: () => import('@/views/item/itemAll'),
+        name: 'itemAll',
+        meta: { title: 'itemList' }
       }
     ]
   },
+  {
+    path: '/user',
+    component: Layout,
+    redirect: '/user/all',
+    name: 'User',
+    meta: {
+      title: 'userManagement',
+      icon: 'peoples'
+    },
+    children: [
+      {
+        path: 'all',
+        component: () => import('@/views/user/userAll'),
+        name: 'userAll',
+        meta: { title: 'userList' }
+      },
+      {
+        path: 'black',
+        component: () => import('@/views/user/blackLIST'),
+        name: 'blackLIST',
+        meta: { title: 'blackList' }
+      }
+    ]
+  },
+  {
+    path: '/notice',
+    component: Layout,
+    redirect: '/notice/list',
+    name: 'notice',
+    meta: {
+      title: 'Notice',
+      icon: 'message'
+    },
+    children: [
+      {
+        path: 'list',
+        component: () => import('@/views/notice/noticeList'),
+        name: 'Notice',
+        meta: { title: 'Notice' }
+      }
+    ]
+  },
+  {
+    path: '/room',
+    component: Layout,
+    redirect: '/room/list',
+    name: 'room',
+    meta: {
+      title: 'Room',
+      icon: 'list'
+    },
+    children: [
+      {
+        path: 'list',
+        component: () => import('@/views/room/roomList'),
+        name: 'Room',
+        meta: { title: 'Room' }
+      }
+    ]
+  },
+  {
+    path: '/check',
+    component: Layout,
+    redirect: '/check/ticket',
+    name: 'checkTicket',
+    meta: {
+      title: 'CheckTicket',
+      icon: 'password'
+    },
+    children: [
+      {
+        path: 'ticket',
+        component: () => import('@/views/check/checkTicket'),
+        name: 'CheckTicket',
+        meta: { title: 'CheckTicket' }
+      }
+    ]
+  },
+  { path: '*', redirect: '/404', hidden: true }
+]
 
+export const asyncCheckRouterMap = [
   {
     path: '/item',
     component: Layout,
@@ -163,140 +238,6 @@ export const asyncRouterMap = [
         name: 'itemAll',
         meta: { title: 'itemList' }
       }
-      // {
-      //   path: 'longterm',
-      //   component: () => import('@/views/item/itemLongterm'),
-      //   name: 'itemLongterm',
-      //   meta: { title: 'LongtermItem' }
-      // }
-    ]
-  },
-  // {
-  //   path: '/zip',
-  //   component: Layout,
-  //   redirect: '/zip/download',
-  //   alwaysShow: true,
-  //   meta: {title: 'zip', icon: 'zip'},
-  //   children: [
-  //     {
-  //       path: 'download',
-  //       component: () => import('@/views/zip/index'),
-  //       name: 'ExportZip',
-  //       meta: {title: 'exportZip'}
-  //     }
-  //   ]
-  // },
-
-  // {
-  //   path: '/theme',
-  //   component: Layout,
-  //   redirect: 'noredirect',
-  //   children: [
-  //     {
-  //       path: 'index',
-  //       component: () => import('@/views/theme/index'),
-  //       name: 'Theme',
-  //       meta: {title: 'theme', icon: 'theme'}
-  //     }
-  //   ]
-  // },
-
-  // {
-  //   path: '/clipboard',
-  //   component: Layout,
-  //   redirect: 'noredirect',
-  //   children: [
-  //     {
-  //       path: 'index',
-  //       component: () => import('@/views/clipboard/index'),
-  //       name: 'ClipboardDemo',
-  //       meta: {title: 'clipboardDemo', icon: 'clipboard'}
-  //     }
-  //   ]
-  // },
-
-  // {
-  //   path: '/i18n',
-  //   component: Layout,
-  //   children: [
-  //     {
-  //       path: 'index',
-  //       component: () => import('@/views/i18n-demo/index'),
-  //       name: 'I18n',
-  //       meta: {title: 'i18n', icon: 'international'}
-  //     }
-  //   ]
-  // },
-
-  // {
-  //   path: 'external-link',
-  //   component: Layout,
-  //   children: [
-  //     {
-  //       path: 'https://github.com/PanJiaChen/vue-element-admin',
-  //       meta: {title: 'externalLink', icon: 'link'}
-  //     }
-  //   ]
-  // },
-  {
-    path: '/user',
-    component: Layout,
-    redirect: '/user/all',
-    name: 'User',
-    meta: {
-      title: 'userManagement',
-      icon: 'people'
-    },
-    children: [
-      {
-        path: 'all',
-        component: () => import('@/views/user/userAll'),
-        name: 'userAll',
-        meta: { title: 'userList' }
-      },
-      {
-        path: 'black',
-        component: () => import('@/views/user/blackLIST'),
-        name: 'blackLIST',
-        meta: { title: 'blackList' }
-      },
-    ]
-  },
-  {
-    path: '/notice',
-    component: Layout,
-    alwaysShow: true,
-    redirect: '/notice/list',
-    name: 'notice',
-    meta: {
-      title: 'Notice',
-      icon: 'table'
-    },
-    children: [
-      {
-        path: 'list',
-        component: () => import('@/views/notice/noticeList'),
-        name: 'Notice',
-        meta: { title: 'Notice' }
-      }
-    ]
-  },
-  {
-    path: '/room',
-    component: Layout,
-    redirect: '/room/list',
-    name: 'room',
-    meta: {
-      title: 'Room',
-      icon: 'table'
-    },
-    children: [
-      {
-        path: 'list',
-        component: () => import('@/views/room/roomList'),
-        name: 'Room',
-        meta: { title: 'Room' }
-      }
     ]
   },
   {
@@ -316,6 +257,5 @@ export const asyncRouterMap = [
         meta: { title: 'CheckTicket' }
       }
     ]
-  },
-  { path: '*', redirect: '/404', hidden: true }
+  }
 ]

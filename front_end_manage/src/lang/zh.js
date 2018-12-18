@@ -189,7 +189,7 @@ export default {
     close: '关闭',
     info: '简  介',
     value: '价  格',
-    claim: '琴房不可用时间列表',
+    claim: '琴房 不可用 时间列表',
     infoEdit: '编辑信息',
     ruleEdit: '编辑时间',
     start:'开始时间',

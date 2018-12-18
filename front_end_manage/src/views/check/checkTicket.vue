@@ -1,25 +1,15 @@
 <template>
   <div class="mixin-components-container">
-    <el-row>
+    <el-row style="width:700px">
       <el-card class="box-card">
         <div slot="header" class="clearfix">
           <span>检票</span>
         </div>
         <div style="margin-bottom:50px;">
-          <el-input :placeholder="$t('please input id')" v-model="query.id" style="width: 50%;" class="filter-item"/>
+          <el-input :placeholder="$t('please input id')" v-model="query.id" style="width: 80%;" class="filter-item"/>
           <el-button class="filter-item" type="primary" @click="checkin">检票</el-button>
         </div>
       </el-card>
-    </el-row>
-
-    <el-row :gutter="20" style="margin-top:50px;">
-      <el-col style = "width:50%;">
-        <el-card class="box-card">
-          <div slot="header" class="clearfix">
-            <span>{{ res }}</span>
-          </div>
-        </el-card>
-      </el-col>
     </el-row>
   </div>
 </template>

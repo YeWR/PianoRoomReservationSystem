@@ -188,7 +188,7 @@ export default {
     close: 'Close',
     info:'Info',
     value: 'Value',
-    claim: 'unavailable',
+    claim: 'Unavailable',
     infoEdit: 'info edit',
     ruleEdit: 'time edit',
     start:'Start Time',

@@ -1,5 +1,6 @@
 <template>
-  <div>
+<div>
+  <div v-if='flag'>
     <div>
       <el-row :gutter="40" v-loading="listLoading" class="panel-group" :list="list">
         <div v-for="item in list" :key="item.id" class="board-item" v-on:click="setTemp(item)">
@@ -17,7 +18,7 @@
         </div>
       </el-row>
     </div>
-    <div style="top: 30px; right: 30px">
+    <div style="top: 30px; left: 30px">
       <el-col :xs="{span: 24}" :sm="{span: 12}" :md="{span: 12}" :lg="{span: 6}" :xl="{span: 6}"
               style="margin-bottom:30px; ">
         <BoxCard v-loading="tempLoading" :key="2" :temp="temp" :headerText="itemDetail" :options="options"
@@ -25,6 +26,19 @@
       </el-col>
     </div>
   </div>
+  <div v-if='1-flag' class="app-container" style="left: 30%">
+    <el-card class="box-card" style="width: 400px; height: 200px">
+      <div slot="header">
+        <a class="link-type link-title" target="_blank">
+          {{ $t('今日订单提示') }}
+        </a>
+      </div>
+      <div class="box-item">
+        <code style="margin-top:5px; height:100px">{{ $t('截至现在，琴房并无今日订单！！') }}</code>
+      </div>
+    </el-card>
+  </div>
+</div>
 </template>
 <script>
   import BoxCard from './components/BoxCard'
@@ -37,6 +51,7 @@
     },
     data() {
       return {
+        flag : 1,
         options: {
           group: 'mission'
         },
@@ -69,8 +84,10 @@
           if (this.list.length > 0) {
             this.temp = this.list[0]
           }
+          else{
+            this.flag = 0
+          }
           console.log('gg', this.list)
-          // Just to simulate the time of the request
           setTimeout(() => {
             this.listLoading = false
             this.tempLoading = false

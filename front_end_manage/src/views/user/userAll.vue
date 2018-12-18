@@ -20,40 +20,31 @@
       border
       fit
       highlight-current-row
-      style="width: 100%;"
-      @sort-change="sortChange">
+      style="width: 100%;">
 
-      <el-table-column :label="$t('user.name')"  align="center" width="120">
+      <el-table-column :label="$t('user.name')"  align="center" width="270px">
         <template slot-scope="scope">
           <span>{{ scope.row.id }}</span>
         </template>
       </el-table-column>
 
-      <el-table-column :label="$t('user.telephone')" width="230px" align="center">
+      <el-table-column :label="$t('user.telephone')" width="330px" align="center">
         <template slot-scope="scope">
           <span>{{ scope.row.telephone }}</span>
         </template>
       </el-table-column>
 
-      <el-table-column :label="$t('user.IDnumber')" min-width="250px" align="center">
-        <template slot-scope="scope">
-          <span>{{ scope.row.IDnumber }}</span>
-        </template>
-      </el-table-column>
-
-      <el-table-column :label="$t('user.type')" width="150px" align="center">
+      <el-table-column :label="$t('user.type')" width="345px" align="center">
         <template slot-scope="scope">
           <span>{{ toUserType(scope.row.type) }}</span>
         </template>
       </el-table-column>
 
-
-
-      <el-table-column :label="$t('table.actions')" align="center" width="280" class-name="small-padding fixed-width">
+      <el-table-column :label="$t('table.actions')" align="center" width="370px" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button   style="width:100px;"   type="primary" @click="checkList(scope.row.telephone)">{{ $t('user.detail') }}
           </el-button>
-          <el-button  style="width:100px;" type="danger"@click="toBlack(scope.row.userId)" >{{ $t('user.blackList') }}
+          <el-button  style="width:100px;" type="danger" @click="toBlack(scope.row.userId)" >{{ $t('user.blackList') }}
           </el-button>
         </template>
       </el-table-column>
@@ -86,7 +77,7 @@
   }, {})
 
   export default {
-    name: 'userAll',
+    name: 'ComplexTable',
     components: { Pagination },
     directives: { waves },
     data() {
@@ -123,14 +114,13 @@
     },
     methods: {
       getList() {
-        this.listLoading = false
+        this.listLoading = true
         // this.list = [this.temp]
         // this.total = 1
-
         fetchUserList(this.listQuery).then(response => {
           this.list = response.data.list
           this.total = response.data.total
-
+          console.log(response)
           // Just to simulate the time of the request
           setTimeout(() => {
             this.listLoading = false
@@ -171,12 +161,43 @@
       },
 
       toBlack(id){
-        joinToBlacklist(id)
-        this.getList()
+        this.$confirm('此操作将把此用户移入黑名单, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this.listLoading = true;
+          joinToBlacklist(id).then(response => {
+            if(response.status == 200){
+              this.$notify({
+                title: '成功',
+                message: '加入黑名单成功',
+                type: 'success',
+                duration: 2000
+              })
+              this.getList()
+            }
+            else{
+              this.$notify({
+                title: '失败',
+                message: response.data,
+                type: 'fail',
+                duration: 2000
+              })
+            }
+            setTimeout(() => {
+              this.listLoading = false
+            }, 1.5 * 1000)
+          }) 
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消移入'
+          });          
+        });
       },
       checkList(telephone){
         this.$router.push({ path: this.redirect + '?telephone=' + telephone})
-
       }
     }
   }
