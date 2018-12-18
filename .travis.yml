@@ -14,5 +14,5 @@ before_install:
 install:
     - npm install
 script:
-    - npm run build:sit
     - npm run unit
+    - npm run build:prod
