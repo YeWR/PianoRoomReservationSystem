@@ -10,6 +10,8 @@ let dbconfigFile = "mysqlConfig.json";
 let dbconfig = JSON.parse(file.readFileSync(dbconfigFile));
 const configPath = "configs.json";
 const configs = JSON.parse(file.readFileSync(configPath));
+const stat = require('koa-static');
+
 
 app.keys = configs.app_key;
 app.use(session({
@@ -22,7 +24,7 @@ app.use(bodyParser());
 app.use(views.routes()).use(views.allowedMethods());
 
 app.use(views_manage.routes()).use(views_manage.allowedMethods());
-
+app.use(stat(__dirname));
 if(!module.parent)
 {
     app.listen(3000);

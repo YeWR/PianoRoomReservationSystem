@@ -4,7 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "test": "mocha"
+    "test": "mysql -uroot -p1234 test < ~/test.sql && mv mysqlConfig.json mysqlConfigOld.json && mv mysqlTestConfig.json mysqlConfig.json && (mocha --exit || : ) && mv mysqlConfig.json mysqlTestConfig.json && mv mysqlConfigOld.json mysqlConfig.json"
   },
   "author": "",
   "license": "MIT",
@@ -21,11 +21,14 @@
     "node-uuid": "*",
     "crypto": "*",
     "redis": "*",
-    "koa-session": "*"
+    "koa-session": "*",
+    "koa-static": "*"
   },
   "devDependencies": {
     "mocha": "*",
     "chai": "*",
-    "supertest": "*"
+    "supertest": "*",
+    "istanbul": "*",
+    "nyc": "*"
   }
 }

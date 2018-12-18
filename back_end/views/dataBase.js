@@ -13,7 +13,7 @@ let db = new Db.Adapter({
 });
 
 let redis = require("redis");
-let client = redis.createClient(config.redisPort,config.serverIp)
+let client = redis.createClient(config.redisPort,config.serverIp);
 
 let timeLength = 84;
 
@@ -971,11 +971,11 @@ let SearchItem = async function(count, offset, username, roomId, member, type, o
     let sortOrder = null;
     if(order === '-')
     {
-        sortOrder = ['`item_date` asc', '`item_begin` asc'];
+        sortOrder = ['`item_date` desc', '`item_begin` desc'];
     }
     else
     {
-        sortOrder = ['`item_date` desc', '`item_begin` desc'];
+        sortOrder = ['`item_date` asc', '`item_begin` asc'];
     }
     let test = function(){
         return new Promise(resolve =>{
@@ -1226,11 +1226,11 @@ let SearchNotice = async function(count, offset, title, author, order){
     let sortOrder = null;
     if(order === '-')
     {
-        sortOrder = ['`notice_time` asc'];
+        sortOrder = ['`notice_time` desc'];
     }
     else
     {
-        sortOrder = ['`notice_time` desc'];
+        sortOrder = ['`notice_time` asc'];
     }
     let test = function(){
         return new Promise(resolve =>{
