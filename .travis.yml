@@ -15,4 +15,4 @@ install:
     - npm install
 script:
     - npm run build:sit
-    - npm test
+    - npm run unit
