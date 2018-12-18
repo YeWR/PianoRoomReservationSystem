@@ -14,8 +14,9 @@ let db = new Db.Adapter({
 
 let timeLength = 84
 
-let doUpdate = async function(id,buffer, use){
-    let checkUpdate = function(){
+// 只在开始的时候执行一次
+let doInit = async function(id, buffer, use){
+    let init = function(){
         return new Promise(resolve =>{
             db.where({piano_id: id}).update('piano',{piano_buffer:buffer, piano_list:use},function(err){
                 if(err){
@@ -27,7 +28,7 @@ let doUpdate = async function(id,buffer, use){
             });
         });
     };
-    let check = await checkUpdate()
+    let check = await init()
     if(check == 0){
         return 0;
     }
@@ -36,8 +37,7 @@ let doUpdate = async function(id,buffer, use){
     }
 }
 
-// 每天23：00更新
-let update = async function(){
+let init = async function(){
     let now = new Date()
     let errorMsg = "";
     let pianoInfo;
@@ -47,19 +47,10 @@ let update = async function(){
                 let _data = JSON.stringify(rows);
                 pianoInfo = JSON.parse(_data);
                 console.log(pianoInfo)
-                let count = 0;
                 for(let i = 0; i<pianoInfo.length; i++){
                     let buffer =  ""
-                    for(let j = 1*timeLength; j<(pianoInfo[i].piano_buffer.data).length; j++){
-                        if(pianoInfo[i].piano_buffer.data[j] == '0' || pianoInfo[i].piano_buffer.data[j] == 48){
-                            buffer += '0'
-                        }
-                        else{
-                            buffer += '1'
-                        }
-                    }
-                    for(let j = (now.getDay()-1)*timeLength; j<(now.getDay())*timeLength; j++){
-                        if(pianoInfo[i].piano_rule.data[j] == '0' || pianoInfo[i].piano_rule.data[j] == 48){
+                    for(let j = (now.getDay()-1)*timeLength; j<(now.getDay()+6)*timeLength; j++){
+                        if(pianoInfo[i].piano_rule.data[j%(7*timeLength)] == '0' || pianoInfo[i].piano_rule.data[j%(7*timeLength)] == 48){
                             buffer += '0'
                         }
                         else{
@@ -67,15 +58,7 @@ let update = async function(){
                         }
                     }
                     let use = ""
-                    for(let j = 1*timeLength; j<(pianoInfo[i].piano_list.data).length; j++){
-                        if(pianoInfo[i].piano_list.data[j] == '0' || pianoInfo[i].piano_list.data[j] == 48){
-                            use += '0'
-                        }
-                        else{
-                            use += '1'
-                        }
-                    }
-                    for(let j = 2*timeLength; j<3*timeLength; j++){
+                    for(let j = 0; j<3*timeLength; j++){
                         if(buffer[j] == '0' || buffer[j] == 48){
                             use += '0'
                         }
@@ -83,32 +66,22 @@ let update = async function(){
                             use += '1'
                         }
                     }
-                    db.where({piano_id: pianoInfo[i].piano_id}).update('piano',{piano_buffer:buffer, piano_list:use},function(err){
-                        count ++;
-                        if(count == pianoInfo.length){
-                            if(err){
-                                resolve(0);
-                            }
-                            else{
-                                resolve(1);
-                            }
-                        }
-                    });
+                    doInit(pianoInfo[i].piano_id,buffer,use)
                 }
+                resolve(1);
             });
         });
     };
     let flag = await test();
     console.log(flag);
     if(flag == 0){
-        process.exit(1);
         return {"success":false,
                 "info":errorMsg};
     }
     if(flag == 1){
-        process.exit(1);
         return {"success":true};
     }
 }
 
-update()
+init()
+
