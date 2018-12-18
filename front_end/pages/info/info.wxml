@@ -27,20 +27,20 @@
             </view>
         </view>
 
-        <view class="info-cut">
-            <view class="info-cutline"></view>
-        </view>
+        <!--<view class="info-cut">-->
+            <!--<view class="info-cutline"></view>-->
+        <!--</view>-->
 
-        <view class = "info_main_card_line2">
-            <view class = "info_main_card_line2_left" bindtap="bindPersonalInfo">
-                <text class = "info_main_card_line2_left_text">个人信息</text>
-            </view>
-            <view class = "info_main_card_line2_middle">
-            </view>
-            <view class = "info_main_card_line2_right" bindtap="bindPersonalMsg">
-                <text class = "info_main_card_line2_left_text">我的消息</text>
-            </view>
-        </view>
+        <!--<view class = "info_main_card_line2">-->
+            <!--<view class = "info_main_card_line2_left" bindtap="bindPersonalInfo">-->
+                <!--<text class = "info_main_card_line2_left_text">个人信息</text>-->
+            <!--</view>-->
+            <!--<view class = "info_main_card_line2_middle">-->
+            <!--</view>-->
+            <!--<view class = "info_main_card_line2_right" bindtap="bindPersonalMsg">-->
+                <!--<text class = "info_main_card_line2_left_text">我的消息</text>-->
+            <!--</view>-->
+        <!--</view>-->
 
     </view>
 
@@ -64,7 +64,7 @@
                 <text class="fa fa-exclamation-circle fa-lg"></text>
             </view>
             <view class = "card_down_middle" bindtap="bindReservationIllegal">
-                <text>违规记录</text>
+                <text>长期预约</text>
             </view>
             <view class = "card_down_right">
                 <text class="fa fa-location-arrow fa-lg"></text>

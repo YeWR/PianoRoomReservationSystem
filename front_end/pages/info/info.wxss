@@ -20,7 +20,7 @@
     height: 45%;
     margin-left: 10%;
     margin-right: 10%;
-    margin-top: 6%;
+    margin-top: 16%;
     font-family: SFUIText-regular;
     display: flex;
     align-items: center;
