@@ -14,5 +14,6 @@ before_install:
 install:
     - npm install
 script:
+    - increase-memory-limit
     - npm run unit
     - npm run build:prod
