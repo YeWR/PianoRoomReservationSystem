@@ -1,7 +1,5 @@
 <!--pages/info/individual_info/individual_info.wxml-->
 
-<!--pages/info/info.wxml-->
-
 <view class="container">
     <view class="up_board">
         <text class="info_title">

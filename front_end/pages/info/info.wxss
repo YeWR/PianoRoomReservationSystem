@@ -7,20 +7,21 @@
 }
 
 .info_main_card {
+    box-shadow: 5rpx 5rpx 10rpx 1rpx rgba(100, 100, 100, 1);
     position: absolute;
-    margin-top: 18%;
+    margin-top: 20%;
     border: 1px solid rgba(238, 238, 238, 1);
     background-color: white;
-    height: 31%;
+    height: 25%;
     width: 86%;
 }
 
 .info_main_card_line1 {
     width: 80%;
-    height: 45%;
+    height: 55%;
     margin-left: 10%;
     margin-right: 10%;
-    margin-top: 16%;
+    margin-top: 11%;
     font-family: SFUIText-regular;
     display: flex;
     align-items: center;
@@ -53,54 +54,8 @@
     height: 60%;
     font-size: 110%;
 }
-.info-cut {
-    display: flex;
-    justify-content: center;
-    width: 100%;
-    margin-top: 3%;
-    height: 1%;
-}
-
-.info-cutline {
-    height: 100%;
-    width: 90%;
-    background-color: rgba(238, 238, 238, 1);
-}
-
-.info_main_card_line2{
-    margin-top: 2%;
-    width: 80%;
-    height: 27%;
-    margin-left: 10%;
-    margin-right: 10%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.info_main_card_line2_left{
-     width: 49%;
-     height: 100%;
-    text-align: center;
-    font-size: 120%;
-    color: #aaaaaa;
-    line-height: 200%;
- }
-.info_main_card_line2_middle{
-    width: 1%;
-    height: 100%;
-    background-color: rgba(238, 238, 238, 1);
-
-}
-.info_main_card_line2_right{
-    width: 49%;
-    height: 100%;
-    text-align: center;
-    font-size: 120%;
-    color: #aaaaaa;
-    line-height: 200%;
-}
 .card{
+    box-shadow: 5rpx 5rpx 10rpx 1rpx rgba(187, 187, 187, 1);
     margin-top: 15%;
     width: 90%;
     height: 17%;
@@ -184,6 +139,7 @@
 }
 
 .card2{
+    box-shadow: 5rpx 5rpx 10rpx 1rpx rgba(187, 187, 187, 1);
     margin-top: 8%;
     width: 90%;
     height: 17%;

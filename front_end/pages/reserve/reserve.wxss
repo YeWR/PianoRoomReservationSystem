@@ -74,7 +74,7 @@ progress/* pages/reserve/reserve_space/reserve.wxss */
     text-align: center;
 }
 .date {
-    font-size: xx-large;
+    font-size: 80rpx;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -96,8 +96,9 @@ progress/* pages/reserve/reserve_space/reserve.wxss */
     margin-left: 6%;
 }
 .select_time_board{
+    margin-top: 1%;
     justify-content: center;
-    margin-left: 11%;
+    margin-left: 6%;
     border-bottom:1px solid rgba(187, 187, 187, 1);
     border-top:1px solid rgba(187, 187, 187, 1);
 
@@ -127,10 +128,11 @@ progress/* pages/reserve/reserve_space/reserve.wxss */
     flex-direction: column;
     justify-content: space-between;
     border-radius: 10rpx;
+    box-shadow: 5rpx 5rpx 10rpx 1rpx rgba(187, 187, 187, 1);
 }
 
 .title-container{
-    margin-top: 1%;
+    margin-top: 3%;
     margin-left: 6%;
     width: 85%;
     height: 10%;
@@ -146,7 +148,7 @@ progress/* pages/reserve/reserve_space/reserve.wxss */
 }
 .detail{
     width: 10%;
-    margin-top: 1%;
+    /*margin-top: 1%;*/
 }
 
 .icon_reserve{
@@ -164,7 +166,7 @@ progress/* pages/reserve/reserve_space/reserve.wxss */
 }
 .lable-cut{
     width: 100%;
-    margin-top: 9%;
+    margin-top: 6%;
     height:1%;
     background-color: rgba(187, 187, 187, 1);
 }
@@ -189,31 +191,42 @@ progress/* pages/reserve/reserve_space/reserve.wxss */
 
 .top_icon{
     width: 100%;
-    margin-top: 1%;
+    margin-top: 12%;
     display: flex;
-    /*vertical-align:middle;*/
-    /*align-items: flex-end;*/
+    /*background-color: white;*/
     justify-content: space-between;
 }
-.fa-icon-back-cal{
-    width: 14%;
-    margin-left: 3%;
-    margin-top: 1%;
-    color: white;
-}
+
 .fa-icon-back{
-    width: 14%;
+    margin-left: 10%;
+    margin-right: 10%;
+    width: 80%;
     display: flex;
     justify-content: space-between;
     margin-right: 3%;
 }
 
 .caret_btn{
+    font-size: 80rpx;
     background: none ;
     border: 2rpx solid transparent;
     height: 100%;
+    margin-top: -35rpx;
 }
 .no_room{
     text-align: center;
     margin-top: 20%;
+}
+.nodata{
+    width: 100%;
+    height:100%;
+    /*background-color: #660874;*/
+}
+.nodata-icon{
+    width: 100%;
+    height: 100%;
+}
+.nodata-text{
+    color: #aaaaaa;
+    text-align: center;
 }

@@ -1,4 +1,17 @@
 /* pages/board/board.wxss */
+.nodata{
+    width: 60%;
+    height:50%;
+    /*background-color: #660874;*/
+}
+.nodata-icon{
+    width: 100%;
+    height: 100%;
+}
+.nodata-text{
+    color: #aaaaaa;
+    text-align: center;
+}
 .new_card {
     background-color: rgba(102, 8, 116, 0.9);
     margin-top: 5%;
@@ -9,8 +22,7 @@
     flex-direction: column;
     align-items: center;
     border-radius: 10rpx;
-
-
+    box-shadow: 5rpx 5rpx 10rpx 1rpx rgba(187, 187, 187, 1);
 }
 
 .new_up_title{
@@ -91,6 +103,7 @@
 }
 
 .card {
+    box-shadow: 5rpx 5rpx 10rpx 1rpx rgba(187, 187, 187, 1);
     background-color: white;
     margin-top: 5%;
     height: 18%;

@@ -33,7 +33,7 @@ Page({
     /*todo*/
     toBoard: function () {
         wx.switchTab({
-            url: "../info/info"
+            url: "../alarm/alarm"
         });
     },
 

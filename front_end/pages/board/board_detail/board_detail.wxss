@@ -1,5 +1,7 @@
 /* pages/board/board_detail/board_detail.wxss */
 .card {
+    box-shadow: 5rpx 5rpx 10rpx 1rpx rgba(187, 187, 187, 1);
+
     background-color: white;
     margin-top: 5%;
     height: 30%;

@@ -10,10 +10,6 @@
     <view class="middle_board">
 
         <view class="top_icon">
-            <view class="fa-icon-back-cal">
-                <text class="fa fa-calendar fa-lg"></text>
-            </view>
-
             <view class="fa-icon-back">
 
                 <view class="caret_btn">
@@ -22,15 +18,17 @@
                     <text wx:else></text>
                 </view>
 
+
+                <view class="date">
+                    {{_date}}
+                </view>
+
                 <view class="caret_btn">
                     <text class="fa fa-caret-right fa-lg" bindtap="bindChooseNextDay" wx:if="{{!_cannotNext}}"></text>
                     <text wx:else></text>
                 </view>
-            </view>
-        </view>
 
-        <view class="date">
-            {{_date}}
+            </view>
         </view>
 
         <view class="space"></view>
@@ -98,6 +96,7 @@
 
                         <view class="title-container">
                             <text class="title">{{piano.pianoType}} ({{piano.pianoPlace}})</text>
+
                             <view class="detail">
                                 <view class="fa-icon">
                                     <text class="fa fa-location-arrow fa-lg"></text>
@@ -105,9 +104,9 @@
                             </view>
                         </view>
 
-                        <view class="lable">
-                            <text class="lable-detail">星海立式钢琴，位于蒙民伟楼{{piano.pianoPlace}}</text>
-                        </view>
+                        <!--<view class="lable">-->
+                            <!--<text class="lable-detail">星海立式钢琴，位于蒙民伟楼{{piano.pianoPlace}}</text>-->
+                        <!--</view>-->
 
                         <view class="lable-cut">
                         </view>
@@ -139,8 +138,11 @@
             </scrollview>
         </view>
 
-        <view class="no_room" wx:else>
-            此时间段无可用琴房哦~
+        <view class="nodata" wx:else>
+            <image class="nodata-icon" mode="aspectFit" src="../../../images/bg/nodata.png"></image>
+            <view class="nodata-text">
+                <text>此时间段无可用琴房哦~</text>
+            </view>
         </view>
     </view>
 </view>

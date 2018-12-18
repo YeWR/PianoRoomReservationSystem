@@ -6,7 +6,7 @@ page {
 }
 
 .container {
-    height: 1100rpx;
+    height: 1000rpx;
     display: flex;
     flex-direction: column;
     align-items: center;

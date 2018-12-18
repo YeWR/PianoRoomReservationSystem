@@ -6,12 +6,15 @@
         </text>
     </view>
 
-    <view wx:if="{{_reservationList.length == 0}}">
-        暂无预约信息~
+    <view class="nodata" wx:if="{{_reservationList.length == 0}}">
+        <image class="nodata-icon" mode="aspectFit" src="../../../images/bg/nodata.png"></image>
+        <view class="nodata-text">
+            <text>暂无预约信息~</text>
+        </view>
     </view>
 
 
-    <view class="middle_board" wx:if="{{_reservationList.length > 0}}" data-id="{{0}}" bindtap= "bindReserveDetail">
+    <view class="middle_board" wx:if="{{_reservationList.length > 0}}" data-id="{{0}}" bindtap="bindReserveDetail">
         <view class="middle_view">
 
             <view class="left_icon">
@@ -22,19 +25,25 @@
 
             <view class="right_text">
                 <view class="line1">
-                    <text class="line1_text">{{_reservationList[0].reservationPianoPlace}} {{_reservationList[0].reservationStateDis}}</text>
+                    <text class="line1_text">{{_reservationList[0].reservationPianoPlace}}
+                        {{_reservationList[0].reservationStateDis}}
+                    </text>
                 </view>
 
                 <view class="line2">
-                    <text class="line2_text"> </text>
+                    <text class="line2_text"></text>
                 </view>
 
                 <view class="line3">
-                    <text class="line3_text">{{_reservationList[0].reservationDate}} {{_reservationList[0].reservationWeekday}}</text>
+                    <text class="line3_text">{{_reservationList[0].reservationDate}}
+                        {{_reservationList[0].reservationWeekday}}
+                    </text>
                 </view>
 
                 <view class="line4">
-                    <text class="line4_text">{{_reservationList[0].reservationBegTime}}-{{_reservationList[0].reservationEndTime}}</text>
+                    <text class="line4_text">
+                        {{_reservationList[0].reservationBegTime}}-{{_reservationList[0].reservationEndTime}}
+                    </text>
                 </view>
             </view>
         </view>
@@ -53,10 +62,12 @@
                     </view>
                 </view>
 
-                <view class="card_right_text" wx:if="{{id > 0}}" data-id="{{id}}" bindtap= "bindReserveDetail">
+                <view class="card_right_text" wx:if="{{id > 0}}" data-id="{{id}}" bindtap="bindReserveDetail">
 
                     <view class="card_right_text_line1">
-                        <text class="card_right_text_line1_text">{{reservation.reservationPianoPlace}} {{reservation.reservationStateDis}}</text>
+                        <text class="card_right_text_line1_text">{{reservation.reservationPianoPlace}}
+                            {{reservation.reservationStateDis}}
+                        </text>
                     </view>
 
                     <view class="card_right_text_line2">
@@ -69,13 +80,17 @@
 
                     <view class="card_right_text_line4">
                         <view class="card_right_text_line4_1">
-                            <text class="card_right_text_line4_1_text">{{reservation.reservationDate}} {{reservation.reservationWeekday}}</text>
+                            <text class="card_right_text_line4_1_text">{{reservation.reservationDate}}
+                                {{reservation.reservationWeekday}}
+                            </text>
                         </view>
                         <view class="card_right_text_line4_2">
                             <text class="card_right_text_line4_2_text"></text>
                         </view>
                         <view class="card_right_text_line4_3">
-                            <text class="card_right_text_line4_3_text">{{reservation.reservationBegTime}}-{{reservation.reservationEndTime}}</text>
+                            <text class="card_right_text_line4_3_text">
+                                {{reservation.reservationBegTime}}-{{reservation.reservationEndTime}}
+                            </text>
                         </view>
                     </view>
 
@@ -85,7 +100,6 @@
 
         </view>
     </scrollview>
-
 
 
 </view>

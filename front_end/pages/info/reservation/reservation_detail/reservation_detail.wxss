@@ -1,4 +1,17 @@
 /* pages/info/reservation/reservation_detail/reservation_detail.wxss */
+.nodata{
+    width: 60%;
+    height:50%;
+    /*background-color: #660874;*/
+}
+.nodata-icon{
+    width: 100%;
+    height: 100%;
+}
+.nodata-text{
+    color: #aaaaaa;
+    text-align: center;
+}
 .top{
     width: 100%;
     height:55%;

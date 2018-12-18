@@ -14,7 +14,7 @@
     <view class="info_main_card">
 
         <view class="info_main_card_line1">
-            <view class = "info_main_card_line1_left">
+            <view class = "info_main_card_line1_left" bindtap="bindPersonalInfo">
                     <text class="fa fa-user fa-lg"></text>
             </view>
             <view class = "info_main_card_line1_right">
@@ -52,7 +52,7 @@
             <view class = "card_up_middle" bindtap="bindReservationAll">
                 <text>预约记录</text>
             </view>
-            <view class = "card_up_right">
+            <view class = "card_up_right" bindtap="bindReservationAll">
                 <text class="fa fa-location-arrow fa-lg"></text>
             </view>
         </view>
@@ -66,7 +66,7 @@
             <view class = "card_down_middle" bindtap="bindReservationIllegal">
                 <text>长期预约</text>
             </view>
-            <view class = "card_down_right">
+            <view class = "card_down_right" bindtap="bindReservationIllegal">
                 <text class="fa fa-location-arrow fa-lg"></text>
             </view>
         </view>
