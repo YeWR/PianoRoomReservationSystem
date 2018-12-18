@@ -14,7 +14,6 @@ module.exports = function karmaConfig (config) {
     browsers: ['Chrome'],
     frameworks: ['mocha', 'sinon-chai'],
     reporters: ['progress'],
-    port: 9876,
     files: ['./index.js'],
     preprocessors: {
       './index.js': ['webpack']
@@ -23,6 +22,7 @@ module.exports = function karmaConfig (config) {
     webpackMiddleware: {
       noInfo: true
     },
+    port: 9876,
     coverageReporter: {
       dir: './coverage',
       reporters: [
