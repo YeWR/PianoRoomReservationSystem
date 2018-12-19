@@ -6,6 +6,7 @@ const request = require('request');
 const configPath = "configs.json";
 let fs = require("fs");
 const configs = JSON.parse(fs.readFileSync(configPath));
+const uuid = require("node-uuid");
 
 const getUserIp = (req) => {
     return req.headers['x-forwarded-for'] ||
@@ -25,6 +26,43 @@ function getInfo(url) {
             }
         });
     });
+}
+
+function parseInfo(res) {
+    res = res.split(":");
+    let info =  {
+        "code": 0,
+        "number": "",
+        "name": "",
+        "type": 0
+    };
+    for(let i of res)
+    {
+        i = i.split("=");
+        switch(i[0])
+        {
+            case "code":
+                info.code = parseInt(i[1]);
+                break;
+            case "zjh":
+                info.number = i[1];
+                break;
+            case "xm":
+                info.name = i[1];
+                break;
+            case "yhlb":
+                if(i[1].charAt(0) === "X")
+                {
+                    info.type = constVariable.USERTYPE_STUDENT;
+                }
+                else if(i[1].charAt(0) === "J" || i[1].charAt(0) === "H")
+                {
+                    info.type = constVariable.USERTYPE_TEACHER;
+                }
+                break;
+        }
+    }
+    return info;
 }
 
 const routers = router.post("/outSchool", async (ctx, next) => {
@@ -57,20 +95,32 @@ const routers = router.post("/outSchool", async (ctx, next) => {
         let res = await getInfo(requestUrl);
         res = "code=0:zjh=2014013432:yhm=lizy14:xm=李肇阳:yhlb=X0031:dw=软件学院:email="; //mock
         console.log(res);
-        res = res.split(":");
-        let info =  {
-            "code": 0,
-            "number": "",
-            "name": "",
-            "type": 0
-        };
-        for(let i of res)
+        let info = parseInfo(res);
+        if(info.code !== 0)
         {
-            i = i.split("=");
-            switch(i[0])
+            ctx.response.body = {
+                "success": false,
+                "info": "票据验证失败! 错误代码:" + info.code.toString()
+            };
+            ctx.session = null;
+        }
+        else
+        {
+            let useruuid = uuid.v1().replace(/\-/g,'').substring(0,16);
+            let result = await dataBase.CampusUserLogin(info.type,info.name,info.number, useruuid);
+            if(result.success)
             {
-                case "code":
-
+                ctx.session.userId = result.info.uuid;
+                ctx.session.userType = info.type;
+                ctx.response.body =  {
+                    "success":true,
+                    "data": result.info.name
+                };
+            }
+            else
+            {
+                ctx.session = null;
+                ctx.response.body = result;
             }
         }
     }
@@ -79,10 +129,9 @@ const routers = router.post("/outSchool", async (ctx, next) => {
         ctx.response.body = {
             "success": false,
             "info": "票据不存在!"
-        }
+        };
         ctx.session = null;
     }
-
 });
 
 module.exports = routers;

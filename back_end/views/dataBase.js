@@ -260,6 +260,62 @@ let SocietyUserRegister = async function(socType, socId, socRealname, socTele, s
     }
 }
 
+let CampusUserLogin = async function(type, name, number, uuid) {
+    let errorMsg = "";
+    let info = {};
+    let test = function() {
+        return new Promise(resolve => {
+            db.where({number: number}).get('user', function (err, res, fields) {
+                let _select = res;
+                if (_select.length !== 0) {
+                    let _info = JSON.parse(_select);
+                    info = _info[0];
+                    resolve(1);
+                }
+                else {
+                    let _info = {
+                        status: 1,
+                        type: type,
+                        name: name,
+                        number: number,
+                        uuid: uuid
+                    };
+                    db.insert('user', _info, function (err, info) {
+                        if (err == null) {
+                            db.where({number: number}).get('user', function (err, res, fields) {
+                                let _select = res;
+                                if (_select.length !== 0) {
+                                    _info = JSON.parse(_select);
+                                    info = _info[0];
+                                    resolve(1);
+                                }
+                                else {
+                                    errorMsg = "新建用户失败";
+                                    resolve(0);
+                                }
+                            });
+                        }
+                        else {
+                            errorMsg = "新建用户失败";
+                            resolve(0);
+                        }
+                    });
+                }
+            });
+        });
+    }
+    let flag = await test();
+    console.log(flag);
+    if(flag == 0){
+        return {"success":false,
+            "info":errorMsg};
+    }
+    if(flag == 1){
+        return {"success":true,
+            "info":info};
+    }
+}
+
 // to do check tele
 let SetLoginMsg = async function(socTele, socPassword) {
     let errorMsg = "";
@@ -1381,7 +1437,7 @@ exports.ChangePianoRule = ChangePianoRule;
 // 注册
 exports.SetRegisterMsg = SetRegisterMsg;    // 点击发送
 exports.SocietyUserRegister = SocietyUserRegister;  // 点击注册
-//exports.CampusRegister = SocietyRegister;
+exports.CampusUserLogin = CampusUserLogin;
 
 // 登录
 exports.SetLoginMsg = SetLoginMsg;          // 点击发送
