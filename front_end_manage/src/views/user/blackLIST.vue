@@ -28,7 +28,7 @@
         </template>
       </el-table-column>
 
-      <el-table-column :label="$t('user.telephone')" width="330px" align="center">
+      <el-table-column :label="$t('user.telephone')" min-width="220px" align="center">
         <template slot-scope="scope">
           <span>{{ scope.row.telephone }}</span>
         </template>

@@ -25,7 +25,6 @@
           :placeholder="$t('login.username')"
           name="username"
           type="text"
-          auto-complete="on"
         />
       </el-form-item>
 
@@ -38,7 +37,6 @@
           v-model="loginForm.password"
           :placeholder="$t('login.password')"
           name="password"
-          auto-complete="on"
           @keyup.enter.native="handleLogin" />
         <span class="show-pwd" @click="showPwd">
           <svg-icon icon-class="eye" />
@@ -79,8 +77,8 @@ export default {
       sortOptions: [{ label: '管理员', key: '0' }, { label: '审核人员', key: '1' }],
       loginForm: {
         usertype: '0',
-        username: 'liuqiang',
-        password: '1234'
+        username: '',
+        password: ''
       },
       loginRules: {
         username: [{ required: true, trigger: 'blur', validator: validateUsername }],
