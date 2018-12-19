@@ -50,7 +50,7 @@
             </view>
 
             <view class="date-info">
-                {{_pianoPlace}}
+                {{_pianoType}}({{_pianoPlace}})
             </view>
         </view>
 

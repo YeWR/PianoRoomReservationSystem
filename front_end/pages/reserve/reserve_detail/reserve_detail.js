@@ -16,6 +16,7 @@ Page({
         _pianoPrices: [],
         _pianoPrice: 0,
         _pianoPlace: "",
+        _pianoType: "",
         _pianoInfo: "",
 
         _begTimeArray: [],
@@ -128,6 +129,7 @@ Page({
         paras["endTimeIndex"] = util.getIndexInTimeTable(this.data._endHour, this.data._endMinute);
 
         paras["pianoPlace"] = this.data._pianoPlace;
+        paras["pianoType"] = this.data._pianoType;
         paras["pianoId"] = this.data._pianoId;
         // TODO: price should be determined by the settings of reserveType
         // paras["pianoPrice"] = this.data._pianoPrices;
@@ -448,6 +450,7 @@ Page({
             _date: options.date,
             _pianoId: options.pianoId,
             _pianoPlace: options.pianoPlace,
+            _pianoType: options.pianoType,
             _reservationType: app.globalData._userType
         });
     },

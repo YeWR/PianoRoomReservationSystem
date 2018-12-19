@@ -502,6 +502,7 @@ Page({
         let id = e.currentTarget.dataset.id;
         paras["pianoId"] = this.data._pianoList[id].pianoId;
         paras["pianoPlace"] = this.data._pianoList[id].pianoPlace;
+        paras["pianoType"] = this.data._pianoList[id].pianoType;
         paras["date"] = this.data._date;
         paras["jsDate"] = this.data._jsDate;
 

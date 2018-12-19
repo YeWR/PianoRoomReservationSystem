@@ -10,7 +10,7 @@
         </view>
 
         <view class="date">
-            蒙民伟楼 {{_pianoPlace}}
+            {{_pianoType}}({{_pianoPlace}})
         </view>
 
         <view class="reserve-info-cut">

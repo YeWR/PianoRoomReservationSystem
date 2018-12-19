@@ -20,6 +20,7 @@ Page({
         _begTimeIndex: -1,
         _endTimeIndex: -1,
         _pianoPlace: "",
+        _pianoType: "",
         _pianoPrice: "",
         _pianoId: "",
     },
@@ -203,6 +204,7 @@ Page({
             _endTimeIndex: options.endTimeIndex,
             _pianoPlace: options.pianoPlace,
             _pianoPrice: options.pianoPrice,
+            _pianoType: options.pianoType,
             _pianoId: options.pianoId,
         });
     },
