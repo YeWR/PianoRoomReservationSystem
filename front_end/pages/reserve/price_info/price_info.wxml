@@ -1,0 +1,34 @@
+<!--pages/reserve/price_info/price_info.wxml-->
+
+<view class="container">
+    <view class="up_board">
+        <text class="reserve_title">
+            价格详情
+        </text>
+    </view>
+
+    <view class="card">
+
+        <view class="up_title">
+
+            <view class="up_text">
+                <text class="title">{{_noticeTitle}}</text>
+                多人
+            </view>
+        </view>
+
+        <view class="middle_title">
+            <view class="middle_time">
+                <text class="middle_time_text">{{_noticeAuthor}} {{_noticeTime}}</text>
+            </view>
+        </view>
+
+        <view class="bottom_title">
+            <view class="bottom_text">
+                <!--TODO：最多16中字 + ...-->
+                当一个练琴房中人数大于1时，无论使用者身份、钢琴种类，一律30元/小时
+                <text class="bottom_time_text">{{_noticeContent}}</text>
+            </view>
+        </view>
+    </view>
+</view>

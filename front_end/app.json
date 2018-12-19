@@ -10,6 +10,7 @@
     "pages/reserve/reserve",
     "pages/info/info",
     "pages/reserve/reserve_detail/reserve_detail",
+    "pages/reserve/price_info/price_info",
     "pages/reserve/reserve_confirm/reserve_confirm",
     "pages/alarm/alarm_detail/alarm_detail",
     "pages/info/reservation/reservation",

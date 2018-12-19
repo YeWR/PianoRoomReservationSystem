@@ -36,7 +36,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 5,
+			"current": 7,
 			"list": [
 				{
 					"id": -1,
@@ -71,7 +71,20 @@
 				{
 					"id": -1,
 					"name": "注册",
-					"pathName": "pages/register/register_out_school/register_out_school"
+					"pathName": "pages/register/register_out_school/register_out_school",
+					"query": ""
+				},
+				{
+					"id": 6,
+					"name": "价格详情",
+					"pathName": "pages/reserve/price_info/price_info",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "预约提醒",
+					"pathName": "pages/alarm/alarm",
+					"query": ""
 				}
 			]
 		}

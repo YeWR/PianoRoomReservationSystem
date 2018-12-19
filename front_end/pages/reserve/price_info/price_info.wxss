@@ -1,10 +1,10 @@
-/* pages/board/board_detail/board_detail.wxss */
+/* pages/reserve/price_info/price_info.wxss */
 .card {
     box-shadow: 5rpx 5rpx 10rpx 1rpx rgba(187, 187, 187, 1);
 
     background-color: white;
     margin-top: 5%;
-    height: 30%;
+    height: 60%;
     width: 90%;
     color: rgba(0, 0, 0, 1);
     display: flex;
@@ -19,6 +19,8 @@
     height: 18%;
     display: flex;
     flex-direction: row;
+    text-align: center;
+    font-weight: bold;
 }
 
 .up_icon{

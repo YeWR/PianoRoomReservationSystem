@@ -452,9 +452,9 @@ Page({
                 return;
             }
             const RectX = 0;
-            const RectY = 0;
+            const RectY = 6;
             const blockHeight = 5;
-            const blockWidth = 3.2;
+            const blockWidth = 3.3;
 
             let x1 = RectX + begIndex * blockWidth;
             let x2 = (endIndex - begIndex) * blockWidth;
@@ -470,7 +470,7 @@ Page({
             const ctx = wx.createCanvasContext('piano' + piano.pianoId, that);
             const tableList = piano.timeTable;
 
-            drawRect(0, tableList.length, ctx, 'grey');
+            drawRect(0, tableList.length, ctx, 'rgba(245, 245, 245, 1)');
 
             let begIndex = getFirstBegIndex(tableList);
             let endIndex = begIndex;
@@ -478,7 +478,7 @@ Page({
             while (begIndex !== -1 && endIndex !== -1) {
 
                 endIndex = getThisEndIndex(begIndex, tableList);
-                drawRect(begIndex, endIndex, ctx, 'red');
+                drawRect(begIndex, endIndex, ctx, 'rgba(187, 187, 187, 1)');
                 begIndex = getNextBegIndex(endIndex, tableList);
             }
             ctx.draw();

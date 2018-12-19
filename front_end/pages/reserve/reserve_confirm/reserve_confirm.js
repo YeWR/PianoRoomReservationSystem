@@ -64,6 +64,7 @@ Page({
             url: "https://958107.iterator-traits.com/user/reservation/order",
             data: {
                 openid: openid,
+                // openid:"test",
                 number: number,
                 reservationType: that.data._reservationType,
                 pianoId: that.data._pianoId,
@@ -112,15 +113,65 @@ Page({
      * confirm reservation
      * TODO: do not forget to pay for the reservation and check
      */
+
     confirmReservation: function (e) {
+        // let that = this;
+        // wx.login({
+        //     success: function (res) {
+        //         console.log("login: ", res);
+        //         that.getOpenId(that, res.code)
+        //     },
+        //     fail: function () {
+        //         util.alertInfo("微信登录失败", "none", 1000);
+        //     }
+        // });
         let that = this;
-        wx.login({
-            success: function (res) {
-                console.log("login: ", res);
-                that.getOpenId(that, res.code)
+        let number = app.globalData._idNumber;
+        if (app.globalData._userType !== util.USERTYPE.SOCIAL) {
+            // stu id card
+            number = app.globalData._idNumber;
+        }
+        // wx.requestPayment({
+        // 'timeStamp': '',
+        // 'nonceStr': '',
+        // 'package': '',
+        // 'signType': 'MD5',
+        // 'paySign': '',
+        // 'success': function (res) {
+        // },
+        // 'fail': function (res) {
+        // },
+        // 'complete': function (res) {
+        // }
+        // });
+        wx.request({
+            url: "https://958107.iterator-traits.com/user/reservation/ordertest",
+            data: {
+                number: number,
+                reservationType: that.data._reservationType,
+                pianoId: that.data._pianoId,
+                pianoPrice: that.data._pianoPrice,
+                begTimeIndex: that.data._begTimeIndex,
+                endTimeIndex: that.data._endTimeIndex,
+                date: that.data._date,
             },
-            fail: function () {
-                util.alertInfo("微信登录失败", "none", 1000);
+            method: "POST",
+            header: {
+                "Content-Type": "application/x-www-form-urlencoded"
+            },
+            success: function (res) {
+                if (res.data.success) {
+                    util.alertInfo("预约成功！", "success", 500);
+                    setTimeout(() => {
+                        that.toAlarm();
+                    }, 500);
+                }
+                else {
+                    util.alertInfo(res.data.info, "none", 1000);
+                }
+            },
+            fail: function (res) {
+                util.alertInfo("预约失败，请检查网络设备是否正常。", "none", 1000);
             }
         });
     },

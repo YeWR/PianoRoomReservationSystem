@@ -7,7 +7,7 @@ page{
 }
 .register_icon_los{
     margin:14%;
-    height:21%;
+    height:22%;
     width: 35%;
     text-align: center;
 }
@@ -20,7 +20,7 @@ page{
 
 .register_form{
     background-color: white;
-    height: 45%;
+    height: 50%;
     width: 86%;
     text-align: center;
     border: 2rpx solid rgba(238, 238, 238, 1);
