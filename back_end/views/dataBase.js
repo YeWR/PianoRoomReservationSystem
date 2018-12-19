@@ -13,15 +13,15 @@ let db = new Db.Adapter({
 });
 
 let redis = require("redis");
-let client = redis.createClient(config.redisPort,config.serverIp)
+let client = redis.createClient(config.redisPort,config.serverIp);
 
 let timeLength = 84;
 
-let ChangeSocietyInfo = async function(userUuid, userTele){
+let ChangeSocietyType = async function(userUuid, userType){
     let errorMsg = "";
     let test = function(){
         return new Promise(resolve =>{
-            db.where({soc_uuid: userUuid }).update('society_user', {soc_tele: userTele}, function (err) {
+            db.where({soc_uuid: userUuid }).update('society_user', {soc_type: userType}, function (err) {
                 if(err == null){
                     resolve(1);
                 }
@@ -72,6 +72,54 @@ let GetSocietyUuidByTele = async function(userTele){
     }
     if(flag == 1){
         return {"data":userInfo.soc_uuid};
+    }
+}
+
+let SearchSocietyUser = async function(count, offset, soc_tele, soc_realname, soc_id, soc_type){
+    let errorMsg = "";
+    let userInfo = null;
+    let userCount = 0;
+    let query = { soc_tele: soc_tele, soc_realname: soc_realname, soc_id: soc_id, soc_type: soc_type};
+    for(let q in query)
+    {
+        if(!query[q])
+        {
+            delete query[q];
+        }
+    }
+    let test = function(){
+        return new Promise(resolve =>{
+            db.where(query)
+                .limit(count,offset)
+                .get('society_user', function (err, res, fields) {
+                let _select = res;
+                    let _data = JSON.stringify(_select);
+                    let _info = JSON.parse(_data);
+                    userInfo = _info;
+                    resolve(1);
+            });
+        });
+    };
+    let getUserCount = function(){
+        return new Promise(resolve =>{
+            db.where(query)
+                .count('society_user', function (err, res, fields) {
+                    userCount = res;
+                    resolve(1);
+                });
+        });
+    };
+    let flag = await test();
+    let flagCount = await getUserCount();
+    console.log(flag);
+    if(flag == 0){
+        return {"data":userInfo,
+            "count": userCount,
+            "info":errorMsg};
+    }
+    if(flag == 1){
+        return {"data":userInfo,
+        "count": userCount};
     }
 }
 
@@ -307,38 +355,31 @@ let SocietyLogin = async function(socTele, socPassword) {
     }
 }
 
-let InsertPiano = async function(pianoList, pianoId, pianoRoom, pianoPicurl, pianoInfo, pianoStuvalue, pianoTeavalue, pianoSocvalue, pianoMultivalue, pianoType) {
+let InsertPiano = async function(pianoRoom, pianoInfo, pianoStuvalue, pianoTeavalue, pianoSocvalue, pianoMultivalue, pianoType, pianoStatus) {
     let errorMsg = "";
+    let pianoList = "0".repeat(84*3);
+    let pianoRule = "0".repeat(84*7);
     let test = function(){
         return new Promise(resolve =>{
-            db.where({ piano_id: pianoId }).get('piano', function (err, res, fields) {
-                let _select = res;
-                if(_select.length != 0){
-                    errorMsg = "琴房已经存在";
-                    resolve(0);
+            let _info = {
+                piano_list: pianoList,
+                piano_room: pianoRoom,
+                piano_info: pianoInfo,
+                piano_stuvalue: pianoStuvalue,
+                piano_socvalue: pianoSocvalue,
+                piano_teavalue: pianoTeavalue,
+                piano_multivalue: pianoMultivalue,
+                piano_type: pianoType,
+                piano_status: pianoStatus,
+                piano_rule: pianoRule
+            };
+            db.insert('piano', _info, function (err, info) {
+                if(err == null){
+                    resolve(1);
                 }
                 else{
-                    let _info = {
-                        piano_list: pianoList,
-                        piano_id: pianoId,
-                        piano_room: pianoRoom,
-                        piano_picurl: pianoPicurl,
-                        piano_info: pianoInfo,
-                        piano_stuvalue: pianoStuvalue,
-                        piano_socvalue: pianoSocvalue,
-                        piano_teavalue: pianoTeavalue,
-                        piano_multivalue: pianoMultivalue,
-                        piano_type: pianoType
-                    }
-                    db.insert('piano', _info, function (err, info) { 
-                        if(err == null){
-                            resolve(1);
-                        }
-                        else{
-                            errorMsg = "新建琴房失败";
-                            resolve(0);
-                        }
-                    });
+                    errorMsg = "新建琴房失败";
+                    resolve(0);
                 }
             });
         });
@@ -353,6 +394,49 @@ let InsertPiano = async function(pianoList, pianoId, pianoRoom, pianoPicurl, pia
         return {"success":true};
     }
 }
+
+let UpdatePianoInfo = async function(pianoId, pianoRoom, pianoInfo, pianoStuvalue, pianoTeavalue, pianoSocvalue, pianoMultivalue, pianoType, pianoStatus) {
+    let errorMsg = "";
+    let info = {
+        piano_room: pianoRoom,
+        piano_info: pianoInfo,
+        piano_stuvalue: pianoStuvalue,
+        piano_socvalue: pianoSocvalue,
+        piano_teavalue: pianoTeavalue,
+        piano_multivalue: pianoMultivalue,
+        piano_type: pianoType,
+        piano_status: pianoStatus,
+    };
+    for(let i in info)
+    {
+        if(!info[i])
+        {
+            delete info[i];
+        }
+    }
+    let test = function(){
+        return new Promise(resolve =>{
+            db.where({ piano_id: pianoId }).update('piano', info, function (err, res, fields) {
+                if(err === null)
+                    resolve(1);
+                else
+                {
+                    errorMsg = "修改琴房信息失败";
+                    resolve(0);
+                }
+            });
+        });
+    };
+    let flag = await test();
+    console.log(flag);
+    if(flag == 0){
+        return {"success":false,
+            "info":errorMsg};
+    }
+    if(flag == 1){
+        return {"success":true};
+    }
+};
 
 let GetPianoRoomAll = async function(){
     let errorMsg = "";
@@ -376,7 +460,54 @@ let GetPianoRoomAll = async function(){
         return {"data":pianoInfo,
                 "info":errorMsg};
     }
-}
+};
+
+let SearchPiano = async function(count, offset, piano_room, piano_type, piano_id){
+    let errorMsg = "";
+    let pianoInfo = null;
+    let pianoCount = 0;
+    let query = { piano_room: piano_room, piano_type: piano_type, piano_id: piano_id};
+    for(let q in query)
+    {
+        if(!query[q])
+        {
+            delete query[q];
+        }
+    }
+    let test = function(){
+        return new Promise(resolve =>{
+            db.where(query)
+                .limit(count,offset)
+                .get('piano', function(err, rows, fields) {
+                let _data = JSON.stringify(rows);
+                pianoInfo = JSON.parse(_data);
+                resolve(1);
+            });
+        });
+    };
+    let getPianoCount = function(){
+        return new Promise(resolve =>{
+            db.where(query)
+                .count('piano', function (err, res, fields) {
+                    pianoCount = res;
+                    resolve(1);
+                });
+        });
+    };
+    let flag = await test();
+    let flagCount = await getPianoCount();
+    console.log(flag);
+    if(flag == 0){
+        return {"data":pianoInfo,
+            "count": pianoCount,
+            "info":errorMsg};
+    }
+    if(flag == 1){
+        return {"data":pianoInfo,
+            "count": pianoCount,
+            "info":errorMsg};
+    }
+};
 
 let getDateNum = function(itemDate){
     let item_date = new Date(itemDate);
@@ -461,6 +592,7 @@ let preparePianoForInsert = async function(itemRoomId, itemBegin, itemDuration, 
     let errorMsg = "";
     itemBegin = timeLength*getDateNum(itemDate)+itemBegin;
     let itemEnd = itemBegin+itemDuration;
+    let pianoInfo = null;
     let test = function(){
         return new Promise(resolve =>{
             db.where({ piano_id: itemRoomId }).get('piano', function (err, res, fields) {
@@ -532,16 +664,88 @@ let preparePianoForInsert = async function(itemRoomId, itemBegin, itemDuration, 
     }
 }
 
+let ChangePianoRule = async function(itemRoomId, itemBegin, itemDuration, itemDay, ruleType){
+    let errorMsg = "";
+    itemBegin = timeLength*itemDay+itemBegin;
+    let itemEnd = itemBegin+itemDuration;
+    let pianoInfo = null;
+    let test = function(){
+        return new Promise(resolve =>{
+            db.where({ piano_id: itemRoomId }).get('piano', function (err, res, fields) {
+                let _select = res;
+                if(_select.length == 0){
+                    errorMsg = "琴房不存在";
+                    resolve(0);
+                }
+                else
+                {
+                    let _data = JSON.stringify(_select);
+                    let _info = JSON.parse(_data);
+                    pianoInfo = _info[0];
+                    resolve(1);
+                }
+            });
+        });
+    };
+    let flag = await test();
+    console.log(flag);
+    if(flag == 0){
+        return {"success":false,
+            "info":errorMsg};
+    }
+    if(flag == 1){
+        let newList = "";
+        let len = pianoInfo.piano_rule.data.length;
+        for(let i = 0; i<len; i++){
+            if(i < itemEnd){
+                if(i >= itemBegin){
+                    newList += ruleType.toString();
+                    continue;
+                }
+            }
+            if(pianoInfo.piano_rule.data[i] == '0' || pianoInfo.piano_rule.data[i] == 48){
+                newList += '0';
+            }
+            else{
+                newList += '1';
+            }
+        }
+        let checkUpdate = function(){
+            return new Promise(resolve =>{
+                db.where({piano_id: itemRoomId}).update('piano',{piano_rule:newList},function(err){
+                    if(err){
+                        resolve(0);
+                    }
+                    else{
+                        resolve(1);
+                    }
+                });
+            });
+        };
+        let check = await checkUpdate()
+        if(check == 0){
+            errorMsg = "更新失败";
+            return {"success":false,
+                "info":errorMsg};
+        }
+        else{
+            return {"success":true};
+        }
+    }
+}
+
 // uuid: itemUsername 传入uuid
 // begin is the begin index, duration is the length
 let InsertItem = async function(itemDate, itemUsername, itemRoomId, itemType, itemMember, itemValue, itemDuration, itemBegin, itemUuid){
     let errorMsg = "";
     // 修改可预约时间段。
     let result = await preparePianoForInsert(itemRoomId, itemBegin, itemDuration, itemDate);
-    if(result.success == false){
+    if (result.success === false) {
         errorMsg = "预约失败";
-        return {"success":false,
-                "info":errorMsg};
+        return {
+            "success": false,
+            "info": errorMsg
+        };
     }
     // 插入订单
     let test = function(){
@@ -586,10 +790,136 @@ let InsertItem = async function(itemDate, itemUsername, itemRoomId, itemType, it
     }
 }
 
-let UpdateItem = async function(itemTime, itemUsername, itemRoom, itemType, itemMember, itemValue, itemDuration){
-    // to do 
-    // check lock
+//使用redis存储未支付订单
+let InsertTempItem = async function(itemDate, itemUsername, itemRoomId, itemType, itemMember, itemValue, itemDuration, itemBegin, itemUuid){
+    let errorMsg = "";
+    // 插入订单
+    let test = function(){
+        return new Promise(resolve =>{
+            try{
+                let _info = {
+                    item_date: itemDate,
+                    item_username: itemUsername,
+                    item_roomId: itemRoomId,
+                    item_type: itemType,
+                    item_member: itemMember,
+                    item_value: itemValue,
+                    item_duration: itemDuration,
+                    item_begin: itemBegin,
+                    item_uuid: itemUuid
+                }
+                client.set(itemUuid, JSON.stringify(_info));
+                client.expire(itemUuid, 3600);
+                resolve(1);
+            }
+            catch{
+                errorMsg = "预约失败";
+                resolve(0);
+            }
+        });
+    };
+    let flag = await test();
+    console.log(flag);
+    if(flag == 0){
+        return {"success":false,
+            "info":errorMsg};
+    }
+    if(flag == 1){
+        return {"success":true};
+    }
 }
+
+let DeleteTempItem = async function(itemUuid){
+    let errorMsg = "";
+    // 插入订单
+    let test = function(){
+        return new Promise(resolve =>{
+            try{
+                client.del(itemUuid, function (err, reply) {});
+                resolve(1);
+            }
+            catch{
+                resolve(0);
+            }
+        });
+    };
+    let flag = await test();
+    console.log(flag);
+    if(flag == 0){
+        return {"success":false,
+            "info":errorMsg};
+    }
+    if(flag == 1){
+        return {"success":true};
+    }
+}
+
+let ItemCheckin = async function(itemUuid){
+    let errorMsg = "";
+    let itemInfo = null;
+    let test = function(){
+        return new Promise(resolve =>{
+            db.where({ item_uuid: itemUuid }).get('item', function (err, res, fields) {
+                let _select = res;
+                if(_select.length == 0)
+                {
+                    errorMsg = "订单不存在";
+                    resolve(0);
+                }
+                else
+                {
+                    let _data = JSON.stringify(_select);
+                    let _info = JSON.parse(_data);
+                    itemInfo = _info[0];
+                    if(itemInfo.item_type === 2)
+                    {
+                        errorMsg = "订单已使用";
+                        resolve(0);
+                    }
+                    else if(itemInfo.item_type === 0)
+                    {
+                        errorMsg = "订单已取消";
+                        resolve(0);
+                    }
+                    else
+                    {
+                        resolve(1);
+                    }
+                }
+            });
+        });
+    };
+    let checkin = function(){
+        return new Promise(resolve =>{
+            db.where({ item_uuid: itemUuid }).update('item',{item_type:2},function(err){
+                if(err){
+                    errorMsg = "检票失败";
+                    resolve(0);
+                }
+                else{
+                    resolve(1);
+                }
+            });
+        });
+    };
+    let flag = await test();
+    console.log(flag);
+    if(flag == 0){
+        return {"success": false,
+            "info":errorMsg};
+    }
+    if(flag == 1){
+        flag = await checkin();
+        if(flag == 0){
+            return {"success": false,
+                "info":errorMsg};
+        }
+        if(flag == 1){
+            return {"data":itemInfo,
+                "success": true};
+        }
+    }
+};
 
 // uuid: 使用用户的uuid
 let GetItem = async function(itemUsername){
@@ -616,6 +946,75 @@ let GetItem = async function(itemUsername){
                 "info":errorMsg};
     }
 }
+
+let SearchItem = async function(count, offset, username, roomId, member, type, order, date){
+    let errorMsg = "";
+    let itemInfo = null;
+    let itemCount = 0;
+    let dateQuery = "item_date IS NOT NULL";
+    if(typeof date === 'string')
+    {
+        dateQuery = "DATE_FORMAT(item_date, \'%Y-%m-%d\') = \'" + date + "\'";
+    }
+    else if(typeof date === 'number')
+    {
+        dateQuery = "DATE_SUB(CURDATE(), INTERVAL " + date.toString() + " DAY) <= date(item_date)";
+    }
+    let query = { item_username: username, item_roomId: roomId, item_member: member};
+    for(let q in query)
+    {
+        if(!query[q])
+        {
+            delete query[q];
+        }
+    }
+    let sortOrder = null;
+    if(order === '-')
+    {
+        sortOrder = ['`item_date` desc', '`item_begin` desc', '`item_id` asc'];
+    }
+    else
+    {
+        sortOrder = ['`item_date` asc', '`item_begin` asc', '`item_id` asc'];
+    }
+    let test = function(){
+        return new Promise(resolve =>{
+            db.where(query)
+                .where(dateQuery)
+                .where('item_type', type)
+                .limit(count, offset)
+                .order_by(sortOrder)
+                .get('item', function (err, res, fields) {
+                let _data = JSON.stringify(res);
+                let _info = JSON.parse(_data);
+                itemInfo = _info;
+                resolve(1);
+            });
+        });
+    };
+    let getItemCount = function(){
+        return new Promise(resolve =>{
+            db.where(query)
+                .where('item_type', type)
+                .count('item', function (err, res, fields) {
+                    itemCount = res;
+                    resolve(1);
+                });
+        });
+    };
+    let flag = await test();
+    let flagCount = await getItemCount();
+    if(flag == 0){
+        return {"data":itemInfo,
+            "count": itemCount,
+            "info":errorMsg};
+    }
+    if(flag == 1){
+        return {"data":itemInfo,
+            "count": itemCount,
+            "info":errorMsg};
+    }
+};
 
 let GetItemByUuid = async function(itemUuid){
     let errorMsg = "";
@@ -646,6 +1045,35 @@ let GetItemByUuid = async function(itemUuid){
         console
         return {"data":itemInfo,
                 "info":errorMsg};
+    }
+}
+
+let GetTempItemByUuid = async function(itemUuid){
+    let errorMsg = "";
+    let itemInfo = null;
+    let test = function(){
+        return new Promise(resolve =>{
+            client.get(itemUuid, function(err, reply){
+                if(reply){
+                    itemInfo = JSON.parse(reply);
+                    resolve(1);
+                }
+                else{
+                    errorMsg = "无此订单";
+                    resolve(0);
+                }
+            });
+        });
+    };
+    let flag = await test();
+    console.log(flag);
+    if(flag == 0){
+        return {"data":itemInfo,
+            "info":errorMsg};
+    }
+    if(flag == 1){
+        return {"data":itemInfo,
+            "info":errorMsg};
     }
 }
 
@@ -764,7 +1192,7 @@ let GetNoticeAll = async function(){
     let noticeInfo = null;
     let test = function(){
         return new Promise(resolve =>{
-            db.get('notice', function(err, rows, fields) { 
+            db.where({notice_type: 1}).get('notice', function(err, rows, fields) {
                 let _data = JSON.stringify(rows);
                 noticeInfo = JSON.parse(_data);
                 resolve(1);
@@ -782,6 +1210,58 @@ let GetNoticeAll = async function(){
                 "info":errorMsg};
     }
 }
+
+let SearchNotice = async function(count, offset, title, author, order){
+    let errorMsg = "";
+    let noticeInfo = null;
+    let noticeCount = 0;
+    let query = { notice_title: title, notice_auth: author};
+    for(let q in query)
+    {
+        if(!query[q])
+        {
+            delete query[q];
+        }
+    }
+    let sortOrder = null;
+    if(order === '-')
+    {
+        sortOrder = ['`notice_time` desc', '`notice_id` asc'];
+    }
+    else
+    {
+        sortOrder = ['`notice_time` asc', '`notice_id` asc'];
+    }
+    let test = function(){
+        return new Promise(resolve =>{
+            db.where(query)
+                .where({notice_type: 1})
+                .limit(count, offset)
+                .order_by(sortOrder)
+                .get('notice', function(err, rows, fields) {
+                let _data = JSON.stringify(rows);
+                noticeInfo = JSON.parse(_data);
+                resolve(1);
+            });
+        });
+    };
+    let getNoticeCount = function(){
+        return new Promise(resolve =>{
+            db.where(query)
+                .where({notice_type: 1})
+                .count('notice', function (err, res, fields) {
+                    noticeCount = res;
+                    resolve(1);
+                });
+        });
+    };
+    let flag = await test();
+    let flagCount = await getNoticeCount();
+    console.log(flag);
+    return {"data":noticeInfo,
+        "count": noticeCount,
+        "info":errorMsg};
+};
 
 let GetNoticeInfo = async function(noticeId){
     let errorMsg = "";
@@ -820,29 +1300,20 @@ let InsertNotice = async function(noticeTitle, noticeCont, noticeTime, noticeAut
     let errorMsg = "";
     let test = function(){
         return new Promise(resolve =>{
-            db.where({ notice_title: noticeTitle }).get('notice', function (err, res, fields) {
-                let _select = res;
-                if(_select.length != 0){
-                    errorMsg = "公告已经存在";
-                    resolve(0);
+            let _info = {
+                notice_title: noticeTitle,
+                notice_cont: noticeCont,
+                notice_time: noticeTime,
+                notice_auth: noticeAuth,
+                notice_type: noticeType
+            }
+            db.insert('notice', _info, function (err, info) {
+                if(err == null){
+                    resolve(1);
                 }
                 else{
-                    let _info = {
-                        notice_title: noticeTitle,
-                        notice_cont: noticeCont,
-                        notice_time: noticeTime,
-                        notice_auth: noticeAuth,
-                        notice_type: noticeType
-                    }
-                    db.insert('notice', _info, function (err, info) { 
-                        if(err == null){
-                            resolve(1);
-                        }
-                        else{
-                            errorMsg = "新建公告失败";
-                            resolve(0);
-                        }
-                    });
+                    errorMsg = "新建公告失败";
+                    resolve(0);
                 }
             });
         });
@@ -886,20 +1357,30 @@ let DeleteNotice = async function(noticeId) {
 
 // 订单
 exports.InsertItem = InsertItem;            // 新增订单
-exports.UpdateItem = UpdateItem;            // 更新订单
+exports.ItemCheckin = ItemCheckin;            // 更新订单
 exports.GetItem = GetItem;                  // 获取某个人的订单信息
+exports.SearchItem = SearchItem;            // 查询订单(管理端)
 exports.GetItemByUuid = GetItemByUuid;      // 获取订单信息，由uuid
 exports.DeleteItem = DeleteItem;            // 删除订单-需要改写琴房信息
+exports.InsertTempItem = InsertTempItem;
+exports.DeleteTempItem = DeleteTempItem;
+exports.GetTempItemByUuid = GetTempItemByUuid;
 
 // 琴房
 exports.GetPianoRoomInfo = GetPianoRoomInfo;// 获取单个琴房信息
 exports.GetPianoRoomAll = GetPianoRoomAll;  // 获取所有琴房信息
+exports.SearchPiano = SearchPiano;
 exports.InsertPiano = InsertPiano;          // 新增琴房
+exports.UpdatePianoInfo = UpdatePianoInfo;
+exports.preparePianoForInsert = preparePianoForInsert;
+exports.preparePianoForDel = preparePianoForDel;
+exports.ChangePianoRule = ChangePianoRule;
 // 每日更新琴房信息
 
 // 注册
 exports.SetRegisterMsg = SetRegisterMsg;    // 点击发送
 exports.SocietyRegister = SocietyRegister;  // 点击注册
+//exports.CampusRegister = SocietyRegister;
 
 // 登录
 exports.SetLoginMsg = SetLoginMsg;          // 点击发送
@@ -908,13 +1389,15 @@ exports.SocietyLogin = SocietyLogin;        // 点击登录
 // 用户
 exports.GetSocietyUserInfo = GetSocietyUserInfo;  // 获取某个校外用户的信息
 exports.GetSocietyUuidByTele = GetSocietyUuidByTele; // 通过手机号获取uuid
-exports.ChangeSocietyInfo = ChangeSocietyInfo;      // 更新用户数据
+exports.ChangeSocietyType = ChangeSocietyType;      // 更新用户数据
+exports.SearchSocietyUser = SearchSocietyUser;
 
 // 公告
 exports.GetNoticeAll = GetNoticeAll;            // 获取所有公告
 exports.GetNoticeInfo = GetNoticeInfo;          // 获取一个公告，由notice_id
 exports.InsertNotice = InsertNotice;            // 插入公告
 exports.DeleteNotice = DeleteNotice;            // 删除公告
+exports.SearchNotice = SearchNotice;
 
 // 查询
 

@@ -2,6 +2,31 @@ const Router = require("koa-router");
 const router = new Router();
 const dataBase = require("../dataBase");
 const constVariable = require("../const");
+const request = require('request');
+const configPath = "configs.json";
+let fs = require("fs");
+const configs = JSON.parse(fs.readFileSync(configPath));
+
+const getUserIp = (req) => {
+    return req.headers['x-forwarded-for'] ||
+        req.connection.remoteAddress ||
+        req.socket.remoteAddress ||
+        req.connection.socket.remoteAddress;
+}
+
+function getInfo(url) {
+    console.log(url);
+
+    return new Promise(function(resolve,reject) {
+        request.get(url, (err, response, body) => {
+            if (err) {
+                reject(err);
+            } else {
+                resolve(body);
+            }
+        });
+    });
+}
 
 const routers = router.post("/outSchool", async (ctx, next) => {
     console.log(ctx.request.body);
@@ -17,41 +42,24 @@ const routers = router.post("/outSchool", async (ctx, next) => {
         ctx.session.userId = useruuid;
         ctx.session.userType = constVariable.USERTYPE_OUTSCHOOL;
     }
-    ctx.response.body = result;
-}).post("/cookie", async (ctx, next) => {
-    let response = {
-        "success": false,
-        "userType": null,
-        "realName": null,
-        "idNumber": null,
-        "info": null
-    };
-    console.log(ctx.session);
-    if(ctx.session.userId && ctx.session.userType)
-    {
-        let userInfo = null;
-        console.log("cookie:", ctx.session.userId);
-        if(ctx.session.userType === constVariable.USERTYPE_OUTSCHOOL)
-        {
-            userInfo = await dataBase.GetSocietyUserInfo(ctx.session.userId);
-            if(userInfo.data)
-            {
-                response.success = true;
-                response.userType = constVariable.USERTYPE_OUTSCHOOL;
-                response.realName = userInfo.data.soc_realname;
-                response.idNumber = userInfo.data.soc_tele;
-            }
-            else
-            {
-                response.info = userInfo.info;
-            }
-        }
-    }
     else
     {
-        response.info = "无cookie或cookie过期,请重新登录!";
+        ctx.session = null;
     }
-    ctx.response.body = response;
+    ctx.response.body = result;
+}).get("/inSchool", async (ctx, next) => {
+    let ticket = ctx.query.ticket;
+    let userIP = getUserIp(ctx.req).replace(/::ffff:/, '');
+    userIP = userIP.split(".").join("_");
+    let requestUrl = "https://id-tsinghua-test.iterator-traits.com/thuser/authapi/checkticket/" + configs.tsinghua_APPID +
+        "/" + ticket + "/" + userIP;
+    if(ticket)
+    {
+        let res = await getInfo(requestUrl);
+        console.log(res);
+        ctx.response.body = res;
+    }
+
 });
 
 module.exports = routers;
