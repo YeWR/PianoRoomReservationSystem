@@ -1,8 +1,7 @@
 const {should,expect,assert} = require('chai');
-const request = require('supertest');
 const dataBase = require('../views/dataBase');
 const app = require('../app');
-const koaapp = app.listen(3000);
+const request = require('supertest').agent(app.listen());
 const testUser = [{
     phoneNumber: "13220167398",
     validateCode: "1234",

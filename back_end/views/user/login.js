@@ -59,6 +59,7 @@ const routers = router.post("/outSchool", async (ctx, next) => {
         console.log(res);
         ctx.response.body = res;
     }
+
 });
 
 module.exports = routers;
