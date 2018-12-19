@@ -109,9 +109,9 @@
         </view>
     </view>
 
-    <view class="bottom" wx:if="{{!_refundDisable}}">
-        <button class="bottom_btn" disabled="{{_refundDisable}}" bindtap="bindRefund">
-            退订
-        </button>
-    </view>
+    <!--<view class="bottom" wx:if="{{!_refundDisable}}">-->
+        <!--<button class="bottom_btn" disabled="{{_refundDisable}}" bindtap="bindRefund">-->
+            <!--退订-->
+        <!--</button>-->
+    <!--</view>-->
 </view>

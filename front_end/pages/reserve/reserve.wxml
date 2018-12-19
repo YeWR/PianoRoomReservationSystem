@@ -92,7 +92,7 @@
                         wx:for-item="piano" wx:key="pianoId">
                 <view class="scroll-y">
 
-                    <view class="card" data-id="{{id}}" bindtap="toReservePiano">
+                    <view class="card" data-id="{{piano.pianoId}}" bindtap="toReservePiano">
 
                         <view class="title-container">
                             <text class="title">{{piano.pianoType}} ({{piano.pianoPlace}})</text>
