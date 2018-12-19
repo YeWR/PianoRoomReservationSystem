@@ -6,7 +6,7 @@ page {
 }
 
 .container {
-    height: 1000rpx;
+    height: 1110rpx;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -14,7 +14,7 @@ page {
 }
 
 .up_board {
-    height:7%;
+    height:8%;
     width: 100%;
     left: 0rpx;
     line-height: 28rpx;
