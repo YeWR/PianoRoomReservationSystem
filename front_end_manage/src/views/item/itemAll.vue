@@ -146,7 +146,7 @@
         },
 
         timeSortOptions: () => {
-          return [{ label: this.$t('item.timeDes'), key: '+' }, { label: this.$t('item.timeAsc'), key: '-' }]
+          return [{ label: this.$t('item.timeDes'), key: '-' }, { label: this.$t('item.timeAsc'), key: '+' }]
         },
         itemTypeSortOptions: () => {
           let ans = []
