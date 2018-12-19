@@ -971,11 +971,11 @@ let SearchItem = async function(count, offset, username, roomId, member, type, o
     let sortOrder = null;
     if(order === '-')
     {
-        sortOrder = ['`item_date` desc', '`item_begin` desc'];
+        sortOrder = ['`item_date` desc', '`item_begin` desc', '`item_id` asc'];
     }
     else
     {
-        sortOrder = ['`item_date` asc', '`item_begin` asc'];
+        sortOrder = ['`item_date` asc', '`item_begin` asc', '`item_id` asc'];
     }
     let test = function(){
         return new Promise(resolve =>{
@@ -1226,11 +1226,11 @@ let SearchNotice = async function(count, offset, title, author, order){
     let sortOrder = null;
     if(order === '-')
     {
-        sortOrder = ['`notice_time` desc'];
+        sortOrder = ['`notice_time` desc', '`notice_id` asc'];
     }
     else
     {
-        sortOrder = ['`notice_time` asc'];
+        sortOrder = ['`notice_time` asc', '`notice_id` asc'];
     }
     let test = function(){
         return new Promise(resolve =>{

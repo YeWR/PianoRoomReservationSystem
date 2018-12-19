@@ -41,7 +41,6 @@ const routers = router.post("/", async (ctx, next) => {
             console.log(err);
             return {"success": false, "info": err.data.Message};
         });
-    console.log(sendsms);
     ctx.response.body = sendsms;
 });
 

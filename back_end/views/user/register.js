@@ -13,6 +13,5 @@ const routers = router.post("/", async (ctx, next) => {
         useruuid = uuid.v1().substring(0,16);
     let result = await dataBase.SocietyRegister(1,idNumber,realname,phoneNumber,useruuid,validateCode);
     ctx.response.body = result;
-    console.log(`signin with number: ${phoneNumber}`);
 });
 module.exports = routers;

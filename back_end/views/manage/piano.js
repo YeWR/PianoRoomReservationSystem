@@ -1,29 +1,7 @@
 const Router = require("koa-router");
 const router = new Router();
 const dataBase = require("../dataBase");
-
-function getDateStr (date) {
-    let dateStr = date.getFullYear().toString() + "-";
-    let month = date.getMonth()+1;
-    let day = date.getDate();
-    if(month < 10)
-    {
-        dateStr = dateStr + "0" + month.toString() + "-";
-    }
-    else
-    {
-        dateStr = dateStr + month.toString() + "-";
-    }
-    if(day < 10)
-    {
-        dateStr = dateStr + "0" + day.toString();
-    }
-    else
-    {
-        dateStr = dateStr + day.toString();
-    }
-    return dateStr;
-}
+const utils = require("../utils");
 
 function dayCheck(day) {
     let today = new Date().getDay();
@@ -136,7 +114,7 @@ const routers = router.get("/list", async (ctx, next) => {
         {
             let itemDate = new Date();
             itemDate.setDate(itemDate.getDate() - i);
-            let result = await dataBase.SearchItem(1, 0, null, request.id, null,1,"+",getDateStr(itemDate));
+            let result = await dataBase.SearchItem(1, 0, null, request.id, null,1,"+",utils.getDateStr(itemDate));
             if(result.count !== 0)
             {
                 ctx.response.status = 400;
@@ -159,7 +137,7 @@ const routers = router.get("/list", async (ctx, next) => {
     {
         let date = new Date();
         date.setDate(date.getDate() + day);
-        let dateStr = getDateStr(date);
+        let dateStr = utils.getDateStr(date);
         result = await dataBase.preparePianoForInsert(request.id, startIndex, endIndex - startIndex, dateStr);
         if (!result.success) {
             ctx.response.status = 400;

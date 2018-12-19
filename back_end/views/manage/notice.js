@@ -1,48 +1,8 @@
 const Router = require("koa-router");
 const router = new Router();
 const dataBase = require("../dataBase");
+const utils = require("../utils");
 
-
-function getDateStr (date) {
-    let dateStr = date.getFullYear().toString() + "-";
-    let month = date.getMonth()+1;
-    let day = date.getDate();
-    let hour = date.getHours();
-    let minute = date.getMinutes();
-    if(month < 10)
-    {
-        dateStr = dateStr + "0" + month.toString() + "-";
-    }
-    else
-    {
-        dateStr = dateStr + month.toString() + "-";
-    }
-    if(day < 10)
-    {
-        dateStr = dateStr + "0" + day.toString();
-    }
-    else
-    {
-        dateStr = dateStr + day.toString();
-    }
-    if(hour < 10)
-    {
-        dateStr = dateStr + " " + "0" + hour.toString();
-    }
-    else
-    {
-        dateStr = dateStr + " " + hour.toString();
-    }
-    if(minute < 10)
-    {
-        dateStr = dateStr + ":0" + minute.toString();
-    }
-    else
-    {
-        dateStr = dateStr + ":" + minute.toString();
-    }
-    return dateStr;
-}
 
 const routers = router.get("/list", async (ctx, next) => {
     let query = ctx.query;
@@ -64,7 +24,7 @@ const routers = router.get("/list", async (ctx, next) => {
     for(let notice of result.data)
     {
         let date = new Date(notice.notice_time);
-        let dateStr = getDateStr(date);
+        let dateStr = utils.getDatetimeStr(date);
         let temp = {
             "title": notice.notice_title,
             "date": dateStr,
@@ -73,7 +33,6 @@ const routers = router.get("/list", async (ctx, next) => {
         };
         noticeList.push(temp);
     }
-    noticeList.reverse();
     ctx.response.status = 200;
     ctx.response.body = {
         "items": noticeList,
@@ -95,7 +54,7 @@ const routers = router.get("/list", async (ctx, next) => {
     let id = ctx.query.id;
     let result = await dataBase.GetNoticeInfo(id);
     let date = new Date(result.data.notice_time);
-    let dateStr = getDateStr(date);
+    let dateStr = utils.getDatetimeStr(date);
     ctx.response.status = 200;
     ctx.response.body = {
         "title": result.data.notice_title,

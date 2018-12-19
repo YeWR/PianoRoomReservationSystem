@@ -77,18 +77,29 @@ const routers = router.get("/all", async (ctx, next) => {
 }).post("/detail", async (ctx, next) => {
     let noticeId = ctx.request.body.noticeId;
     let result = await dataBase.GetNoticeInfo(noticeId);
-    let notice = result.data;
-    let date = new Date(notice.notice_time);
-    let dateStr = getDateStr(date);
-    let info = {
-        "noticeTitle": notice.notice_title,
-        "noticeTime": dateStr,
-        "noticeAuthor": notice.notice_auth,
-        "noticeContent": notice.notice_cont
-    };
-    ctx.response.body = {
-        "success": true,
-        "notice": info
+    if(result.success)
+    {
+        let notice = result.data;
+        let date = new Date(notice.notice_time);
+        let dateStr = getDateStr(date);
+        let info = {
+            "noticeTitle": notice.notice_title,
+            "noticeTime": dateStr,
+            "noticeAuthor": notice.notice_auth,
+            "noticeContent": notice.notice_cont
+        };
+        ctx.response.body = {
+            "success": true,
+            "notice": info
+        }
+    }
+    else
+    {
+        ctx.response.body = {
+            "success": false,
+            "notice": null,
+            "info": result.info
+        }
     }
 });
 
