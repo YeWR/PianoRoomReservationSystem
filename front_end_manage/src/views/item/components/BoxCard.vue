@@ -102,6 +102,7 @@
 
 <style rel="stylesheet/scss" lang="scss">
   .box-card-component {
+
     .el-card__header {
       padding: 0px !important;
     }
@@ -109,6 +110,7 @@
 </style>
 <style rel="stylesheet/scss" lang="scss" scoped>
   .box-card-component {
+    width: 400px;
     .box-card-header {
       position: relative;
       height: 220px;

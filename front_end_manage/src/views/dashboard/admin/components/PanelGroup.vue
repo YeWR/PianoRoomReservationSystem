@@ -69,12 +69,15 @@ export default {
     margin-bottom: 32px;
   }
   .card-panel {
+
     height: 108px;
     cursor: pointer;
     font-size: 12px;
     position: relative;
     overflow: hidden;
     color: #666;
+    /*background: #0a76a4;*/
+    /*box-shadow: 4px 4px 40px rgba(110, 110, 110, 1);*/
     background: #fff;
     box-shadow: 4px 4px 40px rgba(0, 0, 0, .05);
     border-color: rgba(0, 0, 0, .05);
