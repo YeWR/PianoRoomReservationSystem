@@ -781,6 +781,105 @@ const randomString = () => {
     return pwd;
 };
 
+/*
+ * draw time table progress bar
+ */
+const drawTimeTable = (that, pianoList, canvasId) => {
+
+    let getFirstBegIndex = (tableList) => {
+
+        let ans = -1;
+        for (let i = 0; i < tableList.length; ++i) {
+            if (tableList[i] === 0) {
+                ans = i;
+                break;
+            }
+        }
+
+        return ans;
+    };
+
+    let getNextBegIndex = (endIndex, tableList) => {
+
+        let ans = -1;
+        if (endIndex === -1 || endIndex >= tableList.length) {
+            return ans;
+        }
+
+        for (let i = endIndex + 1; i < tableList.length; ++i) {
+            if (tableList[i] === 0) {
+                ans = i;
+                break;
+            }
+        }
+
+        if(ans === -1){
+            ans = tableList.length;
+        }
+
+        return ans;
+    };
+
+    let getThisEndIndex = (begIndex, tableList) => {
+
+        let ans = -1;
+        if (begIndex === -1 || begIndex >= tableList.length) {
+            return ans;
+        }
+
+        for (let i = begIndex; i < tableList.length; ++i) {
+            if (tableList[i] === 1) {
+                ans = i;
+                break;
+            }
+        }
+
+        if(ans === -1){
+            ans = tableList.length;
+        }
+
+        return ans;
+    };
+
+    let drawRect = (begIndex, endIndex, ctx, color) => {
+
+        if (begIndex === -1 || endIndex === -1) {
+            return;
+        }
+        const RectX = 0;
+        const RectY = 6;
+        const blockHeight = 5;
+        const blockWidth = 3.3;
+
+        let x1 = RectX + begIndex * blockWidth;
+        let x2 = (endIndex - begIndex) * blockWidth;
+
+        ctx.setFillStyle(color);
+        ctx.fillRect(x1, RectY, x2, blockHeight);
+        ctx.stroke();
+
+    };
+
+    for (let piano of pianoList) {
+
+        const ctx = wx.createCanvasContext(canvasId + piano.pianoId, that);
+        const tableList = piano.timeTable;
+
+        drawRect(0, tableList.length, ctx, 'rgba(245, 245, 245, 1)');
+
+        let begIndex = getFirstBegIndex(tableList);
+        let endIndex = begIndex;
+
+        while (begIndex !== -1 && endIndex !== -1) {
+
+            endIndex = getThisEndIndex(begIndex, tableList);
+            drawRect(begIndex, endIndex, ctx, 'rgba(187, 187, 187, 1)');
+            begIndex = getNextBegIndex(endIndex, tableList);
+        }
+        ctx.draw();
+    }
+};
+
 
 module.exports = {
     alertInfo: alertInfo,
@@ -821,5 +920,6 @@ module.exports = {
     moneyToPay: moneyToPay,
     PAYAPPID: PAYAPPID,
     PAYSECRETID: PAYSECRETID,
-    randomString: randomString
+    randomString: randomString,
+    drawTimeTable: drawTimeTable
 };

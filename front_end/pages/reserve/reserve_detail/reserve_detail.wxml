@@ -20,8 +20,7 @@
         <view class="progress-days">
 
             <view class="progress">
-                <progress percent="{{50}}" stroke-width="5" activeColor="rgba(187, 187, 187, 1)"
-                          backgroundColor="rgb(187, 187, 187) 100%" active="true"/>
+                <canvas canvas-id="{{'pianoDetail' + _pianoId}}"></canvas>
             </view>
 
             <view class="progress-time">
