@@ -67,12 +67,118 @@ export const constantRouterMap = [
 ]
 
 export default new Router({
-  // mode: 'history', // require service support
   scrollBehavior: () => ({ y: 0 }),
   routes: constantRouterMap
 })
 
 export const asyncRouterMap = [
+  {
+    path: '/item',
+    component: Layout,
+    alwaysShow: true,
+    redirect: '/item/scan',
+    name: 'Item',
+    meta: {
+      title: 'itemManagement',
+      icon: 'component'
+    },
+    children: [
+      {
+        path: 'scan',
+        component: () => import('@/views/item/itemScan'),
+        name: 'itemScan',
+        meta: { title: 'itemScan' }
+      },
+      {
+        path: 'all',
+        component: () => import('@/views/item/itemAll'),
+        name: 'itemAll',
+        meta: { title: 'itemList' }
+      }
+    ]
+  },
+  {
+    path: '/user',
+    component: Layout,
+    redirect: '/user/all',
+    name: 'User',
+    meta: {
+      title: 'userManagement',
+      icon: 'peoples'
+    },
+    children: [
+      {
+        path: 'all',
+        component: () => import('@/views/user/userAll'),
+        name: 'userAll',
+        meta: { title: 'userList' }
+      },
+      {
+        path: 'black',
+        component: () => import('@/views/user/blackLIST'),
+        name: 'blackLIST',
+        meta: { title: 'blackList' }
+      }
+    ]
+  },
+  {
+    path: '/notice',
+    component: Layout,
+    redirect: '/notice/list',
+    name: 'notice',
+    meta: {
+      title: 'Notice',
+      icon: 'message'
+    },
+    children: [
+      {
+        path: 'list',
+        component: () => import('@/views/notice/noticeList'),
+        name: 'Notice',
+        meta: { title: 'Notice' }
+      }
+    ]
+  },
+  {
+    path: '/room',
+    component: Layout,
+    redirect: '/room/list',
+    name: 'room',
+    meta: {
+      title: 'Room',
+      icon: 'list'
+    },
+    children: [
+      {
+        path: 'list',
+        component: () => import('@/views/room/roomList'),
+        name: 'Room',
+        meta: { title: 'Room' }
+      }
+    ]
+  },
+  {
+    path: '/check',
+    component: Layout,
+    redirect: '/check/ticket',
+    name: 'checkTicket',
+    meta: {
+      title: 'CheckTicket',
+      icon: 'password'
+    },
+    children: [
+      {
+        path: 'ticket',
+        component: () => import('@/views/check/checkTicket'),
+        name: 'CheckTicket',
+        meta: { title: 'CheckTicket' }
+      }
+    ]
+  },
+  { path: '*', redirect: '/404', hidden: true }
+]
+
+export const asyncCheckRouterMap = [
   {
     path: '/item',
     component: Layout,
@@ -99,67 +205,6 @@ export const asyncRouterMap = [
     ]
   },
   {
-    path: '/user',
-    component: Layout,
-    redirect: '/user/all',
-    name: 'User',
-    meta: {
-      title: 'userManagement',
-      icon: 'people'
-    },
-    children: [
-      {
-        path: 'all',
-        component: () => import('@/views/user/userAll'),
-        name: 'userAll',
-        meta: { title: 'userList' }
-      },
-      {
-        path: 'black',
-        component: () => import('@/views/user/blackLIST'),
-        name: 'blackLIST',
-        meta: { title: 'blackList' }
-      },
-    ]
-  },
-  {
-    path: '/notice',
-    component: Layout,
-    alwaysShow: true,
-    redirect: '/notice/list',
-    name: 'notice',
-    meta: {
-      title: 'Notice',
-      icon: 'table'
-    },
-    children: [
-      {
-        path: 'list',
-        component: () => import('@/views/notice/noticeList'),
-        name: 'Notice',
-        meta: { title: 'Notice' }
-      }
-    ]
-  },
-  {
-    path: '/room',
-    component: Layout,
-    redirect: '/room/list',
-    name: 'room',
-    meta: {
-      title: 'Room',
-      icon: 'table'
-    },
-    children: [
-      {
-        path: 'list',
-        component: () => import('@/views/room/roomList'),
-        name: 'Room',
-        meta: { title: 'Room' }
-      }
-    ]
-  },
-  {
     path: '/check',
     component: Layout,
     redirect: '/check/ticket',
@@ -176,6 +221,5 @@ export const asyncRouterMap = [
         meta: { title: 'CheckTicket' }
       }
     ]
-  },
-  { path: '*', redirect: '/404', hidden: true }
+  }
 ]

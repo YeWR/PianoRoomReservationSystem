@@ -1,4 +1,4 @@
-import { asyncRouterMap, constantRouterMap } from '@/router'
+import { asyncRouterMap, constantRouterMap,asyncCheckRouterMap } from '@/router'
 
 /**
  * 通过meta.role判断是否与当前用户权限匹配
@@ -53,7 +53,7 @@ const permission = {
         if (roles.includes('admin')) {
           accessedRouters = asyncRouterMap
         } else {
-          accessedRouters = filterAsyncRouter(asyncRouterMap, roles)
+          accessedRouters = asyncCheckRouterMap
         }
         commit('SET_ROUTERS', accessedRouters)
         resolve()

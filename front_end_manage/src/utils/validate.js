@@ -3,8 +3,7 @@
  */
 
 export function isvalidUsername(str) {
-  const valid_map = ['liuqiang', 'editor']
-  return valid_map.indexOf(str.trim()) >= 0
+  return 1
 }
 
 /* 合法uri*/
