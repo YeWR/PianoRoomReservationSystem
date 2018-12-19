@@ -15,7 +15,7 @@ const routers = router.get("/list", async (ctx, next) => {
     {
         query.status = parseInt(query.status) - 3;
     }
-    let userId = await dataBase.GetSocietyUuidByTele(ctx.query.idNumber);
+    let userId = await dataBase.GetUserUuidByNumber(ctx.query.idNumber);
     userId = userId.data;
     let result = await dataBase.SearchItem(limit, (page-1)*limit, userId, query.room, query.itemType, query.status, query.timeSort, null);
     let reservationList = [];
@@ -28,12 +28,12 @@ const routers = router.get("/list", async (ctx, next) => {
             {
                 let date = new Date(p.item_date);
                 let dateStr = utils.getDateStr_Index(date, p);
-                let userInfo = await dataBase.GetSocietyUserInfo(p.item_username);
+                let userInfo = await dataBase.GetUserInfo(p.item_username);
                 let info = {
-                    "idNumber": userInfo.data.soc_tele,
+                    "idNumber": userInfo.data.number,
                     "room": i.piano_room,
                     "itemType": p.item_member,
-                    "userType": 2,
+                    "userType": userInfo.data.type,
                     "pianoType": i.piano_type,
                     "price": p.item_value,
                     "status": parseInt(p.item_type) + 3,
@@ -68,12 +68,12 @@ const routers = router.get("/list", async (ctx, next) => {
             {
                 let date = new Date(p.item_date);
                 let dateStr = utils.getDateStr_Index(date, p);
-                let userInfo = await dataBase.GetSocietyUserInfo(p.item_username);
+                let userInfo = await dataBase.GetUserInfo(p.item_username);
                 let info = {
-                    "idNumber": userInfo.data.soc_tele,
+                    "idNumber": userInfo.data.number,
                     "room": i.piano_room,
                     "itemType": p.item_member,
-                    "userType": 2,
+                    "userType": userInfo.data.type,
                     "pianoType": i.piano_type,
                     "price": p.item_value,
                     "status": parseInt(p.item_type) + 3,

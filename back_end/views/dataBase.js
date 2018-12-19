@@ -17,11 +17,11 @@ let client = redis.createClient(config.redisPort,config.serverIp);
 
 let timeLength = 84;
 
-let ChangeSocietyType = async function(userUuid, userType){
+let ChangeUserStatus = async function(userUuid, userStatus){
     let errorMsg = "";
     let test = function(){
         return new Promise(resolve =>{
-            db.where({soc_uuid: userUuid }).update('society_user', {soc_type: userType}, function (err) {
+            db.where({uuid: userUuid }).update('user', {status: userStatus}, function (err) {
                 if(err == null){
                     resolve(1);
                 }
@@ -44,12 +44,12 @@ let ChangeSocietyType = async function(userUuid, userType){
 }
 
 // uuid:改为使用uuid
-let GetSocietyUuidByTele = async function(userTele){
+let GetUserUuidByNumber = async function(userNumber){
     let errorMsg = "";
     let userInfo = null;
     let test = function(){
         return new Promise(resolve =>{
-            db.where({ soc_tele: userTele }).get('society_user', function (err, res, fields) {
+            db.where({ number: userNumber }).get('user', function (err, res, fields) {
                 let _select = res;
                 if (_select.length == 0) {
                     errorMsg = "用户不存在"; // to do
@@ -71,15 +71,15 @@ let GetSocietyUuidByTele = async function(userTele){
             "info":errorMsg};
     }
     if(flag == 1){
-        return {"data":userInfo.soc_uuid};
+        return {"data":userInfo.uuid};
     }
 }
 
-let SearchSocietyUser = async function(count, offset, soc_tele, soc_realname, soc_id, soc_type){
+let SearchUser = async function(count, offset, number, name, id, type, status){
     let errorMsg = "";
     let userInfo = null;
     let userCount = 0;
-    let query = { soc_tele: soc_tele, soc_realname: soc_realname, soc_id: soc_id, soc_type: soc_type};
+    let query = { number: number, name: name, id: id, type: type, status: status};
     for(let q in query)
     {
         if(!query[q])
@@ -91,7 +91,7 @@ let SearchSocietyUser = async function(count, offset, soc_tele, soc_realname, so
         return new Promise(resolve =>{
             db.where(query)
                 .limit(count,offset)
-                .get('society_user', function (err, res, fields) {
+                .get('user', function (err, res, fields) {
                 let _select = res;
                     let _data = JSON.stringify(_select);
                     let _info = JSON.parse(_data);
@@ -103,7 +103,7 @@ let SearchSocietyUser = async function(count, offset, soc_tele, soc_realname, so
     let getUserCount = function(){
         return new Promise(resolve =>{
             db.where(query)
-                .count('society_user', function (err, res, fields) {
+                .count('user', function (err, res, fields) {
                     userCount = res;
                     resolve(1);
                 });
@@ -124,12 +124,12 @@ let SearchSocietyUser = async function(count, offset, soc_tele, soc_realname, so
 }
 
 // uuid:改为使用uuid
-let GetSocietyUserInfo = async function(userUuid){
+let GetUserInfo = async function(userUuid){
     let errorMsg = "";
     let userInfo = null;
     let test = function(){
         return new Promise(resolve =>{
-            db.where({ soc_uuid: userUuid }).get('society_user', function (err, res, fields) {
+            db.where({ uuid: userUuid }).get('user', function (err, res, fields) {
                 let _select = res;
                 if (_select.length == 0) {
                     errorMsg = "用户不存在"; // to do
@@ -160,7 +160,7 @@ let SetRegisterMsg = async function(socTele, socPassword) {
     let errorMsg = "";
     let test = function(){
         return new Promise(resolve =>{
-            db.where({ soc_tele: socTele }).get('society_user', function (err, res, fields) {
+            db.where({ number: socTele }).get('user', function (err, res, fields) {
                 let _select = res;
                 if (_select.length != 0) {
                     errorMsg = "手机号已经被使用"; // to do 
@@ -191,7 +191,7 @@ let SetRegisterMsg = async function(socTele, socPassword) {
     }
 }
 // uuid:增加参数uuid
-let SocietyRegister = async function(socType, socId, socRealname, socTele, socUuid,socPassword) {
+let SocietyUserRegister = async function(socType, socId, socRealname, socTele, socUuid, socPassword) {
     let errorMsg = "";
     let checkMsg = function(){
         return new Promise(resolve =>{
@@ -221,7 +221,7 @@ let SocietyRegister = async function(socType, socId, socRealname, socTele, socUu
     }
     let test = function(){
         return new Promise(resolve =>{
-            db.where({ soc_tele: socTele }).get('society_user', function (err, res, fields) {
+            db.where({ number: socTele }).get('user', function (err, res, fields) {
                 let _select = res;
                 if (_select.length != 0) {
                     errorMsg = "手机号已经被使用"; // to do 
@@ -229,13 +229,14 @@ let SocietyRegister = async function(socType, socId, socRealname, socTele, socUu
                 }
                 else {
                     let _info = {
-                        soc_type: socType,
-                        soc_id: socId,
-                        soc_realname: socRealname,
-                        soc_tele: socTele,
-                        soc_uuid: socUuid
+                        status: 1,
+                        type: socType,
+                        id: socId,
+                        name: socRealname,
+                        number: socTele,
+                        uuid: socUuid
                     };
-                    db.insert('society_user', _info, function (err, info) {
+                    db.insert('user', _info, function (err, info) {
                         if(err == null){
                             resolve(1);
                         }
@@ -264,7 +265,7 @@ let SetLoginMsg = async function(socTele, socPassword) {
     let errorMsg = "";
     let test = function(){
         return new Promise(resolve =>{
-            db.where({ soc_tele: socTele }).get('society_user', function (err, res, fields) {
+            db.where({ number: socTele }).get('user', function (err, res, fields) {
                 let _select = res;
                 if (_select.length == 0) {
                     errorMsg = "手机号未注册"; // to do 
@@ -296,28 +297,28 @@ let SetLoginMsg = async function(socTele, socPassword) {
 }
 
 // to do check if already online
-let SocietyLogin = async function(socTele, socPassword) {
+let SocietyUserLogin = async function(socTele, socPassword) {
     let errorMsg = "";
     let getUser = function(){
         return new Promise(resolve =>{
-            db.where({ soc_tele: socTele }).get('society_user', function (err, res, fields) {
+            db.where({ number: socTele }).get('user', function (err, res, fields) {
                 let _select = res;
-                if (_select.length == 0) {
+                if (_select.length === 0) {
                     errorMsg = "手机号未注册"; // to do 
                     resolve(0);
                 }
                 else {
                     let _data = JSON.stringify(_select);
                     let _info = JSON.parse(_data);
-                    user = _info[0];
+                    let user = _info[0];
                     //console.log(user);
-                    resolve(user.soc_realname);
+                    resolve(1);
                 }
             });
         });
     };
     let realName = await getUser();
-    if(realName == 0){
+    if(realName === 0){
         return {"success":false,
                 "data": realName,
                 "info":errorMsg};
@@ -326,7 +327,7 @@ let SocietyLogin = async function(socTele, socPassword) {
         return new Promise(resolve =>{
             client.get(socTele, function(err, reply){
                 if(reply){
-                    if(socPassword == (reply.toString())){
+                    if(socPassword === (reply.toString())){
                         client.del(socTele, function (err, reply) {});
                         resolve(1);
                     }
@@ -344,12 +345,12 @@ let SocietyLogin = async function(socTele, socPassword) {
     };
     let flag = await test();
     console.log(flag);
-    if(flag == 0){
+    if(flag === 0){
         return {"success":false,
                 "data":realName,
                 "info":errorMsg};
     }
-    if(flag == 1){
+    if(flag === 1){
         return {"success":true,
                 "data":realName};
     }
@@ -1379,18 +1380,18 @@ exports.ChangePianoRule = ChangePianoRule;
 
 // 注册
 exports.SetRegisterMsg = SetRegisterMsg;    // 点击发送
-exports.SocietyRegister = SocietyRegister;  // 点击注册
+exports.SocietyUserRegister = SocietyUserRegister;  // 点击注册
 //exports.CampusRegister = SocietyRegister;
 
 // 登录
 exports.SetLoginMsg = SetLoginMsg;          // 点击发送
-exports.SocietyLogin = SocietyLogin;        // 点击登录
+exports.SocietyUserLogin = SocietyUserLogin;        // 点击登录
 
 // 用户
-exports.GetSocietyUserInfo = GetSocietyUserInfo;  // 获取某个校外用户的信息
-exports.GetSocietyUuidByTele = GetSocietyUuidByTele; // 通过手机号获取uuid
-exports.ChangeSocietyType = ChangeSocietyType;      // 更新用户数据
-exports.SearchSocietyUser = SearchSocietyUser;
+exports.GetUserInfo = GetUserInfo;  // 获取某个校外用户的信息
+exports.GetUserUuidByNumber = GetUserUuidByNumber; // 通过手机号获取uuid
+exports.ChangeUserStatus = ChangeUserStatus;      // 更新用户数据
+exports.SearchUser = SearchUser;
 
 // 公告
 exports.GetNoticeAll = GetNoticeAll;            // 获取所有公告

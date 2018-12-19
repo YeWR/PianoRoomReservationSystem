@@ -246,7 +246,7 @@ const routers = router.post("/refundment", async (ctx, next) => {
     ctx.response.body = result;
 }).get("/all", async (ctx, next) => {
     let number = ctx.query.number;
-    let userId = await dataBase.GetSocietyUuidByTele(number);
+    let userId = await dataBase.GetUserUuidByNumber(number);
     userId = userId.data;
     let result = await dataBase.GetItem(userId);
     if(result.data === null)
@@ -304,7 +304,7 @@ const routers = router.post("/refundment", async (ctx, next) => {
     }
 }).get("/alarm", async (ctx, next) => {
     let number = ctx.query.number;
-    let userId = await dataBase.GetSocietyUuidByTele(number);
+    let userId = await dataBase.GetUserUuidByNumber(number);
     userId = userId.data;
     let result = await dataBase.GetItem(userId);
     if(result.data === null)
@@ -363,10 +363,10 @@ const routers = router.post("/refundment", async (ctx, next) => {
 }).post("/order", async (ctx, next) => {
     console.log(ctx.request.body);
     let number = ctx.request.body.number;
-    let userId = await dataBase.GetSocietyUuidByTele(number);
+    let userId = await dataBase.GetUserUuidByNumber(number);
     userId = userId.data;
-    let userInfo = await dataBase.GetSocietyUserInfo(userId);
-    if(userInfo.data.soc_type)
+    let userInfo = await dataBase.GetUserInfo(userId);
+    if(userInfo.data.status)
     {
         let clientIP = getUserIp(ctx.req).replace(/::ffff:/, '');
         let openId = ctx.request.body.openid;
@@ -466,10 +466,10 @@ const routers = router.post("/refundment", async (ctx, next) => {
     }
 }).post('/ordertest', async (ctx, next) => {
     let number = ctx.request.body.number;
-    let userId = await dataBase.GetSocietyUuidByTele(number);
+    let userId = await dataBase.GetUserUuidByNumber(number);
     userId = userId.data;
-    let userInfo = await dataBase.GetSocietyUserInfo(userId);
-    if(userInfo.data.soc_type)
+    let userInfo = await dataBase.GetUserInfo(userId);
+    if(userInfo.data.status)
     {
         let pianoId = ctx.request.body.pianoId;
         let reserveType = parseInt(ctx.request.body.reservationType);

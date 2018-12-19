@@ -15,21 +15,17 @@ const routers = router.get("/", async (ctx, next) => {
     if(ctx.session.userId && ctx.session.userType)
     {
         let userInfo = null;
-        console.log("cookie:", ctx.session.userId);
-        if(ctx.session.userType === constVariable.USERTYPE_OUTSCHOOL)
+        userInfo = await dataBase.GetUserInfo(ctx.session.userId);
+        if(userInfo.data)
         {
-            userInfo = await dataBase.GetSocietyUserInfo(ctx.session.userId);
-            if(userInfo.data)
-            {
-                response.success = true;
-                response.userType = constVariable.USERTYPE_OUTSCHOOL;
-                response.realName = userInfo.data.soc_realname;
-                response.idNumber = userInfo.data.soc_tele;
-            }
-            else
-            {
-                response.info = userInfo.info;
-            }
+            response.success = true;
+            response.userType = userInfo.data.type;
+            response.realName = userInfo.data.name;
+            response.idNumber = userInfo.data.number;
+        }
+        else
+        {
+            response.info = userInfo.info;
         }
     }
     else

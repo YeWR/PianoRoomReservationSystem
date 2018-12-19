@@ -16,7 +16,6 @@ const getUserIp = (req) => {
 
 function getInfo(url) {
     console.log(url);
-
     return new Promise(function(resolve,reject) {
         request.get(url, (err, response, body) => {
             if (err) {
@@ -33,11 +32,11 @@ const routers = router.post("/outSchool", async (ctx, next) => {
     let tele = ctx.request.body.phoneNumber,
         code = ctx.request.body.validateCode;
     console.log(`login with tele: ${tele}`);
-    let result = await dataBase.SocietyLogin(tele,code);
+    let result = await dataBase.SocietyUserLogin(tele,code);
     //let result = {"success": true};
     if(result.success === true)
     {
-        let useruuid = await dataBase.GetSocietyUuidByTele(tele);
+        let useruuid = await dataBase.GetUserUuidByNumber(tele);
         useruuid = useruuid.data;
         ctx.session.userId = useruuid;
         ctx.session.userType = constVariable.USERTYPE_OUTSCHOOL;
@@ -56,8 +55,32 @@ const routers = router.post("/outSchool", async (ctx, next) => {
     if(ticket)
     {
         let res = await getInfo(requestUrl);
+        res = "code=0:zjh=2014013432:yhm=lizy14:xm=李肇阳:yhlb=X0031:dw=软件学院:email="; //mock
         console.log(res);
-        ctx.response.body = res;
+        res = res.split(":");
+        let info =  {
+            "code": 0,
+            "number": "",
+            "name": "",
+            "type": 0
+        };
+        for(let i of res)
+        {
+            i = i.split("=");
+            switch(i[0])
+            {
+                case "code":
+
+            }
+        }
+    }
+    else
+    {
+        ctx.response.body = {
+            "success": false,
+            "info": "票据不存在!"
+        }
+        ctx.session = null;
     }
 
 });
