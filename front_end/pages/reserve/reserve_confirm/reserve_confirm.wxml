@@ -11,7 +11,9 @@
 
 
         <view class="date-view">
+            <view class="date-view-icon">
             <text class="fa fa-calendar fa-lg"></text>
+            </view>
             <view class="date-text">
                 日期：
             </view>
@@ -22,7 +24,9 @@
         </view>
 
         <view class="date-view">
+            <view class="date-view-icon">
             <text class="fa fa-clock-o fa-lg"></text>
+            </view>
             <view class="date-text">
                 时间：
             </view>
@@ -33,7 +37,9 @@
         </view>
 
         <view class="date-view">
+            <view class="date-view-icon">
             <text class="fa fa-user fa-lg"></text>
+            </view>
             <view class="date-text">
                 人数：
             </view>
@@ -44,7 +50,9 @@
         </view>
 
         <view class="date-view">
-            <text class="fa fa-user fa-lg"></text>
+            <view class="date-view-icon">
+            <text class="fa fa-map-marker fa-lg"></text>
+            </view>
             <view class="date-text">
                 地点：
             </view>
@@ -55,7 +63,9 @@
         </view>
 
         <view class="date-view">
+            <view class="date-view-icon">
             <text class="fa fa-jpy fa-lg"></text>
+            </view>
             <view class="date-text">
                 金额 :
             </view>

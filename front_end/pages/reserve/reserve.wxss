@@ -105,7 +105,7 @@ progress/* pages/reserve/reserve_space/reserve.wxss */
 }
 .select_time_--{
     justify-content: center;
-    margin-left: 10%;
+    margin-left: 7%;
 }
 .preview{
     width: 100%;
@@ -178,6 +178,8 @@ progress/* pages/reserve/reserve_space/reserve.wxss */
     width: 83%;
     height: 30rpx;
     margin-left: 8%;
+    /*box-shadow: 5rpx 5rpx 10rpx 1rpx rgba(187, 187, 187, 1);*/
+
 }
 .progress-time{
     margin-top: 1%;

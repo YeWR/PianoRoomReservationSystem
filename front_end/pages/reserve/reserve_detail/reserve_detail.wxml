@@ -39,9 +39,10 @@
     <view class="reserve-card">
 
         <view class="date-view">
-            <text class="fa fa-calendar fa-lg"></text>
-            <view class="date-text">
-                日期：
+            <view class="date-view-icon">
+                <text class="fa fa-calendar fa-lg"></text>
+            </view>
+            <view class="date-text">日期：
             </view>
 
             <view class="date-info">
@@ -51,39 +52,43 @@
         </view>
 
         <view class="date-view">
-            <text class="fa fa-clock-o fa-lg"></text>
-            <view class="date-text">
-                时间 :
+            <view class="date-view-icon">
+                <text class="fa fa-clock-o fa-lg"></text>
+            </view>
+            <view class="date-text">时间：
             </view>
 
             <view class="select_time">
 
-                    <picker class="select_time_board" mode="multiSelector" value="{{_begTimeIndex}}" range="{{_begTimeArray}}"
-                            bindcolumnchange="bindBegTimeChange">
-                        <text wx:if="{{_begHour < 10}}">0{{_begHour}}</text>
-                        <text wx:else>{{_begHour}}</text>
-                        :
-                        <text wx:if="{{_begMinute < 10}}">0{{_begMinute}}</text>
-                        <text wx:else>{{_begMinute}}</text>
-                    </picker>
+                <picker class="select_time_board" mode="multiSelector" value="{{_begTimeIndex}}"
+                        range="{{_begTimeArray}}"
+                        bindcolumnchange="bindBegTimeChange">
+                    <text wx:if="{{_begHour < 10}}">0{{_begHour}}</text>
+                    <text wx:else>{{_begHour}}</text>
+                    :
+                    <text wx:if="{{_begMinute < 10}}">0{{_begMinute}}</text>
+                    <text wx:else>{{_begMinute}}</text>
+                </picker>
                 <view class="select_time_--">--</view>
 
-                    <picker class="select_time_board" mode="multiSelector" value="{{_endTimeIndex}}" range="{{_endTimeArray}}"
-                            bindcolumnchange="bindEndTimeChange">
-                        <text wx:if="{{_endHour < 10}}">0{{_endHour}}</text>
-                        <text wx:else>{{_endHour}}</text>
-                        :
-                        <text wx:if="{{_endMinute < 10}}">0{{_endMinute}}</text>
-                        <text wx:else>{{_endMinute}}</text>
-                    </picker>
-                </view>
+                <picker class="select_time_board" mode="multiSelector" value="{{_endTimeIndex}}"
+                        range="{{_endTimeArray}}"
+                        bindcolumnchange="bindEndTimeChange">
+                    <text wx:if="{{_endHour < 10}}">0{{_endHour}}</text>
+                    <text wx:else>{{_endHour}}</text>
+                    :
+                    <text wx:if="{{_endMinute < 10}}">0{{_endMinute}}</text>
+                    <text wx:else>{{_endMinute}}</text>
+                </picker>
+            </view>
         </view>
 
 
         <view class="date-view">
-            <text class="fa fa-user fa-lg"></text>
-            <view class="date-text">
-                人数：
+            <view class="date-view-icon">
+                <text class="fa fa-user fa-lg"></text>
+            </view>
+            <view class="date-text">人数：
             </view>
 
             <view class="select_people" wx:if="{{_chooseSingle}}">
@@ -92,24 +97,25 @@
                 </button>
 
                 <button class="people-btn" bindtap="bindMultiUsers" style="background-color: #ffffff">
-                        多人
+                    多人
                 </button>
             </view>
 
             <view class="select_people" wx:if="{{!_chooseSingle}}">
                 <button class="people-btn" bindtap="bindSingleUser" style="background-color: #ffffff">
-                        单人
+                    单人
                 </button>
                 <button class="people-btn-white" bindtap="bindMultiUsers" style="background-color: #660874">
-                        多人
+                    多人
                 </button>
             </view>
         </view>
 
         <view class="date-view">
-            <text class="fa fa-jpy fa-lg"></text>
-            <view class="date-text">
-                金额 :
+            <view class="date-view-icon">
+                <text class="fa fa-jpy fa-lg"></text>
+            </view>
+            <view class="date-text">金额：
             </view>
 
             <view class="money-info">

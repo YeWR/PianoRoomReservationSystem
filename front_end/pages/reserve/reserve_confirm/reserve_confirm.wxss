@@ -3,7 +3,7 @@
     align-items: center;
     background-color: white;
     margin-top: 10%;
-    height: 43%;
+    height: 60%;
     width: 86%;
     color: rgba(0, 0, 0, 1);
     display: flex;
@@ -12,21 +12,22 @@
 }
 
 .date-view {
-    margin-top: 5%;
+    margin-top: 4%;
     width: 90%;
-    height: 10%;
+    height: 12%;
     display: flex;
     color: rgba(102, 8, 116, 1);
 
 }
-
-.date-icon {
-    background-color: rgba(102, 8, 116, 1);
-}
-
-.date-text {
+.date-view-icon{
     text-align: center;
-    width: 30%;
+    width: 10%;
+    height: 100%;
+}
+.date-text {
+    height: 100%;
+    text-align: left;
+    width: 20%;
     margin-left: 2%;
     color: rgba(136, 136, 136, 1);
     font-size: 36rpx;
@@ -37,20 +38,19 @@
     color: rgba(136, 136, 136, 1);
     font-family: Arial;
     justify-content: center;
-    width: 70%;
+    width: 65%;
     text-align: center;
 }
 .money-info{
     color: rgba(136, 136, 136, 1);
     justify-content: center;
-    width: 70%;
+    width: 65%;
     text-align: center;
-    color: black;
-    font-size: 80rpx;
+    font-size: 55rpx;
     font-weight: bolder;
 }
 .reserve_btn_view {
-    margin-top:10%;
+    margin-top:5%;
     width: 80%;
     color: white;
     font-size:30rpx;

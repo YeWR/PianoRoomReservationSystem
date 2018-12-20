@@ -25,8 +25,7 @@
 
             <view class="right_text">
                 <view class="line1">
-                    <text class="line1_text">{{_reservationListShow[0].reservationPianoPlace}}
-                        {{_reservationListShow[0].reservationStateDis}}
+                    <text class="line1_text">{{_reservationListShow[0].reservationPianoPlace}} {{_reservationListShow[0].reservationStateDis}}
                     </text>
                 </view>
 
@@ -35,14 +34,12 @@
                 </view>
 
                 <view class="line3">
-                    <text class="line3_text">{{_reservationListShow[0].reservationDate}}
-                        {{_reservationListShow[0].reservationWeekday}}
+                    <text class="line3_text">{{_reservationListShow[0].reservationDate}} {{_reservationListShow[0].reservationWeekday}}
                     </text>
                 </view>
 
                 <view class="line4">
-                    <text class="line4_text">
-                        {{_reservationListShow[0].reservationBegTime}}-{{_reservationListShow[0].reservationEndTime}}
+                    <text class="line4_text">{{_reservationListShow[0].reservationBegTime}}-{{_reservationListShow[0].reservationEndTime}}
                     </text>
                 </view>
             </view>
@@ -65,8 +62,7 @@
                 <view class="card_right_text" wx:if="{{id > 0}}" data-id="{{id}}" bindtap="bindReserveDetail">
 
                     <view class="card_right_text_line1">
-                        <text class="card_right_text_line1_text">{{reservation.reservationPianoPlace}}
-                            {{reservation.reservationStateDis}}
+                        <text class="card_right_text_line1_text">{{reservation.reservationPianoPlace}} {{reservation.reservationStateDis}}
                         </text>
                     </view>
 
@@ -80,16 +76,14 @@
 
                     <view class="card_right_text_line4">
                         <view class="card_right_text_line4_1">
-                            <text class="card_right_text_line4_1_text">{{reservation.reservationDate}}
-                                {{reservation.reservationWeekday}}
+                            <text class="card_right_text_line4_1_text">{{reservation.reservationDate}} {{reservation.reservationWeekday}}
                             </text>
                         </view>
                         <view class="card_right_text_line4_2">
                             <text class="card_right_text_line4_2_text"></text>
                         </view>
                         <view class="card_right_text_line4_3">
-                            <text class="card_right_text_line4_3_text">
-                                {{reservation.reservationBegTime}}-{{reservation.reservationEndTime}}
+                            <text class="card_right_text_line4_3_text">{{reservation.reservationBegTime}}-{{reservation.reservationEndTime}}
                             </text>
                         </view>
                     </view>

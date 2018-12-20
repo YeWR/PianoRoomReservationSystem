@@ -31,7 +31,10 @@
     justify-content: center;
 }
 .line_left{
+    font-size: 20rpx;
     width: 12%;
+    height: 100%;
+    line-height: 400%;
     text-align: center;
 }
 .line_right{
