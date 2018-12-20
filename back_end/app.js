@@ -1,5 +1,6 @@
 const Koa = require("koa");
 const app = module.exports = new Koa();
+const xmlParser = require('koa-xml-body');
 const bodyParser = require("koa-bodyparser");
 const views = require("./views/views");
 const views_manage = require("./views/views_manage");
@@ -19,6 +20,14 @@ app.use(session({
 },app));
 
 app.use(cors());
+app.use(xmlParser({
+    limit: 2048,
+    xmlOptions: {
+        normalize: true,     // Trim whitespace inside text nodes
+        normalizeTags: true, // Transform tags to lowercase
+        explicitArray: false // Only put nodes in array if >1
+    }
+}))
 app.use(bodyParser());
 
 app.use(views.routes()).use(views.allowedMethods());

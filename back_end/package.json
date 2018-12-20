@@ -12,6 +12,7 @@
     "koa": "*",
     "koa-router": "*",
     "koa-bodyparser": "*",
+    "koa-xml-body": "*",
     "mysql-activerecord": "*",
     "koa2-cors": "*",
     "koa2-request": "*",

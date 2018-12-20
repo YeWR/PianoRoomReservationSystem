@@ -228,7 +228,7 @@ const routers = router.get("/list", async (ctx, next) => {
     for(let p of result.data)
     {
         let info = {
-            "id": p.name,
+            "id": p.realname,
             "telephone": p.number,
             "type": p.type,
             "status": p.status,

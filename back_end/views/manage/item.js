@@ -5,6 +5,7 @@ const utils = require("../utils");
 
 const routers = router.get("/list", async (ctx, next) => {
     let query = ctx.query;
+    console.log(query);
     let page = query.page;
     let limit = parseInt(query.limit);
     if(!query.status)
@@ -17,6 +18,14 @@ const routers = router.get("/list", async (ctx, next) => {
     }
     let userId = await dataBase.GetUserUuidByNumber(ctx.query.idNumber);
     userId = userId.data;
+    if(query.room)
+    {
+        let roomResult = await dataBase.SearchPiano(1,0,query.room,null,null);
+        if(roomResult.count)
+        {
+            query.room = roomResult.data[0].piano_id;
+        }
+    }
     let result = await dataBase.SearchItem(limit, (page-1)*limit, userId, query.room, query.itemType, query.status, query.timeSort, null);
     let reservationList = [];
     let pianoInfo = await dataBase.GetPianoRoomAll();
@@ -69,6 +78,8 @@ const routers = router.get("/list", async (ctx, next) => {
                 let date = new Date(p.item_date);
                 let dateStr = utils.getDateStr_Index(date, p);
                 let userInfo = await dataBase.GetUserInfo(p.item_username);
+                console.log(p);
+                console.log(userInfo);
                 let info = {
                     "idNumber": userInfo.data.number,
                     "room": i.piano_room,

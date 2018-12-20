@@ -2,6 +2,7 @@ const Router = require("koa-router");
 const router = new Router();
 const dataBase = require("../dataBase");
 const constVariable = require("../const");
+const jwt = require("jsonwebtoken");
 
 const routers = router.get("/", async (ctx, next) => {
     let response = {
@@ -11,6 +12,7 @@ const routers = router.get("/", async (ctx, next) => {
         "idNumber": null,
         "info": null
     };
+
     console.log(ctx.session);
     if(ctx.session.userId && ctx.session.userType)
     {

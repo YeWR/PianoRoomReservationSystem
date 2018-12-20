@@ -103,6 +103,18 @@ function getNonceStr(len)
     return str;
 }
 
+function itemTimeout(itemuuid)
+{
+    let result = dataBase.GetItemByUuid(itemuuid);
+    if(result.data)
+    {
+        if(result.data.item_type === 3)
+        {
+            dataBase.DeleteItem(itemuuid);
+        }
+    }
+}
+
 //source: https://blog.csdn.net/zhuming3834/article/details/73168056
 async function wechatPayment(ip, openid, price, uuid) {
     return new Promise((resolve, reject) => {
@@ -383,44 +395,14 @@ const routers = router.post("/refundment", async (ctx, next) => {
         let duration = endTimeIndex - begTimeIndex;
         let itemUuid = uuid.v1().toString();
         itemUuid = itemUuid.replace(/\-/g,'');
-        let result = await dataBase.InsertTempItem(dateStr, userId, pianoId, 1, reserveType, pianoPrice, duration, begTimeIndex, itemUuid);
-        if(result.success && openId !== 'test') //测试用
+        let result = await dataBase.InsertItem(dateStr, userId, pianoId, 3, reserveType, pianoPrice, duration, begTimeIndex, itemUuid);
+        if(result.success)
         {
-            result = await wechatPayment(clientIP, openId, pianoPrice, itemUuid);
-            if(result.success)
-            {
-                ctx.response.body = {
-                    "success": true,
-                    "info": "下单成功",
-                    "sign": {
-                        "timeStamp": result.timeStamp,
-                        "nonceStr": result.nonceStr,
-                        "package": result.package,
-                        "paySign": result.paySign
-                    }
-                }
-            }
-            else
-            {
-                ctx.response.body = {
-                    "success": false,
-                    "info": result.msg
-                }
-            }
-        }
-        else if(result.success && openId === 'test') //测试用
-        {
+            setTimeout(()=>{itemTimeout(itemUuid)},30*60*1000);
             ctx.response.body = {
                 "success": true,
-                "info": "测试成功!",
+                "info": "下单成功",
                 "uuid": itemUuid
-            }
-        }
-        else
-        {
-            ctx.response.body = {
-                "success": false,
-                "info": result.info
             }
         }
     }
@@ -432,30 +414,67 @@ const routers = router.post("/refundment", async (ctx, next) => {
         }
     }
     //console.log(ctx.response.body);
-}).post("/validate/:uuid", async (ctx, next) => {
-    console.log(ctx.params);
-    let id = ctx.params.uuid;
-    let resultdb = await dataBase.GetTempItemByUuid(id);
-    if(resultdb.data)
+}).post("/pay", async (ctx, next) => {
+    console.log(ctx.request.body);
+    let uuid = ctx.request.body.uuid;
+    let openId = ctx.request.body.openid;
+    let clientIP = getUserIp(ctx.req).replace(/::ffff:/, '');
+    let itemInfo = await dataBase.GetItemByUuid(uuid);
+    console.log(itemInfo);
+    if(itemInfo.data)
     {
-        let itemInfo = resultdb.data;
-        console.log("validation");
-        console.log(itemInfo);
-        resultdb = await dataBase.InsertItem(itemInfo.item_date,itemInfo.item_username,itemInfo.item_roomId, itemInfo.item_type,itemInfo.item_member,itemInfo.item_value,itemInfo.item_duration,itemInfo.item_begin,itemInfo.item_uuid);
-        console.log(resultdb);
-        if(resultdb.success)
+        let result = await wechatPayment(clientIP, openId, itemInfo.data.item_value, uuid);
+        if(result.success)
         {
-            resultdb = await dataBase.DeleteTempItem(id);
+            ctx.response.body = {
+                "success": true,
+                "info": "下单成功",
+                "sign": {
+                    "timeStamp": result.timeStamp,
+                    "nonceStr": result.nonceStr,
+                    "package": result.package,
+                    "paySign": result.paySign
+                }
+            }
         }
-        ctx.response.status = 200;
-        ctx.response.body = "<xml>" +
-            "<return_code><![CDATA[SUCCESS]]></return_code>" +
-            "<return_msg><![CDATA[OK]]></return_msg>" +
-            "</xml>";
+        else
+        {
+            ctx.response.body = {
+                "success": false,
+                "info": result.msg
+            }
+        }
     }
     else
     {
-        console.log("订单不存在");
+        ctx.response.body = {
+            "success": false,
+            "info": "订单已过期!"
+        }
+    }
+}).post("/validate/:uuid", async (ctx, next) => {
+    let id = ctx.params.uuid;
+    let result = ctx.request.body;
+    if (result.xml.return_code === 'SUCCESS' && result.xml.result_code === 'SUCCESS')
+    {
+        let resultdb = await dataBase.ItemPaySuccess(id);
+        if(resultdb.success)
+        {
+            ctx.response.status = 200;
+            ctx.response.body = "<xml>" +
+                "<return_code><![CDATA[SUCCESS]]></return_code>" +
+                "<return_msg><![CDATA[OK]]></return_msg>" +
+                "</xml>";
+        }
+        else
+        {
+            console.log("确认支付失败");
+            ctx.response.status = 404;
+        }
+    }
+    else
+    {
+        console.log("支付失败");
         ctx.response.status = 404;
     }
 }).post('/ordertest', async (ctx, next) => {
@@ -474,7 +493,7 @@ const routers = router.post("/refundment", async (ctx, next) => {
         dateStr.concat(" 08:00:00");
         let duration = endTimeIndex - begTimeIndex;
         let itemUuid = uuid.v1();
-        let result = await dataBase.InsertItem(dateStr, userId, pianoId, 1, reserveType, pianoPrice, duration, begTimeIndex, itemUuid);
+        let result = await dataBase.InsertItemTemp(dateStr, userId, pianoId, 1, reserveType, pianoPrice, duration, begTimeIndex, itemUuid);
         ctx.response.body = result;
     }
     else

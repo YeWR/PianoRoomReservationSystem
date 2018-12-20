@@ -7,6 +7,7 @@ const configPath = "configs.json";
 let fs = require("fs");
 const configs = JSON.parse(fs.readFileSync(configPath));
 const uuid = require("node-uuid");
+const jwt = require("jsonwebtoken");
 
 const getUserIp = (req) => {
     return req.headers['x-forwarded-for'] ||
@@ -78,6 +79,12 @@ const routers = router.post("/outSchool", async (ctx, next) => {
         useruuid = useruuid.data;
         ctx.session.userId = useruuid;
         ctx.session.userType = constVariable.USERTYPE_OUTSCHOOL;
+        //const userToken = {
+        //     "userId": username,
+        //     "userType": usertype
+        // };
+        // const secret = configs.app_key[0];
+        // const token = jwt.sign(userToken,secret, {"expiresIn": 10*60*1});   // 10分钟过期
     }
     else
     {
@@ -117,6 +124,12 @@ const routers = router.post("/outSchool", async (ctx, next) => {
                     "data": result.info,
                     "uuid": result.info.uuid
                 };
+                // const userToken = {
+                //     "userId": username,
+                //     "userType": usertype
+                // };
+                // const secret = configs.app_key[0];
+                // const token = jwt.sign(userToken,secret, {"expiresIn": 10*60*1});   // 10分钟过期
             }
             else
             {
