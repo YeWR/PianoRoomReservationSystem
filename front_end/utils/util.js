@@ -784,7 +784,7 @@ const randomString = () => {
 /*
  * draw time table progress bar
  */
-const drawTimeTable = (that, pianoList, canvasId, date) => {
+const drawTimeTable = (pianoList, canvasId, date, idAdd) => {
 
     let getFirstBegIndex = (tableList) => {
 
@@ -880,7 +880,14 @@ const drawTimeTable = (that, pianoList, canvasId, date) => {
 
     for (let piano of pianoList) {
 
-        const ctx = wx.createCanvasContext(canvasId + piano.pianoId, that);
+        let ctxId = "";
+        if(idAdd){
+            ctxId = canvasId + piano.pianoId;
+        }
+        else {
+            ctxId = canvasId;
+        }
+        const ctx = wx.createCanvasContext(ctxId);
         const tableList = piano.timeTable.slice();
         for (let i = 0; i < tableList.length; ++i) {
             tableList[i] = tableList[i] | availTable[i];

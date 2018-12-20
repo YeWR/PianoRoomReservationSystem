@@ -250,7 +250,7 @@ Page({
             _pianoAvailableShow: pianoAvailable.slice(0, that.data._pianoLimit),
             _pianoIsAvailable: pianoIsAvailable
         }, function () {
-            util.drawTimeTable(that, pianoAvailable, "piano", that.data._jsDate);
+            util.drawTimeTable(pianoAvailable, "piano", that.data._jsDate, 1);
         });
     },
 

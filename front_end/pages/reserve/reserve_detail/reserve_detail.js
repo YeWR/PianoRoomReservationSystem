@@ -366,8 +366,7 @@ Page({
                     that.initTime();
                     // draw
                     let pianotList =[{"pianoId": that.data._pianoId, "timeTable": that.data._timeTable}];
-                    console.log(pianotList);
-                    util.drawTimeTable(that, pianotList, "pianoDetail", that.data._jsDate);
+                    util.drawTimeTable(pianotList, "pianoDetail", that.data._jsDate, 0);
                 }
                 else {
                     util.alertInfo(res.data.info, "none", 1000);
