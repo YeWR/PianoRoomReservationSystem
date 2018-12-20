@@ -31,7 +31,7 @@
 .left_icon{
     text-align: center;
     width: 30%;
-    height: 50%;
+    height: 60%;
     font-size: 100rpx;
     color: white;
 }
@@ -106,10 +106,12 @@
     width: 100%;
 }
 .card {
+    box-shadow: 5rpx 5rpx 10rpx 1rpx rgba(187, 187, 187, 1);
+
     margin-left: 5%;
     margin-right: 5%;
     background-color: white;
-    margin-top: 6%;
+    margin-top: 4%;
     height: 18%;
     width: 90%;
     color: rgba(0, 0, 0, 1);
@@ -184,7 +186,7 @@
 
 .card_right_text_line4_1{
     height: 10%;
-    width: 50%;
+    width: 38%;
     font-size: 80%;
 
     overflow: hidden;
@@ -192,19 +194,19 @@
     white-space: nowrap;
 }
 
-/*.card_right_text_line4_2{*/
-    /*height: 100%;*/
-    /*width: 28%;*/
-    /*font-size: 80%;*/
+.card_right_text_line4_2{
+    height: 100%;
+    width: 25%;
+    font-size: 80%;
 
-    /*overflow: hidden;*/
-    /*text-overflow: ellipsis;*/
-    /*white-space: nowrap;*/
-/*}*/
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
 
 .card_right_text_line4_3{
     height: 100%;
-    width: 40%;
+    width: 37%;
     font-size: 80%;
 
     overflow: hidden;

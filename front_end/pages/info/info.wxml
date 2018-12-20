@@ -13,7 +13,7 @@
 
     <view class="info_main_card">
 
-        <view class="info_main_card_line1">
+        <view class="info_main_card_line1" bindtap="bindPersonalInfo">
             <view class = "info_main_card_line1_left" bindtap="bindPersonalInfo">
                     <text class="fa fa-user fa-lg"></text>
             </view>
@@ -26,21 +26,6 @@
                 </view>
             </view>
         </view>
-
-        <!--<view class="info-cut">-->
-            <!--<view class="info-cutline"></view>-->
-        <!--</view>-->
-
-        <!--<view class = "info_main_card_line2">-->
-            <!--<view class = "info_main_card_line2_left" bindtap="bindPersonalInfo">-->
-                <!--<text class = "info_main_card_line2_left_text">个人信息</text>-->
-            <!--</view>-->
-            <!--<view class = "info_main_card_line2_middle">-->
-            <!--</view>-->
-            <!--<view class = "info_main_card_line2_right" bindtap="bindPersonalMsg">-->
-                <!--<text class = "info_main_card_line2_left_text">我的消息</text>-->
-            <!--</view>-->
-        <!--</view>-->
 
     </view>
 
@@ -80,7 +65,7 @@
             <view class = "card_up_middle" bindtap="bindHelp">
                 <text>使用帮助</text>
             </view>
-            <view class = "card_up_right">
+            <view class = "card_up_right" bindtap="bindHelp">
                 <text class="fa fa-location-arrow fa-lg"></text>
             </view>
         </view>
@@ -94,7 +79,7 @@
             <view class = "card_down_middle" bindtap="bindLogout">
                 <text>退出登录</text>
             </view>
-            <view class = "card_down_right">
+            <view class = "card_down_right"bindtap="bindLogout">
                 <text class="fa fa-location-arrow fa-lg"></text>
             </view>
         </view>

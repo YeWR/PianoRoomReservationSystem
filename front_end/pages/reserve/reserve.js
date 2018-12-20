@@ -419,6 +419,15 @@ Page({
             url: url
         });
     },
+    /*
+     * to reserve a piano
+     */
+    toPriceInfo: function (e) {
+        let url = util.setUrl("./price_info/price_info");
+        wx.navigateTo({
+            url: url
+        });
+    },
 
     /*
      * fresh reservation info

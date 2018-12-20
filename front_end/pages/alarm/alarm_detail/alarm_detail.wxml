@@ -90,7 +90,7 @@
             </view>
 
             <view class="top_line3">
-                <view class="line3_left">
+                <view class="line_left">
                     <text class="fa fa-jpy fa-lg"></text>
                 </view>
                 <view class="line3_right">
