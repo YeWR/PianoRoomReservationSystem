@@ -51,7 +51,7 @@
 }
 
 .progress-time{
-    margin-top: 1%;
+    margin-top: 3%;
     width: 100%;
     font-size: 26rpx;
     font-family: SFUIText-regular;
