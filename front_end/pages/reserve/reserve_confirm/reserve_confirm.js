@@ -23,6 +23,7 @@ Page({
         _pianoType: "",
         _pianoPrice: "",
         _pianoId: "",
+        _uuid: "",
     },
 
     /*
@@ -62,17 +63,10 @@ Page({
         }
 
         wx.request({
-            url: "https://958107.iterator-traits.com/user/reservation/order",
+            url: "https://958107.iterator-traits.com/user/reservation/pay",
             data: {
                 openid: openid,
-                // openid:"test",
-                number: number,
-                reservationType: that.data._reservationType,
-                pianoId: that.data._pianoId,
-                pianoPrice: that.data._pianoPrice,
-                begTimeIndex: that.data._begTimeIndex,
-                endTimeIndex: that.data._endTimeIndex,
-                date: that.data._date,
+                uuid: that.data._uuid
             },
             method: "POST",
             header: {
@@ -116,52 +110,14 @@ Page({
      */
 
     confirmReservation: function (e) {
-        // let that = this;
-        // wx.login({
-        //     success: function (res) {
-        //         console.log("login: ", res);
-        //         that.getOpenId(that, res.code)
-        //     },
-        //     fail: function () {
-        //         util.alertInfo("微信登录失败", "none", 1000);
-        //     }
-        // });
-
-        // TODO
         let that = this;
-        let number = app.globalData._idNumber;
-        if (app.globalData._userType !== util.USERTYPE.SOCIAL) {
-            // stu id card
-            number = app.globalData._idNumber;
-        }
-        wx.request({
-            url: "https://958107.iterator-traits.com/user/reservation/ordertest",
-            data: {
-                number: number,
-                reservationType: that.data._reservationType,
-                pianoId: that.data._pianoId,
-                pianoPrice: that.data._pianoPrice,
-                begTimeIndex: that.data._begTimeIndex,
-                endTimeIndex: that.data._endTimeIndex,
-                date: that.data._date,
-            },
-            method: "POST",
-            header: {
-                "Content-Type": "application/x-www-form-urlencoded"
-            },
+        wx.login({
             success: function (res) {
-                if (res.data.success) {
-                    util.alertInfo("预约成功！", "success", 500);
-                    setTimeout(() => {
-                        that.toAlarm();
-                    }, 500);
-                }
-                else {
-                    util.alertInfo(res.data.info, "none", 1000);
-                }
+                console.log("login: ", res);
+                that.getOpenId(that, res.code)
             },
-            fail: function (res) {
-                util.alertInfo("预约失败，请检查网络设备是否正常。", "none", 1000);
+            fail: function () {
+                util.alertInfo("微信登录失败", "none", 1000);
             }
         });
     },
@@ -195,6 +151,7 @@ Page({
             _pianoPrice: options.pianoPrice,
             _pianoType: options.pianoType,
             _pianoId: options.pianoId,
+            _uuid: options.uuid
         });
     },
 
