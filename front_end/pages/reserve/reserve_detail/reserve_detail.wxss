@@ -46,12 +46,14 @@
 .progress {
     width: 83%;
     margin-left: 8%;
+    height: 13rpx;
+    /*background-color: #660874;*/
 }
 
-.progress-time {
+.progress-time{
     margin-top: 1%;
     width: 100%;
-    font-size: 26 rpx;
+    font-size: 26rpx;
     font-family: SFUIText-regular;
 }
 
@@ -147,20 +149,6 @@
     font-size: 23rpx;
     font-weight: bold;
     color: white;
-}
-
-.progress{
-    width: 83%;
-    margin-left: 8%;
-}
-.progress-time{
-    margin-top: 1%;
-    width: 100%;
-    font-size: 26rpx;
-    font-family: SFUIText-regular;
-}
-.progress-time-each{
-    margin-left: 7%;
 }
 
 .reserve_btn_view {

@@ -30,6 +30,16 @@ Page({
         });
     },
 
+    bindReserveDetail: function(e){
+        let id = e.currentTarget.dataset.id;
+        let paras = this.data._reservationList[id];
+
+        let url = util.setUrl("./alarm_detail/alarm_detail", paras);
+        wx.navigateTo({
+            url: url
+        });
+    },
+
     /*
      * set reservation list
      */

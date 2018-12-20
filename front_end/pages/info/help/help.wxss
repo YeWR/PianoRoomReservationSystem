@@ -1,1 +1,84 @@
 /* pages/info/help/help.wxss */
+/* pages/reserve/price_info/price_info.wxss */
+.card {
+    box-shadow: 5rpx 5rpx 10rpx 1rpx rgba(187, 187, 187, 1);
+
+    background-color: white;
+    margin-top: 5%;
+    height: 100%;
+    width: 90%;
+    color: rgba(0, 0, 0, 1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 10rpx;
+}
+
+.up_title{
+    margin-top: 2%;
+    width: 90%;
+    height: 8%;
+    display: flex;
+    flex-direction: row;
+    text-align: center;
+    font-weight: bold;
+    font-size: 50rpx;
+}
+
+.up_text{
+    width: 100%;
+}
+
+.title{
+    font-size: 42rpx;
+    font-weight: bolder;
+    font-family: SFUIText-regular;
+}
+.bottom_up_title{
+    height: 20%;
+    display: flex;
+    width: 90%;
+    margin-left: 10%;
+    margin-top: 1%;
+}
+.bottom_up_text{
+    width: 90%;
+    font-size: 35rpx;
+    line-height: 60rpx;
+    text-indent: 60rpx;
+    text-align: left;
+
+    font-family: SFUIText-regular;
+}
+.bottom_title{
+    height: 9%;
+    display: flex;
+    width: 90%;
+    margin-left: 10%;
+    margin-top: 1%;
+}
+
+.bottom_text{
+    width: 90%;
+    font-size: 35rpx;
+
+    text-indent: 60rpx;
+    text-align: left;
+
+    font-family: SFUIText-regular;
+}
+
+.bottom_icon{
+    width: 10%;
+}
+.bottom_in_title{
+    height: 9%;
+    width: 70%;
+    margin-top: -20rpx;
+    margin-left: 30%;
+}
+.bottom_in_text{
+    font-size: 30rpx;
+
+    font-family: SFUIText-regular;
+}

@@ -76,7 +76,7 @@
                 <text>不可用</text>
             </view>
         </view>
-        <view class = "right">
+        <view class = "right" bindtap="toPriceInfo" >
                 <text>价格详情</text>
             <view class ="right-arrow">
                 <text class="fa fa-angle-right fa-lg"></text>

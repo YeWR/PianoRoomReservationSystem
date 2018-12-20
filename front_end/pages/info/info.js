@@ -67,7 +67,10 @@ Page({
             url: "../login/login"
         });
     },
-
+    /* to help */
+    toHelp: function (e) {
+        //todo:跳转
+    },
     /*
      * redirect to login
      * this is a bug in wechat, so we have to fix it.

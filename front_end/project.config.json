@@ -10,7 +10,7 @@
 		"minified": true,
 		"newFeature": true
 	},
-	"compileType": "miniprogram",
+	"compileType": "plugin",
 	"libVersion": "2.3.2",
 	"appid": "wx715248ea60f61941",
 	"projectname": "THU%E7%90%B4%E6%88%BF%E6%94%AF%E4%BB%98%E6%B5%8B%E8%AF%95",
@@ -28,15 +28,21 @@
 			"list": []
 		},
 		"plugin": {
-			"current": -1,
-			"list": []
+			"current": 0,
+			"list": [
+				{
+					"id": -1,
+					"name": "预约空间",
+					"pathName": "pages/reserve/reserve"
+				}
+			]
 		},
 		"game": {
 			"currentL": -1,
 			"list": []
 		},
 		"miniprogram": {
-			"current": 7,
+			"current": 8,
 			"list": [
 				{
 					"id": -1,
@@ -85,6 +91,11 @@
 					"name": "预约提醒",
 					"pathName": "pages/alarm/alarm",
 					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "shiyongbangzhu",
+					"pathName": "pages/info/help/help"
 				}
 			]
 		}
