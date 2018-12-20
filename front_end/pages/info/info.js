@@ -26,14 +26,18 @@ Page({
      * bind personal infomation
      */
     bindPersonalInfo: function (e) {
-
+        wx.navigateTo({
+            url: "./individual_info/individual_info"
+        });
     },
 
     /*
-     * bind personal msg
+     * bind help
      */
-    bindPersonalMsg: function (e) {
-
+    bindHelp: function (e) {
+        wx.navigateTo({
+            url: "./help/help"
+        });
     },
 
     /*
@@ -52,12 +56,6 @@ Page({
 
     },
 
-    /*
-     * bind help
-     */
-    bindHelp: function(e){
-
-    },
 
     /*
      * to login page
