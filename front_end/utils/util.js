@@ -719,7 +719,7 @@ const showHidenId = (itemId, front, middle, back) => {
     let number = "";
 
     number += itemId.slice(0, front);
-    for(let i = 0; i < middle; ++i){
+    for (let i = 0; i < middle; ++i) {
         number += "*";
     }
     number += itemId.slice(back, itemId.length);
@@ -736,7 +736,7 @@ const shwoHidenIdNumber = (idNumber, userType) => {
         if (phoneNumber && phoneNumber.length === 11) {
             return showHidenId(phoneNumber, 3, 4, 7);
         }
-        else{
+        else {
             return null;
         }
     };
@@ -745,7 +745,7 @@ const shwoHidenIdNumber = (idNumber, userType) => {
         if (stuNumber) {
             return showHidenId(stuNumber, 4, 3, 7)
         }
-        else{
+        else {
             return null;
         }
     };
@@ -784,7 +784,7 @@ const randomString = () => {
 /*
  * draw time table progress bar
  */
-const drawTimeTable = (that, pianoList, canvasId) => {
+const drawTimeTable = (that, pianoList, canvasId, date) => {
 
     let getFirstBegIndex = (tableList) => {
 
@@ -813,7 +813,7 @@ const drawTimeTable = (that, pianoList, canvasId) => {
             }
         }
 
-        if(ans === -1){
+        if (ans === -1) {
             ans = tableList.length;
         }
 
@@ -834,7 +834,7 @@ const drawTimeTable = (that, pianoList, canvasId) => {
             }
         }
 
-        if(ans === -1){
+        if (ans === -1) {
             ans = tableList.length;
         }
 
@@ -860,10 +860,31 @@ const drawTimeTable = (that, pianoList, canvasId) => {
 
     };
 
+    let today = new Date();
+    let availTable = [];
+    if (dateCompare(date, today) > 0) {
+        for (let i = 0; i < getTimeTableLen(); ++i) {
+            availTable.push(0);
+        }
+    }
+    else {
+        let todayIndex = getIndexInTimeTable(today.getHours(), today.getMinutes());
+
+        for (let i = 0; i < todayIndex; ++i) {
+            availTable.push(1);
+        }
+        for (let i = todayIndex; i < getTimeTableLen(); ++i) {
+            availTable.push(0);
+        }
+    }
+
     for (let piano of pianoList) {
 
         const ctx = wx.createCanvasContext(canvasId + piano.pianoId, that);
-        const tableList = piano.timeTable;
+        const tableList = piano.timeTable.slice();
+        for (let i = 0; i < tableList.length; ++i) {
+            tableList[i] = tableList[i] | availTable[i];
+        }
 
         drawRect(0, tableList.length, ctx, 'rgba(245, 245, 245, 1)');
 
