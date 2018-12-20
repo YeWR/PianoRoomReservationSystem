@@ -14,13 +14,18 @@ Page({
      */
     data: {
         _reservationList: [],
+        _reservationListShow: [],
+        _reservationLimit: 5,
+
+        _showThis: false,
+        _text: "加载中...",
     },
 
     /*
      * bind reservation detail
      * to detail
      */
-    bindReserveDetail: function(e){
+    bindReserveDetail: function (e) {
         let id = e.currentTarget.dataset.id;
         let paras = this.data._reservationList[id];
 
@@ -33,11 +38,11 @@ Page({
     /*
      * set reservation list
      */
-    setReservationList: function(reservationList, that){
+    setReservationList: function (reservationList, that) {
         let list = [];
         let scaleHour = util.BEGINHOUR;
         let scaleMinute = util.BEGINMINUTE;
-        for(let i = 0; i < reservationList.length; ++i){
+        for (let i = 0; i < reservationList.length; ++i) {
             const e = reservationList[i];
             let begTime = util.getEndTime(scaleHour, scaleMinute, e.begTimeIndex);
             let endTime = util.getEndTime(scaleHour, scaleMinute, e.endTimeIndex);
@@ -62,7 +67,8 @@ Page({
         }
 
         this.setData({
-            _reservationList: list
+            _reservationList: list,
+            _reservationListShow: list.slice(0, this.data._reservationLimit)
         });
     },
 
@@ -86,10 +92,10 @@ Page({
                 "Content-Type": "application/x-www-form-urlencoded"
             },
             success: function (res) {
-                if(res.data.success){
+                if (res.data.success) {
                     that.setReservationList(res.data.reservationList, that);
                 }
-                else{
+                else {
                     util.alertInfo(res.data.info, "none", 1000);
                 }
 
@@ -112,7 +118,7 @@ Page({
      * redirect to login
      * this is a bug in wechat, so we have to fix it.
      */
-    reLogin: function(){
+    reLogin: function () {
         wx.redirectTo({
             url: "../login/login"
         });
@@ -123,7 +129,7 @@ Page({
      */
     onLoad: function (options) {
         let user = app.globalData._username;
-        if(!user){
+        if (!user) {
             this.reLogin();
         }
     },
@@ -160,6 +166,13 @@ Page({
      * 页面相关事件处理函数--监听用户下拉动作
      */
     onPullDownRefresh: function () {
+        this.setData({
+            _reservationListShow: [],
+            _reservationLimit: 5,
+
+            _showThis: false,
+            _text: "加载中...",
+        });
         this.freshInfo();
     },
 
@@ -167,7 +180,26 @@ Page({
      * 页面上拉触底事件的处理函数
      */
     onReachBottom: function () {
-
+        let that = this;
+        let limit = Math.min(that.data._reservationLimit + 3, that.data._reservationList.length);
+        that.setData({
+            _showThis: true
+        }, function () {
+            if (that.data._reservationLimit >= that.data._reservationList.length) {
+                that.setData({
+                    _text: "已经到底啦~",
+                })
+            }
+            else {
+                setTimeout(function () {
+                    that.setData({
+                        _reservationLimit: limit,
+                        _reservationListShow: that.data._reservationList.slice(0, that.data._reservationLimit),
+                        _showThis: false
+                    });
+                }, 300);
+            }
+        });
     },
 
     /**

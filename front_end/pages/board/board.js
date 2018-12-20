@@ -11,9 +11,9 @@ Page({
     data: {
         _noticeList: [],
         _noticeListShow: [],
-        _noticeLimit: 5,
+        _noticeLimit: 6,
 
-        _showThis: true,
+        _showThis: false,
         _text: "加载中...",
     },
 
@@ -129,6 +129,13 @@ Page({
      * 页面相关事件处理函数--监听用户下拉动作
      */
     onPullDownRefresh: function () {
+        this.setData({
+            _noticeListShow: [],
+            _noticeLimit: 6,
+
+            _showThis: false,
+            _text: "加载中...",
+        });
         this.freshInfo();
     },
 
@@ -140,14 +147,22 @@ Page({
         let limit = Math.min(that.data._noticeLimit + 3, that.data._noticeList.length);
         that.setData({
             _showThis: true
+        }, function () {
+            if(that.data._noticeLimit >= that.data._noticeList.length){
+                that.setData({
+                    _text: "已经到底啦~",
+                })
+            }
+            else {
+                setTimeout(function () {
+                    that.setData({
+                        _noticeLimit: limit,
+                        _noticeListShow: that.data._noticeList.slice(0, that.data._noticeLimit),
+                        _showThis: false
+                    });
+                }, 300);
+            }
         });
-        setTimeout(function () {
-            that.setData({
-                _noticeLimit: limit,
-                _noticeListShow: that.data._noticeList.slice(0, that.data._noticeLimit),
-                _showThis: false
-            });
-        }, 500);
     },
 
     /**
