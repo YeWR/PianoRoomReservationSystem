@@ -583,16 +583,15 @@ let getDateNum = function(itemDate){
     let item_date = new Date(itemDate);
     let now_date = new Date();
     now_date.setHours(now_date.getHours()+8);
-    if(now_date>item_date){
-        item_date.setDate(item_date.getDate()+1);
-        if(now_date > item_date){
-            return -1;
-        }
+    if(now_date.getDate()>item_date.getDate()){
+        return -1;
+    }
+    else if(now_date.getDate() === item_date.getDate()){
         return 0;
     }
     else{
         item_date.setDate(item_date.getDate()-1);
-        if(now_date>item_date){
+        if(now_date.getDate() === item_date.getDate()){
             return 1;
         }
         else{
@@ -809,14 +808,14 @@ let ChangePianoRule = async function(itemRoomId, itemBegin, itemDuration, itemDa
 let InsertItem = async function(itemDate, itemUsername, itemRoomId, itemType, itemMember, itemValue, itemDuration, itemBegin, itemUuid){
     let errorMsg = "";
     // 修改可预约时间段。
-    let result = await preparePianoForInsert(itemRoomId, itemBegin, itemDuration, itemDate);
-    if (result.success === false) {
-        errorMsg = "预约失败";
-        return {
-            "success": false,
-            "info": errorMsg
-        };
-    }
+    // let result = await preparePianoForInsert(itemRoomId, itemBegin, itemDuration, itemDate);
+    // if (result.success === false) {
+    //     errorMsg = "预约失败";
+    //     return {
+    //         "success": false,
+    //         "info": errorMsg
+    //     };
+    // }
     // 插入订单
     let test = function(){
         return new Promise(resolve =>{
@@ -862,6 +861,14 @@ let InsertItem = async function(itemDate, itemUsername, itemRoomId, itemType, it
 //使用redis存储未支付订单
 let InsertTempItem = async function(itemDate, itemUsername, itemRoomId, itemType, itemMember, itemValue, itemDuration, itemBegin, itemUuid){
     let errorMsg = "";
+    let result = await preparePianoForInsert(itemRoomId, itemBegin, itemDuration, itemDate);
+    if (result.success === false) {
+        errorMsg = "预约失败";
+        return {
+            "success": false,
+            "info": errorMsg
+        };
+    }
     // 插入订单
     let test = function(){
         return new Promise(resolve =>{

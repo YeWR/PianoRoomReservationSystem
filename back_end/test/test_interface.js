@@ -40,13 +40,13 @@ let testRule = [{
     id: 2,
     start: 12,
     end: 20,
-    week: (date.getDay()+1)%7,
+    week: date.getDay(),
     type: 1
 },{
     id: 1,
     start: 0,
     end: 6,
-    week: (date.getDay()+1)%7,
+    week: date.getDay(),
     type: 1
 }]
 
@@ -240,6 +240,7 @@ describe('#interfaceUser',()=>{
             expect(res.reservationList[0].reservationType).equal(2);
             expect(res.reservationList[0].reservationState).equal(1);
         });
+        /*
         it('refundment',async () => {
             let res = await request.post('/user/reservation/refundment')
                 .send({
@@ -300,6 +301,7 @@ describe('#interfaceUser',()=>{
             expect(res.reservationList[0].reservationType).equal(2);
             expect(res.reservationList[0].reservationState).equal(1);
         });
+        */
     });
     describe('notice', ()=>{
         it('all', async () => {
@@ -540,7 +542,6 @@ describe('interfaceManager', ()=>{
                 })
                 .expect(400);
         });
-        /*
         it('open', async () => {
             let res = await request.post('/manager/room/status')
                 .send({
@@ -557,9 +558,10 @@ describe('interfaceManager', ()=>{
             res = JSON.parse(res.text);
             console.log('openValidate');
             console.log(res);
-            expect(res.status).equals(1);
+            expect(res.items[0].status).equals(1);
         });
         it('rule', async () => {
+            console.log(testRule[0]);
             let res = await request.post('/manager/room/rule')
                 .send(testRule[0])
                 .expect(200);
@@ -603,7 +605,6 @@ describe('interfaceManager', ()=>{
             console.log(res);
             expect(res.success).equal(true);
         });
-        */
     });
 });
 
