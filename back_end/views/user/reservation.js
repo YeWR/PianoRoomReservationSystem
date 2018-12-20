@@ -248,7 +248,7 @@ const routers = router.post("/refundment", async (ctx, next) => {
     let number = ctx.query.number;
     let userId = await dataBase.GetUserUuidByNumber(number);
     userId = userId.data;
-    let result = await dataBase.GetItem(userId);
+    let result = await dataBase.SearchItem(2147483647,0,userId,null,null,[1,2,-1,-2,-3],"-",30);
     if(result.data === null)
     {
         ctx.response.body = {
@@ -266,37 +266,34 @@ const routers = router.post("/refundment", async (ctx, next) => {
         nowDate.setHours(0,0,0);
         for(let p of result.data)
         {
-            if(p.item_type)
+            for(let i of pianoInfo.data)
             {
-                for(let i of pianoInfo.data)
+                if (i.piano_id === p.item_roomId)
                 {
-                    if (i.piano_id === p.item_roomId)
+                    let date = new Date(p.item_date);
+                    if(nowDate-date < 1000*60*60*24*30)
                     {
-                        let date = new Date(p.item_date);
-                        if(nowDate-date < 1000*60*60*24*30)
-                        {
-                            let dateStr = utils.getDateStr(date);
-                            let week = date.getDay();
-                            let info = {
-                                "pianoPlace": i.piano_room,
-                                "pianoType": i.piano_type,
-                                "pianoPrice": p.item_value,
-                                "reservationType": p.item_member,
-                                "reservationState": p.item_type,
-                                "reservationId": p.item_uuid,
-                                "date": dateStr,
-                                "weekday": weekStr[week],
-                                "begTimeIndex": p.item_begin,
-                                "endTimeIndex": p.item_begin + p.item_duration
-                            };
-                            reservationList.push(info);
-                        }
-                        break;
+                        let dateStr = utils.getDateStr(date);
+                        let week = date.getDay();
+                        let info = {
+                            "pianoPlace": i.piano_room,
+                            "pianoType": i.piano_type,
+                            "pianoPrice": p.item_value,
+                            "reservationType": p.item_member,
+                            "reservationState": p.item_type,
+                            "reservationId": p.item_uuid,
+                            "date": dateStr,
+                            "weekday": weekStr[week],
+                            "begTimeIndex": p.item_begin,
+                            "endTimeIndex": p.item_begin + p.item_duration
+                        };
+                        reservationList.push(info);
                     }
+                    break;
                 }
             }
         }
-        reservationList = reservationList.sort(sortItemAll);
+        //reservationList = reservationList.sort(sortItemAll);
         ctx.response.body = {
             "success": true,
             "reservationList": reservationList
@@ -306,7 +303,7 @@ const routers = router.post("/refundment", async (ctx, next) => {
     let number = ctx.query.number;
     let userId = await dataBase.GetUserUuidByNumber(number);
     userId = userId.data;
-    let result = await dataBase.GetItem(userId);
+    let result = await dataBase.SearchItem(2147483647,0,userId,null,null,[1,2,-1,-2,-3],"+",3);
     if(result.data === null)
     {
         ctx.response.body = {
@@ -323,43 +320,39 @@ const routers = router.post("/refundment", async (ctx, next) => {
         let nowDate = new Date();
         for(let p of result.data)
         {
-            if(p.item_type)
+            let date = new Date(p.item_date);
+            if(utils.compTime(nowDate, date, p.item_begin+p.item_duration))
             {
-                let date = new Date(p.item_date);
-                if(utils.compTime(nowDate, date, p.item_begin+p.item_duration))
+                for(let i of pianoInfo.data)
                 {
-                    for(let i of pianoInfo.data)
+                    if (i.piano_id === p.item_roomId)
                     {
-                        if (i.piano_id === p.item_roomId)
-                        {
-                            let dateStr = utils.getDateStr(date);
-                            let week = date.getDay();
-                            let info = {
-                                "pianoPlace": i.piano_room,
-                                "pianoType": i.piano_type,
-                                "pianoPrice": p.item_value,
-                                "reservationType": p.item_member,
-                                "reservationState": p.item_type,
-                                "reservationId": p.item_uuid,
-                                "date": dateStr,
-                                "weekday": weekStr[week],
-                                "begTimeIndex": p.item_begin,
-                                "endTimeIndex": p.item_begin + p.item_duration
-                            };
-                            reservationList.push(info);
-                            break;
-                        }
+                        let dateStr = utils.getDateStr(date);
+                        let week = date.getDay();
+                        let info = {
+                            "pianoPlace": i.piano_room,
+                            "pianoType": i.piano_type,
+                            "pianoPrice": p.item_value,
+                            "reservationType": p.item_member,
+                            "reservationState": p.item_type,
+                            "reservationId": p.item_uuid,
+                            "date": dateStr,
+                            "weekday": weekStr[week],
+                            "begTimeIndex": p.item_begin,
+                            "endTimeIndex": p.item_begin + p.item_duration
+                        };
+                        reservationList.push(info);
+                        break;
                     }
                 }
             }
         }
-        reservationList = reservationList.sort(sortItemAlarm);
+        //reservationList = reservationList.sort(sortItemAlarm);
         ctx.response.body = {
             "success": true,
             "reservationList": reservationList
         };
     }
-    console.log(ctx.response.body);
 }).post("/order", async (ctx, next) => {
     console.log(ctx.request.body);
     let number = ctx.request.body.number;

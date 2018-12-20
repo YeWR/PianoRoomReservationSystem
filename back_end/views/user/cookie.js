@@ -20,7 +20,7 @@ const routers = router.get("/", async (ctx, next) => {
         {
             response.success = true;
             response.userType = userInfo.data.type;
-            response.realName = userInfo.data.name;
+            response.realName = userInfo.data.realname;
             response.idNumber = userInfo.data.number;
         }
         else

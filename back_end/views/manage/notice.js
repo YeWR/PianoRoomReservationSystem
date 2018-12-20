@@ -3,7 +3,6 @@ const router = new Router();
 const dataBase = require("../dataBase");
 const utils = require("../utils");
 
-
 const routers = router.get("/list", async (ctx, next) => {
     let query = ctx.query;
     let page = 1;

@@ -22,7 +22,7 @@ let ChangeUserStatus = async function(userUuid, userStatus){
     let test = function(){
         return new Promise(resolve =>{
             db.where({uuid: userUuid }).update('user', {status: userStatus}, function (err) {
-                if(err == null){
+                if(err){
                     resolve(1);
                 }
                 else{
@@ -34,11 +34,11 @@ let ChangeUserStatus = async function(userUuid, userStatus){
     };
     let flag = await test();
     console.log(flag);
-    if(flag == 0){
+    if(flag === 0){
         return {"success":false,
                 "info":errorMsg};
     }
-    if(flag == 1){
+    if(flag === 1){
         return {"success":true};
     }
 }
@@ -51,7 +51,7 @@ let GetUserUuidByNumber = async function(userNumber){
         return new Promise(resolve =>{
             db.where({ number: userNumber }).get('user', function (err, res, fields) {
                 let _select = res;
-                if (_select.length == 0) {
+                if (_select.length === 0) {
                     errorMsg = "用户不存在"; // to do
                     resolve(0);
                 }
@@ -66,11 +66,11 @@ let GetUserUuidByNumber = async function(userNumber){
     };
     let flag = await test();
     console.log(flag);
-    if(flag == 0){
+    if(flag === 0){
         return {"data":userInfo,
             "info":errorMsg};
     }
-    if(flag == 1){
+    if(flag === 1){
         return {"data":userInfo.uuid};
     }
 }
@@ -79,7 +79,7 @@ let SearchUser = async function(count, offset, number, name, id, type, status){
     let errorMsg = "";
     let userInfo = null;
     let userCount = 0;
-    let query = { number: number, name: name, id: id, type: type, status: status};
+    let query = { number: number, realname: name, id: id, type: type, status: status};
     for(let q in query)
     {
         if(!query[q])
@@ -112,12 +112,12 @@ let SearchUser = async function(count, offset, number, name, id, type, status){
     let flag = await test();
     let flagCount = await getUserCount();
     console.log(flag);
-    if(flag == 0){
+    if(flag === 0){
         return {"data":userInfo,
             "count": userCount,
             "info":errorMsg};
     }
-    if(flag == 1){
+    if(flag === 1){
         return {"data":userInfo,
         "count": userCount};
     }
@@ -131,7 +131,7 @@ let GetUserInfo = async function(userUuid){
         return new Promise(resolve =>{
             db.where({ uuid: userUuid }).get('user', function (err, res, fields) {
                 let _select = res;
-                if (_select.length == 0) {
+                if (_select.length === 0) {
                     errorMsg = "用户不存在"; // to do
                     resolve(0);
                 }
@@ -146,11 +146,11 @@ let GetUserInfo = async function(userUuid){
     };
     let flag = await test();
     console.log(flag);
-    if(flag == 0){
+    if(flag === 0){
         return {"data":userInfo,
             "info":errorMsg};
     }
-    if(flag == 1){
+    if(flag === 1){
         return {"data":userInfo};
     }
 }
@@ -182,11 +182,11 @@ let SetRegisterMsg = async function(socTele, socPassword) {
     };
     let flag = await test();
     console.log(flag);
-    if(flag == 0){
+    if(flag === 0){
         return {"success":false,
                 "info":errorMsg};
     }
-    if(flag == 1){
+    if(flag === 1){
         return {"success":true};
     }
 }
@@ -197,7 +197,7 @@ let SocietyUserRegister = async function(socType, socId, socRealname, socTele, s
         return new Promise(resolve =>{
             client.get(socTele, function(err, reply){
                 if(reply){
-                    if(socPassword == (reply.toString())){
+                    if(socPassword === (reply.toString())){
                         client.del(socTele, function (err, reply) {});
                         resolve(1);
                     }
@@ -215,7 +215,7 @@ let SocietyUserRegister = async function(socType, socId, socRealname, socTele, s
     };
     let res = await checkMsg();
     console.log(res);
-    if(res == 0){
+    if(res === 0){
         return {"success":false,
                 "info":errorMsg};
     }
@@ -232,15 +232,18 @@ let SocietyUserRegister = async function(socType, socId, socRealname, socTele, s
                         status: 1,
                         type: socType,
                         id: socId,
-                        name: socRealname,
+                        realname: socRealname,
                         number: socTele,
                         uuid: socUuid
                     };
+                    console.log(_info);
                     db.insert('user', _info, function (err, info) {
-                        if(err == null){
+                        if(err){
                             resolve(1);
                         }
                         else{
+                            console.log(err);
+                            console.log(info);
                             errorMsg = "新建用户失败";
                             resolve(0);
                         }
@@ -251,11 +254,11 @@ let SocietyUserRegister = async function(socType, socId, socRealname, socTele, s
     };
     let flag = await test();
     console.log(flag);
-    if(flag == 0){
+    if(flag === 0){
         return {"success":false,
                 "info":errorMsg};
     }
-    if(flag == 1){
+    if(flag === 1){
         return {"success":true};
     }
 }
@@ -268,7 +271,8 @@ let CampusUserLogin = async function(type, name, number, uuid) {
             db.where({number: number}).get('user', function (err, res, fields) {
                 let _select = res;
                 if (_select.length !== 0) {
-                    let _info = JSON.parse(_select);
+                    let _data = JSON.stringify(_select);
+                    let _info = JSON.parse(_data);
                     info = _info[0];
                     resolve(1);
                 }
@@ -276,16 +280,18 @@ let CampusUserLogin = async function(type, name, number, uuid) {
                     let _info = {
                         status: 1,
                         type: type,
-                        name: name,
+                        realname: name,
+                        id: "",
                         number: number,
                         uuid: uuid
                     };
                     db.insert('user', _info, function (err, info) {
-                        if (err == null) {
+                        if (err) {
                             db.where({number: number}).get('user', function (err, res, fields) {
                                 let _select = res;
                                 if (_select.length !== 0) {
-                                    _info = JSON.parse(_select);
+                                    let _data = JSON.stringify(_select);
+                                    let _info = JSON.parse(_data);
                                     info = _info[0];
                                     resolve(1);
                                 }
@@ -306,11 +312,11 @@ let CampusUserLogin = async function(type, name, number, uuid) {
     }
     let flag = await test();
     console.log(flag);
-    if(flag == 0){
+    if(flag === 0){
         return {"success":false,
             "info":errorMsg};
     }
-    if(flag == 1){
+    if(flag === 1){
         return {"success":true,
             "info":info};
     }
@@ -323,7 +329,7 @@ let SetLoginMsg = async function(socTele, socPassword) {
         return new Promise(resolve =>{
             db.where({ number: socTele }).get('user', function (err, res, fields) {
                 let _select = res;
-                if (_select.length == 0) {
+                if (_select.length === 0) {
                     errorMsg = "手机号未注册"; // to do 
                     resolve(0);
                 }
@@ -343,11 +349,11 @@ let SetLoginMsg = async function(socTele, socPassword) {
     };
     let flag = await test();
     console.log(flag);
-    if(flag == 0){
+    if(flag === 0){
         return {"success":false,
                 "info":errorMsg};
     }
-    if(flag == 1){
+    if(flag === 1){
         return {"success":true};
     }
 }
@@ -431,7 +437,7 @@ let InsertPiano = async function(pianoRoom, pianoInfo, pianoStuvalue, pianoTeava
                 piano_rule: pianoRule
             };
             db.insert('piano', _info, function (err, info) {
-                if(err == null){
+                if(err){
                     resolve(1);
                 }
                 else{
@@ -443,11 +449,11 @@ let InsertPiano = async function(pianoRoom, pianoInfo, pianoStuvalue, pianoTeava
     };
     let flag = await test();
     console.log(flag);
-    if(flag == 0){
+    if(flag === 0){
         return {"success":false,
                 "info":errorMsg};
     }
-    if(flag == 1){
+    if(flag === 1){
         return {"success":true};
     }
 }
@@ -474,7 +480,7 @@ let UpdatePianoInfo = async function(pianoId, pianoRoom, pianoInfo, pianoStuvalu
     let test = function(){
         return new Promise(resolve =>{
             db.where({ piano_id: pianoId }).update('piano', info, function (err, res, fields) {
-                if(err === null)
+                if(err)
                     resolve(1);
                 else
                 {
@@ -486,11 +492,11 @@ let UpdatePianoInfo = async function(pianoId, pianoRoom, pianoInfo, pianoStuvalu
     };
     let flag = await test();
     console.log(flag);
-    if(flag == 0){
+    if(flag === 0){
         return {"success":false,
             "info":errorMsg};
     }
-    if(flag == 1){
+    if(flag === 1){
         return {"success":true};
     }
 };
@@ -509,11 +515,11 @@ let GetPianoRoomAll = async function(){
     };
     let flag = await test();
     console.log(flag);
-    if(flag == 0){
+    if(flag === 0){
         return {"data":pianoInfo,
                 "info":errorMsg};
     }
-    if(flag == 1){
+    if(flag === 1){
         return {"data":pianoInfo,
                 "info":errorMsg};
     }
@@ -554,12 +560,12 @@ let SearchPiano = async function(count, offset, piano_room, piano_type, piano_id
     let flag = await test();
     let flagCount = await getPianoCount();
     console.log(flag);
-    if(flag == 0){
+    if(flag === 0){
         return {"data":pianoInfo,
             "count": pianoCount,
             "info":errorMsg};
     }
-    if(flag == 1){
+    if(flag === 1){
         return {"data":pianoInfo,
             "count": pianoCount,
             "info":errorMsg};
@@ -598,7 +604,7 @@ let GetPianoRoomInfo = async function(pianoId, date) {
         return new Promise(resolve =>{
             db.where({ piano_id: pianoId }).get('piano', function (err, res, fields) {
                 let _select = res;
-                if(_select.length == 0){
+                if(_select.length === 0){
                     errorMsg = "琴房不存在";
                     resolve(0);
                 }
@@ -608,10 +614,10 @@ let GetPianoRoomInfo = async function(pianoId, date) {
                     pianoInfo = _info[0];
                     
                     for(let i = num*timeLength; i<(num+1)*timeLength; i++){
-                        if(pianoInfo.piano_list.data[i] == 48){
+                        if(pianoInfo.piano_list.data[i] === 48){
                             pianoList.push(0);
                         }
-                        if(pianoInfo.piano_list.data[i] == 49){
+                        if(pianoInfo.piano_list.data[i] === 49){
                             pianoList.push(1);
                         }
                     }
@@ -634,11 +640,11 @@ let GetPianoRoomInfo = async function(pianoId, date) {
     };
     let flag = await test();
     console.log(flag);
-    if(flag == 0){
+    if(flag === 0){
         return {"data":pianoInfoRes,
                 "info":errorMsg};
     }
-    if(flag == 1){
+    if(flag === 1){
         return {"data":pianoInfoRes,
                 "info":errorMsg};
     }
@@ -654,7 +660,7 @@ let preparePianoForInsert = async function(itemRoomId, itemBegin, itemDuration, 
         return new Promise(resolve =>{
             db.where({ piano_id: itemRoomId }).get('piano', function (err, res, fields) {
                 let _select = res;
-                if(_select.length == 0){
+                if(_select.length === 0){
                     errorMsg = "琴房不存在";
                     resolve(0);
                 }
@@ -664,7 +670,7 @@ let preparePianoForInsert = async function(itemRoomId, itemBegin, itemDuration, 
                     pianoInfo = _info[0];
                     // change data
                     for(let i = itemBegin; i<itemEnd; i++){
-                        if(pianoInfo.piano_list.data[i] == '1' || pianoInfo.piano_list.data[i] == 49){
+                        if(pianoInfo.piano_list.data[i] === '1' || pianoInfo.piano_list.data[i] === 49){
                             resolve(0);
                         }
                     }
@@ -675,11 +681,11 @@ let preparePianoForInsert = async function(itemRoomId, itemBegin, itemDuration, 
     };
     let flag = await test();
     console.log(flag);
-    if(flag == 0){
+    if(flag === 0){
         return {"success":false,
                 "info":errorMsg};
     }
-    if(flag == 1){
+    if(flag === 1){
         // to do 更新数据
         let newList = "";
         let len = pianoInfo.piano_list.data.length;
@@ -690,7 +696,7 @@ let preparePianoForInsert = async function(itemRoomId, itemBegin, itemDuration, 
                     continue;
                 }
             }
-            if(pianoInfo.piano_list.data[i] == '0' || pianoInfo.piano_list.data[i] == 48){
+            if(pianoInfo.piano_list.data[i] === '0' || pianoInfo.piano_list.data[i] === 48){
                 newList += '0';
             }
             else{
@@ -710,7 +716,7 @@ let preparePianoForInsert = async function(itemRoomId, itemBegin, itemDuration, 
             });
         };
         let check = await checkUpdate()
-        if(check == 0){
+        if(check === 0){
             errorMsg = "更新失败";
             return {"success":false,
                     "info":errorMsg};
@@ -730,7 +736,7 @@ let ChangePianoRule = async function(itemRoomId, itemBegin, itemDuration, itemDa
         return new Promise(resolve =>{
             db.where({ piano_id: itemRoomId }).get('piano', function (err, res, fields) {
                 let _select = res;
-                if(_select.length == 0){
+                if(_select.length === 0){
                     errorMsg = "琴房不存在";
                     resolve(0);
                 }
@@ -746,11 +752,11 @@ let ChangePianoRule = async function(itemRoomId, itemBegin, itemDuration, itemDa
     };
     let flag = await test();
     console.log(flag);
-    if(flag == 0){
+    if(flag === 0){
         return {"success":false,
             "info":errorMsg};
     }
-    if(flag == 1){
+    if(flag === 1){
         let newList = "";
         let len = pianoInfo.piano_rule.data.length;
         for(let i = 0; i<len; i++){
@@ -760,7 +766,7 @@ let ChangePianoRule = async function(itemRoomId, itemBegin, itemDuration, itemDa
                     continue;
                 }
             }
-            if(pianoInfo.piano_rule.data[i] == '0' || pianoInfo.piano_rule.data[i] == 48){
+            if(pianoInfo.piano_rule.data[i] === '0' || pianoInfo.piano_rule.data[i] === 48){
                 newList += '0';
             }
             else{
@@ -780,7 +786,7 @@ let ChangePianoRule = async function(itemRoomId, itemBegin, itemDuration, itemDa
             });
         };
         let check = await checkUpdate()
-        if(check == 0){
+        if(check === 0){
             errorMsg = "更新失败";
             return {"success":false,
                 "info":errorMsg};
@@ -821,7 +827,7 @@ let InsertItem = async function(itemDate, itemUsername, itemRoomId, itemType, it
                 }
                 db.insert('item', _info, function (err, info) {
                     console.log(err);
-                    if(err == null){
+                    if(err){
                         resolve(1);
                     }
                     else{
@@ -838,11 +844,11 @@ let InsertItem = async function(itemDate, itemUsername, itemRoomId, itemType, it
     };
     let flag = await test();
     console.log(flag);
-    if(flag == 0){
+    if(flag === 0){
         return {"success":false,
                 "info":errorMsg};
     }
-    if(flag == 1){
+    if(flag === 1){
         return {"success":true};
     }
 }
@@ -877,11 +883,11 @@ let InsertTempItem = async function(itemDate, itemUsername, itemRoomId, itemType
     };
     let flag = await test();
     console.log(flag);
-    if(flag == 0){
+    if(flag === 0){
         return {"success":false,
             "info":errorMsg};
     }
-    if(flag == 1){
+    if(flag === 1){
         return {"success":true};
     }
 }
@@ -902,11 +908,11 @@ let DeleteTempItem = async function(itemUuid){
     };
     let flag = await test();
     console.log(flag);
-    if(flag == 0){
+    if(flag === 0){
         return {"success":false,
             "info":errorMsg};
     }
-    if(flag == 1){
+    if(flag === 1){
         return {"success":true};
     }
 }
@@ -918,7 +924,7 @@ let ItemCheckin = async function(itemUuid){
         return new Promise(resolve =>{
             db.where({ item_uuid: itemUuid }).get('item', function (err, res, fields) {
                 let _select = res;
-                if(_select.length == 0)
+                if(_select.length === 0)
                 {
                     errorMsg = "订单不存在";
                     resolve(0);
@@ -961,17 +967,17 @@ let ItemCheckin = async function(itemUuid){
     };
     let flag = await test();
     console.log(flag);
-    if(flag == 0){
+    if(flag === 0){
         return {"success": false,
             "info":errorMsg};
     }
-    if(flag == 1){
+    if(flag === 1){
         flag = await checkin();
-        if(flag == 0){
+        if(flag === 0){
             return {"success": false,
                 "info":errorMsg};
         }
-        if(flag == 1){
+        if(flag === 1){
             return {"data":itemInfo,
                 "success": true};
         }
@@ -994,11 +1000,11 @@ let GetItem = async function(itemUsername){
     };
     let flag = await test();
     console.log(flag);
-    if(flag == 0){
+    if(flag === 0){
         return {"data":itemInfo,
                 "info":errorMsg};
     }
-    if(flag == 1){
+    if(flag === 1){
         return {"data":itemInfo,
                 "info":errorMsg};
     }
@@ -1061,12 +1067,12 @@ let SearchItem = async function(count, offset, username, roomId, member, type, o
     };
     let flag = await test();
     let flagCount = await getItemCount();
-    if(flag == 0){
+    if(flag === 0){
         return {"data":itemInfo,
             "count": itemCount,
             "info":errorMsg};
     }
-    if(flag == 1){
+    if(flag === 1){
         return {"data":itemInfo,
             "count": itemCount,
             "info":errorMsg};
@@ -1079,7 +1085,7 @@ let GetItemByUuid = async function(itemUuid){
     let test = function(){
         return new Promise(resolve =>{
             db.where({ item_uuid: itemUuid }).get('item', function (err, res, fields) {
-                if(res.length == 0){
+                if(res.length === 0){
                     errorMsg = "订单不存在";
                     resolve(0);
                 }
@@ -1094,11 +1100,11 @@ let GetItemByUuid = async function(itemUuid){
     };
     let flag = await test();
     console.log(flag);
-    if(flag == 0){
+    if(flag === 0){
         return {"data":itemInfo,
                 "info":errorMsg};
     }
-    if(flag == 1){
+    if(flag === 1){
         console
         return {"data":itemInfo,
                 "info":errorMsg};
@@ -1124,11 +1130,11 @@ let GetTempItemByUuid = async function(itemUuid){
     };
     let flag = await test();
     console.log(flag);
-    if(flag == 0){
+    if(flag === 0){
         return {"data":itemInfo,
             "info":errorMsg};
     }
-    if(flag == 1){
+    if(flag === 1){
         return {"data":itemInfo,
             "info":errorMsg};
     }
@@ -1138,7 +1144,7 @@ let GetTempItemByUuid = async function(itemUuid){
 let preparePianoForDel = async function(itemRoomId, itemBegin, itemDuration, itemDate){
     let errorMsg = "";
     let num = getDateNum(itemDate);
-    if(num == -1){
+    if(num === -1){
         return {"success":true};
     }
     itemBegin = timeLength*num+itemBegin;
@@ -1147,7 +1153,7 @@ let preparePianoForDel = async function(itemRoomId, itemBegin, itemDuration, ite
         return new Promise(resolve =>{
             db.where({ piano_id: itemRoomId }).get('piano', function (err, res, fields) {
                 let _select = res;
-                if(_select.length == 0){
+                if(_select.length === 0){
                     errorMsg = "琴房不存在";
                     resolve(0);
                 }
@@ -1162,11 +1168,11 @@ let preparePianoForDel = async function(itemRoomId, itemBegin, itemDuration, ite
     };
     let flag = await test();
     console.log(flag);
-    if(flag == 0){
+    if(flag === 0){
         return {"success":false,
                 "info":errorMsg};
     }
-    if(flag == 1){
+    if(flag === 1){
         // to do 更新数据
         let newList = "";
         let len = pianoInfo.piano_list.data.length;
@@ -1177,7 +1183,7 @@ let preparePianoForDel = async function(itemRoomId, itemBegin, itemDuration, ite
                     continue;
                 }
             }
-            if(pianoInfo.piano_list.data[i] == '0' || pianoInfo.piano_list.data[i] == 48){
+            if(pianoInfo.piano_list.data[i] === '0' || pianoInfo.piano_list.data[i] === 48){
                 newList += '0';
             }
             else{
@@ -1197,7 +1203,7 @@ let preparePianoForDel = async function(itemRoomId, itemBegin, itemDuration, ite
             });
         };
         let check = await checkUpdate()
-        if(check == 0){
+        if(check === 0){
             errorMsg = "更新失败";
             return {"success":false,
                     "info":errorMsg};
@@ -1213,7 +1219,7 @@ let DeleteItem = async function(itemUuid){
     let item = await GetItemByUuid(itemUuid);
     let errorMsg = "";
     let result = await preparePianoForDel(item.data.item_roomId, item.data.item_begin, item.data.item_duration, item.data.item_date);
-    if(result.success == false){
+    if(result.success === false){
         errorMsg = "退订失败";
         return {"success":false,
                 "info":errorMsg};
@@ -1222,7 +1228,7 @@ let DeleteItem = async function(itemUuid){
     let test = function(){
         return new Promise(resolve =>{
             db.where({item_uuid: itemUuid }).update('item', {item_type: 0}, function (err) {
-                if(err == null){
+                if(err){
                     resolve(1);
                 }
                 else{
@@ -1234,11 +1240,11 @@ let DeleteItem = async function(itemUuid){
     };
     let flag = await test();
     console.log(flag);
-    if(flag == 0){
+    if(flag === 0){
         return {"success":false,
                 "info":errorMsg};
     }
-    if(flag == 1){
+    if(flag === 1){
         return {"success":true,
                 "info":errorMsg};
     }
@@ -1258,11 +1264,11 @@ let GetNoticeAll = async function(){
     };
     let flag = await test();
     console.log(flag);
-    if(flag == 0){
+    if(flag === 0){
         return {"data":noticeInfo,
                 "info":errorMsg};
     }
-    if(flag == 1){
+    if(flag === 1){
         return {"data":noticeInfo,
                 "info":errorMsg};
     }
@@ -1327,7 +1333,7 @@ let GetNoticeInfo = async function(noticeId){
         return new Promise(resolve =>{
             db.where({ notice_id: noticeId }).get('notice', function (err, res, fields) {
                 let _select = res;
-                if(_select.length == 0){
+                if(_select.length === 0){
                     errorMsg = "公告不存在";
                     resolve(0);
                 }
@@ -1342,11 +1348,11 @@ let GetNoticeInfo = async function(noticeId){
     };
     let flag = await test();
     console.log(flag);
-    if(flag == 0){
+    if(flag === 0){
         return {"data":noticeInfo,
                 "info":errorMsg};
     }
-    if(flag == 1){
+    if(flag === 1){
         console.log(noticeInfo);
         return {"data":noticeInfo,
                 "info":errorMsg};
@@ -1365,7 +1371,7 @@ let InsertNotice = async function(noticeTitle, noticeCont, noticeTime, noticeAut
                 notice_type: noticeType
             }
             db.insert('notice', _info, function (err, info) {
-                if(err == null){
+                if(err){
                     resolve(1);
                 }
                 else{
@@ -1377,11 +1383,11 @@ let InsertNotice = async function(noticeTitle, noticeCont, noticeTime, noticeAut
     };
     let flag = await test();
     console.log(flag);
-    if(flag == 0){
+    if(flag === 0){
         return {"success":false,
                 "info":errorMsg};
     }
-    if(flag == 1){
+    if(flag === 1){
         return {"success":true};
     }
 }
@@ -1391,7 +1397,7 @@ let DeleteNotice = async function(noticeId) {
     let test = function(){
         return new Promise(resolve =>{
             db.where({notice_id: noticeId }).update('notice', {notice_type: 0}, function (err) {
-                if(err == null){
+                if(err){
                     resolve(1);
                 }
                 else{
@@ -1403,11 +1409,11 @@ let DeleteNotice = async function(noticeId) {
     };
     let flag = await test();
     console.log(flag);
-    if(flag == 0){
+    if(flag === 0){
         return {"success":false,
                 "info":errorMsg};
     }
-    if(flag == 1){
+    if(flag === 1){
         return {"success":true};
     }
 }

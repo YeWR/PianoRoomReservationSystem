@@ -92,8 +92,8 @@ const routers = router.post("/outSchool", async (ctx, next) => {
         "/" + ticket + "/" + userIP;
     if(ticket)
     {
-        let res = await getInfo(requestUrl);
-        res = "code=0:zjh=2014013432:yhm=lizy14:xm=李肇阳:yhlb=X0031:dw=软件学院:email="; //mock
+        //let res = await getInfo(requestUrl);
+        let res = "code=0:zjh=2014013432:yhm=lizy14:xm=李肇阳:yhlb=X0031:dw=软件学院:email="; //mock
         console.log(res);
         let info = parseInfo(res);
         if(info.code !== 0)
@@ -114,7 +114,8 @@ const routers = router.post("/outSchool", async (ctx, next) => {
                 ctx.session.userType = info.type;
                 ctx.response.body =  {
                     "success":true,
-                    "data": result.info.name
+                    "data": result.info,
+                    "uuid": result.info.uuid
                 };
             }
             else
