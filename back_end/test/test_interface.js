@@ -170,6 +170,7 @@ describe('#interfaceUser',()=>{
                 })
                 .expect(200);
             res = JSON.parse(res.text);
+            console.log(res);
             expect(res.success).equal(true);
             expect(res.timeTable).to.be.an('array');
             expect(res.timeTable.length).equal(84);
@@ -240,7 +241,6 @@ describe('#interfaceUser',()=>{
             expect(res.reservationList[0].reservationType).equal(2);
             expect(res.reservationList[0].reservationState).equal(1);
         });
-        /*
         it('refundment',async () => {
             let res = await request.post('/user/reservation/refundment')
                 .send({
@@ -301,7 +301,6 @@ describe('#interfaceUser',()=>{
             expect(res.reservationList[0].reservationType).equal(2);
             expect(res.reservationList[0].reservationState).equal(1);
         });
-        */
     });
     describe('notice', ()=>{
         it('all', async () => {

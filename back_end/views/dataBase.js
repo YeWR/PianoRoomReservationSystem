@@ -582,7 +582,7 @@ let SearchPiano = async function(count, offset, piano_room, piano_type, piano_id
 let getDateNum = function(itemDate){
     let item_date = new Date(itemDate);
     let now_date = new Date();
-    now_date.setHours(now_date.getHours()+8);
+    //now_date.setHours(now_date.getHours()+8);
     if(now_date.getDate()>item_date.getDate()){
         return -1;
     }
