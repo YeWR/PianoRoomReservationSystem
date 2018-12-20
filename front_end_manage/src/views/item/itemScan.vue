@@ -33,7 +33,6 @@
 <script>
   import BoxCard from './components/BoxCard'
   import {getItemScan} from '@/api/item'
-
   export default {
     name: 'ItemScan',
     components: {
@@ -118,11 +117,9 @@
       }
     }
   }
-
   .panel-group {
     margin-top: 25px;
     width: 100%;
-
     .card-panel-col {
       width:45%;
       margin-left: 25px;
@@ -196,4 +193,3 @@
     }
   }
 </style>
-

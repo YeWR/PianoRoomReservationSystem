@@ -467,7 +467,7 @@ export default {
             console.log('-------------')
             console.log(data)
             InfoRoom(data).then(response => {
-              if(response.status == 200){
+              if(response.status === 200){
                     this.$notify({
                       title: '成功',
                       message: '更改成功',
@@ -514,7 +514,7 @@ export default {
               info:this.temp.info
             }
             createRoom(data).then(response => {
-              if(response.status == 200){
+              if(response.status === 200){
                     this.$notify({
                       title: '成功',
                       message: '添加成功',
@@ -548,11 +548,11 @@ export default {
       let n = 0
       let flag = 0
       for(let i = 0; i<str.length; i++){
-        if(str[i] == ':'){
+        if(str[i] === ':'){
           flag = 1
           continue
         }
-        if(flag == 0){
+        if(flag === 0){
           m = m+str[i]
         }
         else{
@@ -567,7 +567,7 @@ export default {
       let s = ['星期一','星期二','星期三','星期四','星期五','星期六','星期日']
       let key = 0
       for(let i = 0; i<s.length; i++){
-        if(row.week == s[i]){
+        if(row.week === s[i]){
           key = i
           break
         }
@@ -587,7 +587,7 @@ export default {
             }
             console.log(data)
             RuleRoom(data).then(response => {
-              if(response.status == 200){
+              if(response.status === 200){
                     this.$notify({
                       title: '成功',
                       message: '删除成功',
@@ -635,7 +635,7 @@ export default {
             }
             console.log(data)
             RuleRoom(data).then(response => {
-              if(response.status == 200){
+              if(response.status === 200){
                     this.$notify({
                       title: '成功',
                       message: '添加成功',
@@ -672,7 +672,7 @@ export default {
       let s = ['星期一','星期二','星期三','星期四','星期五','星期六','星期日']
       let key = 0
       for(let i = 0; i<s.length; i++){
-        if(row.week == s[i]){
+        if(row.week === s[i]){
           key = i
           break
         }
@@ -691,7 +691,7 @@ export default {
             }
             console.log(data)
             RuleRoom(data).then(response => {
-              if(response.status == 200){
+              if(response.status === 200){
                     this.$notify({
                       title: '成功',
                       message: '更改成功',
@@ -746,11 +746,11 @@ export default {
         let start = 0
         let end = 0
         for(let j = 0; j<84; j++){
-          if(list[84*i+j] == 1 && flag == 0){
+          if(list[84*i+j] === 1 && flag === 0){
             start = j;
             flag = 1
           }
-          else if(list[84*i+j] == 0 && flag == 1){
+          else if(list[84*i+j] === 0 && flag === 1){
             flag = 0;
             end = j;
             tmp.push({
@@ -761,7 +761,7 @@ export default {
             })
             id = id+1;
           }
-          else if(j == 83 && flag == 1){
+          else if(j === 83 && flag === 1){
             flag = 0;
             end = j+1;
             tmp.push({
