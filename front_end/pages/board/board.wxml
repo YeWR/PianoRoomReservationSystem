@@ -58,7 +58,7 @@
 
         <view class="scroll-y">
 
-            <view class="card" wx:for="{{_noticeList}}" wx:for-index="id" wx:for-item="notice" wx:key="noticeId" data-id="{{id}}" bindtap= "bindNoticeDetail">
+            <view class="card" wx:for="{{_noticeListShow}}" wx:for-index="id" wx:for-item="notice" wx:key="noticeId" data-id="{{id}}" bindtap= "bindNoticeDetail">
 
                 <view class="up_title" wx:if="{{id > 0}}">
                     <view class="up_icon">
@@ -95,6 +95,11 @@
                         </view>
                     </view>
                 </view>
+            </view>
+
+            <view class="loadmore" hidden='{{!_showThis}}' bindtap='clickLoadMore'>
+                <!--<image class="icon {{_showThis?'active':''}}" src='../../img/loading.png' hidden='{{!_showThis}}'/>-->
+                <text>{{_text}}</text>
             </view>
         </view>
     </scrollview>

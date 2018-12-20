@@ -10,6 +10,11 @@ Page({
      */
     data: {
         _noticeList: [],
+        _noticeListShow: [],
+        _noticeLimit: 5,
+
+        _showThis: true,
+        _text: "加载中...",
     },
 
     /*
@@ -18,7 +23,7 @@ Page({
      */
     bindNoticeDetail: function(e){
         let id = e.currentTarget.dataset.id;
-        let paras = this.data._noticeList[id];
+        let paras = this.data._noticeListShow[id];
 
         let url = util.setUrl("./board_detail/board_detail", paras);
         wx.navigateTo({
@@ -31,7 +36,8 @@ Page({
      */
     setNoticeList: function(noticeList, that){
         that.setData({
-            _noticeList: noticeList
+            _noticeList: noticeList,
+            _noticeListShow: noticeList.slice(0, that.data._noticeLimit)
         });
     },
 
@@ -130,7 +136,18 @@ Page({
      * 页面上拉触底事件的处理函数
      */
     onReachBottom: function () {
-
+        let that = this;
+        let limit = Math.min(that.data._noticeLimit + 3, that.data._noticeList.length);
+        that.setData({
+            _showThis: true
+        });
+        setTimeout(function () {
+            that.setData({
+                _noticeLimit: limit,
+                _noticeListShow: that.data._noticeList.slice(0, that.data._noticeLimit),
+                _showThis: false
+            });
+        }, 500);
     },
 
     /**
