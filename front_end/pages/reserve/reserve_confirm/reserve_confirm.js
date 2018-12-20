@@ -126,25 +126,14 @@ Page({
         //         util.alertInfo("微信登录失败", "none", 1000);
         //     }
         // });
+
+        // TODO
         let that = this;
         let number = app.globalData._idNumber;
         if (app.globalData._userType !== util.USERTYPE.SOCIAL) {
             // stu id card
             number = app.globalData._idNumber;
         }
-        // wx.requestPayment({
-        // 'timeStamp': '',
-        // 'nonceStr': '',
-        // 'package': '',
-        // 'signType': 'MD5',
-        // 'paySign': '',
-        // 'success': function (res) {
-        // },
-        // 'fail': function (res) {
-        // },
-        // 'complete': function (res) {
-        // }
-        // });
         wx.request({
             url: "https://958107.iterator-traits.com/user/reservation/ordertest",
             data: {

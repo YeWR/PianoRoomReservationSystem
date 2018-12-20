@@ -20,7 +20,7 @@
         <view class="progress-days">
 
             <view class="progress">
-                <canvas canvas-id="pianoDetail"></canvas>
+                <canvas canvas-id="pianoDetail" style="height:30rpx;"></canvas>
             </view>
 
             <view class="progress-time">

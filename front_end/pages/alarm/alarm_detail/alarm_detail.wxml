@@ -1,4 +1,4 @@
-x<!--pages/alarm/alarm_detail/alarm_detail.wxml-->
+<!--pages/alarm/alarm_detail/alarm_detail.wxml-->
 <view class="container">
     <view class="up_board">
         <text class="reserve_title">
