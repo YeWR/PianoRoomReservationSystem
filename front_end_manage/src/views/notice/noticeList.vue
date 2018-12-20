@@ -22,7 +22,7 @@
       @sort-change="sortChange">
       <el-table-column :label="$t('table.id')" align="center" width="65">
         <template slot-scope="scope">
-          <span>{{ scope.row.id }}</span>
+          <span>{{ scope.row.uuid }}</span>
         </template>
       </el-table-column>
       <el-table-column :label="$t('table.date')" prop="date" width="150px" align="center">
@@ -125,6 +125,7 @@ export default {
       sortOptions: [{ label: 'Date Ascending', key: 'date' }, { label: 'Date Descending', key: '-date' }],
       temp: {
         id: '',
+        uuid:'',
         timestamp: new Date(),
         title: '',
         type: '1',
@@ -158,7 +159,8 @@ export default {
         let tmp = []
         for(let i = 0; i<tmp_items.length; i++){
           tmp.push({
-            id:i+(this.listQuery.page-1)*this.listQuery.limit+1,
+            id:tmp_items[i].id,
+            uuid:i+(this.listQuery.page-1)*this.listQuery.limit+1,
             timestamp:new Date(Date.parse(tmp_items[i].date)),
             author:tmp_items[i].author,
             title:tmp_items[i].title,
@@ -172,7 +174,7 @@ export default {
       })
     },
     handleFilter() {
-      if(this.listQuery.sort == 'date'){
+      if(this.listQuery.sort === 'date'){
         this.listQuery.dateSort = '+'
       }
       else{
@@ -200,6 +202,7 @@ export default {
     resetTemp() {
       this.temp = {
         id: undefined,
+        uuid:undefined,
         importance: 1,
         remark: '',
         timestamp: new Date(),
@@ -230,7 +233,7 @@ export default {
               content: this.temp.content
             }
             createNotice(data).then(response => {
-              if(response.status == 200){
+              if(response.status === 200){
                     this.$notify({
                       title: '成功',
                       message: '添加成功',
@@ -283,7 +286,7 @@ export default {
             id: row.id
           }
           DeleteNotice(data).then(response => {
-            if(response.status == 200){
+            if(response.status === 200){
               this.$notify({
                 title: '成功',
                 message: '删除成功',
@@ -317,7 +320,7 @@ export default {
       this.downloadLoading = true
       import('@/vendor/Export2Excel').then(excel => {
         const tHeader = ['id', 'title', 'author', 'time']
-        const filterVal = ['id', 'title', 'author', 'timestamp']
+        const filterVal = ['uuid', 'title', 'author', 'timestamp']
         const data = this.formatJson(filterVal, this.list)
         excel.export_json_to_excel({
           header: tHeader,

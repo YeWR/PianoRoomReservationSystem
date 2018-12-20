@@ -204,8 +204,9 @@ export default {
     detail: '订单详情',
     blackList: '加入黑名单',
     blackListOut: '移出黑名单',
-    type_0: '校内用户',
-    type_1: '校外用户'
+    type_0: '校内学生',
+    type_1: '校内老师',
+    type_2: '校外用户'
   },
   errorLog: {
     tips: '请点击右上角bug小图标',

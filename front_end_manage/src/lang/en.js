@@ -205,9 +205,9 @@ export default {
     detail: 'List Details',
     blackList: 'Black List',
     blackListOut: 'Move Out',
-    type_: 'All',
-    type_0: 'In School',
-    type_1: 'Out Of School'
+    type_0: 'student',
+    type_1: 'teacher',
+    type_2: 'Out Of School'
   },
 
   errorLog: {

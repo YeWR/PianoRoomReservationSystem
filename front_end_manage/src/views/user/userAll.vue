@@ -98,11 +98,11 @@
           blackOrnot:1
         },
         typeOptions: () => {
-          return [{label: this.$t('user.type_0'), key: 0}, {label: this.$t('user.type_1'), key: 1}]
+          return [{label: this.$t('user.type_0'), key: 0}, {label: this.$t('user.type_1'), key: 1}, {label: this.$t('user.type_2'), key: 2}]
         },
         temp: {
           id: 'myn',
-          telephone: '18800000000',
+          number: '18800000000',
           IDnumber: '2016011111',
           type: '1'
         },
@@ -115,13 +115,11 @@
     methods: {
       getList() {
         this.listLoading = true
-        // this.list = [this.temp]
-        // this.total = 1
         fetchUserList(this.listQuery).then(response => {
+          console.log(response)
           this.list = response.data.list
           this.total = response.data.total
           console.log(response)
-          // Just to simulate the time of the request
           setTimeout(() => {
             this.listLoading = false
           }, 1.5 * 1000)
@@ -168,7 +166,7 @@
         }).then(() => {
           this.listLoading = true;
           joinToBlacklist(id).then(response => {
-            if(response.status == 200){
+            if(response.status === 200){
               this.$notify({
                 title: '成功',
                 message: '加入黑名单成功',
