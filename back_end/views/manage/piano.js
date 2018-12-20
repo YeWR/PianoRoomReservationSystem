@@ -138,16 +138,27 @@ const routers = router.get("/list", async (ctx, next) => {
     let day = dayCheck(request.week);
     console.log("day:" + day.toString());
     let result = null;
-    if (day >= 0 && request.type == 1)
+    if (day >= 0)
     {
-        let date = new Date();
-        date.setDate(date.getDate() + day);
-        let dateStr = utils.getDateStr(date);
-        result = await dataBase.preparePianoForInsert(request.id, startIndex, endIndex - startIndex, dateStr);
-        if (!result.success) {
-            ctx.response.status = 400;
-            ctx.response.body = {"info": "与现有订单冲突，请联系用户处理！"};
-            return;
+        if(request.type === 1)
+        {
+            let date = new Date();
+            date.setDate(date.getDate() + day);
+            let dateStr = utils.getDateStr(date);
+            result = await dataBase.preparePianoForInsert(request.id, startIndex, endIndex - startIndex, dateStr);
+            if (!result.success) {
+                ctx.response.status = 400;
+                ctx.response.body = {"info": "与现有订单冲突，请联系用户处理！"};
+                return;
+            }
+        }
+        else
+        {
+            let date = new Date();
+            date.setDate(date.getDate() + day);
+            let dateStr = utils.getDateStr(date);
+            result = await dataBase.preparePianoForDel(request.id, startIndex, endIndex - startIndex, dateStr);
+
         }
     }
     result = await dataBase.ChangePianoRule(request.id,parseInt(startIndex), endIndex - startIndex,parseInt(request.week), request.type);
