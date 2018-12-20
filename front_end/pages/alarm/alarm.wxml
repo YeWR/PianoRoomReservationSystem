@@ -48,7 +48,7 @@
     </view>
 
 
-    <scrollview class="preview" scroll-y="true" style="height: 300rpx;" wx:if="{{_reservationList.length > 1}}">
+    <scrollview class="preview" scroll-y="true" style="height: 600rpx;" wx:if="{{_reservationList.length > 1}}">
         <view class="scroll-y">
             <view class="card" wx:for="{{_reservationList}}" wx:for-index="id" wx:for-item="reservation"
                   wx:key="reservationId">
