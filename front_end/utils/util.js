@@ -865,7 +865,7 @@ const drawTimeTable = (that, pianoList, canvasId) => {
         const ctx = wx.createCanvasContext(canvasId + piano.pianoId, that);
         const tableList = piano.timeTable;
 
-        drawRect(0, tableList.length, ctx, 'rgba(245, 245, 245, 1)');
+        drawRect(0, tableList.length, ctx, 'rgba(187, 187, 187, 1)');
 
         let begIndex = getFirstBegIndex(tableList);
         let endIndex = begIndex;
@@ -873,7 +873,7 @@ const drawTimeTable = (that, pianoList, canvasId) => {
         while (begIndex !== -1 && endIndex !== -1) {
 
             endIndex = getThisEndIndex(begIndex, tableList);
-            drawRect(begIndex, endIndex, ctx, 'rgba(187, 187, 187, 1)');
+            drawRect(begIndex, endIndex, ctx, 'rgba(245, 245, 245, 1)');
             begIndex = getNextBegIndex(endIndex, tableList);
         }
         ctx.draw();

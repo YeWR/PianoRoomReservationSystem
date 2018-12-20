@@ -28,12 +28,37 @@
 			"list": []
 		},
 		"plugin": {
-			"current": 0,
+			"current": 4,
 			"list": [
+				{
+					"id": 0,
+					"name": "正常情况",
+					"pathName": "pages/login/login",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "预约确认",
+					"pathName": "pages/reserve/reserve_confirm/reserve_confirm",
+					"query": ""
+				},
 				{
 					"id": -1,
 					"name": "预约空间",
-					"pathName": "pages/reserve/reserve"
+					"pathName": "pages/reserve/reserve",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "预约提醒",
+					"pathName": "pages/alarm/alarm",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "预约详情",
+					"pathName": "pages/alarm/alarm_detail/alarm_detail",
+					"query": ""
 				}
 			]
 		},

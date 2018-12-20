@@ -9,7 +9,7 @@
 .reserve-info {
     box-shadow: 5rpx 5rpx 10rpx 1rpx rgba(100, 100, 100, 1);
     position: absolute;
-    margin-top: 18%;
+    margin-top: 16%;
     border: 1px solid rgba(238, 238, 238, 1);
     background-color: white;
     height: 31%;
@@ -82,15 +82,15 @@
     color: rgba(102, 8, 116, 1);
 
 }
-
-.date-icon {
-    color: rgba(102, 8, 116, 1);
-}
-
-.date-text {
+.date-view-icon{
     text-align: center;
-    width: 30%;
-    margin-left: 2%;
+    height: 100%;
+    width: 15%;
+}
+.date-text {
+    height: 100%;
+    text-align: left;
+    width: 20%;
     color: rgba(136, 136, 136, 1);
     font-size: 36rpx;
     font-family: Arial;
@@ -98,18 +98,17 @@
 
 .date-info {
     justify-content: center;
-    width: 70%;
+    width: 65%;
     border-bottom: 2rpx solid rgba(187, 187, 187, 1);
     text-align: center;
     color: black;
 }
 .money-info{
-    justify-content: center;
-    width: 70%;
+    width: 65%;
     text-align: center;
     color: black;
-    font-size: 80rpx;
-    font-weight: bolder;
+    font-size: 55rpx;
+    font-weight: bold;
 }
 
 .select_time_-- {
@@ -119,7 +118,7 @@
 .select_time {
     display: flex;
     justify-content: space-between;
-    width: 70%;
+    width: 65%;
     border-bottom: 2rpx solid rgba(187, 187, 187, 1);
     text-align: center;
     color: black;
@@ -132,7 +131,7 @@
 .select_people{
     display: flex;
     height: 100%;
-    width: 70%;
+    width: 65%;
     justify-content: center;
 }
 .people-btn{
