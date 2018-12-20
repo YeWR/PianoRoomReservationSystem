@@ -2,6 +2,7 @@
 export default {
   beforeCreate() {
     const { params, query } = this.$route
+    console.log(query)
     const { path } = params
     this.$router.replace({ path: '/' + path, query })
   },

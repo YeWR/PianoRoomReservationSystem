@@ -25,7 +25,7 @@
           <span>{{ scope.row.id }}</span>
         </template>
       </el-table-column>
-      <el-table-column :label="$t('table.date')" prop="date" sortable="custom" width="150px" align="center">
+      <el-table-column :label="$t('table.date')" prop="date" width="150px" align="center">
         <template slot-scope="scope">
           <span>{{ scope.row.timestamp | parseTime('{y}-{m}-{d} {h}:{i}') }}</span>
         </template>
@@ -158,7 +158,7 @@ export default {
         let tmp = []
         for(let i = 0; i<tmp_items.length; i++){
           tmp.push({
-            id:tmp_items[i].id,
+            id:i+(this.listQuery.page-1)*this.listQuery.limit+1,
             timestamp:new Date(Date.parse(tmp_items[i].date)),
             author:tmp_items[i].author,
             title:tmp_items[i].title,
@@ -210,6 +210,7 @@ export default {
     },
     handleCreate() {
       this.resetTemp()
+      this.temp.author = ''; // huoqudenglu
       this.dialogStatus = 'create';
       this.newFormVisible = true;
       this.$nextTick(() => {

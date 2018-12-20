@@ -28,19 +28,19 @@
         </template>
       </el-table-column>
 
-      <el-table-column :label="$t('user.telephone')" width="330px" align="center">
+      <el-table-column :label="$t('user.telephone')" min-width="200px" align="center">
         <template slot-scope="scope">
           <span>{{ scope.row.telephone }}</span>
         </template>
       </el-table-column>
 
-      <el-table-column :label="$t('user.type')" width="345px" align="center">
+      <el-table-column :label="$t('user.type')" width="345" align="center">
         <template slot-scope="scope">
           <span>{{ toUserType(scope.row.type) }}</span>
         </template>
       </el-table-column>
 
-      <el-table-column :label="$t('table.actions')" align="center" width="370px" class-name="small-padding fixed-width">
+      <el-table-column :label="$t('table.actions')" align="center" width="370" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button   style="width:100px;"   type="primary" @click="checkList(scope.row.telephone)">{{ $t('user.detail') }}
           </el-button>
