@@ -66,19 +66,19 @@
     </view>
 
     <view class="price-info">
-        <view class = "left">
-            <view class = "available">
-                <view class ="available-icon"></view>
+        <view class="left">
+            <view class="available">
+                <view class="available-icon"></view>
                 <text>可用</text>
             </view>
-            <view class = "unavailable">
-                <view class ="unavailable-icon"></view>
+            <view class="unavailable">
+                <view class="unavailable-icon"></view>
                 <text>不可用</text>
             </view>
         </view>
-        <view class = "right">
-                <text>价格详情</text>
-            <view class ="right-arrow">
+        <view class="right">
+            <text>价格详情</text>
+            <view class="right-arrow">
                 <text class="fa fa-angle-right fa-lg"></text>
             </view>
         </view>
@@ -87,12 +87,11 @@
     <view class="down_board">
         <view wx:if="{{_pianoIsAvailable}}">
 
-            <scrollview class="preview" scroll-y="true" style="height: 50px;" wx:for="{{_pianoAvailable}}"
-                        wx:for-index="id"
-                        wx:for-item="piano" wx:key="pianoId">
+            <scrollview class="preview" scroll-y="true" style="height: 50px;">
                 <view class="scroll-y">
 
-                    <view class="card" data-id="{{piano.pianoId}}" bindtap="toReservePiano">
+                    <view class="card" wx:for="{{_pianoAvailableShow}}" wx:for-index="id" wx:for-item="piano"
+                          wx:key="pianoId" data-id="{{id}}" bindtap="toReservePiano">
 
                         <view class="title-container">
                             <text class="title">{{piano.pianoType}} ({{piano.pianoPlace}})</text>
@@ -105,7 +104,7 @@
                         </view>
 
                         <!--<view class="lable">-->
-                            <!--<text class="lable-detail">星海立式钢琴，位于蒙民伟楼{{piano.pianoPlace}}</text>-->
+                        <!--<text class="lable-detail">星海立式钢琴，位于蒙民伟楼{{piano.pianoPlace}}</text>-->
                         <!--</view>-->
 
                         <view class="lable-cut">
@@ -136,6 +135,10 @@
 
                 </view>
             </scrollview>
+            <view class="loadmore" hidden='{{!_showThis}}' bindtap='clickLoadMore'>
+                <!--<image class="icon {{_showThis?'active':''}}" src='../../img/loading.png' hidden='{{!_showThis}}'/>-->
+                <text>{{_text}}</text>
+            </view>
         </view>
 
         <view class="nodata" wx:else>

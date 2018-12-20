@@ -7,14 +7,14 @@
         </text>
     </view>
 
-    <view class="nodata" wx:if="{{_noticeList.length == 0}}">
+    <view class="nodata" wx:if="{{_noticeListShow.length == 0}}">
         <image class="nodata-icon" mode="aspectFit" src="../../../images/bg/nodata.png"></image>
         <view class="nodata-text">
             <text>暂无公告~</text>
         </view>
     </view>
 
-    <view class="new_card" wx:if="{{_noticeList.length > 0}}" data-id="{{0}}" bindtap= "bindNoticeDetail">
+    <view class="new_card" wx:if="{{_noticeListShow.length > 0}}" data-id="{{0}}" bindtap= "bindNoticeDetail">
 
         <view class="new_up_title">
             <view class="new_up_icon">
@@ -24,14 +24,14 @@
             </view>
 
             <view class="new_up_text">
-                <text class="new_title">{{_noticeList[0].noticeTitle}}</text>
+                <text class="new_title">{{_noticeListShow[0].noticeTitle}}</text>
                 <!--ToDo:11中字以内-->
             </view>
         </view>
 
         <view class="new_middle_title">
             <view class="new_middle_time">
-                <text class="new_middle_time_text">{{_noticeList[0].noticeTime}}</text>
+                <text class="new_middle_time_text">{{_noticeListShow[0].noticeTime}}</text>
             </view>
 
             <view class="new_middle_line">
@@ -42,7 +42,7 @@
         <view class="new_bottom_title">
             <view class="new_bottom_text">
                 <!--TODO：最多18中字 + ...-->
-                <text class="new_bottom_time_text">{{_noticeList[0].noticeKey}}</text>
+                <text class="new_bottom_time_text">{{_noticeListShow[0].noticeKey}}</text>
             </view>
 
             <view class="new_bottom_icon">
@@ -54,7 +54,7 @@
 
     </view>
 
-    <scrollview class="preview" scroll-y="true" style="height: 200rpx;" wx:if="{{_noticeList.length > 1}}">
+    <scrollview class="preview" scroll-y="true" style="height: 200rpx;" wx:if="{{_noticeListShow.length > 1}}">
 
         <view class="scroll-y">
 

@@ -10,6 +10,11 @@ Page({
      */
     data: {
         _reservationList: [],
+        _reservationListShow: [],
+        _reservationLimit: 7,
+
+        _showThis: false,
+        _text: "加载中...",
     },
 
     /*
@@ -58,17 +63,9 @@ Page({
         }
 
         this.setData({
-            _reservationList: list
+            _reservationList: list,
+            _reservationListShow: list.slice(0, this.data._reservationLimit)
         });
-    },
-
-    /*
-     * init reservation information
-     */
-    initReserveInfo: function(){
-        let that = this;
-
-
     },
 
     /*
@@ -150,6 +147,13 @@ Page({
      * 页面相关事件处理函数--监听用户下拉动作
      */
     onPullDownRefresh: function () {
+        this.setData({
+            _reservationListShow: [],
+            _reservationLimit: 7,
+
+            _showThis: false,
+            _text: "加载中...",
+        });
         this.freshInfo();
     },
 
@@ -157,7 +161,26 @@ Page({
      * 页面上拉触底事件的处理函数
      */
     onReachBottom: function () {
-
+        let that = this;
+        let limit = Math.min(that.data._reservationLimit + 3, that.data._reservationList.length);
+        that.setData({
+            _showThis: true
+        }, function () {
+            if (that.data._reservationLimit >= that.data._reservationList.length) {
+                that.setData({
+                    _text: "已经到底啦~",
+                })
+            }
+            else {
+                setTimeout(function () {
+                    that.setData({
+                        _reservationLimit: limit,
+                        _reservationListShow: that.data._reservationList.slice(0, limit),
+                        _showThis: false
+                    });
+                }, 500);
+            }
+        });
     },
 
     /**
@@ -166,4 +189,4 @@ Page({
     onShareAppMessage: function () {
 
     }
-})
+});

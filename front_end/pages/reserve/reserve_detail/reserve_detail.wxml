@@ -20,7 +20,7 @@
         <view class="progress-days">
 
             <view class="progress">
-                <canvas canvas-id="{{'pianoDetail' + _pianoId}}"></canvas>
+                <!--<canvas canvas-id="{{'pianoDetail' + _pianoId}}"></canvas>-->
             </view>
 
             <view class="progress-time">

@@ -10,7 +10,7 @@ Page({
      */
     data: {
         _noticeList: [],
-        _noticeListShow: [],
+            _noticeListShow: [],
         _noticeLimit: 6,
 
         _showThis: false,
@@ -157,10 +157,10 @@ Page({
                 setTimeout(function () {
                     that.setData({
                         _noticeLimit: limit,
-                        _noticeListShow: that.data._noticeList.slice(0, that.data._noticeLimit),
+                        _noticeListShow: that.data._noticeList.slice(0, limit),
                         _showThis: false
                     });
-                }, 300);
+                }, 500);
             }
         });
     },

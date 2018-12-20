@@ -13,7 +13,9 @@ Page({
         _date: "",
         _pianoList: [],
         _pianoAvailable: [],
+        _pianoAvailableShow: [],
         _pianoIsAvailable: false,
+        _pianoLimit: 4,
 
         _begTimeArray: [],
         _begTimeIndex: [],
@@ -30,7 +32,10 @@ Page({
         _cannotPrevious: true,
         _cannotNext: false,
 
-        _canvasId: "timeTabelBar"
+        _canvasId: "timeTabelBar",
+
+        _showThis: false,
+        _text: "加载中...",
     },
 
     /*
@@ -242,12 +247,11 @@ Page({
         }
         that.setData({
             _pianoAvailable: pianoAvailable,
+            _pianoAvailableShow: pianoAvailable.slice(0, that.data._pianoLimit),
             _pianoIsAvailable: pianoIsAvailable
         }, function () {
             util.drawTimeTable(that, pianoAvailable, "piano");
         });
-
-        console.log("aval: ", that.data._pianoAvailable);
     },
 
     /*
@@ -355,6 +359,7 @@ Page({
         that.setData({
             _pianoList: [],
             _pianoAvailable: [],
+            _pianoAvailableShow: [],
 
             _begTimeArray: [],
             _begTimeIndex: [],
@@ -401,9 +406,11 @@ Page({
     toReservePiano: function (e) {
         let paras = {};
         let id = e.currentTarget.dataset.id;
-        paras["pianoId"] = this.data._pianoList[id].pianoId;
-        paras["pianoPlace"] = this.data._pianoList[id].pianoPlace;
-        paras["pianoType"] = this.data._pianoList[id].pianoType;
+        console.log(id);
+
+        paras["pianoId"] = this.data._pianoAvailableShow[id].pianoId;
+        paras["pianoPlace"] = this.data._pianoAvailableShow[id].pianoPlace;
+        paras["pianoType"] = this.data._pianoAvailableShow[id].pianoType;
         paras["date"] = this.data._date;
         paras["jsDate"] = this.data._jsDate;
 
@@ -458,8 +465,6 @@ Page({
                 else {
                     util.alertInfo(res.data.info, "none", 1000);
                 }
-                console.log("res: ", res.data.pianoList);
-                console.log("aval0: ", that.data._pianoAvailable);
                 wx.hideNavigationBarLoading();
                 wx.stopPullDownRefresh();
             },
@@ -505,6 +510,13 @@ Page({
      * 页面相关事件处理函数--监听用户下拉动作
      */
     onPullDownRefresh: function () {
+        this.setData({
+            _pianoAvailableShow: [],
+            _pianoLimit: 4,
+
+            _showThis: false,
+            _text: "加载中...",
+        });
         this.freshInfo();
     },
 
@@ -512,7 +524,26 @@ Page({
      * 页面上拉触底事件的处理函数
      */
     onReachBottom: function () {
-
+        let that = this;
+        let limit = Math.min(that.data._pianoLimit + 3, that.data._pianoAvailable.length);
+        that.setData({
+            _showThis: true
+        }, function () {
+            if(that.data._pianoLimit >= that.data._pianoAvailable.length){
+                that.setData({
+                    _text: "已经到底啦~",
+                })
+            }
+            else {
+                setTimeout(function () {
+                    that.setData({
+                        _pianoLimit: limit,
+                        _pianoAvailableShow: that.data._pianoAvailable.slice(0, limit),
+                        _showThis: false
+                    });
+                }, 500);
+            }
+        });
     },
 
     /**

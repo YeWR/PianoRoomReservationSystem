@@ -194,10 +194,10 @@ Page({
                 setTimeout(function () {
                     that.setData({
                         _reservationLimit: limit,
-                        _reservationListShow: that.data._reservationList.slice(0, that.data._reservationLimit),
+                        _reservationListShow: that.data._reservationList.slice(0, limit),
                         _showThis: false
                     });
-                }, 300);
+                }, 500);
             }
         });
     },
