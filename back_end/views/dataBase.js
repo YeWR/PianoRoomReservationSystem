@@ -22,7 +22,7 @@ let ChangeUserStatus = async function(userUuid, userStatus){
     let test = function(){
         return new Promise(resolve =>{
             db.where({uuid: userUuid }).update('user', {status: userStatus}, function (err) {
-                if(err){
+                if(!err){
                     resolve(1);
                 }
                 else{
@@ -82,7 +82,7 @@ let SearchUser = async function(count, offset, number, name, id, type, status){
     let query = { number: number, realname: name, id: id, type: type, status: status};
     for(let q in query)
     {
-        if(!query[q])
+        if(query[q] === undefined || query[q] === null)
         {
             delete query[q];
         }
@@ -223,7 +223,9 @@ let SocietyUserRegister = async function(socType, socId, socRealname, socTele, s
         return new Promise(resolve =>{
             db.where({ number: socTele }).get('user', function (err, res, fields) {
                 let _select = res;
-                if (_select.length != 0) {
+                console.log("register");
+                console.log(_select);
+                if (_select.length !== 0) {
                     errorMsg = "手机号已经被使用"; // to do 
                     resolve(0);
                 }
@@ -238,7 +240,7 @@ let SocietyUserRegister = async function(socType, socId, socRealname, socTele, s
                     };
                     console.log(_info);
                     db.insert('user', _info, function (err, info) {
-                        if(err){
+                        if(!err){
                             resolve(1);
                         }
                         else{
@@ -286,7 +288,7 @@ let CampusUserLogin = async function(type, name, number, uuid) {
                         uuid: uuid
                     };
                     db.insert('user', _info, function (err, info) {
-                        if (err) {
+                        if (!err) {
                             db.where({number: number}).get('user', function (err, res, fields) {
                                 let _select = res;
                                 if (_select.length !== 0) {
@@ -437,7 +439,7 @@ let InsertPiano = async function(pianoRoom, pianoInfo, pianoStuvalue, pianoTeava
                 piano_rule: pianoRule
             };
             db.insert('piano', _info, function (err, info) {
-                if(err){
+                if(!err){
                     resolve(1);
                 }
                 else{
@@ -470,20 +472,25 @@ let UpdatePianoInfo = async function(pianoId, pianoRoom, pianoInfo, pianoStuvalu
         piano_type: pianoType,
         piano_status: pianoStatus,
     };
+    console.log("Updatepianoinfo");
+    console.log(info);
     for(let i in info)
     {
-        if(!info[i])
+        if(info[i] === undefined || info[i] === null)
         {
             delete info[i];
         }
     }
+    console.log("Updatepianoinfo");
+    console.log(info);
     let test = function(){
         return new Promise(resolve =>{
-            db.where({ piano_id: pianoId }).update('piano', info, function (err, res, fields) {
-                if(err)
+            db.where({ piano_id: pianoId }).update('piano', info, function (err) {
+                if(!err)
                     resolve(1);
                 else
                 {
+                    console.log(err);
                     errorMsg = "修改琴房信息失败";
                     resolve(0);
                 }
@@ -532,7 +539,7 @@ let SearchPiano = async function(count, offset, piano_room, piano_type, piano_id
     let query = { piano_room: piano_room, piano_type: piano_type, piano_id: piano_id};
     for(let q in query)
     {
-        if(!query[q])
+        if(query[q] === null || query[q] === undefined)
         {
             delete query[q];
         }
@@ -826,8 +833,7 @@ let InsertItem = async function(itemDate, itemUsername, itemRoomId, itemType, it
                     item_uuid: itemUuid
                 }
                 db.insert('item', _info, function (err, info) {
-                    console.log(err);
-                    if(err){
+                    if(!err){
                         resolve(1);
                     }
                     else{
@@ -1026,7 +1032,7 @@ let SearchItem = async function(count, offset, username, roomId, member, type, o
     let query = { item_username: username, item_roomId: roomId, item_member: member};
     for(let q in query)
     {
-        if(!query[q])
+        if(query[q] === undefined || query[q] === null)
         {
             delete query[q];
         }
@@ -1048,6 +1054,7 @@ let SearchItem = async function(count, offset, username, roomId, member, type, o
                 .limit(count, offset)
                 .order_by(sortOrder)
                 .get('item', function (err, res, fields) {
+                    console.log(res);
                 let _data = JSON.stringify(res);
                 let _info = JSON.parse(_data);
                 itemInfo = _info;
@@ -1058,6 +1065,7 @@ let SearchItem = async function(count, offset, username, roomId, member, type, o
     let getItemCount = function(){
         return new Promise(resolve =>{
             db.where(query)
+                .where(dateQuery)
                 .where('item_type', type)
                 .count('item', function (err, res, fields) {
                     itemCount = res;
@@ -1228,7 +1236,7 @@ let DeleteItem = async function(itemUuid){
     let test = function(){
         return new Promise(resolve =>{
             db.where({item_uuid: itemUuid }).update('item', {item_type: 0}, function (err) {
-                if(err){
+                if(!err){
                     resolve(1);
                 }
                 else{
@@ -1281,7 +1289,7 @@ let SearchNotice = async function(count, offset, title, author, order){
     let query = { notice_title: title, notice_auth: author};
     for(let q in query)
     {
-        if(!query[q])
+        if(query[q] === null || query[q] === undefined)
         {
             delete query[q];
         }
@@ -1371,7 +1379,7 @@ let InsertNotice = async function(noticeTitle, noticeCont, noticeTime, noticeAut
                 notice_type: noticeType
             }
             db.insert('notice', _info, function (err, info) {
-                if(err){
+                if(!err){
                     resolve(1);
                 }
                 else{
@@ -1397,7 +1405,7 @@ let DeleteNotice = async function(noticeId) {
     let test = function(){
         return new Promise(resolve =>{
             db.where({notice_id: noticeId }).update('notice', {notice_type: 0}, function (err) {
-                if(err){
+                if(!err){
                     resolve(1);
                 }
                 else{

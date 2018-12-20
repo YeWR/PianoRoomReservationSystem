@@ -108,23 +108,28 @@ const routers = router.get("/list", async (ctx, next) => {
         ctx.response.status = 400;
 }).post("/status", async (ctx, next) => {
     let request = ctx.request.body;
-    if(request.status == 0)
+    if(request.status === 0)
     {
+        console.log("check");
         for(let i = 0; i <= 2; i++)
         {
             let itemDate = new Date();
-            itemDate.setDate(itemDate.getDate() - i);
-            let result = await dataBase.SearchItem(1, 0, null, request.id, null,1,"+",utils.getDateStr(itemDate));
+            itemDate.setDate(itemDate.getDate() + i);
+            let result = await dataBase.SearchItem(100, 0, null, request.id, null,[1],"+",null);
+            console.log(result);
             if(result.count !== 0)
             {
                 ctx.response.status = 400;
-                ctx.response.body = {"info": "该琴房仍有未生效订单，请联系用户处理！"};
+                ctx.response.body = {"info": "该琴房仍有未使用订单，请联系用户处理！"};
                 return;
             }
         }
     }
-    let result = await dataBase.UpdatePianoInfo(request.id,null,null,null,null,null,null,null,request.status.toString());
-    ctx.response.status = 200;
+    let result = await dataBase.UpdatePianoInfo(request.id,null,null,null,null,null,null,null,request.status);
+    if(result.success)
+        ctx.response.status = 200;
+    else
+        ctx.response.status = 400;
 }).post("/rule", async (ctx, next) => {
     let request = ctx.request.body;
     console.log(request);

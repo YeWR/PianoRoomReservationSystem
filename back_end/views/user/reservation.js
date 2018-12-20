@@ -442,6 +442,7 @@ const routers = router.post("/refundment", async (ctx, next) => {
         console.log("validation");
         console.log(itemInfo);
         resultdb = await dataBase.InsertItem(itemInfo.item_date,itemInfo.item_username,itemInfo.item_roomId, itemInfo.item_type,itemInfo.item_member,itemInfo.item_value,itemInfo.item_duration,itemInfo.item_begin,itemInfo.item_uuid);
+        console.log(resultdb);
         if(resultdb.success)
         {
             resultdb = await dataBase.DeleteTempItem(id);

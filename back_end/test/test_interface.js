@@ -5,7 +5,8 @@ const request = require('supertest').agent(app.listen());
 const utils = require('../views/utils');
 
 let date = new Date();
-let todayDateStr = utils.getDateStr(date);
+date.setDate(date.getDate() + 1);
+let tomorrowDateStr = utils.getDateStr(date);
 let testUser = [{
     phoneNumber: "13220167398",
     validateCode: "1234",
@@ -39,13 +40,13 @@ let testRule = [{
     id: 2,
     start: 12,
     end: 20,
-    week: date.getDay(),
+    week: (date.getDay()+1)%7,
     type: 1
 },{
     id: 1,
     start: 0,
     end: 6,
-    week: date.getDay(),
+    week: (date.getDay()+1)%7,
     type: 1
 }]
 
@@ -55,7 +56,7 @@ let testItem = [{
     reservationType: 2,
     pianoId: 1,
     pianoPrice: 100,
-    date: todayDateStr,
+    date: tomorrowDateStr,
     begTimeIndex: 0,
     endTimeIndex: 11,
     uuid: null
@@ -65,7 +66,7 @@ let testItem = [{
     reservationType: 3,
     pianoId: 2,
     pianoPrice: 100,
-    date: todayDateStr,
+    date: tomorrowDateStr,
     begTimeIndex: 12,
     endTimeIndex: 18,
     uuid: null
@@ -96,6 +97,7 @@ describe('#interfaceUser',()=>{
                 .send(testUser[0])
                 .expect(200);
             res = JSON.parse(res.text);
+            console.log(res.toString() + "registerFalse");
             expect(res.success).equal(false);
         });
         it('register2',async () => {
@@ -280,7 +282,24 @@ describe('#interfaceUser',()=>{
             expect(res.uuid.length).equal(32);
             testItem[0].uuid = res.uuid;
         });
-
+        it('repay',async () => {
+            let res = await request.post('/user/reservation/validate/' + testItem[0].uuid)
+                .expect(200);
+        });
+        it('all',async () => {
+            let res = await request.get('/user/reservation/all')
+                .query({
+                    number: testUser[0].phoneNumber
+                })
+                .expect(200);
+            res = JSON.parse(res.text);
+            expect(res.success).equal(true);
+            expect(res.reservationList).to.be.an('array');
+            expect(res.reservationList.length).equal(1);
+            expect(res.reservationList[0].reservationId).equal(testItem[0].uuid);
+            expect(res.reservationList[0].reservationType).equal(2);
+            expect(res.reservationList[0].reservationState).equal(1);
+        });
     });
     describe('notice', ()=>{
         it('all', async () => {
@@ -292,6 +311,7 @@ describe('#interfaceUser',()=>{
         });
     });
 });
+
 
 describe('interfaceManager', ()=>{
     describe('admin', ()=>{
@@ -520,6 +540,7 @@ describe('interfaceManager', ()=>{
                 })
                 .expect(400);
         });
+        /*
         it('open', async () => {
             let res = await request.post('/manager/room/status')
                 .send({
@@ -534,6 +555,8 @@ describe('interfaceManager', ()=>{
                 })
                 .expect(200);
             res = JSON.parse(res.text);
+            console.log('openValidate');
+            console.log(res);
             expect(res.status).equals(1);
         });
         it('rule', async () => {
@@ -561,7 +584,7 @@ describe('interfaceManager', ()=>{
             expect(res.success).equal(false);
         });
         it('ruleFail', async () => {
-            let res = await request.post('/manager/room/status')
+            let res = await request.post('/manager/room/rule')
                 .send(testRule[1])
                 .expect(400);
         });
@@ -580,6 +603,7 @@ describe('interfaceManager', ()=>{
             console.log(res);
             expect(res.success).equal(true);
         });
+        */
     });
 });
 
