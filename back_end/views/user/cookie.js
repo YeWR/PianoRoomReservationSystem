@@ -3,6 +3,9 @@ const router = new Router();
 const dataBase = require("../dataBase");
 const constVariable = require("../const");
 const jwt = require("jsonwebtoken");
+const configPath = "configs.json";
+let fs = require("fs");
+const configs = JSON.parse(fs.readFileSync(configPath));
 
 const routers = router.get("/", async (ctx, next) => {
     let response = {
@@ -12,13 +15,25 @@ const routers = router.get("/", async (ctx, next) => {
         "idNumber": null,
         "info": null
     };
-
-    console.log(ctx.session);
-    if(ctx.session.userId && ctx.session.userType)
+    let token = ctx.query.token;
+    const secret = configs.app_key[0];
+    try
     {
-        let userInfo = null;
-        userInfo = await dataBase.GetUserInfo(ctx.session.userId);
-        if(userInfo.data)
+        token = jwt.verify(token, secret);
+    }
+    catch(err)
+    {
+        ctx.response.status = 401;
+        ctx.response.body = {
+            "info": "Invalid token"
+        };
+        return
+    }
+    console.log(token);
+    if(token.userId && token.userType !== null && token.userType !== undefined)
+    {
+        let userInfo = await dataBase.GetUserInfo(token.userId);
+        if(userInfo.data && userInfo.data.type === token.userType)
         {
             response.success = true;
             response.userType = userInfo.data.type;
@@ -27,7 +42,7 @@ const routers = router.get("/", async (ctx, next) => {
         }
         else
         {
-            response.info = userInfo.info;
+            response.info = "token验证错误";
         }
     }
     else

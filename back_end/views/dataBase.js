@@ -384,7 +384,7 @@ let SocietyUserLogin = async function(socTele, socPassword) {
     let realName = await getUser();
     if(realName === 0){
         return {"success":false,
-                "data": realName,
+                "username": realName,
                 "info":errorMsg};
     }
     let test = function(){
@@ -411,12 +411,12 @@ let SocietyUserLogin = async function(socTele, socPassword) {
     console.log(flag);
     if(flag === 0){
         return {"success":false,
-                "data":realName,
+                "username":realName,
                 "info":errorMsg};
     }
     if(flag === 1){
         return {"success":true,
-                "data":realName};
+                "username":realName};
     }
 }
 
@@ -807,16 +807,16 @@ let ChangePianoRule = async function(itemRoomId, itemBegin, itemDuration, itemDa
 // begin is the begin index, duration is the length
 let InsertItem = async function(itemDate, itemUsername, itemRoomId, itemType, itemMember, itemValue, itemDuration, itemBegin, itemUuid){
     let errorMsg = "";
-    // 修改可预约时间段。
-    // let result = await preparePianoForInsert(itemRoomId, itemBegin, itemDuration, itemDate);
-    // if (result.success === false) {
-    //     errorMsg = "预约失败";
-    //     return {
-    //         "success": false,
-    //         "info": errorMsg
-    //     };
-    // }
-    // 插入订单
+    //修改可预约时间段。
+    let result = await preparePianoForInsert(itemRoomId, itemBegin, itemDuration, itemDate);
+    if (result.success === false) {
+        errorMsg = "预约失败";
+        return {
+            "success": false,
+            "info": errorMsg
+        };
+    }
+    //插入订单
     let test = function(){
         return new Promise(resolve =>{
             try{
@@ -1176,7 +1176,6 @@ let SearchItem = async function(count, offset, username, roomId, member, type, o
                 .limit(count, offset)
                 .order_by(sortOrder)
                 .get('item', function (err, res, fields) {
-                    console.log(res);
                 let _data = JSON.stringify(res);
                 let _info = JSON.parse(_data);
                 itemInfo = _info;

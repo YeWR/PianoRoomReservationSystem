@@ -72,25 +72,24 @@ const routers = router.post("/outSchool", async (ctx, next) => {
         code = ctx.request.body.validateCode;
     console.log(`login with tele: ${tele}`);
     let result = await dataBase.SocietyUserLogin(tele,code);
-    //let result = {"success": true};
     if(result.success === true)
     {
         let useruuid = await dataBase.GetUserUuidByNumber(tele);
         useruuid = useruuid.data;
-        ctx.session.userId = useruuid;
-        ctx.session.userType = constVariable.USERTYPE_OUTSCHOOL;
-        //const userToken = {
-        //     "userId": username,
-        //     "userType": usertype
-        // };
-        // const secret = configs.app_key[0];
-        // const token = jwt.sign(userToken,secret, {"expiresIn": 10*60*1});   // 10分钟过期
+        const userToken = {
+             "userId": useruuid,
+             "userType": constVariable.USERTYPE_OUTSCHOOL
+         };
+        const secret = configs.app_key[0];
+        const token = jwt.sign(userToken,secret, {"expiresIn": 10*24*60*60*1});
+        result.token = token;
+        ctx.response.body = result;
     }
     else
     {
-        ctx.session = null;
+        result.token = null;
+        ctx.response.body = result;
     }
-    ctx.response.body = result;
 }).get("/inSchool", async (ctx, next) => {
     let ticket = ctx.query.ticket;
     let userIP = getUserIp(ctx.req).replace(/::ffff:/, '');
@@ -105,47 +104,66 @@ const routers = router.post("/outSchool", async (ctx, next) => {
         let info = parseInfo(res);
         if(info.code !== 0)
         {
-            ctx.response.body = {
+            let data = {
                 "success": false,
+                "token": null,
                 "info": "票据验证失败! 错误代码:" + info.code.toString()
             };
-            ctx.session = null;
+            ctx.response.type = 'html';
+            ctx.response.body = "<script type=\"text/javascript\" src=\"https://res.wx.qq.com/open/js/jweixin-1.3.2.js\"></script><script>wx.miniProgram.getEnv(function (res) {if (res.miniprogram) {wx.miniProgram.switchTab({url: '/pages/alarm/alarm'});wx.miniProgram.postMessage({data: " + JSON.stringify(data) + "});}})</script>";
         }
         else
         {
             let useruuid = uuid.v1().replace(/\-/g,'').substring(0,16);
             let result = await dataBase.CampusUserLogin(info.type,info.name,info.number, useruuid);
-            if(result.success)
-            {
-                ctx.session.userId = result.info.uuid;
-                ctx.session.userType = info.type;
-                ctx.response.body =  {
-                    "success":true,
-                    "data": result.info,
-                    "uuid": result.info.uuid
+            if(result.success) {
+                const userToken = {
+                    "userId": result.info.uuid,
+                    "userType": result.info.type,
                 };
-                // const userToken = {
-                //     "userId": username,
-                //     "userType": usertype
-                // };
-                // const secret = configs.app_key[0];
-                // const token = jwt.sign(userToken,secret, {"expiresIn": 10*60*1});   // 10分钟过期
+                const secret = configs.app_key[0];
+                const token = jwt.sign(userToken, secret, {"expiresIn": 10 * 24 * 60 * 60 * 1});
+                let data = {
+                    "success": true,
+                    "token": token,
+                    "userType": result.info.type,
+                    "idNumber": result.info.number,
+                    "username": result.info.realname
+                };
+                let dataString = JSON.stringify(data);
+                let navigateUrl = "/pages/alarm/alarm?a=1";
+                // navigateUrl = navigateUrl + "success=" + data.success.toString() + "&";
+                // navigateUrl = navigateUrl + "token=" + data.token + "&";
+                // navigateUrl = navigateUrl + "userType=" + data.userType.toString() + "&";
+                // navigateUrl = navigateUrl + "idNumber=" + data.idNumber.toString() + "&";
+                // navigateUrl = navigateUrl + "username=" + data.username;
+                ctx.response.type = 'html';
+                //ctx.response.body = "<script type=\"text/javascript\" src=\"https://res.wx.qq.com/open/js/jweixin-1.3.2.js\"></script><script>wx.miniProgram.getEnv(function (res) {if (res.miniprogram) {wx.miniProgram.switchTab({url: '" + navigateUrl +"'});}})</script>";
+                ctx.response.body = "<script type=\"text/javascript\" src=\"https://res.wx.qq.com/open/js/jweixin-1.3.2.js\"></script><script>wx.miniProgram.getEnv(function (res) {if (res.miniprogram) {wx.miniProgram.postMessage({data: " + dataString + "});wx.miniProgram.switchTab({url: '/pages/alarm/alarm'});}})</script>";
             }
             else
             {
-                ctx.session = null;
-                ctx.response.body = result;
+                let data = {
+                    "success": false,
+                    "token": null,
+                    "info": "登录失败!"
+                };
+                ctx.response.type = 'html';
+                ctx.response.body = "<script type=\"text/javascript\" src=\"https://res.wx.qq.com/open/js/jweixin-1.3.2.js\"></script><script>wx.miniProgram.getEnv(function (res) {if (res.miniprogram) {wx.miniProgram.switchTab({url: '/pages/alarm/alarm'});wx.miniProgram.postMessage({data: " + JSON.stringify(data) + "});}})</script>";
             }
         }
     }
     else
     {
-        ctx.response.body = {
+        let data = {
             "success": false,
+            "token": null,
             "info": "票据不存在!"
         };
-        ctx.session = null;
+        ctx.response.type = 'html';
+        ctx.response.body = "<script type=\"text/javascript\" src=\"https://res.wx.qq.com/open/js/jweixin-1.3.2.js\"></script><script>wx.miniProgram.getEnv(function (res) {if (res.miniprogram) {wx.miniProgram.switchTab({url: '/pages/alarm/alarm'});wx.miniProgram.postMessage({data: " + JSON.stringify(data) + "});}})</script>";
     }
+    console.log(ctx.response.body);
 });
 
 module.exports = routers;

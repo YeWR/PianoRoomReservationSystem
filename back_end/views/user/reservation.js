@@ -252,8 +252,9 @@ const getUserIp = (req) => {
         req.connection.socket.remoteAddress;
 }
 
-const routers = router.post("/refundment", async (ctx, next) => {
+const routers = router.post("/cancel", async (ctx, next) => {
     let uuid = ctx.request.body.reservationId;
+    console.log(uuid);
     let result = await dataBase.DeleteItem(uuid);
     ctx.response.body = result;
 }).get("/all", async (ctx, next) => {
@@ -306,6 +307,61 @@ const routers = router.post("/refundment", async (ctx, next) => {
             }
         }
         //reservationList = reservationList.sort(sortItemAll);
+        ctx.response.body = {
+            "success": true,
+            "reservationList": reservationList
+        };
+    }
+}).get("/notpaid", async (ctx, next) => {
+    let number = ctx.query.number;
+    let userId = await dataBase.GetUserUuidByNumber(number);
+    userId = userId.data;
+    let result = await dataBase.SearchItem(2147483647,0,userId,null,null,3,"-",null);
+    if(result.data === null)
+    {
+        ctx.response.body = {
+            "success": false,
+            "reservationList": null,
+            "info": result.info
+        };
+    }
+    else
+    {
+        let reservationList = [];
+        const weekStr = ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"];
+        let pianoInfo = await dataBase.GetPianoRoomAll();
+        let nowDate = new Date();
+        nowDate.setHours(0,0,0);
+        for(let p of result.data)
+        {
+            for(let i of pianoInfo.data)
+            {
+                if (i.piano_id === p.item_roomId)
+                {
+                    let date = new Date(p.item_date);
+                    let dateStr = utils.getDateStr(date);
+                    let week = date.getDay();
+                    let ordertime = Date.parse(p.item_time);
+                    console.log(ordertime);
+                    let info = {
+                        "pianoPlace": i.piano_room,
+                        "pianoType": i.piano_type,
+                        "pianoPrice": p.item_value,
+                        "reservationType": p.item_member,
+                        "reservationState": p.item_type,
+                        "reservationId": p.item_uuid,
+                        "date": dateStr,
+                        "weekday": weekStr[week],
+                        "begTimeIndex": p.item_begin,
+                        "endTimeIndex": p.item_begin + p.item_duration,
+                        "orderTime": ordertime
+                    };
+                    reservationList.push(info);
+                    break;
+                }
+            }
+        }
+        console.log(reservationList);
         ctx.response.body = {
             "success": true,
             "reservationList": reservationList
@@ -370,6 +426,16 @@ const routers = router.post("/refundment", async (ctx, next) => {
     let number = ctx.request.body.number;
     let userId = await dataBase.GetUserUuidByNumber(number);
     userId = userId.data;
+    //查看是否有未支付订单
+    let unpayed = await dataBase.SearchItem(1,0,userId,null,null,3,"+",null);
+    if(unpayed.count > 0)
+    {
+        ctx.response.body = {
+            "success": false,
+            "info": "您有未支付订单，请前往个人中心->未支付订单支付!"
+        };
+        return;
+    }
     let userInfo = await dataBase.GetUserInfo(userId);
     if(userInfo.data.status)
     {
@@ -402,7 +468,7 @@ const routers = router.post("/refundment", async (ctx, next) => {
             ctx.response.body = {
                 "success": true,
                 "info": "下单成功",
-                "uuid": itemUuid
+                "reservationId": itemUuid
             }
         }
     }
@@ -413,15 +479,14 @@ const routers = router.post("/refundment", async (ctx, next) => {
             "info": "您已被加入黑名单，无法预约，请联系管理员!"
         }
     }
-    //console.log(ctx.response.body);
 }).post("/pay", async (ctx, next) => {
     console.log(ctx.request.body);
-    let uuid = ctx.request.body.uuid;
+    let uuid = ctx.request.body.reservationId;
     let openId = ctx.request.body.openid;
     let clientIP = getUserIp(ctx.req).replace(/::ffff:/, '');
     let itemInfo = await dataBase.GetItemByUuid(uuid);
     console.log(itemInfo);
-    if(itemInfo.data)
+    if(itemInfo.data && itemInfo.data.item_type !== 0)
     {
         let result = await wechatPayment(clientIP, openId, itemInfo.data.item_value, uuid);
         if(result.success)
@@ -503,7 +568,6 @@ const routers = router.post("/refundment", async (ctx, next) => {
             "info": "您已被加入黑名单，无法预约，请联系管理员!"
         }
     }
-
 });
 
 module.exports = routers;
