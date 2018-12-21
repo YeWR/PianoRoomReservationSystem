@@ -22,8 +22,7 @@ Page({
         _pianoPlace: "",
         _pianoType: "",
         _pianoPrice: "",
-        _pianoId: "",
-        _uuid: "",
+        _reservationId: "",
     },
 
     /*
@@ -66,7 +65,7 @@ Page({
             url: "https://958107.iterator-traits.com/user/reservation/pay",
             data: {
                 openid: openid,
-                uuid: that.data._uuid
+                reservationId: that.data.__reservationId
             },
             method: "POST",
             header: {
@@ -130,7 +129,7 @@ Page({
             url: "https://958107.iterator-traits.com/user/reservation/cancel",
             data: {
                 openid: openid,
-                uuid: that.data._uuid
+                reservationList: that.data._reservationList
             },
             method: "POST",
             header: {
@@ -188,8 +187,7 @@ Page({
             _pianoPlace: options.reservationPianoPlace,
             _pianoPrice: options.reservationPianoPrice,
             _pianoType: options.reservationPianoType,
-            _pianoId: options.reservationPianoId,
-            _uuid: options.reservationId
+            _reservationList: options.reservationId
         });
     },
 

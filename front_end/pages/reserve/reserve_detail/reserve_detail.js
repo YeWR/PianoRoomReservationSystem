@@ -160,7 +160,7 @@ Page({
                 if (res.data.success) {
                     util.alertInfo("成功下单！", "success", 500);
                     setTimeout(() => {
-                        paras["uuid"] = res.data.uuid;
+                        paras["reservationId"] = res.data.reservationId;
                         let url = util.setUrl("../reserve_confirm/reserve_confirm", paras);
                         wx.reLaunch({
                             url: url

@@ -55,7 +55,6 @@ Page({
             reservation.reservationPianoPlace = e.pianoPlace;
             reservation.reservationPianoType = e.pianoType;
             reservation.reservationPianoPrice = e.pianoPrice;
-            reservation.reservationPianoId = e.pianoId;
 
             list.push(reservation);
         }
@@ -76,7 +75,7 @@ Page({
         let number = app.globalData._idNumber;
 
         wx.request({
-            url: "https://958107.iterator-traits.com/user/reservation/notpiad",
+            url: "https://958107.iterator-traits.com/user/reservation/notpaid",
             data: {
                 number: number
             },

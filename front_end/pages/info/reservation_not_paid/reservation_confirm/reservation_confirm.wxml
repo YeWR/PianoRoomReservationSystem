@@ -86,9 +86,6 @@
             <button class="reserve_btn" bindtap="cancelReservation">取消支付</button>
         </view>
 
-        <view class="reserve_btn_view">
-            <button class="reserve_btn" bindtap="goOut">出去看看</button>
-        </view>
     </view>
 
 </view>
