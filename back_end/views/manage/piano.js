@@ -132,37 +132,125 @@ const routers = router.get("/list", async (ctx, next) => {
         ctx.response.status = 400;
 }).post("/rule", async (ctx, next) => {
     let request = ctx.request.body;
+    console.log("rule");
     console.log(request);
     let startIndex = request.start;
     let endIndex = request.end;
     let day = dayCheck(request.week);
-    console.log("day:" + day.toString());
     let result = null;
-    if (day >= 0)
+    if(request.type === 2) //添加规则
     {
-        if(request.type === 1)
+        //检查长期预约
+        result = await dataBase.SearchLongItem(2147483647,0,null,request.id,request.week,null);
+        if(result.count > 0)
+        {
+            for(let i in result.data)
+            {
+                if(i.item_long_begin > endIndex && (i.item_long_begin+i.item_long_duration) < startIndex)
+                {
+                    ctx.response.status = 400;
+                    ctx.response.body = {"info": "与现有长期预约冲突，请联系用户处理！"};
+                    return;
+                }
+            }
+        }
+        //检查3天内订单
+        if (day >= 0)
         {
             let date = new Date();
             date.setDate(date.getDate() + day);
             let dateStr = utils.getDateStr(date);
-            result = await dataBase.preparePianoForInsert(request.id, startIndex, endIndex - startIndex, dateStr);
+            result = await dataBase.preparePianoForRule(request.id, startIndex, endIndex - startIndex, dateStr);
             if (!result.success) {
                 ctx.response.status = 400;
                 ctx.response.body = {"info": "与现有订单冲突，请联系用户处理！"};
                 return;
             }
         }
-        else
+    }
+    else if(request.type === 0) //删除规则
+    {
+        if (day >= 0)
         {
             let date = new Date();
             date.setDate(date.getDate() + day);
             let dateStr = utils.getDateStr(date);
             result = await dataBase.preparePianoForDel(request.id, startIndex, endIndex - startIndex, dateStr);
-
         }
     }
     result = await dataBase.ChangePianoRule(request.id,parseInt(startIndex), endIndex - startIndex,parseInt(request.week), request.type);
-    console.log(result);
+    if (!result.success) {
+        ctx.response.status = 400;
+        ctx.response.body = {"info": "修改规则失败,请联系开发人员"};
+        return;
+    }
+    ctx.response.status = 200;
+}).post("/ruleChange", async (ctx, next) => {
+    let request = ctx.request.body;
+    console.log("ruleChange");
+    console.log(request);
+    let oldstartIndex = request.oldStart;
+    let oldendIndex = request.oldEnd;
+    let newstartIndex = request.newStart;
+    let newendIndex = request.newEnd;
+    let day = dayCheck(request.week);
+    console.log("day:" + day.toString());
+    let result = null;
+    //删除旧规则
+    if (day >= 0)
+    {
+        let date = new Date();
+        date.setDate(date.getDate() + day);
+        let dateStr = utils.getDateStr(date);
+        result = await dataBase.preparePianoForDel(request.id, oldstartIndex, oldendIndex - oldstartIndex, dateStr);
+    }
+    result = await dataBase.ChangePianoRule(request.id,parseInt(oldstartIndex), oldendIndex - oldstartIndex,parseInt(request.week), 0);
+    if (!result.success) {
+        ctx.response.status = 400;
+        ctx.response.body = {"info": "修改规则失败,请联系开发人员"};
+        return;
+    }
+    //检查新规则
+    //检查长期预约
+    result = await dataBase.SearchLongItem(2147483647,0,null,request.id,request.week,null);
+    if(result.count > 0)
+    {
+        for(let i in result.data)
+        {
+            if(i.item_long_begin > newendIndex && (i.item_long_begin+i.item_long_duration) < newstartIndex)
+            {
+                //写回旧规则
+                result = await dataBase.preparePianoForRule(request.id, oldstartIndex, oldendIndex - oldstartIndex, dateStr);
+                result = await dataBase.ChangePianoRule(request.id,parseInt(oldstartIndex), oldendIndex - oldstartIndex,parseInt(request.week), 2);
+                ctx.response.status = 400;
+                ctx.response.body = {"info": "与现有长期预约冲突，请联系用户处理！"};
+                return;
+            }
+        }
+    }
+    //检查3天内订单
+    if (day >= 0)
+    {
+        let date = new Date();
+        date.setDate(date.getDate() + day);
+        let dateStr = utils.getDateStr(date);
+        result = await dataBase.preparePianoForRule(request.id, newstartIndex, newendIndex - newstartIndex, dateStr);
+        if (!result.success) {
+            //写回旧规则
+            result = await dataBase.preparePianoForRule(request.id, oldstartIndex, oldendIndex - oldstartIndex, dateStr);
+            result = await dataBase.ChangePianoRule(request.id,parseInt(oldstartIndex), oldendIndex - oldstartIndex,parseInt(request.week), 2);
+            ctx.response.status = 400;
+            ctx.response.body = {"info": "与现有订单冲突，请联系用户处理！"};
+            return;
+        }
+    }
+    //插入新规则
+    result = await dataBase.ChangePianoRule(request.id,parseInt(newstartIndex), newendIndex - newstartIndex,parseInt(request.week), 2);
+    if (!result.success) {
+        ctx.response.status = 400;
+        ctx.response.body = {"info": "修改规则失败,请联系开发人员"};
+        return;
+    }
     ctx.response.status = 200;
 });
 

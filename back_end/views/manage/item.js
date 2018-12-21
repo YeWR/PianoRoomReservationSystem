@@ -16,8 +16,12 @@ const routers = router.get("/list", async (ctx, next) => {
     {
         query.status = parseInt(query.status) - 3;
     }
-    let userId = await dataBase.GetUserUuidByNumber(ctx.query.idNumber);
-    userId = userId.data;
+    let userId = null;
+    if(ctx.query.idNumber)
+    {
+        userId = await dataBase.GetUserUuidByNumber(ctx.query.idNumber);
+        userId = userId.data;
+    }
     if(query.room)
     {
         let roomResult = await dataBase.SearchPiano(1,0,query.room,null,null);

@@ -67,7 +67,7 @@ let GetUserUuidByNumber = async function(userNumber){
     let flag = await test();
     console.log(flag);
     if(flag === 0){
-        return {"data":userInfo,
+        return {"data":null,
             "info":errorMsg};
     }
     if(flag === 1){
@@ -223,8 +223,6 @@ let SocietyUserRegister = async function(socType, socId, socRealname, socTele, s
         return new Promise(resolve =>{
             db.where({ number: socTele }).get('user', function (err, res, fields) {
                 let _select = res;
-                console.log("register");
-                console.log(_select);
                 if (_select.length !== 0) {
                     errorMsg = "手机号已经被使用"; // to do 
                     resolve(0);
@@ -238,14 +236,11 @@ let SocietyUserRegister = async function(socType, socId, socRealname, socTele, s
                         number: socTele,
                         uuid: socUuid
                     };
-                    console.log(_info);
                     db.insert('user', _info, function (err, info) {
                         if(!err){
                             resolve(1);
                         }
                         else{
-                            console.log(err);
-                            console.log(info);
                             errorMsg = "新建用户失败";
                             resolve(0);
                         }
@@ -375,7 +370,6 @@ let SocietyUserLogin = async function(socTele, socPassword) {
                     let _data = JSON.stringify(_select);
                     let _info = JSON.parse(_data);
                     let user = _info[0];
-                    //console.log(user);
                     resolve(1);
                 }
             });
@@ -472,8 +466,6 @@ let UpdatePianoInfo = async function(pianoId, pianoRoom, pianoInfo, pianoStuvalu
         piano_type: pianoType,
         piano_status: pianoStatus,
     };
-    console.log("Updatepianoinfo");
-    console.log(info);
     for(let i in info)
     {
         if(info[i] === undefined || info[i] === null || info[i] === "")
@@ -481,8 +473,6 @@ let UpdatePianoInfo = async function(pianoId, pianoRoom, pianoInfo, pianoStuvalu
             delete info[i];
         }
     }
-    console.log("Updatepianoinfo");
-    console.log(info);
     let test = function(){
         return new Promise(resolve =>{
             db.where({ piano_id: pianoId }).update('piano', info, function (err) {
@@ -490,7 +480,6 @@ let UpdatePianoInfo = async function(pianoId, pianoRoom, pianoInfo, pianoStuvalu
                     resolve(1);
                 else
                 {
-                    console.log(err);
                     errorMsg = "修改琴房信息失败";
                     resolve(0);
                 }
@@ -676,7 +665,8 @@ let preparePianoForInsert = async function(itemRoomId, itemBegin, itemDuration, 
                     pianoInfo = _info[0];
                     // change data
                     for(let i = itemBegin; i<itemEnd; i++){
-                        if(pianoInfo.piano_list.data[i] === '1' || pianoInfo.piano_list.data[i] === 49){
+                        if(pianoInfo.piano_list.data[i] === '1' || pianoInfo.piano_list.data[i] === 49
+                        || pianoInfo.piano_list.data[i] === '2' || pianoInfo.piano_list.data[i] === 50){
                             resolve(0);
                         }
                     }
@@ -705,8 +695,12 @@ let preparePianoForInsert = async function(itemRoomId, itemBegin, itemDuration, 
             if(pianoInfo.piano_list.data[i] === '0' || pianoInfo.piano_list.data[i] === 48){
                 newList += '0';
             }
-            else{
+            else if(pianoInfo.piano_list.data[i] === '1' || pianoInfo.piano_list.data[i] === 49){
                 newList += '1';
+            }
+            else
+            {
+                newList += '2';
             }
         }
         let checkUpdate = function(){
@@ -726,6 +720,86 @@ let preparePianoForInsert = async function(itemRoomId, itemBegin, itemDuration, 
             errorMsg = "更新失败";
             return {"success":false,
                     "info":errorMsg};
+        }
+        else{
+            return {"success":true};
+        }
+    }
+}
+
+let preparePianoForRule = async function(itemRoomId, itemBegin, itemDuration, itemDate){
+    let errorMsg = "";
+    itemBegin = timeLength*getDateNum(itemDate)+itemBegin;
+    let itemEnd = itemBegin+itemDuration;
+    let pianoInfo = null;
+    let test = function(){
+        return new Promise(resolve =>{
+            db.where({ piano_id: itemRoomId }).get('piano', function (err, res, fields) {
+                let _select = res;
+                if(_select.length === 0){
+                    errorMsg = "琴房不存在";
+                    resolve(0);
+                }
+                else{
+                    let _data = JSON.stringify(_select);
+                    let _info = JSON.parse(_data);
+                    pianoInfo = _info[0];
+                    // change data
+                    for(let i = itemBegin; i<itemEnd; i++){
+                        if(pianoInfo.piano_list.data[i] === '1' || pianoInfo.piano_list.data[i] === 49){
+                            resolve(0);
+                        }
+                    }
+                    resolve(1);
+                }
+            });
+        });
+    };
+    let flag = await test();
+    console.log(flag);
+    if(flag === 0){
+        return {"success":false,
+            "info":errorMsg};
+    }
+    if(flag === 1){
+        // to do 更新数据
+        let newList = "";
+        let len = pianoInfo.piano_list.data.length;
+        for(let i = 0; i<len; i++){
+            if(i < itemEnd){
+                if(i >= itemBegin){
+                    newList += '2';
+                    continue;
+                }
+            }
+            if(pianoInfo.piano_list.data[i] === '0' || pianoInfo.piano_list.data[i] === 48){
+                newList += '0';
+            }
+            else if(pianoInfo.piano_list.data[i] === '1' || pianoInfo.piano_list.data[i] === 49){
+                newList += '1';
+            }
+            else
+            {
+                newList += '2';
+            }
+        }
+        let checkUpdate = function(){
+            return new Promise(resolve =>{
+                db.where({piano_id: itemRoomId}).update('piano',{piano_list:newList},function(err){
+                    if(err){
+                        resolve(0);
+                    }
+                    else{
+                        resolve(1);
+                    }
+                });
+            });
+        };
+        let check = await checkUpdate()
+        if(check === 0){
+            errorMsg = "更新失败";
+            return {"success":false,
+                "info":errorMsg};
         }
         else{
             return {"success":true};
@@ -775,8 +849,12 @@ let ChangePianoRule = async function(itemRoomId, itemBegin, itemDuration, itemDa
             if(pianoInfo.piano_rule.data[i] === '0' || pianoInfo.piano_rule.data[i] === 48){
                 newList += '0';
             }
-            else{
+            else if(pianoInfo.piano_rule.data[i] === '1' || pianoInfo.piano_rule.data[i] === 49){
                 newList += '1';
+            }
+            else
+            {
+                newList += '2';
             }
         }
         let checkUpdate = function(){
@@ -803,6 +881,44 @@ let ChangePianoRule = async function(itemRoomId, itemBegin, itemDuration, itemDa
     }
 }
 
+let CheckPianoRule = async function(itemRoomId, itemBegin, itemDuration, itemDay){
+    let errorMsg = "";
+    itemBegin = timeLength*itemDay+itemBegin;
+    let itemEnd = itemBegin+itemDuration;
+    let test = function(){
+        return new Promise(resolve =>{
+            db.where({ piano_id: itemRoomId }).get('piano', function (err, res, fields) {
+                let _select = res;
+                if(_select.length === 0){
+                    errorMsg = "琴房不存在";
+                    resolve(0);
+                }
+                else{
+                    let _data = JSON.stringify(_select);
+                    let _info = JSON.parse(_data);
+                    let pianoInfo = _info[0];
+                    // change data
+                    for(let i = itemBegin; i<itemEnd; i++){
+                        if(pianoInfo.piano_rule.data[i] === '2' || pianoInfo.piano_rule.data[i] === 50){
+                            resolve(0);
+                        }
+                    }
+                    resolve(1);
+                }
+            });
+        });
+    };
+    let flag = await test();
+    console.log(flag);
+    if(flag === 0){
+        return {"success":false,
+            "info":errorMsg};
+    }
+    else
+    {
+        return {"success":true};
+    }
+}
 // uuid: itemUsername 传入uuid
 // begin is the begin index, duration is the length
 let InsertItem = async function(itemDate, itemUsername, itemRoomId, itemType, itemMember, itemValue, itemDuration, itemBegin, itemUuid){
@@ -1010,7 +1126,12 @@ let ItemCheckin = async function(itemUuid){
                         errorMsg = "订单已取消";
                         resolve(0);
                     }
-                    else
+                    else if(itemInfo.item_type === 3 || itemInfo.item_type === -1)
+                    {
+                        errorMsg = "订单未支付";
+                        resolve(0);
+                    }
+                    else if(itemInfo.item_type === 1 || itemInfo.item_type === -2)
                     {
                         resolve(1);
                     }
@@ -1314,8 +1435,12 @@ let preparePianoForDel = async function(itemRoomId, itemBegin, itemDuration, ite
             if(pianoInfo.piano_list.data[i] === '0' || pianoInfo.piano_list.data[i] === 48){
                 newList += '0';
             }
-            else{
+            else if(pianoInfo.piano_list.data[i] === '1' || pianoInfo.piano_list.data[i] === 49){
                 newList += '1';
+            }
+            else
+            {
+                newList += '2';
             }
         }
         let checkUpdate = function(){
@@ -1481,7 +1606,7 @@ let GetNoticeInfo = async function(noticeId){
                 "info":errorMsg};
     }
     if(flag === 1){
-        console.log(noticeInfo);
+
         return {"data":noticeInfo,
                 "info":errorMsg};
     }
@@ -1522,14 +1647,100 @@ let InsertNotice = async function(noticeTitle, noticeCont, noticeTime, noticeAut
 
 let DeleteNotice = async function(noticeId) {
     let errorMsg = "";
+    let test = function () {
+        return new Promise(resolve => {
+            db.where({notice_id: noticeId}).update('notice', {notice_type: 0}, function (err) {
+                if (!err) {
+                    resolve(1);
+                }
+                else {
+                    errorMsg = "删除失败";
+                    resolve(0);
+                }
+            });
+        });
+    };
+    let flag = await test();
+    console.log(flag);
+    if (flag === 0) {
+        return {
+            "success": false,
+            "info": errorMsg
+        };
+    }
+    if (flag === 1) {
+        return {"success": true};
+    }
+};
+
+let SearchLongItem = async function(count, offset, userUuid, roomId, week, type){
+    let errorMsg = "";
+    let itemInfo = null;
+    let itemCount = 0;
+    let query = { item_long_userid: userUuid, item_long_pianoId: roomId, item_long_type: type, item_long_week: week, item_long_status: 1};
+    for(let q in query)
+    {
+        if(query[q] === undefined || query[q] === null || query[q] === "")
+        {
+            delete query[q];
+        }
+    }
     let test = function(){
         return new Promise(resolve =>{
-            db.where({notice_id: noticeId }).update('notice', {notice_type: 0}, function (err) {
+            db.where(query)
+                .limit(count, offset)
+                .get('item_long', function (err, res, fields) {
+                    let _data = JSON.stringify(res);
+                    let _info = JSON.parse(_data);
+                    itemInfo = _info;
+                    resolve(1);
+                });
+        });
+    };
+    let getItemCount = function(){
+        return new Promise(resolve =>{
+            db.where(query)
+                .count('item_long', function (err, res, fields) {
+                    itemCount = res;
+                    resolve(1);
+                });
+        });
+    };
+    let flag = await test();
+    let flagCount = await getItemCount();
+    if(flag === 0){
+        return {
+            "data":itemInfo,
+            "count": itemCount,
+            "info":errorMsg};
+    }
+    if(flag === 1){
+        return {"data":itemInfo,
+            "count": itemCount,
+            "info":errorMsg};
+    }
+};
+
+let AddLongItem = async function(userUuid, userType, roomId, week, begin, duration){
+    let errorMsg = "";
+    //插入订单
+    let test = function(){
+        return new Promise(resolve =>{
+            let _info = {
+                item_long_pianoId: roomId,
+                item_long_userid: userUuid,
+                item_long_type: userType,
+                item_long_week: week,
+                item_long_begin: begin,
+                item_long_duration: duration,
+                item_long_status: 1
+            };
+            db.insert('item_long', _info, function (err, info) {
                 if(!err){
                     resolve(1);
                 }
                 else{
-                    errorMsg = "删除失败";
+                    errorMsg = "新建长期预约失败";
                     resolve(0);
                 }
             });
@@ -1539,12 +1750,38 @@ let DeleteNotice = async function(noticeId) {
     console.log(flag);
     if(flag === 0){
         return {"success":false,
-                "info":errorMsg};
+            "info":errorMsg};
     }
     if(flag === 1){
         return {"success":true};
     }
-}
+};
+
+let DeleteLongItem = async function(longItemId){
+    let errorMsg = "";
+    let test = function(){
+        return new Promise(resolve =>{
+            db.where({item_long_id: longItemId }).update('item_long', {item_long_status: 0}, function (err) {
+                if(!err){
+                    resolve(1);
+                }
+                else{
+                    errorMsg = "删除长期预约失败";
+                    resolve(0);
+                }
+            });
+        });
+    };
+    let flag = await test();
+    console.log(flag);
+    if(flag === 0){
+        return {"success":false,
+            "info":errorMsg};
+    }
+    if(flag === 1){
+        return {"success":true};
+    }
+};
 
 // 订单
 exports.InsertItem = InsertItem;            // 新增订单
@@ -1554,10 +1791,10 @@ exports.ItemPaySuccess = ItemPaySuccess;
 exports.SearchItem = SearchItem;            // 查询订单(管理端)
 exports.GetItemByUuid = GetItemByUuid;      // 获取订单信息，由uuid
 exports.DeleteItem = DeleteItem;            // 删除订单-需要改写琴房信息
-exports.InsertTempItem = InsertTempItem;
-exports.InsertItemTemp = InsertItemTemp;
-exports.DeleteTempItem = DeleteTempItem;
-exports.GetTempItemByUuid = GetTempItemByUuid;
+// exports.InsertTempItem = InsertTempItem;
+// exports.InsertItemTemp = InsertItemTemp;
+// exports.DeleteTempItem = DeleteTempItem;
+// exports.GetTempItemByUuid = GetTempItemByUuid;
 
 // 琴房
 exports.GetPianoRoomInfo = GetPianoRoomInfo;// 获取单个琴房信息
@@ -1566,9 +1803,10 @@ exports.SearchPiano = SearchPiano;
 exports.InsertPiano = InsertPiano;          // 新增琴房
 exports.UpdatePianoInfo = UpdatePianoInfo;
 exports.preparePianoForInsert = preparePianoForInsert;
+exports.preparePianoForRule = preparePianoForRule;
 exports.preparePianoForDel = preparePianoForDel;
 exports.ChangePianoRule = ChangePianoRule;
-// 每日更新琴房信息
+exports.CheckPianoRule = CheckPianoRule;
 
 // 注册
 exports.SetRegisterMsg = SetRegisterMsg;    // 点击发送
@@ -1592,6 +1830,9 @@ exports.InsertNotice = InsertNotice;            // 插入公告
 exports.DeleteNotice = DeleteNotice;            // 删除公告
 exports.SearchNotice = SearchNotice;
 
-// 查询
+//长期预约
+exports.SearchLongItem = SearchLongItem;
+exports.AddLongItem = AddLongItem;
+exports.DeleteLongItem = DeleteLongItem;
 
 

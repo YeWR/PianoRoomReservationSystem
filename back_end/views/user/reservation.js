@@ -342,6 +342,7 @@ const routers = router.post("/cancel", async (ctx, next) => {
                     let dateStr = utils.getDateStr(date);
                     let week = date.getDay();
                     let ordertime = Date.parse(p.item_time);
+                    ordertime += 30*60*1000;
                     console.log(ordertime);
                     let info = {
                         "pianoPlace": i.piano_room,
@@ -354,7 +355,7 @@ const routers = router.post("/cancel", async (ctx, next) => {
                         "weekday": weekStr[week],
                         "begTimeIndex": p.item_begin,
                         "endTimeIndex": p.item_begin + p.item_duration,
-                        "orderTime": ordertime
+                        "deadlineTime": ordertime
                     };
                     reservationList.push(info);
                     break;
@@ -457,14 +458,14 @@ const routers = router.post("/cancel", async (ctx, next) => {
         }
 
         let dateStr = ctx.request.body.date;
-        dateStr.concat(" 08:00:00");
+        dateStr = dateStr.concat(" 08:00:00");
         let duration = endTimeIndex - begTimeIndex;
         let itemUuid = uuid.v1().toString();
         itemUuid = itemUuid.replace(/\-/g,'');
         let result = await dataBase.InsertItem(dateStr, userId, pianoId, 3, reserveType, pianoPrice, duration, begTimeIndex, itemUuid);
         if(result.success)
         {
-            setTimeout(()=>{itemTimeout(itemUuid)},30*60*1000);
+            //setTimeout(()=>{itemTimeout(itemUuid)},30*60*1000);
             ctx.response.body = {
                 "success": true,
                 "info": "下单成功",
