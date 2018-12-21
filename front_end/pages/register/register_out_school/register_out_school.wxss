@@ -7,7 +7,7 @@ page{
 }
 .register_icon_los{
     margin:14%;
-    height:22%;
+    height:23%;
     width: 35%;
     text-align: center;
 }
