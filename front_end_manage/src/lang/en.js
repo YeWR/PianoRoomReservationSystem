@@ -103,6 +103,7 @@ export default {
     status_3: 'refunded',
     status_4: 'not used',
     status_5: 'used already',
+    status_6: 'not paid',
     status_2: 'long term item without paid',
     status_1: 'long term item with paid',
     status_0: 'long term item used',

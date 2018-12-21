@@ -49,11 +49,14 @@ Page({
         });
     },
 
-    /*
-     * bind illegal reservations
-     */
-    bindReservationIllegal: function (e) {
 
+    /*
+     * not paid
+     */
+    bindReservationNotPaid: function(e){
+        wx.navigateTo({
+            url: "./reservation_not_paid/reservation_not_paid"
+        });
     },
 
 
@@ -65,10 +68,7 @@ Page({
             url: "../login/login"
         });
     },
-    /* to help */
-    toHelp: function (e) {
-        //todo:跳转
-    },
+
     /*
      * redirect to login
      * this is a bug in wechat, so we have to fix it.

@@ -669,6 +669,7 @@ const setReservationTypeDiscription = (reservationType) => {
 const RESERVATIONSTATE = {};
 RESERVATIONSTATE.NOTUSED = 1;
 RESERVATIONSTATE.USED = 2;
+RESERVATIONSTATE.NOTPAID = 3;
 RESERVATIONSTATE.LONGNOTPAYED = -1;
 RESERVATIONSTATE.LONGPAYED = -2;
 RESERVATIONSTATE.LONGUSED = -3;
@@ -681,6 +682,9 @@ const setRsvStateDiscription = (reservationState) => {
             break;
         case RESERVATIONSTATE.USED:
             dis = "已使用";
+            break;
+        case RESERVATIONSTATE.NOTPAID:
+            dis = "未支付";
             break;
         case RESERVATIONSTATE.LONGNOTPAYED:
             dis = "长期未缴费";
@@ -849,8 +853,9 @@ const drawTimeTable = (pianoList, canvasId, date, idAdd) => {
         const RectX = 0;
         const RectY = 6;
         const blockHeight = 5;
-        const blockWidth = 3.3;
 
+        const  clientWidth = wx.getSystemInfoSync().screenWidth;
+        const blockWidth = clientWidth * 0.0087;
         let x1 = RectX + begIndex * blockWidth;
         let x2 = (endIndex - begIndex) * blockWidth;
 
@@ -881,7 +886,7 @@ const drawTimeTable = (pianoList, canvasId, date, idAdd) => {
     for (let piano of pianoList) {
 
         let ctxId = "";
-        if(idAdd){
+        if (idAdd) {
             ctxId = canvasId + piano.pianoId;
         }
         else {
@@ -906,6 +911,24 @@ const drawTimeTable = (pianoList, canvasId, date, idAdd) => {
         }
         ctx.draw();
     }
+};
+
+/*
+ * change time to Day, Hour, Minute and second
+ */
+const toMinuteSecond = (timeStamp) => {
+    let ans = [];
+    // day
+    ans[0] = Math.floor(timeStamp / (60 * 60 * 24));
+    // hour
+    let temp = timeStamp % (60 * 60 * 24);
+    ans[1] = Math.floor(temp / (60 * 60));
+    // minute
+    temp = timeStamp % (60 * 60);
+    ans[2] = Math.floor(temp / 60);
+    // second
+    ans[3] = timeStamp % 60;
+    return ans
 };
 
 
@@ -949,5 +972,6 @@ module.exports = {
     PAYAPPID: PAYAPPID,
     PAYSECRETID: PAYSECRETID,
     randomString: randomString,
-    drawTimeTable: drawTimeTable
+    drawTimeTable: drawTimeTable,
+    toMinuteSecond: toMinuteSecond
 };

@@ -105,6 +105,7 @@ export default {
     status_3: '已退订',
     status_4: '未使用',
     status_5: '已使用',
+    status_6: '未支付',
     status_2: '长期未缴费',
     status_1: '长期已缴费',
     status_0: '长期已使用',

@@ -135,9 +135,45 @@ Page({
         // paras["pianoPrice"] = this.data._pianoPrices;
         paras["pianoPrice"] = this.getPrice(this);
 
-        let url = util.setUrl("../reserve_confirm/reserve_confirm", paras);
-        wx.navigateTo({
-            url: url
+        let that = this;
+        let number = app.globalData._idNumber;
+        if (app.globalData._userType !== util.USERTYPE.SOCIAL) {
+            // stu id card
+            number = app.globalData._idNumber;
+        }
+        wx.request({
+            url: "https://958107.iterator-traits.com/user/reservation/order",
+            data: {
+                number: number,
+                reservationType: paras["reservationType"],
+                pianoId: paras["pianoId"],
+                pianoPrice: paras["pianoPrice"],
+                begTimeIndex: paras["begTimeIndex"],
+                endTimeIndex: paras["endTimeIndex"],
+                date: paras["date"],
+            },
+            method: "POST",
+            header: {
+                "Content-Type": "application/x-www-form-urlencoded"
+            },
+            success: function (res) {
+                if (res.data.success) {
+                    util.alertInfo("成功下单！", "success", 500);
+                    setTimeout(() => {
+                        paras["reservationId"] = res.data.reservationId;
+                        let url = util.setUrl("../reserve_confirm/reserve_confirm", paras);
+                        wx.reLaunch({
+                            url: url
+                        });
+                    }, 500);
+                }
+                else {
+                    util.alertInfo(res.data.info, "none", 1000);
+                }
+            },
+            fail: function (res) {
+                util.alertInfo("下单失败，请检查网络设备是否正常。", "none", 1000);
+            }
         });
     },
 

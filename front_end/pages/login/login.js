@@ -67,18 +67,19 @@ Page({
         }
         // if there is cookie
 
-        let cookie = wx.getStorageSync("sessionid");
+        let cookie = wx.getStorageSync("cookie");
         let that = this;
 
         if (cookie) {
             let info = true;
             wx.request({
                 url: "https://958107.iterator-traits.com/user/cookie",
-                data: {},
+                data: {
+                    token: cookie
+                },
                 method: "GET",
                 header: {
                     "Content-Type": "application/x-www-form-urlencoded",
-                    cookie: cookie
                 },
                 success: function (res) {
                     // if success

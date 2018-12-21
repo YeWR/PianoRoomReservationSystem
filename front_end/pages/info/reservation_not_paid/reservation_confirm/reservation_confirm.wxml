@@ -8,7 +8,7 @@
     </view>
 
     <view>
-    可在 个人/未支付订单 中支付, 支付剩余时间：{{_timeShow}}
+        可在 个人/未支付订单 中支付, 支付剩余时间：{{_timeShow}}
     </view>
 
     <view class="reserve-card">
@@ -16,7 +16,7 @@
 
         <view class="date-view">
             <view class="date-view-icon">
-            <text class="fa fa-calendar fa-lg"></text>
+                <text class="fa fa-calendar fa-lg"></text>
             </view>
             <view class="date-text">
                 日期：
@@ -29,7 +29,7 @@
 
         <view class="date-view">
             <view class="date-view-icon">
-            <text class="fa fa-clock-o fa-lg"></text>
+                <text class="fa fa-clock-o fa-lg"></text>
             </view>
             <view class="date-text">
                 时间：
@@ -42,7 +42,7 @@
 
         <view class="date-view">
             <view class="date-view-icon">
-            <text class="fa fa-user fa-lg"></text>
+                <text class="fa fa-user fa-lg"></text>
             </view>
             <view class="date-text">
                 人数：
@@ -55,7 +55,7 @@
 
         <view class="date-view">
             <view class="date-view-icon">
-            <text class="fa fa-map-marker fa-lg"></text>
+                <text class="fa fa-map-marker fa-lg"></text>
             </view>
             <view class="date-text">
                 地点：
@@ -68,7 +68,7 @@
 
         <view class="date-view">
             <view class="date-view-icon">
-            <text class="fa fa-jpy fa-lg"></text>
+                <text class="fa fa-jpy fa-lg"></text>
             </view>
             <view class="date-text">
                 金额 :
@@ -86,9 +86,6 @@
             <button class="reserve_btn" bindtap="cancelReservation">取消支付</button>
         </view>
 
-        <view class="reserve_btn_view">
-            <button class="reserve_btn" bindtap="goOut">出去看看</button>
-        </view>
     </view>
 
 </view>

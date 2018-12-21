@@ -48,10 +48,10 @@
             <view class = "card_down_left">
                 <text class="fa fa-exclamation-circle fa-lg"></text>
             </view>
-            <view class = "card_down_middle" bindtap="bindReservationIllegal">
-                <text>长期预约</text>
+            <view class = "card_down_middle" bindtap="bindReservationNotPaid">
+                <text>未支付订单</text>
             </view>
-            <view class = "card_down_right" bindtap="bindReservationIllegal">
+            <view class = "card_down_right" bindtap="bindReservationNotPaid">
                 <text class="fa fa-location-arrow fa-lg"></text>
             </view>
         </view>
