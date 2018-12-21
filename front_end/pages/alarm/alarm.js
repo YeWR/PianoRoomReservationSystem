@@ -128,14 +128,6 @@ Page({
      * 生命周期函数--监听页面加载
      */
     onLoad: function (options) {
-        if(options.inSchool){
-            app.globalData._username = options.username;
-            app.globalData._userType = options.userType;
-            app.globalData._idNumber = options.idNumber;
-            let cookie = options.token;
-            wx.setStorageSync("cookie", cookie);
-        }
-
         let user = app.globalData._username;
         if (!user) {
             this.reLogin();

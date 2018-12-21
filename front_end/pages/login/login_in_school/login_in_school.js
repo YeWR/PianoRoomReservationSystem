@@ -8,7 +8,17 @@ Page({
     /**
      * 页面的初始数据
      */
-    data: {
+    data: {},
+
+    loginSuccMsg: function (e) {
+        let options = e.detail.data[0];
+        if (options && options.success) {
+            app.globalData._username = options.username;
+            app.globalData._userType = options.userType;
+            app.globalData._idNumber = options.idNumber;
+            let cookie = options.token;
+            wx.setStorageSync("cookie", cookie);
+        }
     },
 
 
