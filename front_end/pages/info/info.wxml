@@ -14,9 +14,11 @@
     <view class="info_main_card">
 
         <view class="info_main_card_line1" bindtap="bindPersonalInfo">
-            <view class = "info_main_card_line1_left" bindtap="bindPersonalInfo">
-                    <text class="fa fa-user fa-lg"></text>
-            </view>
+            <!--<view class = "info_main_card_line1_left" bindtap="bindPersonalInfo">-->
+                    <!--<text class="fa fa-user fa-lg"></text>-->
+                <open-data class = "info_main_card_line1_left"type="userAvatarUrl"></open-data>
+
+            <!--</view>-->
             <view class = "info_main_card_line1_right">
                 <view class = "card_line1_right1">
                     <text >{{_realName}}</text>

@@ -7,16 +7,23 @@
         </text>
     </view>
 
-    <view class="top_board">
+    <view class="top_board"style="opacity:{{0.4}}">
         <image class="top_board_img" mode="aspectFill" src="../../../images/bg/v2_phk5nq.jpg_t.png"></image>
+        <!--<open-data type="userAvatarUrl"class="top_board_img"></open-data>-->
+
     </view>
 
     <view class="top_board_in">
-        <image class="top_board_icon" mode="scaleToFill" src="../../../images/bg/v2_phk5nq.jpg_t.png"></image>
+        <!--<image class="top_board_icon" mode="scaleToFill" src="../../../images/bg/v2_phk5nq.jpg_t.png"></image>-->
+        <!--<image class="avatar" src='{{userInfo.avatarUrl}}'></image>-->
+        <!--<image class="top_board_icon" mode="scaleToFill" src="{{userInfo.avatarUrl}}"></image>-->
+        <open-data type="userAvatarUrl"></open-data>
+
     </view>
 
     <view class="top_board_userid">
-        <text class = top_board_userid_text>用户名</text>
+        <!--<text class = top_board_userid_text></text>-->
+        <open-data type="userNickName"></open-data>
     </view>
 
     <view class="card">

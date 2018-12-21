@@ -73,7 +73,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 9,
+			"current": 8,
 			"list": [
 				{
 					"id": -1,
@@ -112,12 +112,6 @@
 					"query": ""
 				},
 				{
-					"id": 6,
-					"name": "价格详情",
-					"pathName": "pages/reserve/price_info/price_info",
-					"query": ""
-				},
-				{
 					"id": -1,
 					"name": "预约提醒",
 					"pathName": "pages/alarm/alarm",
@@ -125,14 +119,15 @@
 				},
 				{
 					"id": -1,
-					"name": "shiyongbangzhu",
-					"pathName": "pages/info/help/help",
+					"name": "预约确认",
+					"pathName": "pages/reserve/reserve_confirm/reserve_confirm",
 					"query": ""
 				},
 				{
-					"id": -1,
-					"name": "预约确认",
-					"pathName": "pages/reserve/reserve_confirm/reserve_confirm"
+					"id": 8,
+					"name": "个人信息",
+					"pathName": "pages/info/info",
+					"query": ""
 				}
 			]
 		}
