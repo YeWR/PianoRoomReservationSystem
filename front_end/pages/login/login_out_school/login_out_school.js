@@ -124,11 +124,10 @@ Page({
 
                         util.alertInfo("登录成功", "success", 1000);
 
-                        let cookie = res.header["Set-Cookie"];
-                        cookie = cookie.replace(/httponly,/, "httponly;");
-                        wx.setStorageSync("sessionid", cookie);
+                        let cookie = res.data.token;
+                        wx.setStorageSync("cookie", cookie);
 
-                        app.globalData._username = res.data.data;
+                        app.globalData._username = res.data.username;
                         app.globalData._userType = util.USERTYPE.SOCIAL;
                         app.globalData._idNumber = that.data._phoneNumber;
 

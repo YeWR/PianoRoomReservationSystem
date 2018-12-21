@@ -1,0 +1,69 @@
+.reserve-card {
+    align-items: center;
+    background-color: white;
+    margin-top: 10%;
+    height: 60%;
+    width: 86%;
+    color: rgba(0, 0, 0, 1);
+    display: flex;
+    flex-direction: column;
+    border-radius: 6 rpx;
+}
+
+.date-view {
+    margin-top: 4%;
+    width: 90%;
+    height: 12%;
+    display: flex;
+    color: rgba(102, 8, 116, 1);
+
+}
+.date-view-icon{
+    text-align: center;
+    width: 10%;
+    height: 100%;
+}
+.date-text {
+    height: 100%;
+    text-align: left;
+    width: 20%;
+    margin-left: 2%;
+    color: rgba(136, 136, 136, 1);
+    font-size: 36rpx;
+    font-family: Arial;
+}
+
+.date-info {
+    color: rgba(136, 136, 136, 1);
+    font-family: Arial;
+    justify-content: center;
+    width: 65%;
+    text-align: center;
+}
+.money-info{
+    color: rgba(136, 136, 136, 1);
+    justify-content: center;
+    width: 65%;
+    text-align: center;
+    font-size: 55rpx;
+    font-weight: bolder;
+}
+.reserve_btn_view {
+    margin-top:5%;
+    width: 80%;
+    color: white;
+    font-size:30rpx;
+    border-radius: 12rpx;
+    background-color: rgba(102, 8, 116, 0.9);
+    font-family: Arial;
+    border: 2rpx solid rgba(187, 187, 187, 1);
+}
+
+.reserve_btn{
+    /*margin-top: 3%;*/
+    text-align: center;
+    color: white;
+    font-size: 28rpx;
+    font-family: Arial;
+    background-color: rgba(102, 8, 116, 0.9);
+}

@@ -22,7 +22,6 @@ Page({
         _pianoPlace: "",
         _pianoType: "",
         _pianoPrice: "",
-        _pianoId: "",
         _reservationId: "",
         _orderTime: 0,
         _timeLeft: 0,
@@ -128,7 +127,7 @@ Page({
     /*
      * cancel reservation
      */
-    cancelReservation: function(e){
+    cancelReservation: function (e) {
         let that = this;
         wx.request({
             url: "https://958107.iterator-traits.com/user/reservation/cancel",
@@ -159,7 +158,7 @@ Page({
     /*
      * go out
      */
-    goOut: function(e){
+    goOut: function (e) {
         this.toAlarm();
     },
 
@@ -168,7 +167,7 @@ Page({
      */
     toAlarm: function () {
         wx.switchTab({
-            url: "../../alarm/alarm"
+            url: "../../../alarm/alarm"
         });
     },
 
@@ -176,9 +175,9 @@ Page({
      * set time counter
      */
     setCounter: function(that){
-
-
-        let timeLeft = 60 * 30;
+        let timeLeft = Date.parse(new Date()) - that.data._orderTime;
+        timeLeft = Math.floor(timeLeft / 1000);
+        timeLeft = 60 * 30 - timeLeft;
         let temp = util.toMinuteSecond(timeLeft);
         that.setData({
             _timeLeft: timeLeft,
@@ -219,15 +218,14 @@ Page({
 
             _reservationType: options.reservationType,
             _reservationTypeDiscription: util.setReservationTypeDiscription(Number(options.reservationType)),
-            _date: options.date,
-            _begTime: options.begTime,
-            _endTime: options.endTime,
+            _date: options.reservationDate,
+            _begTime: options.reservationBegTime,
+            _endTime: options.reservationEndTime,
             _begTimeIndex: options.begTimeIndex,
             _endTimeIndex: options.endTimeIndex,
-            _pianoPlace: options.pianoPlace,
-            _pianoPrice: options.pianoPrice,
-            _pianoType: options.pianoType,
-            _pianoId: options.pianoId,
+            _pianoPlace: options.reservationPianoPlace,
+            _pianoPrice: options.reservationPianoPrice,
+            _pianoType: options.reservationPianoType,
             _reservationId: options.reservationId,
             _orderTime: options.orderTime
         }, function () {

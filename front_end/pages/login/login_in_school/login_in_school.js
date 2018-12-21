@@ -8,95 +8,19 @@ Page({
     /**
      * 页面的初始数据
      */
-    data: {
-        _username: "",
-        _password: ""
-    },
+    data: {},
 
-    // get username
-    getUsername: function (e) {
-        this.setData({
-            _username: e.detail.value
-        });
-    },
-
-    // get password
-    getPassword: function (e) {
-        this.setData({
-            _password: e.detail.value
-        });
-    },
-
-    /*******************************************************************************************************
-     * TODO:密码加密以及API使用
-     * check if any info is empty
-     * send register POST
-     *******************************************************************************************************/
-
-    // login
-    login: function () {
-        let that = this;
-
-        // not empty check
-        // TODO: add info in the checks
-        let notEmptyCheck = function () {
-            let ans = true;
-            // if (!that.data._username) {
-            //     ans = false;
-            //     util.alertInfo("学号或者工号不能为空", "none", 1000);
-            // }
-            // else if (!that.data._password) {
-            //     ans = false;
-            //     util.alertInfo("密码不能为空", "none", 1000);
-            // }
-            return ans;
-        };
-
-        // register POST
-        let post = function () {
-            wx.request({
-                url: "",
-                data: {
-                    username: that.data._username,
-                    password: that.data._password,
-                },
-                method: "POST",
-                header: {
-                    "Content-Type": "application/x-www-form-urlencoded"
-                },
-                success: function (res) {
-                    if(res.data.success){
-                        util.alertInfo("成功", "success", 1000);
-                        wx.navigateTo({
-                            url: ""
-                        });
-                    }
-                    else{
-                        util.alertInfo(res.data.info, "none", 1000);
-                    }
-                },
-                fail: function (res) {
-                    // fail
-                }
-            });
-        };
-
-        // check
-        if (notEmptyCheck()) {
-            // TODO：暂时跳转到board界面
-            // post();
-            // that.toBoard();
+    loginSuccMsg: function (e) {
+        let options = e.detail.data[0];
+        if (options && options.success) {
+            app.globalData._username = options.username;
+            app.globalData._userType = options.userType;
+            app.globalData._idNumber = options.idNumber;
+            let cookie = options.token;
+            wx.setStorageSync("cookie", cookie);
         }
-
     },
 
-    // to board
-    toBoard: function () {
-        app.globalData._username = this.data._username;
-        wx.switchTab({
-            url: "../../board/board"
-        });
-    },
 
     /**
      * 生命周期函数--监听页面加载
