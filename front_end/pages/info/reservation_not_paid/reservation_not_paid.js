@@ -55,7 +55,7 @@ Page({
             reservation.reservationPianoPlace = e.pianoPlace;
             reservation.reservationPianoType = e.pianoType;
             reservation.reservationPianoPrice = e.pianoPrice;
-            reservation.orderTime = e.orderTime;
+            reservation.deadlineTime = e.deadlineTime;
 
             list.push(reservation);
         }
