@@ -158,6 +158,24 @@ export const asyncRouterMap = [
     ]
   },
   {
+    path: '/item_long',
+    component: Layout,
+    redirect: '/item_long/list',
+    name: 'item_long',
+    meta: {
+      title: 'ItemLong',
+      icon: 'form'
+    },
+    children: [
+      {
+        path: 'list',
+        component: () => import('@/views/item_long/itemLongList'),
+        name: 'ItemLong',
+        meta: { title: 'ItemLong' }
+      }
+    ]
+  },
+  {
     path: '/check',
     component: Layout,
     redirect: '/check/ticket',

@@ -57,7 +57,7 @@ export default {
     checkin(){
       fetchList(this.query.id).then(response => {
         console.log(response)
-        if(response.status == 200){
+        if(response.status === 200){
           this.res = '检票成功，请通过'
           this.$message({
             type: 'info',

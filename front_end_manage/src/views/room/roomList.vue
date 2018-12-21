@@ -98,7 +98,7 @@
     </el-dialog>
 
     <el-dialog :title="textMap[dialogStatus]" :visible.sync="timeFromVisible">
-    <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="70px" style="width: 450px; margin-left:50px;">
+    <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="70px" style="width: 600px; margin-left:50px;">
       <el-form-item :label="$t('table.week')" prop="week">
           <el-select v-model="temp.week" :placeholder="$t('table.week')" clearable class="filter-item" style="width: 130px">
             <el-option v-for="item in weekptions" :key="item.key" :label="item.label" :value="item.key"/>
@@ -118,6 +118,11 @@
       <el-form-item :label="$t('table.claim')" prop="claim"></el-form-item>
     </el-form>
     <el-table v-loading="listLoading" :data="gridData" border fit highlight-current-row style="width: 100%">
+      <el-table-column width="50px" align="center" label="序号">
+        <template slot-scope="scope">
+          <span>{{ scope.row.number }}</span>
+        </template>
+      </el-table-column>
       <el-table-column width="90px" align="center" label="星期">
         <template slot-scope="scope">
           <span>{{ scope.row.week }}</span>
@@ -125,12 +130,12 @@
       </el-table-column>
       <el-table-column min-width="100px" label="开始时间">
         <template slot-scope="scope">
-            <el-time-picker v-model="scope.row.startTime" value-format="HH:mm" format="HH:mm" style = "width:50%;"> </el-time-picker>
+            <el-time-picker v-model="scope.row.startTime" value-format="HH:mm" format="HH:mm" style = "width:80%;"> </el-time-picker>
         </template>
       </el-table-column>
       <el-table-column min-width="100px" label="结束时间">
         <template slot-scope="scope">
-            <el-time-picker v-model="scope.row.endTime" value-format="HH:mm" format="HH:mm" style = "width:50%;"> </el-time-picker>
+            <el-time-picker v-model="scope.row.endTime" value-format="HH:mm" format="HH:mm" style = "width:80%;"> </el-time-picker>
         </template>
       </el-table-column>
       <el-table-column align="center" label="操作" width="180">
@@ -208,7 +213,7 @@
 </template>
 
 <script>
-import { fetchList, fetchPv, createRoom, fetchDetail, StatusRoom, InfoRoom, RuleRoom} from '@/api/room'
+import { fetchList, fetchPv, createRoom, fetchDetail, StatusRoom, InfoRoom, RuleRoom,RuleChangeRoom} from '@/api/room'
 import waves from '@/directive/waves' // Waves directive
 import { parseTime } from '@/utils'
 import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
@@ -229,6 +234,7 @@ export default {
   data() {
     return {
       gridData: [],
+      oldData:[],
       tableKey: 0,
       list: null,
       total: 0,
@@ -254,6 +260,7 @@ export default {
         end:0,
         week:0
       },
+      unaviliableType:2,
       calendarTypeOptions : [
         { key: '1', display_name: '开放（open）' },
         { key: '0', display_name: '关闭（close）' }
@@ -464,8 +471,6 @@ export default {
               multiValue:this.temp.multiValue,
               info:this.temp.info
             }
-            console.log('-------------')
-            console.log(data)
             InfoRoom(data).then(response => {
               if(response.status === 200){
                     this.$notify({
@@ -619,8 +624,89 @@ export default {
           });          
         });
     },
+    checkStart(str){
+      let m = 0;
+      let n = 0;
+      let flag = 0;
+      for(let i = 0; i<str.length; i++){
+        if(str[i] === ':'){
+          flag = 1;
+          continue;
+        }
+        if(flag === 0){
+          m = m+str[i];
+        }
+        else{
+          n = n+str[i];
+        }
+      }
+      let x = parseInt(m)-8;
+      if(x < 0){
+        return 0;
+      }
+      else{
+        return 1;
+      }
+    },
+    checkEnd(str){
+      let m = 0;
+      let n = 0;
+      let flag = 0;
+      for(let i = 0; i<str.length; i++){
+        if(str[i] === ':'){
+          flag = 1;
+          continue;
+        }
+        if(flag === 0){
+          m = m+str[i];
+        }
+        else{
+          n = n+str[i];
+        }
+      }
+      let x = parseInt(m);
+      let y = parseInt(parseInt(n)/10);
+      if(x < 22){
+        return 1;
+      }
+      else if(x>22){
+        return 0;
+      }
+      else if(y>0){
+        return 0;
+      }
+      else{
+        return 1;
+      }
+    },
+    checkTime(start,end){
+      if(!this.checkStart(start) || !this.checkStart(end)){
+        this.$message({
+          type: 'info',
+          message: '时间不可早于8：00'
+        });
+        return 0
+      }
+      if(!this.checkEnd(end) || !this.checkEnd(start)){
+        this.$message({
+          type: 'info',
+          message: '时间不可晚于22：00'
+        });
+        return 0
+      }
+      if(this.getIndex(start) > this.getIndex(end)){
+        this.$message({
+          type: 'info',
+          message: '时间差不可小于10min'
+        });
+        return 0
+      }
+      return 1;
+    },
     addRule(operate){
-      console.log(this.temp)
+      if(!this.checkTime(this.temp.start,this.temp.end)){
+        return 0
+      }
       this.$confirm('此操作将增加琴房的不可用时间, 是否继续?', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
@@ -631,7 +717,7 @@ export default {
               start: this.getIndex(this.temp.start),
               end: this.getIndex(this.temp.end),
               week:this.temp.week,
-              type:1
+              type:this.unaviliableType
             }
             console.log(data)
             RuleRoom(data).then(response => {
@@ -668,7 +754,9 @@ export default {
         });
     },
     confirmEdit(row){
-      console.log(row)
+      if(!this.checkTime(row.startTime,row.endTime)){
+        return 0
+      }
       let s = ['星期一','星期二','星期三','星期四','星期五','星期六','星期日']
       let key = 0
       for(let i = 0; i<s.length; i++){
@@ -682,39 +770,45 @@ export default {
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-            let data = {
-              id: this.temp.id,
-              start: this.getIndex(row.startTime),
-              end: this.getIndex(row.endTime),
-              week:key,
-              type:1
-            }
-            console.log(data)
-            RuleRoom(data).then(response => {
-              if(response.status === 200){
-                    this.$notify({
-                      title: '成功',
-                      message: '更改成功',
-                      type: 'success',
-                      duration: 2000
-                    })
-                    fetchDetail(this.temp.id).then(response => {
-                      this.analysisDisabled(response.data.items[0].disabled)
-                      setTimeout(() => {
-                      }, 1.5 * 1000)
-                    })
-                    row.edit = !row.edit
+            fetchDetail(this.temp.id).then(response => {
+              let tmp = this.analysisDisabledWithoutChange(response.data.items[0].disabled)
+              let data = {
+                id: this.temp.id,
+                oldStart:this.getIndex(tmp[row.number].startTime),
+                oldEnd:this.getIndex(tmp[row.number].endTime),
+                newStart: this.getIndex(row.startTime),
+                newEnd: this.getIndex(row.endTime),
+                week:key,
+                type:1
               }
-              else{
-                    this.$notify({
-                      title: '失败',
-                      message: response.data,
-                      type: 'fail',
-                      duration: 2000
-                    })
-              }
+              RuleChangeRoom(data).then(response => {
+                if(response.status === 200){
+                      this.$notify({
+                        title: '成功',
+                        message: '更改成功',
+                        type: 'success',
+                        duration: 2000
+                      })
+                      fetchDetail(this.temp.id).then(response => {
+                        this.analysisDisabled(response.data.items[0].disabled)
+                        setTimeout(() => {
+                        }, 1.5 * 1000)
+                      })
+                      row.edit = !row.edit
+                }
+                else{
+                      this.$notify({
+                        title: '失败',
+                        message: response.data,
+                        type: 'fail',
+                        duration: 2000
+                      })
+                }
+                setTimeout(() => {
+                  this.listLoading = false
+                }, 1.5 * 1000)
+              })
               setTimeout(() => {
-                this.listLoading = false
               }, 1.5 * 1000)
             })
         }).catch(() => {
@@ -737,6 +831,46 @@ export default {
       let num = offset%6;
       return this.pad((8+n),2)+':'+this.pad((num*10),2)
     },
+    analysisDisabledWithoutChange(list){
+      let tmp = []
+      let weekStr = ['星期一','星期二','星期三','星期四','星期五','星期六','星期日']
+      let id = 0
+      for(let i = 0; i<7; i++){
+        let flag = 0
+        let start = 0
+        let end = 0
+        for(let j = 0; j<84; j++){
+          if(list[84*i+j] === this.unaviliableType && flag === 0){
+            start = j;
+            flag = 1
+          }
+          else if(list[84*i+j] === 0 && flag === 1){
+            flag = 0;
+            end = j;
+            tmp.push({
+              number: id,
+              week: weekStr[i],
+              startTime: this.getTime(start),
+              endTime: this.getTime(end)
+            })
+            id = id+1;
+          }
+          else if(j === 83 && flag === 1){
+            flag = 0;
+            end = j+1;
+            tmp.push({
+              number: id,
+              week: weekStr[i],
+              startTime: this.getTime(start),
+              endTime: this.getTime(end),
+              edit:0
+            })
+            id = id+1;
+          }
+        }
+      }
+      return tmp;
+    },
     analysisDisabled(list){
       let tmp = []
       let weekStr = ['星期一','星期二','星期三','星期四','星期五','星期六','星期日']
@@ -746,7 +880,7 @@ export default {
         let start = 0
         let end = 0
         for(let j = 0; j<84; j++){
-          if(list[84*i+j] === 1 && flag === 0){
+          if(list[84*i+j] === this.unaviliableType && flag === 0){
             start = j;
             flag = 1
           }

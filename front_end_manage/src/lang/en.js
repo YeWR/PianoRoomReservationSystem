@@ -72,6 +72,7 @@ export default {
     userList: 'User List',
     blackList: 'Black List',
     CheckTicket: 'Check Ticket',
+    ItemLong:'Long-term Item',
   },
   item: {
     idNumber: 'User Id Number',
@@ -112,6 +113,14 @@ export default {
     confirm: 'Confirm ',
     warning: 'Warning',
     cancel: 'Cancel',
+    telephone: 'telephone',
+    start: 'start time',
+    end: 'end time',
+    type:'type',
+    week:'week',
+    room:'room',
+    user:'user',
+    list:'id',
   },
   navbar: {
     logOut: 'Log Out',
