@@ -24,10 +24,8 @@ Page({
         _pianoPrice: "",
         _pianoId: "",
         _reservationId: "",
-        _orderTime: 0,
         _timeLeft: 0,
-        _minute: 0,
-        _second: 0,
+        _timeShow: ""
     },
 
     /*
@@ -173,25 +171,49 @@ Page({
     },
 
     /*
+     * set time show
+     */
+    setTimeShow: function(times){
+        let formatTime = function(number){
+            if (number < 10){
+                number = "0" + number;
+            }
+            else {
+                number = "" + number;
+            }
+            return number;
+        };
+
+        let ans = "";
+        if (times[0] > 0){
+            ans = ans +  formatTime(times[0]) + "天";
+        }
+        if (times[1] > 0){
+            ans = ans + formatTime(times[1]) + "时";
+        }
+        if (times[2] > 0){
+            ans = ans + formatTime(times[2]) + "分";
+        }
+        ans = ans + formatTime(times[3]) + "秒";
+        return ans;
+    },
+
+    /*
      * set time counter
      */
     setCounter: function(that){
-
-
         let timeLeft = 60 * 30;
         let temp = util.toMinuteSecond(timeLeft);
         that.setData({
             _timeLeft: timeLeft,
-            _minute: temp[0],
-            _second: temp[1]
+            _timeShow: that.setTimeShow(temp)
         }, function () {
             let countDown = () => {
                 timeLeft--;
                 temp = util.toMinuteSecond(timeLeft);
                 that.setData({
                     _timeLeft: timeLeft,
-                    _minute: temp[0],
-                    _second: temp[1]
+                    _timeShow: that.setTimeShow(temp)
                 });
 
                 if (timeLeft <= 0) {
@@ -229,7 +251,6 @@ Page({
             _pianoType: options.pianoType,
             _pianoId: options.pianoId,
             _reservationId: options.reservationId,
-            _orderTime: options.orderTime
         }, function () {
             that.setCounter(that);
         });

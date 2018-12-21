@@ -8,7 +8,7 @@
     </view>
 
     <view>
-        可在 个人/未支付订单 中支付, 支付剩余时间：{{_minute}}分{{_second}}秒
+        可在 个人/未支付订单 中支付, 支付剩余时间：{{_timeShow}}
     </view>
 
     <view class="reserve-card">
