@@ -127,7 +127,7 @@ Page({
                         let cookie = res.data.token;
                         wx.setStorageSync("cookie", cookie);
 
-                        app.globalData._username = res.data.data;
+                        app.globalData._username = res.data.username;
                         app.globalData._userType = util.USERTYPE.SOCIAL;
                         app.globalData._idNumber = that.data._phoneNumber;
 
