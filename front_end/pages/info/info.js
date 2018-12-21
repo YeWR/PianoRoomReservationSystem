@@ -49,11 +49,14 @@ Page({
         });
     },
 
-    /*
-     * bind illegal reservations
-     */
-    bindReservationIllegal: function (e) {
 
+    /*
+     * not paid
+     */
+    bindReservationNotPaid: function(e){
+        wx.navigateTo({
+            url: "./reservation_not_paid/reservation_not_paid"
+        });
     },
 
 

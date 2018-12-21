@@ -124,7 +124,7 @@ Page({
     /*
      * cancel reservation
      */
-    cancelReservation: function(e){
+    cancelReservation: function (e) {
         let that = this;
         wx.request({
             url: "https://958107.iterator-traits.com/user/reservation/cancel",
@@ -156,7 +156,7 @@ Page({
     /*
      * go out
      */
-    goOut: function(e){
+    goOut: function (e) {
         this.toAlarm();
     },
 
@@ -180,16 +180,16 @@ Page({
 
             _reservationType: options.reservationType,
             _reservationTypeDiscription: util.setReservationTypeDiscription(Number(options.reservationType)),
-            _date: options.date,
-            _begTime: options.begTime,
-            _endTime: options.endTime,
+            _date: options.reservationDate,
+            _begTime: options.reservationBegTime,
+            _endTime: options.reservationEndTime,
             _begTimeIndex: options.begTimeIndex,
             _endTimeIndex: options.endTimeIndex,
-            _pianoPlace: options.pianoPlace,
-            _pianoPrice: options.pianoPrice,
-            _pianoType: options.pianoType,
-            _pianoId: options.pianoId,
-            _uuid: options.uuid
+            _pianoPlace: options.reservationPianoPlace,
+            _pianoPrice: options.reservationPianoPrice,
+            _pianoType: options.reservationPianoType,
+            _pianoId: options.reservationPianoId,
+            _uuid: options.reservationId
         });
     },
 

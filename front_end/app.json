@@ -17,7 +17,9 @@
     "pages/info/reservation/reservation_detail/reservation_detail",
     "pages/board/board_detail/board_detail",
     "pages/info/individual_info/individual_info",
-    "pages/info/help/help"
+    "pages/info/help/help",
+    "pages/info/reservation_not_paid/reservation_not_paid",
+    "pages/info/reservation_not_paid/reservation_confirm/reservation_confirm"
   ],
   "window": {
     "enablePullDownRefresh": true,
