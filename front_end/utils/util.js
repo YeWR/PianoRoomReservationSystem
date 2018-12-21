@@ -853,8 +853,9 @@ const drawTimeTable = (pianoList, canvasId, date, idAdd) => {
         const RectX = 0;
         const RectY = 6;
         const blockHeight = 5;
-        const blockWidth = 3.3;
 
+        const  clientWidth = wx.getSystemInfoSync().screenWidth;
+        const blockWidth = clientWidth * 0.0087;
         let x1 = RectX + begIndex * blockWidth;
         let x2 = (endIndex - begIndex) * blockWidth;
 
@@ -885,7 +886,7 @@ const drawTimeTable = (pianoList, canvasId, date, idAdd) => {
     for (let piano of pianoList) {
 
         let ctxId = "";
-        if(idAdd){
+        if (idAdd) {
             ctxId = canvasId + piano.pianoId;
         }
         else {
