@@ -24,6 +24,10 @@ Page({
         _pianoPrice: "",
         _pianoId: "",
         _reservationId: "",
+        _orderTime: 0,
+        _timeLeft: 0,
+        _minute: 0,
+        _second: 0,
     },
 
     /*
@@ -129,7 +133,6 @@ Page({
         wx.request({
             url: "https://958107.iterator-traits.com/user/reservation/cancel",
             data: {
-                openid: openid,
                 reservationId: that.data._reservationId
             },
             method: "POST",
@@ -169,11 +172,47 @@ Page({
         });
     },
 
+    /*
+     * set time counter
+     */
+    setCounter: function(that){
+
+
+        let timeLeft = 60 * 30;
+        let temp = util.toMinuteSecond(timeLeft);
+        that.setData({
+            _timeLeft: timeLeft,
+            _minute: temp[0],
+            _second: temp[1]
+        }, function () {
+            let countDown = () => {
+                timeLeft--;
+                temp = util.toMinuteSecond(timeLeft);
+                that.setData({
+                    _timeLeft: timeLeft,
+                    _minute: temp[0],
+                    _second: temp[1]
+                });
+
+                if (timeLeft <= 0) {
+                    clearInterval(that.data._intervalIndex);
+                    that.toAlarm();
+                }
+            };
+            let interval = 1000;
+            let index = setInterval(countDown, interval);
+            that.setData({
+                _intervalIndex: index
+            });
+        });
+    },
+
     /**
      * 生命周期函数--监听页面加载
      */
     onLoad: function (options) {
-        this.setData({
+        let that = this;
+        that.setData({
             _realName: app.globalData._username,
             _idNumber: app.globalData._idNumber,
             _idNumberHiden: util.shwoHidenIdNumber(app.globalData._idNumber, app.globalData._userType),
@@ -189,8 +228,12 @@ Page({
             _pianoPrice: options.pianoPrice,
             _pianoType: options.pianoType,
             _pianoId: options.pianoId,
-            _reservationId: options.reservationId
+            _reservationId: options.reservationId,
+            _orderTime: options.orderTime
+        }, function () {
+            that.setCounter(that);
         });
+
     },
 
     /**

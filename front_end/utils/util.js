@@ -912,6 +912,16 @@ const drawTimeTable = (pianoList, canvasId, date, idAdd) => {
     }
 };
 
+/*
+ * change time to Minute and second
+ */
+const toMinuteSecond = (timeStamp) => {
+    let ans = [];
+    ans[0] = Math.floor(timeStamp / 60);
+    ans[1] = timeStamp % 60;
+    return ans
+};
+
 
 module.exports = {
     alertInfo: alertInfo,
@@ -953,5 +963,6 @@ module.exports = {
     PAYAPPID: PAYAPPID,
     PAYSECRETID: PAYSECRETID,
     randomString: randomString,
-    drawTimeTable: drawTimeTable
+    drawTimeTable: drawTimeTable,
+    toMinuteSecond: toMinuteSecond
 };

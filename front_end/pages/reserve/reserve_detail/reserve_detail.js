@@ -161,6 +161,7 @@ Page({
                     util.alertInfo("成功下单！", "success", 500);
                     setTimeout(() => {
                         paras["reservationId"] = res.data.reservationId;
+                        paras["orderTime"] = Date.parse(new Date());
                         let url = util.setUrl("../reserve_confirm/reserve_confirm", paras);
                         wx.reLaunch({
                             url: url
