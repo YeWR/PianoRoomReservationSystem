@@ -73,7 +73,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 8,
+			"current": 9,
 			"list": [
 				{
 					"id": -1,
@@ -126,7 +126,13 @@
 				{
 					"id": -1,
 					"name": "shiyongbangzhu",
-					"pathName": "pages/info/help/help"
+					"pathName": "pages/info/help/help",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "预约确认",
+					"pathName": "pages/reserve/reserve_confirm/reserve_confirm"
 				}
 			]
 		}
