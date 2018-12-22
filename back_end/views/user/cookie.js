@@ -2,6 +2,10 @@ const Router = require("koa-router");
 const router = new Router();
 const dataBase = require("../dataBase");
 const constVariable = require("../const");
+const jwt = require("jsonwebtoken");
+const configPath = "configs.json";
+let fs = require("fs");
+const configs = JSON.parse(fs.readFileSync(configPath));
 
 const routers = router.get("/", async (ctx, next) => {
     let response = {
@@ -11,25 +15,34 @@ const routers = router.get("/", async (ctx, next) => {
         "idNumber": null,
         "info": null
     };
-    console.log(ctx.session);
-    if(ctx.session.userId && ctx.session.userType)
+    let token = ctx.query.token;
+    const secret = configs.app_key[0];
+    try
     {
-        let userInfo = null;
-        console.log("cookie:", ctx.session.userId);
-        if(ctx.session.userType === constVariable.USERTYPE_OUTSCHOOL)
+        token = jwt.verify(token, secret);
+    }
+    catch(err)
+    {
+        ctx.response.status = 401;
+        ctx.response.body = {
+            "info": "Invalid token"
+        };
+        return
+    }
+    console.log(token);
+    if(token.userId && token.userType !== null && token.userType !== undefined)
+    {
+        let userInfo = await dataBase.GetUserInfo(token.userId);
+        if(userInfo.data && userInfo.data.type === token.userType)
         {
-            userInfo = await dataBase.GetSocietyUserInfo(ctx.session.userId);
-            if(userInfo.data)
-            {
-                response.success = true;
-                response.userType = constVariable.USERTYPE_OUTSCHOOL;
-                response.realName = userInfo.data.soc_realname;
-                response.idNumber = userInfo.data.soc_tele;
-            }
-            else
-            {
-                response.info = userInfo.info;
-            }
+            response.success = true;
+            response.userType = userInfo.data.type;
+            response.realName = userInfo.data.realname;
+            response.idNumber = userInfo.data.number;
+        }
+        else
+        {
+            response.info = "token验证错误";
         }
     }
     else

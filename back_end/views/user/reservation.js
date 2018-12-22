@@ -10,56 +10,6 @@ const parseString = require('xml2js').parseString;
 const cryptoMO = require('crypto');
 const utils = require("../utils");
 
-function sortItemAll(a, b)
-{
-    if(a.date > b.date)
-    {
-        return -1;
-    }
-    else if(a.date < b.date)
-    {
-        return 1;
-    }
-    else
-    {
-        if(a.begTimeIndex > b.begTimeIndex)
-        {
-            return -1;
-        }
-        else if(a.begTimeIndex < b.begTimeIndex)
-        {
-            return 1;
-        }
-        else
-            return 0;
-    }
-}
-
-function sortItemAlarm(a, b)
-{
-    if(a.date > b.date)
-    {
-        return 1;
-    }
-    else if(a.date < b.date)
-    {
-        return -1;
-    }
-    else
-    {
-        if(a.begTimeIndex > b.begTimeIndex)
-        {
-            return 1;
-        }
-        else if(a.begTimeIndex < b.begTimeIndex)
-        {
-            return -1;
-        }
-        else
-            return 0;
-    }
-}
-
 
 async function validatePrice(pianoId, orderType, startIndex, endIndex, priceFromFront)
 {
@@ -101,6 +51,18 @@ function getNonceStr(len)
         str += arr[pos];
     }
     return str;
+}
+
+function itemTimeout(itemuuid)
+{
+    let result = dataBase.GetItemByUuid(itemuuid);
+    if(result.data)
+    {
+        if(result.data.item_type === 3)
+        {
+            dataBase.DeleteItem(itemuuid);
+        }
+    }
 }
 
 //source: https://blog.csdn.net/zhuming3834/article/details/73168056
@@ -240,15 +202,16 @@ const getUserIp = (req) => {
         req.connection.socket.remoteAddress;
 }
 
-const routers = router.post("/refundment", async (ctx, next) => {
+const routers = router.post("/cancel", async (ctx, next) => {
     let uuid = ctx.request.body.reservationId;
+    console.log(uuid);
     let result = await dataBase.DeleteItem(uuid);
     ctx.response.body = result;
 }).get("/all", async (ctx, next) => {
     let number = ctx.query.number;
-    let userId = await dataBase.GetSocietyUuidByTele(number);
+    let userId = await dataBase.GetUserUuidByNumber(number);
     userId = userId.data;
-    let result = await dataBase.GetItem(userId);
+    let result = await dataBase.SearchItem(2147483647,0,userId,null,null,[1,2],"-",30);
     if(result.data === null)
     {
         ctx.response.body = {
@@ -266,37 +229,98 @@ const routers = router.post("/refundment", async (ctx, next) => {
         nowDate.setHours(0,0,0);
         for(let p of result.data)
         {
-            if(p.item_type)
+            for(let i of pianoInfo.data)
             {
-                for(let i of pianoInfo.data)
+                if (i.piano_id === p.item_roomId)
                 {
-                    if (i.piano_id === p.item_roomId)
-                    {
-                        let date = new Date(p.item_date);
-                        if(nowDate-date < 1000*60*60*24*30)
-                        {
-                            let dateStr = utils.getDateStr(date);
-                            let week = date.getDay();
-                            let info = {
-                                "pianoPlace": i.piano_room,
-                                "pianoType": i.piano_type,
-                                "pianoPrice": p.item_value,
-                                "reservationType": p.item_member,
-                                "reservationState": p.item_type,
-                                "reservationId": p.item_uuid,
-                                "date": dateStr,
-                                "weekday": weekStr[week],
-                                "begTimeIndex": p.item_begin,
-                                "endTimeIndex": p.item_begin + p.item_duration
-                            };
-                            reservationList.push(info);
-                        }
-                        break;
-                    }
+                    let date = new Date(p.item_date);
+                    let dateStr = utils.getDateStr(date);
+                    let week = date.getDay();
+                    let info = {
+                        "pianoPlace": i.piano_room,
+                        "pianoType": i.piano_type,
+                        "pianoPrice": p.item_value,
+                        "reservationType": p.item_member,
+                        "reservationState": p.item_type,
+                        "reservationId": p.item_uuid,
+                        "date": dateStr,
+                        "weekday": weekStr[week],
+                        "begTimeIndex": p.item_begin,
+                        "endTimeIndex": p.item_begin + p.item_duration
+                    };
+                    reservationList.push(info);
+                    break;
                 }
             }
         }
-        reservationList = reservationList.sort(sortItemAll);
+        //reservationList = reservationList.sort(sortItemAll);
+        ctx.response.body = {
+            "success": true,
+            "reservationList": reservationList
+        };
+    }
+}).get("/notpaid", async (ctx, next) => {
+    let number = ctx.query.number;
+    let userId = await dataBase.GetUserUuidByNumber(number);
+    userId = userId.data;
+    let result = await dataBase.SearchItem(2147483647,0,userId,null,null,[-1,3],"-",null);
+    if(result.data === null)
+    {
+        ctx.response.body = {
+            "success": false,
+            "reservationList": null,
+            "info": result.info
+        };
+    }
+    else
+    {
+        let reservationList = [];
+        const weekStr = ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"];
+        let pianoInfo = await dataBase.GetPianoRoomAll();
+        let nowDate = new Date();
+        nowDate.setHours(0,0,0);
+        for(let p of result.data)
+        {
+            for(let i of pianoInfo.data)
+            {
+                if (i.piano_id === p.item_roomId)
+                {
+                    let date = new Date(p.item_date);
+                    let dateStr = utils.getDateStr(date);
+                    let week = date.getDay();
+                    let ordertime = Date.parse(p.item_time);
+                    if(p.item_type === 3)
+                    {
+                        ordertime += 30*60*1000;
+                    }
+                    else
+                    {
+                        ordertime = new Date(p.item_date);
+                        ordertime.setHours(8+Math.floor(p.item_begin/6));
+                        ordertime.setMinutes(10*(p.item_begin%6));
+                        ordertime.setSeconds(0,0);
+                        ordertime -= 30*60*1000;
+                        ordertime = ordertime.getTime();
+                    }
+                    let info = {
+                        "pianoPlace": i.piano_room,
+                        "pianoType": i.piano_type,
+                        "pianoPrice": p.item_value,
+                        "reservationType": p.item_member,
+                        "reservationState": p.item_type,
+                        "reservationId": p.item_uuid,
+                        "date": dateStr,
+                        "weekday": weekStr[week],
+                        "begTimeIndex": p.item_begin,
+                        "endTimeIndex": p.item_begin + p.item_duration,
+                        "deadlineTime": ordertime
+                    };
+                    reservationList.push(info);
+                    break;
+                }
+            }
+        }
+        console.log(reservationList);
         ctx.response.body = {
             "success": true,
             "reservationList": reservationList
@@ -304,9 +328,9 @@ const routers = router.post("/refundment", async (ctx, next) => {
     }
 }).get("/alarm", async (ctx, next) => {
     let number = ctx.query.number;
-    let userId = await dataBase.GetSocietyUuidByTele(number);
+    let userId = await dataBase.GetUserUuidByNumber(number);
     userId = userId.data;
-    let result = await dataBase.GetItem(userId);
+    let result = await dataBase.SearchItem(2147483647,0,userId,null,null,[1],"+",3);
     if(result.data === null)
     {
         ctx.response.body = {
@@ -323,50 +347,56 @@ const routers = router.post("/refundment", async (ctx, next) => {
         let nowDate = new Date();
         for(let p of result.data)
         {
-            if(p.item_type)
+            let date = new Date(p.item_date);
+            if(utils.compTime(nowDate, date, p.item_begin+p.item_duration))
             {
-                let date = new Date(p.item_date);
-                if(utils.compTime(nowDate, date, p.item_begin+p.item_duration))
+                for(let i of pianoInfo.data)
                 {
-                    for(let i of pianoInfo.data)
+                    if (i.piano_id === p.item_roomId)
                     {
-                        if (i.piano_id === p.item_roomId)
-                        {
-                            let dateStr = utils.getDateStr(date);
-                            let week = date.getDay();
-                            let info = {
-                                "pianoPlace": i.piano_room,
-                                "pianoType": i.piano_type,
-                                "pianoPrice": p.item_value,
-                                "reservationType": p.item_member,
-                                "reservationState": p.item_type,
-                                "reservationId": p.item_uuid,
-                                "date": dateStr,
-                                "weekday": weekStr[week],
-                                "begTimeIndex": p.item_begin,
-                                "endTimeIndex": p.item_begin + p.item_duration
-                            };
-                            reservationList.push(info);
-                            break;
-                        }
+                        let dateStr = utils.getDateStr(date);
+                        let week = date.getDay();
+                        let info = {
+                            "pianoPlace": i.piano_room,
+                            "pianoType": i.piano_type,
+                            "pianoPrice": p.item_value,
+                            "reservationType": p.item_member,
+                            "reservationState": p.item_type,
+                            "reservationId": p.item_uuid,
+                            "date": dateStr,
+                            "weekday": weekStr[week],
+                            "begTimeIndex": p.item_begin,
+                            "endTimeIndex": p.item_begin + p.item_duration
+                        };
+                        reservationList.push(info);
+                        break;
                     }
                 }
             }
         }
-        reservationList = reservationList.sort(sortItemAlarm);
+        //reservationList = reservationList.sort(sortItemAlarm);
         ctx.response.body = {
             "success": true,
             "reservationList": reservationList
         };
     }
-    console.log(ctx.response.body);
 }).post("/order", async (ctx, next) => {
     console.log(ctx.request.body);
     let number = ctx.request.body.number;
-    let userId = await dataBase.GetSocietyUuidByTele(number);
+    let userId = await dataBase.GetUserUuidByNumber(number);
     userId = userId.data;
-    let userInfo = await dataBase.GetSocietyUserInfo(userId);
-    if(userInfo.data.soc_type)
+    //查看是否有未支付订单
+    let unpayed = await dataBase.SearchItem(1,0,userId,null,null,3,"+",null);
+    if(unpayed.count > 0)
+    {
+        ctx.response.body = {
+            "success": false,
+            "info": "您有未支付订单，请前往个人中心->未支付订单支付!"
+        };
+        return;
+    }
+    let userInfo = await dataBase.GetUserInfo(userId);
+    if(userInfo.data.status)
     {
         let clientIP = getUserIp(ctx.req).replace(/::ffff:/, '');
         let openId = ctx.request.body.openid;
@@ -384,50 +414,26 @@ const routers = router.post("/refundment", async (ctx, next) => {
             }
             return;
         }
-
         let dateStr = ctx.request.body.date;
-        dateStr.concat(" 08:00:00");
+        dateStr = dateStr.concat(" 08:00:00");
         let duration = endTimeIndex - begTimeIndex;
         let itemUuid = uuid.v1().toString();
         itemUuid = itemUuid.replace(/\-/g,'');
-        let result = await dataBase.InsertTempItem(dateStr, userId, pianoId, 1, reserveType, pianoPrice, duration, begTimeIndex, itemUuid);
-        if(result.success && openId !== 'test') //测试用
+        let result = await dataBase.InsertItem(dateStr, userId, pianoId, 3, reserveType, pianoPrice, duration, begTimeIndex, itemUuid);
+        if(result.success)
         {
-            result = await wechatPayment(clientIP, openId, pianoPrice, itemUuid);
-            if(result.success)
-            {
-                ctx.response.body = {
-                    "success": true,
-                    "info": "下单成功",
-                    "sign": {
-                        "timeStamp": result.timeStamp,
-                        "nonceStr": result.nonceStr,
-                        "package": result.package,
-                        "paySign": result.paySign
-                    }
-                }
-            }
-            else
-            {
-                ctx.response.body = {
-                    "success": false,
-                    "info": result.msg
-                }
-            }
-        }
-        else if(result.success && openId === 'test') //测试用
-        {
+            //setTimeout(()=>{itemTimeout(itemUuid)},30*60*1000);
             ctx.response.body = {
                 "success": true,
-                "info": "测试成功!",
-                "uuid": itemUuid
+                "info": "下单成功",
+                "reservationId": itemUuid
             }
         }
         else
         {
             ctx.response.body = {
                 "success": false,
-                "info": result.info
+                "info": "预订失败!"
             }
         }
     }
@@ -438,38 +444,75 @@ const routers = router.post("/refundment", async (ctx, next) => {
             "info": "您已被加入黑名单，无法预约，请联系管理员!"
         }
     }
-    //console.log(ctx.response.body);
-}).post("/validate/:uuid", async (ctx, next) => {
-    console.log(ctx.params);
-    let id = ctx.params.uuid;
-    let resultdb = await dataBase.GetTempItemByUuid(id);
-    if(resultdb.data)
+}).post("/pay", async (ctx, next) => {
+    console.log(ctx.request.body);
+    let uuid = ctx.request.body.reservationId;
+    let openId = ctx.request.body.openid;
+    let clientIP = getUserIp(ctx.req).replace(/::ffff:/, '');
+    let itemInfo = await dataBase.GetItemByUuid(uuid);
+    console.log(itemInfo);
+    if(itemInfo.data && itemInfo.data.item_type !== 0)
     {
-        let itemInfo = resultdb.data;
-        console.log("validation");
-        console.log(itemInfo);
-        resultdb = await dataBase.InsertItem(itemInfo.item_date,itemInfo.item_username,itemInfo.item_roomId, itemInfo.item_type,itemInfo.item_member,itemInfo.item_value,itemInfo.item_duration,itemInfo.item_begin,itemInfo.item_uuid);
-        if(resultdb.success)
+        let result = await wechatPayment(clientIP, openId, itemInfo.data.item_value, uuid);
+        if(result.success)
         {
-            resultdb = await dataBase.DeleteTempItem(id);
+            ctx.response.body = {
+                "success": true,
+                "info": "下单成功",
+                "sign": {
+                    "timeStamp": result.timeStamp,
+                    "nonceStr": result.nonceStr,
+                    "package": result.package,
+                    "paySign": result.paySign
+                }
+            }
         }
-        ctx.response.status = 200;
-        ctx.response.body = "<xml>" +
-            "<return_code><![CDATA[SUCCESS]]></return_code>" +
-            "<return_msg><![CDATA[OK]]></return_msg>" +
-            "</xml>";
+        else
+        {
+            ctx.response.body = {
+                "success": false,
+                "info": result.msg
+            }
+        }
     }
     else
     {
-        console.log("订单不存在");
+        ctx.response.body = {
+            "success": false,
+            "info": "订单已过期!"
+        }
+    }
+}).post("/validate/:uuid", async (ctx, next) => {
+    let id = ctx.params.uuid;
+    let result = ctx.request.body;
+    if (result.xml.return_code === 'SUCCESS' && result.xml.result_code === 'SUCCESS')
+    {
+        let resultdb = await dataBase.ItemPaySuccess(id);
+        if(resultdb.success)
+        {
+            ctx.response.status = 200;
+            ctx.response.body = "<xml>" +
+                "<return_code><![CDATA[SUCCESS]]></return_code>" +
+                "<return_msg><![CDATA[OK]]></return_msg>" +
+                "</xml>";
+        }
+        else
+        {
+            console.log("确认支付失败");
+            ctx.response.status = 404;
+        }
+    }
+    else
+    {
+        console.log("支付失败");
         ctx.response.status = 404;
     }
 }).post('/ordertest', async (ctx, next) => {
     let number = ctx.request.body.number;
-    let userId = await dataBase.GetSocietyUuidByTele(number);
+    let userId = await dataBase.GetUserUuidByNumber(number);
     userId = userId.data;
-    let userInfo = await dataBase.GetSocietyUserInfo(userId);
-    if(userInfo.data.soc_type)
+    let userInfo = await dataBase.GetUserInfo(userId);
+    if(userInfo.data.status)
     {
         let pianoId = ctx.request.body.pianoId;
         let reserveType = parseInt(ctx.request.body.reservationType);
@@ -480,7 +523,7 @@ const routers = router.post("/refundment", async (ctx, next) => {
         dateStr.concat(" 08:00:00");
         let duration = endTimeIndex - begTimeIndex;
         let itemUuid = uuid.v1();
-        let result = await dataBase.InsertItem(dateStr, userId, pianoId, 1, reserveType, pianoPrice, duration, begTimeIndex, itemUuid);
+        let result = await dataBase.InsertItemTemp(dateStr, userId, pianoId, 1, reserveType, pianoPrice, duration, begTimeIndex, itemUuid);
         ctx.response.body = result;
     }
     else
@@ -490,7 +533,6 @@ const routers = router.post("/refundment", async (ctx, next) => {
             "info": "您已被加入黑名单，无法预约，请联系管理员!"
         }
     }
-
 });
 
 module.exports = routers;

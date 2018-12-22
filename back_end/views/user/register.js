@@ -10,8 +10,8 @@ const routers = router.post("/", async (ctx, next) => {
         validateCode = ctx.request.body.validateCode,
         realname = ctx.request.body.realName,
         idNumber = ctx.request.body.idNumber,
-        useruuid = uuid.v1().substring(0,16);
-    let result = await dataBase.SocietyRegister(1,idNumber,realname,phoneNumber,useruuid,validateCode);
+        useruuid = uuid.v1().replace(/\-/g,'').substring(0,16);
+    let result = await dataBase.SocietyUserRegister(constVariable.USERTYPE_OUTSCHOOL,idNumber,realname,phoneNumber,useruuid,validateCode);
     ctx.response.body = result;
 });
 module.exports = routers;

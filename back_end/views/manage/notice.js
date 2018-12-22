@@ -3,9 +3,9 @@ const router = new Router();
 const dataBase = require("../dataBase");
 const utils = require("../utils");
 
-
 const routers = router.get("/list", async (ctx, next) => {
     let query = ctx.query;
+    console.log(query);
     let page = 1;
     if(query.page)
     {
@@ -20,6 +20,7 @@ const routers = router.get("/list", async (ctx, next) => {
     let author = query.author;
     let order = query.dateSort;
     let result = await dataBase.SearchNotice(limit, (page-1)*limit, title, author, order);
+    console.log(result);
     let noticeList = [];
     for(let notice of result.data)
     {

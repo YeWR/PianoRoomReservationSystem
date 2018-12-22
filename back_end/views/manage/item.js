@@ -5,18 +5,31 @@ const utils = require("../utils");
 
 const routers = router.get("/list", async (ctx, next) => {
     let query = ctx.query;
+    console.log(query);
     let page = query.page;
     let limit = parseInt(query.limit);
     if(!query.status)
     {
-        query.status = [1,2,-1,-2,-3];
+        query.status = [1,2,3,-1];
     }
     else
     {
         query.status = parseInt(query.status) - 3;
     }
-    let userId = await dataBase.GetSocietyUuidByTele(ctx.query.idNumber);
-    userId = userId.data;
+    let userId = null;
+    if(ctx.query.idNumber)
+    {
+        userId = await dataBase.GetUserUuidByNumber(ctx.query.idNumber);
+        userId = userId.data;
+    }
+    if(query.room)
+    {
+        let roomResult = await dataBase.SearchPiano(1,0,query.room,null,null);
+        if(roomResult.count)
+        {
+            query.room = roomResult.data[0].piano_id;
+        }
+    }
     let result = await dataBase.SearchItem(limit, (page-1)*limit, userId, query.room, query.itemType, query.status, query.timeSort, null);
     let reservationList = [];
     let pianoInfo = await dataBase.GetPianoRoomAll();
@@ -28,12 +41,12 @@ const routers = router.get("/list", async (ctx, next) => {
             {
                 let date = new Date(p.item_date);
                 let dateStr = utils.getDateStr_Index(date, p);
-                let userInfo = await dataBase.GetSocietyUserInfo(p.item_username);
+                let userInfo = await dataBase.GetUserInfo(p.item_username);
                 let info = {
-                    "idNumber": userInfo.data.soc_tele,
+                    "idNumber": userInfo.data.number,
                     "room": i.piano_room,
                     "itemType": p.item_member,
-                    "userType": 2,
+                    "userType": userInfo.data.type,
                     "pianoType": i.piano_type,
                     "price": p.item_value,
                     "status": parseInt(p.item_type) + 3,
@@ -68,12 +81,14 @@ const routers = router.get("/list", async (ctx, next) => {
             {
                 let date = new Date(p.item_date);
                 let dateStr = utils.getDateStr_Index(date, p);
-                let userInfo = await dataBase.GetSocietyUserInfo(p.item_username);
+                let userInfo = await dataBase.GetUserInfo(p.item_username);
+                console.log(p);
+                console.log(userInfo);
                 let info = {
-                    "idNumber": userInfo.data.soc_tele,
+                    "idNumber": userInfo.data.number,
                     "room": i.piano_room,
                     "itemType": p.item_member,
-                    "userType": 2,
+                    "userType": userInfo.data.type,
                     "pianoType": i.piano_type,
                     "price": p.item_value,
                     "status": parseInt(p.item_type) + 3,

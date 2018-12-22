@@ -219,19 +219,20 @@ const routers = router.get("/list", async (ctx, next) => {
     let query = ctx.query;
     let page = query.page;
     let limit = parseInt(query.limit);
-    if(query.IDnumber && query.IDnumber.length > 10)
+    if(query.IDnumber)
     {
         query.IDnumber = md5(query.IDnumber);
     }
-    let result = await dataBase.SearchSocietyUser(limit, (page-1)*limit,query.telephone, query.id, query.IDnumber, query.blackOrnot);
+    let result = await dataBase.SearchUser(limit, (page-1)*limit,query.number, query.id, query.IDnumber, query.type, query.blackOrnot);
     let userList = [];
     for(let p of result.data)
     {
         let info = {
-            "id": p.soc_realname,
-            "telephone": p.soc_tele,
-            "type": p.soc_type,
-            "userId": p.soc_uuid
+            "id": p.realname,
+            "telephone": p.number,
+            "type": p.type,
+            "status": p.status,
+            "userId": p.uuid
         };
         userList.push(info);
     }
@@ -242,11 +243,11 @@ const routers = router.get("/list", async (ctx, next) => {
     };
 }).post("/blacklist/set", async (ctx, next) => {
     let uuid = ctx.request.body.userId;
-    let result = await dataBase.ChangeSocietyType(uuid, 0);
+    let result = await dataBase.ChangeUserStatus(uuid, 0);
     ctx.response.body = result;
 }).post("/blacklist/remove", async (ctx, next) => {
     let uuid = ctx.request.body.userId;
-    let result = await dataBase.ChangeSocietyType(uuid, 1);
+    let result = await dataBase.ChangeUserStatus(uuid, 1);
     ctx.response.body = result;
 });
 
