@@ -2,7 +2,7 @@
 <view class="container">
     <view class="up_board">
         <text class="login_title">
-            登录
+            校外登录
         </text>
     </view>
 

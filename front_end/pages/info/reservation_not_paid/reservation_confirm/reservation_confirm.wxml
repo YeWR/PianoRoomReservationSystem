@@ -7,8 +7,13 @@
         </text>
     </view>
 
-    <view>
-        可在 个人/未支付订单 中支付, 支付剩余时间：{{_timeShow}}
+    <view class="attention">
+        <view>
+            <text class="attention-line1">返回后可在</text>
+            <text class="attention-line2"> 个人中心 - 未支付订单</text>
+            <text class="attention-line3"> 中支付</text>
+        </view>
+        <text class="attention-line4">支付剩余时间：{{_timeShow}}</text>
     </view>
 
     <view class="reserve-card">
@@ -82,8 +87,8 @@
         <view class="reserve_btn_view">
             <button class="reserve_btn" bindtap="confirmReservation">确认支付</button>
         </view>
-        <view class="reserve_btn_view">
-            <button class="reserve_btn" bindtap="cancelReservation">取消支付</button>
+        <view class="unreserve_btn_view">
+            <button class="unreserve_btn" bindtap="cancelReservation">取消支付</button>
         </view>
 
     </view>
