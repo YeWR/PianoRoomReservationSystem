@@ -315,7 +315,14 @@ const routers = router.post("/cancel", async (ctx, next) => {
                         "endTimeIndex": p.item_begin + p.item_duration,
                         "deadlineTime": ordertime
                     };
-                    reservationList.push(info);
+                    if(info.deadlineTime > new Date().getTime())
+                    {
+                        reservationList.push(info);
+                    }
+                    else
+                    {
+                        let del = await dataBase.DeleteItem(info.reservationId);
+                    }
                     break;
                 }
             }
