@@ -167,7 +167,7 @@
         }).then(() => {
           this.listLoading = true;
           outOfBlacklist(id).then(response => {
-            if(response.status == 200){
+            if(response.status === 200){
               this.$notify({
                 title: '成功',
                 message: '移除成功',

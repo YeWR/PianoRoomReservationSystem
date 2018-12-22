@@ -17,12 +17,12 @@ let client = redis.createClient(config.redisPort,config.serverIp);
 
 let timeLength = 84;
 
-let ChangeSocietyType = async function(userUuid, userType){
+let ChangeUserStatus = async function(userUuid, userStatus){
     let errorMsg = "";
     let test = function(){
         return new Promise(resolve =>{
-            db.where({soc_uuid: userUuid }).update('society_user', {soc_type: userType}, function (err) {
-                if(err == null){
+            db.where({uuid: userUuid }).update('user', {status: userStatus}, function (err) {
+                if(!err){
                     resolve(1);
                 }
                 else{
@@ -34,24 +34,24 @@ let ChangeSocietyType = async function(userUuid, userType){
     };
     let flag = await test();
     console.log(flag);
-    if(flag == 0){
+    if(flag === 0){
         return {"success":false,
                 "info":errorMsg};
     }
-    if(flag == 1){
+    if(flag === 1){
         return {"success":true};
     }
 }
 
 // uuid:改为使用uuid
-let GetSocietyUuidByTele = async function(userTele){
+let GetUserUuidByNumber = async function(userNumber){
     let errorMsg = "";
     let userInfo = null;
     let test = function(){
         return new Promise(resolve =>{
-            db.where({ soc_tele: userTele }).get('society_user', function (err, res, fields) {
+            db.where({ number: userNumber }).get('user', function (err, res, fields) {
                 let _select = res;
-                if (_select.length == 0) {
+                if (_select.length === 0) {
                     errorMsg = "用户不存在"; // to do
                     resolve(0);
                 }
@@ -66,23 +66,23 @@ let GetSocietyUuidByTele = async function(userTele){
     };
     let flag = await test();
     console.log(flag);
-    if(flag == 0){
+    if(flag === 0){
         return {"data":userInfo,
             "info":errorMsg};
     }
-    if(flag == 1){
-        return {"data":userInfo.soc_uuid};
+    if(flag === 1){
+        return {"data":userInfo.uuid};
     }
 }
 
-let SearchSocietyUser = async function(count, offset, soc_tele, soc_realname, soc_id, soc_type){
+let SearchUser = async function(count, offset, number, name, id, type, status){
     let errorMsg = "";
     let userInfo = null;
     let userCount = 0;
-    let query = { soc_tele: soc_tele, soc_realname: soc_realname, soc_id: soc_id, soc_type: soc_type};
+    let query = { number: number, realname: name, id: id, type: type, status: status};
     for(let q in query)
     {
-        if(!query[q])
+        if(query[q] === undefined || query[q] === null)
         {
             delete query[q];
         }
@@ -91,7 +91,7 @@ let SearchSocietyUser = async function(count, offset, soc_tele, soc_realname, so
         return new Promise(resolve =>{
             db.where(query)
                 .limit(count,offset)
-                .get('society_user', function (err, res, fields) {
+                .get('user', function (err, res, fields) {
                 let _select = res;
                     let _data = JSON.stringify(_select);
                     let _info = JSON.parse(_data);
@@ -103,7 +103,7 @@ let SearchSocietyUser = async function(count, offset, soc_tele, soc_realname, so
     let getUserCount = function(){
         return new Promise(resolve =>{
             db.where(query)
-                .count('society_user', function (err, res, fields) {
+                .count('user', function (err, res, fields) {
                     userCount = res;
                     resolve(1);
                 });
@@ -112,26 +112,26 @@ let SearchSocietyUser = async function(count, offset, soc_tele, soc_realname, so
     let flag = await test();
     let flagCount = await getUserCount();
     console.log(flag);
-    if(flag == 0){
+    if(flag === 0){
         return {"data":userInfo,
             "count": userCount,
             "info":errorMsg};
     }
-    if(flag == 1){
+    if(flag === 1){
         return {"data":userInfo,
         "count": userCount};
     }
 }
 
 // uuid:改为使用uuid
-let GetSocietyUserInfo = async function(userUuid){
+let GetUserInfo = async function(userUuid){
     let errorMsg = "";
     let userInfo = null;
     let test = function(){
         return new Promise(resolve =>{
-            db.where({ soc_uuid: userUuid }).get('society_user', function (err, res, fields) {
+            db.where({ uuid: userUuid }).get('user', function (err, res, fields) {
                 let _select = res;
-                if (_select.length == 0) {
+                if (_select.length === 0) {
                     errorMsg = "用户不存在"; // to do
                     resolve(0);
                 }
@@ -146,11 +146,11 @@ let GetSocietyUserInfo = async function(userUuid){
     };
     let flag = await test();
     console.log(flag);
-    if(flag == 0){
+    if(flag === 0){
         return {"data":userInfo,
             "info":errorMsg};
     }
-    if(flag == 1){
+    if(flag === 1){
         return {"data":userInfo};
     }
 }
@@ -160,7 +160,7 @@ let SetRegisterMsg = async function(socTele, socPassword) {
     let errorMsg = "";
     let test = function(){
         return new Promise(resolve =>{
-            db.where({ soc_tele: socTele }).get('society_user', function (err, res, fields) {
+            db.where({ number: socTele }).get('user', function (err, res, fields) {
                 let _select = res;
                 if (_select.length != 0) {
                     errorMsg = "手机号已经被使用"; // to do 
@@ -182,22 +182,22 @@ let SetRegisterMsg = async function(socTele, socPassword) {
     };
     let flag = await test();
     console.log(flag);
-    if(flag == 0){
+    if(flag === 0){
         return {"success":false,
                 "info":errorMsg};
     }
-    if(flag == 1){
+    if(flag === 1){
         return {"success":true};
     }
 }
 // uuid:增加参数uuid
-let SocietyRegister = async function(socType, socId, socRealname, socTele, socUuid,socPassword) {
+let SocietyUserRegister = async function(socType, socId, socRealname, socTele, socUuid, socPassword) {
     let errorMsg = "";
     let checkMsg = function(){
         return new Promise(resolve =>{
             client.get(socTele, function(err, reply){
                 if(reply){
-                    if(socPassword == (reply.toString())){
+                    if(socPassword === (reply.toString())){
                         client.del(socTele, function (err, reply) {});
                         resolve(1);
                     }
@@ -215,31 +215,37 @@ let SocietyRegister = async function(socType, socId, socRealname, socTele, socUu
     };
     let res = await checkMsg();
     console.log(res);
-    if(res == 0){
+    if(res === 0){
         return {"success":false,
                 "info":errorMsg};
     }
     let test = function(){
         return new Promise(resolve =>{
-            db.where({ soc_tele: socTele }).get('society_user', function (err, res, fields) {
+            db.where({ number: socTele }).get('user', function (err, res, fields) {
                 let _select = res;
-                if (_select.length != 0) {
+                console.log("register");
+                console.log(_select);
+                if (_select.length !== 0) {
                     errorMsg = "手机号已经被使用"; // to do 
                     resolve(0);
                 }
                 else {
                     let _info = {
-                        soc_type: socType,
-                        soc_id: socId,
-                        soc_realname: socRealname,
-                        soc_tele: socTele,
-                        soc_uuid: socUuid
+                        status: 1,
+                        type: socType,
+                        id: socId,
+                        realname: socRealname,
+                        number: socTele,
+                        uuid: socUuid
                     };
-                    db.insert('society_user', _info, function (err, info) {
-                        if(err == null){
+                    console.log(_info);
+                    db.insert('user', _info, function (err, info) {
+                        if(!err){
                             resolve(1);
                         }
                         else{
+                            console.log(err);
+                            console.log(info);
                             errorMsg = "新建用户失败";
                             resolve(0);
                         }
@@ -250,12 +256,71 @@ let SocietyRegister = async function(socType, socId, socRealname, socTele, socUu
     };
     let flag = await test();
     console.log(flag);
-    if(flag == 0){
+    if(flag === 0){
         return {"success":false,
                 "info":errorMsg};
     }
-    if(flag == 1){
+    if(flag === 1){
         return {"success":true};
+    }
+}
+
+let CampusUserLogin = async function(type, name, number, uuid) {
+    let errorMsg = "";
+    let info = {};
+    let test = function() {
+        return new Promise(resolve => {
+            db.where({number: number}).get('user', function (err, res, fields) {
+                let _select = res;
+                if (_select.length !== 0) {
+                    let _data = JSON.stringify(_select);
+                    let _info = JSON.parse(_data);
+                    info = _info[0];
+                    resolve(1);
+                }
+                else {
+                    let _info = {
+                        status: 1,
+                        type: type,
+                        realname: name,
+                        id: "",
+                        number: number,
+                        uuid: uuid
+                    };
+                    db.insert('user', _info, function (err, info) {
+                        if (!err) {
+                            db.where({number: number}).get('user', function (err, res, fields) {
+                                let _select = res;
+                                if (_select.length !== 0) {
+                                    let _data = JSON.stringify(_select);
+                                    let _info = JSON.parse(_data);
+                                    info = _info[0];
+                                    resolve(1);
+                                }
+                                else {
+                                    errorMsg = "新建用户失败";
+                                    resolve(0);
+                                }
+                            });
+                        }
+                        else {
+                            errorMsg = "新建用户失败";
+                            resolve(0);
+                        }
+                    });
+                }
+            });
+        });
+    }
+    let flag = await test();
+    console.log(flag);
+    if(flag === 0){
+        return {"success":false,
+            "info":errorMsg};
+    }
+    if(flag === 1){
+        return {"success":true,
+            "info":info};
     }
 }
 
@@ -264,9 +329,9 @@ let SetLoginMsg = async function(socTele, socPassword) {
     let errorMsg = "";
     let test = function(){
         return new Promise(resolve =>{
-            db.where({ soc_tele: socTele }).get('society_user', function (err, res, fields) {
+            db.where({ number: socTele }).get('user', function (err, res, fields) {
                 let _select = res;
-                if (_select.length == 0) {
+                if (_select.length === 0) {
                     errorMsg = "手机号未注册"; // to do 
                     resolve(0);
                 }
@@ -286,38 +351,38 @@ let SetLoginMsg = async function(socTele, socPassword) {
     };
     let flag = await test();
     console.log(flag);
-    if(flag == 0){
+    if(flag === 0){
         return {"success":false,
                 "info":errorMsg};
     }
-    if(flag == 1){
+    if(flag === 1){
         return {"success":true};
     }
 }
 
 // to do check if already online
-let SocietyLogin = async function(socTele, socPassword) {
+let SocietyUserLogin = async function(socTele, socPassword) {
     let errorMsg = "";
     let getUser = function(){
         return new Promise(resolve =>{
-            db.where({ soc_tele: socTele }).get('society_user', function (err, res, fields) {
+            db.where({ number: socTele }).get('user', function (err, res, fields) {
                 let _select = res;
-                if (_select.length == 0) {
+                if (_select.length === 0) {
                     errorMsg = "手机号未注册"; // to do 
                     resolve(0);
                 }
                 else {
                     let _data = JSON.stringify(_select);
                     let _info = JSON.parse(_data);
-                    user = _info[0];
+                    let user = _info[0];
                     //console.log(user);
-                    resolve(user.soc_realname);
+                    resolve(1);
                 }
             });
         });
     };
     let realName = await getUser();
-    if(realName == 0){
+    if(realName === 0){
         return {"success":false,
                 "data": realName,
                 "info":errorMsg};
@@ -326,7 +391,7 @@ let SocietyLogin = async function(socTele, socPassword) {
         return new Promise(resolve =>{
             client.get(socTele, function(err, reply){
                 if(reply){
-                    if(socPassword == (reply.toString())){
+                    if(socPassword === (reply.toString())){
                         client.del(socTele, function (err, reply) {});
                         resolve(1);
                     }
@@ -344,12 +409,12 @@ let SocietyLogin = async function(socTele, socPassword) {
     };
     let flag = await test();
     console.log(flag);
-    if(flag == 0){
+    if(flag === 0){
         return {"success":false,
                 "data":realName,
                 "info":errorMsg};
     }
-    if(flag == 1){
+    if(flag === 1){
         return {"success":true,
                 "data":realName};
     }
@@ -374,7 +439,7 @@ let InsertPiano = async function(pianoRoom, pianoInfo, pianoStuvalue, pianoTeava
                 piano_rule: pianoRule
             };
             db.insert('piano', _info, function (err, info) {
-                if(err == null){
+                if(!err){
                     resolve(1);
                 }
                 else{
@@ -386,11 +451,11 @@ let InsertPiano = async function(pianoRoom, pianoInfo, pianoStuvalue, pianoTeava
     };
     let flag = await test();
     console.log(flag);
-    if(flag == 0){
+    if(flag === 0){
         return {"success":false,
                 "info":errorMsg};
     }
-    if(flag == 1){
+    if(flag === 1){
         return {"success":true};
     }
 }
@@ -407,20 +472,25 @@ let UpdatePianoInfo = async function(pianoId, pianoRoom, pianoInfo, pianoStuvalu
         piano_type: pianoType,
         piano_status: pianoStatus,
     };
+    console.log("Updatepianoinfo");
+    console.log(info);
     for(let i in info)
     {
-        if(!info[i])
+        if(info[i] === undefined || info[i] === null)
         {
             delete info[i];
         }
     }
+    console.log("Updatepianoinfo");
+    console.log(info);
     let test = function(){
         return new Promise(resolve =>{
-            db.where({ piano_id: pianoId }).update('piano', info, function (err, res, fields) {
-                if(err === null)
+            db.where({ piano_id: pianoId }).update('piano', info, function (err) {
+                if(!err)
                     resolve(1);
                 else
                 {
+                    console.log(err);
                     errorMsg = "修改琴房信息失败";
                     resolve(0);
                 }
@@ -429,11 +499,11 @@ let UpdatePianoInfo = async function(pianoId, pianoRoom, pianoInfo, pianoStuvalu
     };
     let flag = await test();
     console.log(flag);
-    if(flag == 0){
+    if(flag === 0){
         return {"success":false,
             "info":errorMsg};
     }
-    if(flag == 1){
+    if(flag === 1){
         return {"success":true};
     }
 };
@@ -452,11 +522,11 @@ let GetPianoRoomAll = async function(){
     };
     let flag = await test();
     console.log(flag);
-    if(flag == 0){
+    if(flag === 0){
         return {"data":pianoInfo,
                 "info":errorMsg};
     }
-    if(flag == 1){
+    if(flag === 1){
         return {"data":pianoInfo,
                 "info":errorMsg};
     }
@@ -469,7 +539,7 @@ let SearchPiano = async function(count, offset, piano_room, piano_type, piano_id
     let query = { piano_room: piano_room, piano_type: piano_type, piano_id: piano_id};
     for(let q in query)
     {
-        if(!query[q])
+        if(query[q] === null || query[q] === undefined)
         {
             delete query[q];
         }
@@ -497,12 +567,12 @@ let SearchPiano = async function(count, offset, piano_room, piano_type, piano_id
     let flag = await test();
     let flagCount = await getPianoCount();
     console.log(flag);
-    if(flag == 0){
+    if(flag === 0){
         return {"data":pianoInfo,
             "count": pianoCount,
             "info":errorMsg};
     }
-    if(flag == 1){
+    if(flag === 1){
         return {"data":pianoInfo,
             "count": pianoCount,
             "info":errorMsg};
@@ -512,17 +582,16 @@ let SearchPiano = async function(count, offset, piano_room, piano_type, piano_id
 let getDateNum = function(itemDate){
     let item_date = new Date(itemDate);
     let now_date = new Date();
-    now_date.setHours(now_date.getHours()+8);
-    if(now_date>item_date){
-        item_date.setDate(item_date.getDate()+1);
-        if(now_date > item_date){
-            return -1;
-        }
+    //now_date.setHours(now_date.getHours()+8);
+    if(now_date.getDate()>item_date.getDate()){
+        return -1;
+    }
+    else if(now_date.getDate() === item_date.getDate()){
         return 0;
     }
     else{
         item_date.setDate(item_date.getDate()-1);
-        if(now_date>item_date){
+        if(now_date.getDate() === item_date.getDate()){
             return 1;
         }
         else{
@@ -541,7 +610,7 @@ let GetPianoRoomInfo = async function(pianoId, date) {
         return new Promise(resolve =>{
             db.where({ piano_id: pianoId }).get('piano', function (err, res, fields) {
                 let _select = res;
-                if(_select.length == 0){
+                if(_select.length === 0){
                     errorMsg = "琴房不存在";
                     resolve(0);
                 }
@@ -551,10 +620,10 @@ let GetPianoRoomInfo = async function(pianoId, date) {
                     pianoInfo = _info[0];
                     
                     for(let i = num*timeLength; i<(num+1)*timeLength; i++){
-                        if(pianoInfo.piano_list.data[i] == 48){
+                        if(pianoInfo.piano_list.data[i] === 48){
                             pianoList.push(0);
                         }
-                        if(pianoInfo.piano_list.data[i] == 49){
+                        if(pianoInfo.piano_list.data[i] === 49){
                             pianoList.push(1);
                         }
                     }
@@ -577,11 +646,11 @@ let GetPianoRoomInfo = async function(pianoId, date) {
     };
     let flag = await test();
     console.log(flag);
-    if(flag == 0){
+    if(flag === 0){
         return {"data":pianoInfoRes,
                 "info":errorMsg};
     }
-    if(flag == 1){
+    if(flag === 1){
         return {"data":pianoInfoRes,
                 "info":errorMsg};
     }
@@ -597,7 +666,7 @@ let preparePianoForInsert = async function(itemRoomId, itemBegin, itemDuration, 
         return new Promise(resolve =>{
             db.where({ piano_id: itemRoomId }).get('piano', function (err, res, fields) {
                 let _select = res;
-                if(_select.length == 0){
+                if(_select.length === 0){
                     errorMsg = "琴房不存在";
                     resolve(0);
                 }
@@ -607,7 +676,7 @@ let preparePianoForInsert = async function(itemRoomId, itemBegin, itemDuration, 
                     pianoInfo = _info[0];
                     // change data
                     for(let i = itemBegin; i<itemEnd; i++){
-                        if(pianoInfo.piano_list.data[i] == '1' || pianoInfo.piano_list.data[i] == 49){
+                        if(pianoInfo.piano_list.data[i] === '1' || pianoInfo.piano_list.data[i] === 49){
                             resolve(0);
                         }
                     }
@@ -618,11 +687,11 @@ let preparePianoForInsert = async function(itemRoomId, itemBegin, itemDuration, 
     };
     let flag = await test();
     console.log(flag);
-    if(flag == 0){
+    if(flag === 0){
         return {"success":false,
                 "info":errorMsg};
     }
-    if(flag == 1){
+    if(flag === 1){
         // to do 更新数据
         let newList = "";
         let len = pianoInfo.piano_list.data.length;
@@ -633,7 +702,7 @@ let preparePianoForInsert = async function(itemRoomId, itemBegin, itemDuration, 
                     continue;
                 }
             }
-            if(pianoInfo.piano_list.data[i] == '0' || pianoInfo.piano_list.data[i] == 48){
+            if(pianoInfo.piano_list.data[i] === '0' || pianoInfo.piano_list.data[i] === 48){
                 newList += '0';
             }
             else{
@@ -653,7 +722,7 @@ let preparePianoForInsert = async function(itemRoomId, itemBegin, itemDuration, 
             });
         };
         let check = await checkUpdate()
-        if(check == 0){
+        if(check === 0){
             errorMsg = "更新失败";
             return {"success":false,
                     "info":errorMsg};
@@ -673,7 +742,7 @@ let ChangePianoRule = async function(itemRoomId, itemBegin, itemDuration, itemDa
         return new Promise(resolve =>{
             db.where({ piano_id: itemRoomId }).get('piano', function (err, res, fields) {
                 let _select = res;
-                if(_select.length == 0){
+                if(_select.length === 0){
                     errorMsg = "琴房不存在";
                     resolve(0);
                 }
@@ -689,11 +758,11 @@ let ChangePianoRule = async function(itemRoomId, itemBegin, itemDuration, itemDa
     };
     let flag = await test();
     console.log(flag);
-    if(flag == 0){
+    if(flag === 0){
         return {"success":false,
             "info":errorMsg};
     }
-    if(flag == 1){
+    if(flag === 1){
         let newList = "";
         let len = pianoInfo.piano_rule.data.length;
         for(let i = 0; i<len; i++){
@@ -703,7 +772,7 @@ let ChangePianoRule = async function(itemRoomId, itemBegin, itemDuration, itemDa
                     continue;
                 }
             }
-            if(pianoInfo.piano_rule.data[i] == '0' || pianoInfo.piano_rule.data[i] == 48){
+            if(pianoInfo.piano_rule.data[i] === '0' || pianoInfo.piano_rule.data[i] === 48){
                 newList += '0';
             }
             else{
@@ -723,7 +792,7 @@ let ChangePianoRule = async function(itemRoomId, itemBegin, itemDuration, itemDa
             });
         };
         let check = await checkUpdate()
-        if(check == 0){
+        if(check === 0){
             errorMsg = "更新失败";
             return {"success":false,
                 "info":errorMsg};
@@ -739,14 +808,14 @@ let ChangePianoRule = async function(itemRoomId, itemBegin, itemDuration, itemDa
 let InsertItem = async function(itemDate, itemUsername, itemRoomId, itemType, itemMember, itemValue, itemDuration, itemBegin, itemUuid){
     let errorMsg = "";
     // 修改可预约时间段。
-    let result = await preparePianoForInsert(itemRoomId, itemBegin, itemDuration, itemDate);
-    if (result.success === false) {
-        errorMsg = "预约失败";
-        return {
-            "success": false,
-            "info": errorMsg
-        };
-    }
+    // let result = await preparePianoForInsert(itemRoomId, itemBegin, itemDuration, itemDate);
+    // if (result.success === false) {
+    //     errorMsg = "预约失败";
+    //     return {
+    //         "success": false,
+    //         "info": errorMsg
+    //     };
+    // }
     // 插入订单
     let test = function(){
         return new Promise(resolve =>{
@@ -763,8 +832,7 @@ let InsertItem = async function(itemDate, itemUsername, itemRoomId, itemType, it
                     item_uuid: itemUuid
                 }
                 db.insert('item', _info, function (err, info) {
-                    console.log(err);
-                    if(err == null){
+                    if(!err){
                         resolve(1);
                     }
                     else{
@@ -781,11 +849,11 @@ let InsertItem = async function(itemDate, itemUsername, itemRoomId, itemType, it
     };
     let flag = await test();
     console.log(flag);
-    if(flag == 0){
+    if(flag === 0){
         return {"success":false,
                 "info":errorMsg};
     }
-    if(flag == 1){
+    if(flag === 1){
         return {"success":true};
     }
 }
@@ -793,6 +861,14 @@ let InsertItem = async function(itemDate, itemUsername, itemRoomId, itemType, it
 //使用redis存储未支付订单
 let InsertTempItem = async function(itemDate, itemUsername, itemRoomId, itemType, itemMember, itemValue, itemDuration, itemBegin, itemUuid){
     let errorMsg = "";
+    let result = await preparePianoForInsert(itemRoomId, itemBegin, itemDuration, itemDate);
+    if (result.success === false) {
+        errorMsg = "预约失败";
+        return {
+            "success": false,
+            "info": errorMsg
+        };
+    }
     // 插入订单
     let test = function(){
         return new Promise(resolve =>{
@@ -820,11 +896,11 @@ let InsertTempItem = async function(itemDate, itemUsername, itemRoomId, itemType
     };
     let flag = await test();
     console.log(flag);
-    if(flag == 0){
+    if(flag === 0){
         return {"success":false,
             "info":errorMsg};
     }
-    if(flag == 1){
+    if(flag === 1){
         return {"success":true};
     }
 }
@@ -845,11 +921,11 @@ let DeleteTempItem = async function(itemUuid){
     };
     let flag = await test();
     console.log(flag);
-    if(flag == 0){
+    if(flag === 0){
         return {"success":false,
             "info":errorMsg};
     }
-    if(flag == 1){
+    if(flag === 1){
         return {"success":true};
     }
 }
@@ -861,7 +937,7 @@ let ItemCheckin = async function(itemUuid){
         return new Promise(resolve =>{
             db.where({ item_uuid: itemUuid }).get('item', function (err, res, fields) {
                 let _select = res;
-                if(_select.length == 0)
+                if(_select.length === 0)
                 {
                     errorMsg = "订单不存在";
                     resolve(0);
@@ -904,17 +980,17 @@ let ItemCheckin = async function(itemUuid){
     };
     let flag = await test();
     console.log(flag);
-    if(flag == 0){
+    if(flag === 0){
         return {"success": false,
             "info":errorMsg};
     }
-    if(flag == 1){
+    if(flag === 1){
         flag = await checkin();
-        if(flag == 0){
+        if(flag === 0){
             return {"success": false,
                 "info":errorMsg};
         }
-        if(flag == 1){
+        if(flag === 1){
             return {"data":itemInfo,
                 "success": true};
         }
@@ -937,11 +1013,11 @@ let GetItem = async function(itemUsername){
     };
     let flag = await test();
     console.log(flag);
-    if(flag == 0){
+    if(flag === 0){
         return {"data":itemInfo,
                 "info":errorMsg};
     }
-    if(flag == 1){
+    if(flag === 1){
         return {"data":itemInfo,
                 "info":errorMsg};
     }
@@ -963,7 +1039,7 @@ let SearchItem = async function(count, offset, username, roomId, member, type, o
     let query = { item_username: username, item_roomId: roomId, item_member: member};
     for(let q in query)
     {
-        if(!query[q])
+        if(query[q] === undefined || query[q] === null)
         {
             delete query[q];
         }
@@ -985,6 +1061,7 @@ let SearchItem = async function(count, offset, username, roomId, member, type, o
                 .limit(count, offset)
                 .order_by(sortOrder)
                 .get('item', function (err, res, fields) {
+                    console.log(res);
                 let _data = JSON.stringify(res);
                 let _info = JSON.parse(_data);
                 itemInfo = _info;
@@ -995,6 +1072,7 @@ let SearchItem = async function(count, offset, username, roomId, member, type, o
     let getItemCount = function(){
         return new Promise(resolve =>{
             db.where(query)
+                .where(dateQuery)
                 .where('item_type', type)
                 .count('item', function (err, res, fields) {
                     itemCount = res;
@@ -1004,12 +1082,12 @@ let SearchItem = async function(count, offset, username, roomId, member, type, o
     };
     let flag = await test();
     let flagCount = await getItemCount();
-    if(flag == 0){
+    if(flag === 0){
         return {"data":itemInfo,
             "count": itemCount,
             "info":errorMsg};
     }
-    if(flag == 1){
+    if(flag === 1){
         return {"data":itemInfo,
             "count": itemCount,
             "info":errorMsg};
@@ -1022,7 +1100,7 @@ let GetItemByUuid = async function(itemUuid){
     let test = function(){
         return new Promise(resolve =>{
             db.where({ item_uuid: itemUuid }).get('item', function (err, res, fields) {
-                if(res.length == 0){
+                if(res.length === 0){
                     errorMsg = "订单不存在";
                     resolve(0);
                 }
@@ -1037,11 +1115,11 @@ let GetItemByUuid = async function(itemUuid){
     };
     let flag = await test();
     console.log(flag);
-    if(flag == 0){
+    if(flag === 0){
         return {"data":itemInfo,
                 "info":errorMsg};
     }
-    if(flag == 1){
+    if(flag === 1){
         console
         return {"data":itemInfo,
                 "info":errorMsg};
@@ -1067,11 +1145,11 @@ let GetTempItemByUuid = async function(itemUuid){
     };
     let flag = await test();
     console.log(flag);
-    if(flag == 0){
+    if(flag === 0){
         return {"data":itemInfo,
             "info":errorMsg};
     }
-    if(flag == 1){
+    if(flag === 1){
         return {"data":itemInfo,
             "info":errorMsg};
     }
@@ -1081,7 +1159,7 @@ let GetTempItemByUuid = async function(itemUuid){
 let preparePianoForDel = async function(itemRoomId, itemBegin, itemDuration, itemDate){
     let errorMsg = "";
     let num = getDateNum(itemDate);
-    if(num == -1){
+    if(num === -1){
         return {"success":true};
     }
     itemBegin = timeLength*num+itemBegin;
@@ -1090,7 +1168,7 @@ let preparePianoForDel = async function(itemRoomId, itemBegin, itemDuration, ite
         return new Promise(resolve =>{
             db.where({ piano_id: itemRoomId }).get('piano', function (err, res, fields) {
                 let _select = res;
-                if(_select.length == 0){
+                if(_select.length === 0){
                     errorMsg = "琴房不存在";
                     resolve(0);
                 }
@@ -1105,11 +1183,11 @@ let preparePianoForDel = async function(itemRoomId, itemBegin, itemDuration, ite
     };
     let flag = await test();
     console.log(flag);
-    if(flag == 0){
+    if(flag === 0){
         return {"success":false,
                 "info":errorMsg};
     }
-    if(flag == 1){
+    if(flag === 1){
         // to do 更新数据
         let newList = "";
         let len = pianoInfo.piano_list.data.length;
@@ -1120,7 +1198,7 @@ let preparePianoForDel = async function(itemRoomId, itemBegin, itemDuration, ite
                     continue;
                 }
             }
-            if(pianoInfo.piano_list.data[i] == '0' || pianoInfo.piano_list.data[i] == 48){
+            if(pianoInfo.piano_list.data[i] === '0' || pianoInfo.piano_list.data[i] === 48){
                 newList += '0';
             }
             else{
@@ -1140,7 +1218,7 @@ let preparePianoForDel = async function(itemRoomId, itemBegin, itemDuration, ite
             });
         };
         let check = await checkUpdate()
-        if(check == 0){
+        if(check === 0){
             errorMsg = "更新失败";
             return {"success":false,
                     "info":errorMsg};
@@ -1156,7 +1234,7 @@ let DeleteItem = async function(itemUuid){
     let item = await GetItemByUuid(itemUuid);
     let errorMsg = "";
     let result = await preparePianoForDel(item.data.item_roomId, item.data.item_begin, item.data.item_duration, item.data.item_date);
-    if(result.success == false){
+    if(result.success === false){
         errorMsg = "退订失败";
         return {"success":false,
                 "info":errorMsg};
@@ -1165,7 +1243,7 @@ let DeleteItem = async function(itemUuid){
     let test = function(){
         return new Promise(resolve =>{
             db.where({item_uuid: itemUuid }).update('item', {item_type: 0}, function (err) {
-                if(err == null){
+                if(!err){
                     resolve(1);
                 }
                 else{
@@ -1177,11 +1255,11 @@ let DeleteItem = async function(itemUuid){
     };
     let flag = await test();
     console.log(flag);
-    if(flag == 0){
+    if(flag === 0){
         return {"success":false,
                 "info":errorMsg};
     }
-    if(flag == 1){
+    if(flag === 1){
         return {"success":true,
                 "info":errorMsg};
     }
@@ -1201,11 +1279,11 @@ let GetNoticeAll = async function(){
     };
     let flag = await test();
     console.log(flag);
-    if(flag == 0){
+    if(flag === 0){
         return {"data":noticeInfo,
                 "info":errorMsg};
     }
-    if(flag == 1){
+    if(flag === 1){
         return {"data":noticeInfo,
                 "info":errorMsg};
     }
@@ -1218,7 +1296,7 @@ let SearchNotice = async function(count, offset, title, author, order){
     let query = { notice_title: title, notice_auth: author};
     for(let q in query)
     {
-        if(!query[q])
+        if(query[q] === null || query[q] === undefined)
         {
             delete query[q];
         }
@@ -1270,7 +1348,7 @@ let GetNoticeInfo = async function(noticeId){
         return new Promise(resolve =>{
             db.where({ notice_id: noticeId }).get('notice', function (err, res, fields) {
                 let _select = res;
-                if(_select.length == 0){
+                if(_select.length === 0){
                     errorMsg = "公告不存在";
                     resolve(0);
                 }
@@ -1285,11 +1363,11 @@ let GetNoticeInfo = async function(noticeId){
     };
     let flag = await test();
     console.log(flag);
-    if(flag == 0){
+    if(flag === 0){
         return {"data":noticeInfo,
                 "info":errorMsg};
     }
-    if(flag == 1){
+    if(flag === 1){
         console.log(noticeInfo);
         return {"data":noticeInfo,
                 "info":errorMsg};
@@ -1308,7 +1386,7 @@ let InsertNotice = async function(noticeTitle, noticeCont, noticeTime, noticeAut
                 notice_type: noticeType
             }
             db.insert('notice', _info, function (err, info) {
-                if(err == null){
+                if(!err){
                     resolve(1);
                 }
                 else{
@@ -1320,11 +1398,11 @@ let InsertNotice = async function(noticeTitle, noticeCont, noticeTime, noticeAut
     };
     let flag = await test();
     console.log(flag);
-    if(flag == 0){
+    if(flag === 0){
         return {"success":false,
                 "info":errorMsg};
     }
-    if(flag == 1){
+    if(flag === 1){
         return {"success":true};
     }
 }
@@ -1334,7 +1412,7 @@ let DeleteNotice = async function(noticeId) {
     let test = function(){
         return new Promise(resolve =>{
             db.where({notice_id: noticeId }).update('notice', {notice_type: 0}, function (err) {
-                if(err == null){
+                if(!err){
                     resolve(1);
                 }
                 else{
@@ -1346,11 +1424,11 @@ let DeleteNotice = async function(noticeId) {
     };
     let flag = await test();
     console.log(flag);
-    if(flag == 0){
+    if(flag === 0){
         return {"success":false,
                 "info":errorMsg};
     }
-    if(flag == 1){
+    if(flag === 1){
         return {"success":true};
     }
 }
@@ -1379,18 +1457,18 @@ exports.ChangePianoRule = ChangePianoRule;
 
 // 注册
 exports.SetRegisterMsg = SetRegisterMsg;    // 点击发送
-exports.SocietyRegister = SocietyRegister;  // 点击注册
-//exports.CampusRegister = SocietyRegister;
+exports.SocietyUserRegister = SocietyUserRegister;  // 点击注册
+exports.CampusUserLogin = CampusUserLogin;
 
 // 登录
 exports.SetLoginMsg = SetLoginMsg;          // 点击发送
-exports.SocietyLogin = SocietyLogin;        // 点击登录
+exports.SocietyUserLogin = SocietyUserLogin;        // 点击登录
 
 // 用户
-exports.GetSocietyUserInfo = GetSocietyUserInfo;  // 获取某个校外用户的信息
-exports.GetSocietyUuidByTele = GetSocietyUuidByTele; // 通过手机号获取uuid
-exports.ChangeSocietyType = ChangeSocietyType;      // 更新用户数据
-exports.SearchSocietyUser = SearchSocietyUser;
+exports.GetUserInfo = GetUserInfo;  // 获取某个校外用户的信息
+exports.GetUserUuidByNumber = GetUserUuidByNumber; // 通过手机号获取uuid
+exports.ChangeUserStatus = ChangeUserStatus;      // 更新用户数据
+exports.SearchUser = SearchUser;
 
 // 公告
 exports.GetNoticeAll = GetNoticeAll;            // 获取所有公告
@@ -1400,5 +1478,4 @@ exports.DeleteNotice = DeleteNotice;            // 删除公告
 exports.SearchNotice = SearchNotice;
 
 // 查询
-
-
+exports.getDateNum = getDateNum;
