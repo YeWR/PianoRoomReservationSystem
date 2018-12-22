@@ -1,34 +1,44 @@
 <template>
-  <div class="scan-all">
-    <el-row :gutter="40" v-loading="listLoading" class="panel-group" :list="list">
-      <div v-for="item in list" :key="item.id" class="board-item" v-on:click="setTemp(item)">
-        <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
-          <div class="card-panel">
-
-            <div class="card-panel-icon-wrapper icon-people">
-              <svg-icon icon-class="peoples" class-name="card-panel-icon"/>
-            </div>
-
-            <div class="card-panel-description">
-              <div class="card-panel-text">{{$t('item.time')}}: {{ item.time }}</div>
-              <div class="card-panel-num">{{$t('item.room')}}: {{ item.room }}</div>
-            </div>
-
+  <div>
+    <div v-if='flag'>
+      <div>
+        <el-row :gutter="40" v-loading="listLoading" class="panel-group" :list="list">
+          <div v-for="item in list" :key="item.id" class="board-item" v-on:click="setTemp(item)">
+            <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
+              <div class="card-panel">
+                <div class="card-panel-icon-wrapper icon-people">
+                  <svg-icon icon-class="peoples" class-name="card-panel-icon"/>
+                </div>
+                <div class="card-panel-description">
+                  <div class="card-panel-text">{{$t('item.time')}}: {{ item.time }}</div>
+                  <div class="card-panel-num">{{$t('item.room')}}: {{ item.room }}</div>
+                </div>
+              </div>
+            </el-col>
           </div>
+        </el-row>
+      </div>
+      <div style="top: 30px; left: 30px">
+        <el-col :xs="{span: 24}" :sm="{span: 12}" :md="{span: 12}" :lg="{span: 6}" :xl="{span: 6}"
+                style="margin-bottom:30px; ">
+          <BoxCard v-loading="tempLoading" :key="2" :temp="temp" :headerText="itemDetail" :options="options"
+                   class="kanban todo"/>
         </el-col>
       </div>
-    </el-row>
-
-    <div style="top: 30px; right: 30px" class="kankan-group">
-      <el-col :xs="{span: 24}" :sm="{span: 12}" :md="{span: 12}" :lg="{span: 6}" :xl="{span: 6}"
-              style="margin-bottom:30px; " class="el-col-group">
-        <BoxCard v-loading="tempLoading" :key="2" :temp="temp" :headerText="itemDetail" :options="options"
-                 class="kanban todo"/>
-      </el-col>
+    </div>
+    <div v-if='1-flag' class="app-container" style="left: 30%">
+      <el-card class="box-card" style="width: 400px; height: 200px">
+        <div slot="header">
+          <a class="link-type link-title" target="_blank">
+            {{ $t('今日订单提示') }}
+          </a>
+        </div>
+        <div class="box-item">
+          <code style="margin-top:5px; height:100px">{{ $t('截至现在，琴房并无今日订单！！') }}</code>
+        </div>
+      </el-card>
     </div>
   </div>
-
-
 </template>
 <script>
   import BoxCard from './components/BoxCard'
@@ -40,6 +50,7 @@
     },
     data() {
       return {
+        flag : 1,
         options: {
           group: 'mission'
         },
@@ -72,8 +83,10 @@
           if (this.list.length > 0) {
             this.temp = this.list[0]
           }
+          else{
+            this.flag = 0
+          }
           console.log('gg', this.list)
-          // Just to simulate the time of the request
           setTimeout(() => {
             this.listLoading = false
             this.tempLoading = false
@@ -91,15 +104,14 @@
   }
 </script>
 <style lang="scss">
-  .scan-all {
-    width: 100%;
+  .board {
+    width: 1600px;
+    margin-left: 20px;
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
+    flex-direction: row;
+    align-items: flex-start;
   }
-.kankan-group{
-  /*position: absolute;*/
-  top: 400px;
-}
   .kanban {
     &.todo {
       .board-column-header {
@@ -118,11 +130,8 @@
     }
   }
   .panel-group {
-    margin-top: 25px;
-    width: 100%;
+    margin-top: 18px;
     .card-panel-col {
-      width:45%;
-      margin-left: 25px;
       margin-bottom: 32px;
     }
     .card-panel {
@@ -130,7 +139,7 @@
       cursor: pointer;
       font-size: 12px;
       position: relative;
-      overflow: auto;
+      overflow: hidden;
       color: #666;
       background: #fff;
       box-shadow: 4px 4px 40px rgba(0, 0, 0, .05);
