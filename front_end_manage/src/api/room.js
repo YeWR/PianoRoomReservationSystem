@@ -54,3 +54,11 @@ export function RuleRoom(data) {
     data
   })
 }
+
+export function RuleChangeRoom(data) {
+  return request({
+    url: '/manager/room/ruleChange',
+    method: 'post',
+    data
+  })
+}
