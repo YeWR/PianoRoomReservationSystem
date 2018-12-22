@@ -121,7 +121,7 @@ progress/* pages/reserve/reserve_space/reserve.wxss */
     margin-right: 5%;
     background-color: white;
     margin-top: 50rpx;
-    height: 180rpx;
+    height: 150rpx;
     width: 90%;
     color: rgba(0, 0, 0, 1);
     display: flex;
@@ -143,7 +143,7 @@ progress/* pages/reserve/reserve_space/reserve.wxss */
 }
 
 .title{
-    font-size: 38rpx;
+    font-size: 30rpx;
     font-weight: bolder;
 }
 .detail{
@@ -182,7 +182,6 @@ progress/* pages/reserve/reserve_space/reserve.wxss */
 
 }
 .progress-time{
-    margin-top: 1%;
     width: 100%;
     font-size: 26rpx;
     font-family: SFUIText-regular;
