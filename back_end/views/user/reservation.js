@@ -414,7 +414,6 @@ const routers = router.post("/cancel", async (ctx, next) => {
             }
             return;
         }
-
         let dateStr = ctx.request.body.date;
         dateStr = dateStr.concat(" 08:00:00");
         let duration = endTimeIndex - begTimeIndex;
@@ -428,6 +427,13 @@ const routers = router.post("/cancel", async (ctx, next) => {
                 "success": true,
                 "info": "下单成功",
                 "reservationId": itemUuid
+            }
+        }
+        else
+        {
+            ctx.response.body = {
+                "success": false,
+                "info": "预订失败!"
             }
         }
     }
