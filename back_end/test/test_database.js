@@ -225,7 +225,7 @@ describe('#dataBase',()=>{
         it('success',async () =>{
             let now_date = new Date();
             now_date.setDate(now_date.getDate())
-            now_date.setHours(now_date.getHours()+8)
+            now_date.setHours(now_date.getHours())
             let result = await dataBase.GetPianoRoomInfo(1,now_date)
             expect(result.data.piano_id).to.equal(1);
         });
@@ -236,7 +236,7 @@ describe('#dataBase',()=>{
             let result = await dataBase.GetPianoRoomInfo(6,now_date)
             expect(result.data).to.equal(null);            
         });
-    })
+    }) 
     describe('preparePianoForInsert',()=>{
         it('success',async () =>{
             let now_date = new Date();
@@ -266,12 +266,31 @@ describe('#dataBase',()=>{
         });
     })
     // to do
-    // describe('ChangePianoRule',()=>{
+    describe('ChangePianoRule',()=>{
+        it('success',async () =>{
+            let now_date = new Date();
+            now_date.setDate(now_date.getDate())
+            now_date.setHours(now_date.getHours())
+            let result = await dataBase.ChangePianoRule(1,0,10,0,1);
+            expect(result.success).to.equal(true);
+            result = await dataBase.GetPianoRoomInfo(1,now_date)
+            for(let i = 0; i<10; i++){
+                expect(result.data.piano_list[i]).to.equal(1)
+            }
+        });
+        it('fail1',async () =>{
+            let result = await dataBase.preparePianoForInsert(6,0,5,0,1)
+            expect(result.success).to.equal(false);
+            expect(result.info).to.equal("琴房不存在");         
+        });
+    })
+    // to change
+    // describe('InsertItem',()=>{
     //     it('success',async () =>{
     //         let now_date = new Date();
     //         now_date.setDate(now_date.getDate())
     //         now_date.setHours(now_date.getHours())
-    //         let result = await dataBase.preparePianoForInsert(1,0,10,now_date);
+    //         let result = await dataBase.ChangePianoRule(1,0,10,0,1);
     //         expect(result.success).to.equal(true);
     //         result = await dataBase.GetPianoRoomInfo(1,now_date)
     //         for(let i = 0; i<10; i++){
@@ -279,21 +298,43 @@ describe('#dataBase',()=>{
     //         }
     //     });
     //     it('fail1',async () =>{
-    //         let now_date = new Date();
-    //         now_date.setDate(now_date.getDate())
-    //         now_date.setHours(now_date.getHours())
-    //         let result = await dataBase.preparePianoForInsert(6,0,5,now_date)
+    //         let result = await dataBase.preparePianoForInsert(6,0,5,0,1)
     //         expect(result.success).to.equal(false);
     //         expect(result.info).to.equal("琴房不存在");         
     //     });
-    //     it('fail2',async () =>{
+    // })
+    // describe('InsertTempItem',()=>{
+    //     it('success',async () =>{
     //         let now_date = new Date();
     //         now_date.setDate(now_date.getDate())
     //         now_date.setHours(now_date.getHours())
-    //         let result = await dataBase.preparePianoForInsert(1,0,10,now_date)
+    //         let result = await dataBase.ChangePianoRule(1,0,10,0,1);
+    //         expect(result.success).to.equal(true);
+    //         result = await dataBase.GetPianoRoomInfo(1,now_date)
+    //         for(let i = 0; i<10; i++){
+    //             expect(result.data.piano_list[i]).to.equal(1)
+    //         }
+    //     });
+    //     it('fail1',async () =>{
+    //         let result = await dataBase.preparePianoForInsert(6,0,5,0,1)
     //         expect(result.success).to.equal(false);
+    //         expect(result.info).to.equal("琴房不存在");         
     //     });
     // })
+    describe('ItemCheckin',()=>{
+        it('success',async () =>{
+            // to do
+            
+            let result = await dataBase.ItemCheckin();
+            expect(result.data.length).to.equal(2);
+        });
+        it('fail1',async () =>{
+            // 首先insert
+            
+            let result = await dataBase.ItemCheckin();
+            expect(result.data.length).to.equal(2);
+        });
+    })    
     describe('GetNoticeAll',()=>{
         it('success',async () =>{
             let result = await dataBase.GetNoticeAll();
