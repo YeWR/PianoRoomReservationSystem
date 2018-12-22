@@ -10,7 +10,7 @@ const routers = router.get("/list", async (ctx, next) => {
     let limit = parseInt(query.limit);
     if(!query.status)
     {
-        query.status = [1,2,3,-1,-2,-3];
+        query.status = [1,2,3,-1];
     }
     else
     {

@@ -10,56 +10,6 @@ const parseString = require('xml2js').parseString;
 const cryptoMO = require('crypto');
 const utils = require("../utils");
 
-function sortItemAll(a, b)
-{
-    if(a.date > b.date)
-    {
-        return -1;
-    }
-    else if(a.date < b.date)
-    {
-        return 1;
-    }
-    else
-    {
-        if(a.begTimeIndex > b.begTimeIndex)
-        {
-            return -1;
-        }
-        else if(a.begTimeIndex < b.begTimeIndex)
-        {
-            return 1;
-        }
-        else
-            return 0;
-    }
-}
-
-function sortItemAlarm(a, b)
-{
-    if(a.date > b.date)
-    {
-        return 1;
-    }
-    else if(a.date < b.date)
-    {
-        return -1;
-    }
-    else
-    {
-        if(a.begTimeIndex > b.begTimeIndex)
-        {
-            return 1;
-        }
-        else if(a.begTimeIndex < b.begTimeIndex)
-        {
-            return -1;
-        }
-        else
-            return 0;
-    }
-}
-
 
 async function validatePrice(pianoId, orderType, startIndex, endIndex, priceFromFront)
 {
@@ -261,7 +211,7 @@ const routers = router.post("/cancel", async (ctx, next) => {
     let number = ctx.query.number;
     let userId = await dataBase.GetUserUuidByNumber(number);
     userId = userId.data;
-    let result = await dataBase.SearchItem(2147483647,0,userId,null,null,[1,2,-1,-2,-3],"-",30);
+    let result = await dataBase.SearchItem(2147483647,0,userId,null,null,[1,2],"-",30);
     if(result.data === null)
     {
         ctx.response.body = {
@@ -284,24 +234,21 @@ const routers = router.post("/cancel", async (ctx, next) => {
                 if (i.piano_id === p.item_roomId)
                 {
                     let date = new Date(p.item_date);
-                    if(nowDate-date < 1000*60*60*24*30)
-                    {
-                        let dateStr = utils.getDateStr(date);
-                        let week = date.getDay();
-                        let info = {
-                            "pianoPlace": i.piano_room,
-                            "pianoType": i.piano_type,
-                            "pianoPrice": p.item_value,
-                            "reservationType": p.item_member,
-                            "reservationState": p.item_type,
-                            "reservationId": p.item_uuid,
-                            "date": dateStr,
-                            "weekday": weekStr[week],
-                            "begTimeIndex": p.item_begin,
-                            "endTimeIndex": p.item_begin + p.item_duration
-                        };
-                        reservationList.push(info);
-                    }
+                    let dateStr = utils.getDateStr(date);
+                    let week = date.getDay();
+                    let info = {
+                        "pianoPlace": i.piano_room,
+                        "pianoType": i.piano_type,
+                        "pianoPrice": p.item_value,
+                        "reservationType": p.item_member,
+                        "reservationState": p.item_type,
+                        "reservationId": p.item_uuid,
+                        "date": dateStr,
+                        "weekday": weekStr[week],
+                        "begTimeIndex": p.item_begin,
+                        "endTimeIndex": p.item_begin + p.item_duration
+                    };
+                    reservationList.push(info);
                     break;
                 }
             }
@@ -316,7 +263,7 @@ const routers = router.post("/cancel", async (ctx, next) => {
     let number = ctx.query.number;
     let userId = await dataBase.GetUserUuidByNumber(number);
     userId = userId.data;
-    let result = await dataBase.SearchItem(2147483647,0,userId,null,null,3,"-",null);
+    let result = await dataBase.SearchItem(2147483647,0,userId,null,null,[-1,3],"-",null);
     if(result.data === null)
     {
         ctx.response.body = {
@@ -342,8 +289,19 @@ const routers = router.post("/cancel", async (ctx, next) => {
                     let dateStr = utils.getDateStr(date);
                     let week = date.getDay();
                     let ordertime = Date.parse(p.item_time);
-                    ordertime += 30*60*1000;
-                    console.log(ordertime);
+                    if(p.item_type === 3)
+                    {
+                        ordertime += 30*60*1000;
+                    }
+                    else
+                    {
+                        ordertime = new Date(p.item_date);
+                        ordertime.setHours(8+Math.floor(p.item_begin/6));
+                        ordertime.setMinutes(10*(p.item_begin%6));
+                        ordertime.setSeconds(0,0);
+                        ordertime -= 30*60*1000;
+                        ordertime = ordertime.getTime();
+                    }
                     let info = {
                         "pianoPlace": i.piano_room,
                         "pianoType": i.piano_type,
@@ -372,7 +330,7 @@ const routers = router.post("/cancel", async (ctx, next) => {
     let number = ctx.query.number;
     let userId = await dataBase.GetUserUuidByNumber(number);
     userId = userId.data;
-    let result = await dataBase.SearchItem(2147483647,0,userId,null,null,[1,2,-1,-2,-3],"+",3);
+    let result = await dataBase.SearchItem(2147483647,0,userId,null,null,[1],"+",3);
     if(result.data === null)
     {
         ctx.response.body = {
