@@ -1,0 +1,148 @@
+/* pages/info/info.wxss */
+.top_board {
+    background-color: rgba(102, 8, 116, 0.9);
+    height: 32%;
+    width: 100%;
+    border: 1px solid rgba(187, 187, 187, 1);
+}
+
+.info_main_card {
+    box-shadow: 5rpx 5rpx 10rpx 1rpx rgba(100, 100, 100, 1);
+    position: absolute;
+    margin-top: 25%;
+    border: 1px solid rgba(238, 238, 238, 1);
+    background-color: white;
+    height: 25%;
+    width: 86%;
+}
+
+.info_main_card_line1 {
+    width: 80%;
+    height: 55%;
+    margin-left: 10%;
+    margin-right: 10%;
+    margin-top: 11%;
+    font-family: SFUIText-regular;
+    display: flex;
+    align-items: center;
+}
+.info_main_card_line1_left{
+    width: 30%;
+    height: 100%;
+    border-radius: 50%;
+    border: 2rpx solid rgba(187,187,187,1);
+    text-align: center;
+    align-items: center;
+    line-height: 260%;
+    font-size: 150%;
+    color: #660874;
+}
+.info_main_card_line1_right{
+    width: 70%;
+    height: 100%;
+}
+.card_line1_right1{
+    margin-left: 10%;
+    width: 90%;
+    height: 56%;
+    font-size: 150%;
+    font-weight: bolder;
+}
+.card_line1_right2{
+    margin-left: 10%;
+    width: 90%;
+    height: 60%;
+    font-size: 110%;
+}
+.card{
+    box-shadow: 5rpx 5rpx 10rpx 1rpx rgba(187, 187, 187, 1);
+    margin-top: 15%;
+    width: 90%;
+    height: 17%;
+    background-color: white;
+    border: 2rpx solid rgba(238, 238, 238, 1);
+}
+.card_up{
+    width: 90%;
+    margin-left: 5%;
+    margin-right: 5%;
+    height: 45%;
+    margin-top: 1%;
+    background-color: white;
+    display: flex;
+}
+.card_up_left{
+    width: 16%;
+    height: 100%;
+    text-align: center;
+    color: #660874;
+    font-size: 100%;
+    line-height: 200%;
+}
+
+.card_up_middle{
+    width: 68%;
+    height: 100%;
+    color: #aaaaaa;
+    font-size: 100%;
+    line-height: 220%;
+}
+
+.card_up_right{
+    width: 16%;
+    height: 100%;
+    text-align: center;
+    color: #660874;
+    font-size: 100%;
+    line-height: 200%;
+}
+.card_middle{
+    width: 96%;
+    margin-left: 2%;
+    margin-right: 2%;
+    height: 1%;
+    background-color: #aaaaaa;
+}
+.card_down{
+    width: 90%;
+    margin-left: 5%;
+    margin-right: 5%;
+    height: 45%;
+    margin-top: 1%;
+    background-color: white;
+    display: flex;
+}
+.card_down_left{
+    width: 16%;
+    height: 100%;
+    text-align: center;
+    color: #660874;
+    font-size: 100%;
+    line-height: 200%;
+}
+
+.card_down_middle{
+    width: 68%;
+    height: 100%;
+    color: #aaaaaa;
+    font-size: 100%;
+    line-height: 220%;
+}
+
+.card_down_right{
+    width: 16%;
+    height: 100%;
+    text-align: center;
+    color: #660874;
+    font-size: 100%;
+    line-height: 200%;
+}
+
+.card2{
+    box-shadow: 5rpx 5rpx 10rpx 1rpx rgba(187, 187, 187, 1);
+    margin-top: 8%;
+    width: 90%;
+    height: 17%;
+    background-color: white;
+    border: 2rpx solid rgba(238, 238, 238, 1);
+}

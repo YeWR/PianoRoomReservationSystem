@@ -1,0 +1,151 @@
+<!--pages/reserve/reserve_space/reserve.wxml-->
+<view class="container">
+    <view class="up_board">
+        <text class="reserve_title">
+            资源预约
+        </text>
+    </view>
+
+
+    <view class="middle_board">
+
+        <view class="top_icon">
+            <view class="fa-icon-back">
+
+                <view class="caret_btn">
+                    <text class="fa fa-caret-left fa-lg" bindtap="bindChoosePreviousDay"
+                          wx:if="{{!_cannotPrevious}}"></text>
+                    <text wx:else></text>
+                </view>
+
+
+                <view class="date">
+                    {{_date}}
+                </view>
+
+                <view class="caret_btn">
+                    <text class="fa fa-caret-right fa-lg" bindtap="bindChooseNextDay" wx:if="{{!_cannotNext}}"></text>
+                    <text wx:else></text>
+                </view>
+
+            </view>
+        </view>
+
+        <view class="space"></view>
+
+        <view class="select_time">
+            <!--<image class="icon_time" mode="aspectFit" src="../../../images/icon/clock.png"></image>-->
+            <view class="fa-icon-clock">
+                <text class="fa fa-clock-o fa-lg"></text>
+            </view>
+            <view class="select_time_board">
+                <!--<image class="icon_time" mode="aspectFit" src="../../../images/icon/clock.png"></image>-->
+                <picker mode="multiSelector" value="{{_begTimeIndex}}" range="{{_begTimeArray}}"
+                        bindcolumnchange="bindBegTimeChange">
+                    <text wx:if="{{_begHour < 10}}">0{{_begHour}}</text>
+                    <text wx:else>{{_begHour}}</text>
+                    :
+                    <text wx:if="{{_begMinute < 10}}">0{{_begMinute}}</text>
+                    <text wx:else>{{_begMinute}}</text>
+                </picker>
+            </view>
+            <view class="select_time_--">
+                --
+            </view>
+            <view class="select_time_board">
+                <picker mode="multiSelector" value="{{_endTimeIndex}}" range="{{_endTimeArray}}"
+                        bindcolumnchange="bindEndTimeChange">
+                    <text wx:if="{{_endHour < 10}}">0{{_endHour}}</text>
+                    <text wx:else>{{_endHour}}</text>
+                    :
+                    <text wx:if="{{_endMinute < 10}}">0{{_endMinute}}</text>
+                    <text wx:else>{{_endMinute}}</text>
+                </picker>
+            </view>
+        </view>
+    </view>
+
+    <view class="price-info">
+        <view class="left">
+            <view class="available">
+                <view class="available-icon"></view>
+                <text>可用</text>
+            </view>
+            <view class="unavailable">
+                <view class="unavailable-icon"></view>
+                <text>不可用</text>
+            </view>
+        </view>
+        <view class = "right" bindtap="toPriceInfo" >
+                <text>价格详情</text>
+            <view class ="right-arrow">
+                <text class="fa fa-angle-right fa-lg"></text>
+            </view>
+        </view>
+    </view>
+
+    <view class="down_board">
+        <view wx:if="{{_pianoIsAvailable}}">
+
+            <scrollview class="preview" scroll-y="true" style="height: 50px;">
+                <view class="scroll-y">
+
+                    <view class="card" wx:for="{{_pianoAvailableShow}}" wx:for-index="id" wx:for-item="piano"
+                          wx:key="pianoId" data-id="{{id}}" bindtap="toReservePiano">
+
+                        <view class="title-container">
+                            <text class="title">{{piano.pianoType}} ({{piano.pianoPlace}})</text>
+
+                            <view class="detail">
+                                <view class="fa-icon">
+                                    <text class="fa fa-location-arrow fa-lg"></text>
+                                </view>
+                            </view>
+                        </view>
+
+                        <!--<view class="lable">-->
+                        <!--<text class="lable-detail">星海立式钢琴，位于蒙民伟楼{{piano.pianoPlace}}</text>-->
+                        <!--</view>-->
+
+                        <view class="lable-cut">
+                        </view>
+
+                        <view class="progress-days">
+                            <view class="progress">
+                                <canvas canvas-id="{{'piano' + piano.pianoId}}" style="height:30rpx;width:600rpx"></canvas>
+                            </view>
+                            <!--<view class="progress">-->
+                            <!--<progress percent="{{10 * (id + 1)}}" stroke-width="5"-->
+                            <!--activeColor="rgba(187, 187, 187, 1)"-->
+                            <!--backgroundColor="rgb(187, 187, 187) 100%" active="true"/>-->
+                            <!--</view>-->
+                            <view class="progress-time">
+                                <text class="progress-time-each">08</text>
+                                <text class="progress-time-each">10</text>
+                                <text class="progress-time-each">12</text>
+                                <text class="progress-time-each">14</text>
+                                <text class="progress-time-each">16</text>
+                                <text class="progress-time-each">18</text>
+                                <text class="progress-time-each">20</text>
+                                <text class="progress-time-each">22</text>
+                            </view>
+                        </view>
+
+                    </view>
+
+                </view>
+            </scrollview>
+            <view class="loadmore" hidden='{{!_showThis}}' bindtap='clickLoadMore'>
+                <!--<image class="icon {{_showThis?'active':''}}" src='../../img/loading.png' hidden='{{!_showThis}}'/>-->
+                <text>{{_text}}</text>
+            </view>
+        </view>
+
+        <view class="nodata" wx:else>
+            <image class="nodata-icon" mode="aspectFit" src="../../../images/bg/nodata.png"></image>
+            <view class="nodata-text">
+                <text>此时间段无可用琴房哦~</text>
+            </view>
+        </view>
+    </view>
+</view>

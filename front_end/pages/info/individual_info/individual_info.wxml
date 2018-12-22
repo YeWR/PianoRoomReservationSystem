@@ -1,0 +1,48 @@
+<!--pages/info/individual_info/individual_info.wxml-->
+
+<view class="container">
+    <view class="up_board">
+        <text class="info_title">
+            个人信息
+        </text>
+    </view>
+
+    <view class="top_board">
+        <image class="top_board_img" mode="aspectFill" src="../../../images/bg/v2_phk5nq.jpg_t.png"></image>
+    </view>
+
+    <view class="top_board_in">
+        <image class="top_board_icon" mode="scaleToFill" src="../../../images/bg/v2_phk5nq.jpg_t.png"></image>
+    </view>
+
+    <view class="top_board_userid">
+        <text class = top_board_userid_text>用户名</text>
+    </view>
+
+    <view class="card">
+        <view class="card_up">
+            <view class="card_up_middle" bindtap="bindReservationAll">
+                <text>绑定手机</text>
+            </view>
+            <view class="card_up_right">
+                <text >188****7716</text>
+            </view>
+        </view>
+
+        <view class="card_middle">
+        </view>
+
+        <view class="card_down">
+
+            <view class="card_down_middle" bindtap="bindReservationIllegal">
+                <text>身份类型</text>
+            </view>
+            <view class="card_down_right">
+                <text>校外用户</text>
+            </view>
+        </view>
+    </view>
+
+
+
+</view>

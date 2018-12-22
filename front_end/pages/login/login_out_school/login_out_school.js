@@ -1,70 +1,173 @@
 // pages/login_out_school/login_out_school.js
+
+let app = getApp();
+let util = app.util;
+
 Page({
 
     /**
      * 页面的初始数据
      */
     data: {
-        username: '',
-        password: ''
+        _phoneNumber: "",
+        _validateCode: "",
+
+        _disable: true,
+        _validateCodeTitle: "获取验证码",
+        _timeLeft: 60,
+        _intervalIndex: -1,
     },
 
-    // get username
-    getUsername: function (e) {
-        this.setData({
-            username: e.detail.value
-        });
-    },
-
-    // get password
-    getPassword: function (e) {
-        this.setData({
-            password: e.detail.value
-        });
-    },
-
-    // login
-    login: function () {
-        if (this.data.username.length === 0 || this.data.password.length === 0) {
-            wx.showToast({
-                title: '账号或密码不得为空!',
-                icon: 'loading',
-                duration: 1500
+    /*
+     * bind phone number
+     */
+    bindPhoneNumber: function (e) {
+        let phoneNumber = e.detail.value;
+        if (util.checkPhoneNumber(phoneNumber)) {
+            this.setData({
+                _disable: false,
+                _phoneNumber: phoneNumber
             });
-            setTimeout(function(){
-                wx.hideToast()
-            },2000);
-        } else {
-            // 密码 记得加密
-            wx.request({
-                url: '',
-                data: {username:this.data.username, password:this.data.password},
-                method: 'POST', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
-                header: {
-                    "Content-Type": "application/x-www-form-urlencoded"
-                }, // 设置请求的 header
-                success: function(res){
-                    wx.showToast({
-                        title: '成功',
-                        icon: 'success',
-                        duration: 1000
-                    });
-                    wx.navigateTo({
-                      url: ''
-                    });
-                    // success
-                },
-                fail: function(res) {
-                    // fail
-                }
+        }
+        else {
+            this.setData({
+                _disable: true
             });
         }
     },
 
-    // register
-    register: function () {
+    /*
+     * bind validation code
+     */
+    bindValidateCode: function (e) {
+        this.setData({
+            _validateCode: e.detail.value
+        });
+    },
+
+    /*
+     * get validation code
+     */
+    getValidateCode: function (e) {
+        if (util.checkPhoneNumber(this.data._phoneNumber)) {
+            util.getValidateCode(this.data._phoneNumber, 1);
+
+            // count down 60s
+            let that = this;
+            let countDown = () => {
+                let timeLeft = that.data._timeLeft;
+                timeLeft--;
+                that.setData({
+                    _disable: true,
+                    _timeLeft: timeLeft,
+                    _validateCodeTitle: timeLeft + "秒发送"
+                });
+
+                if (timeLeft <= 0) {
+                    clearInterval(that.data._intervalIndex);
+                    that.setData({
+                        _disable: false,
+                        _timeLeft: 60,
+                        _validateCodeTitle: "获取验证码"
+                    });
+                }
+            };
+            let interval = 1000;
+            let index = setInterval(countDown, interval);
+            that.setData({
+                _intervalIndex: index
+            });
+        }
+        else {
+            util.alertInfo("手机号码格式不正确", "none", 1000);
+            this.setData({
+                _disable: false
+            });
+        }
+    },
+
+    /*
+     * the person out of school logs in
+     */
+    login: function () {
+        let that = this;
+
+        // not empty check
+        let notEmptyCheck = function () {
+            let ans = true;
+            if (!util.checkPhoneNumber(that.data._phoneNumber)) {
+                ans = false;
+                util.alertInfo("手机号码为空或格式不正确", "none", 1000);
+            }
+            else if (!that.data._validateCode) {
+                ans = false;
+                util.alertInfo("验证码不能为空", "none", 1000);
+            }
+            return ans;
+        };
+
+        // register POST
+        let post = function () {
+            wx.request({
+                url: "https://958107.iterator-traits.com/user/login/outSchool",
+                data: {
+                    phoneNumber: that.data._phoneNumber,
+                    validateCode: that.data._validateCode
+                },
+                method: "POST",
+                header: {
+                    "Content-Type": "application/x-www-form-urlencoded",
+                },
+                success: function (res) {
+                    // if success
+                    if (res.data.success) {
+
+                        util.alertInfo("登录成功", "success", 1000);
+
+                        let cookie = res.data.token;
+                        wx.setStorageSync("cookie", cookie);
+
+                        app.globalData._username = res.data.username;
+                        app.globalData._userType = util.USERTYPE.SOCIAL;
+                        app.globalData._idNumber = that.data._phoneNumber;
+
+                        that.toBoard();
+                    }
+                    // if wrong
+                    else {
+                        util.alertInfo(res.data.info, "none", 1000);
+                    }
+                },
+                fail: function (res) {
+                    // fail
+                    util.alertInfo("注册失败，请检查您的网络设备是否连接正常", "none", 1000);
+                }
+            });
+        };
+
+        // check
+        if (notEmptyCheck()) {
+            post();
+        }
+
+    },
+
+    /*
+     * to register
+     */
+    toRegister: function () {
         wx.navigateTo({
-            url: '../../register/register_out_school/register_out_school'
+            url: "../../register/register_out_school/register_out_school"
+        });
+    },
+
+    /*
+     * to board
+     * after login success
+     */
+    toBoard: function () {
+        wx.switchTab({
+            url: "../../board/board"
         });
     },
 
@@ -123,4 +226,4 @@ Page({
     onShareAppMessage: function () {
 
     }
-})
+});

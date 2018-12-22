@@ -1,4 +1,4 @@
 <!--pages/login_in_school/login_in_school.wxml-->
 <view class="container">
-
+    <web-view src="https://id-tsinghua-test.iterator-traits.com/do/off/ui/auth/login/form/ef6dcf375679288e8fe520ec07f29130/0?/callback-958107" bindmessage="loginSuccMsg" ></web-view>
 </view>

@@ -1,16 +1,63 @@
 {
   "pages": [
+    "pages/board/board",
     "pages/login/login",
     "pages/logs/logs",
     "pages/login/login_in_school/login_in_school",
     "pages/login/login_out_school/login_out_school",
     "pages/register/register_out_school/register_out_school",
-    "pages/index/index"
+    "pages/alarm/alarm",
+    "pages/reserve/reserve",
+    "pages/info/info",
+    "pages/reserve/reserve_detail/reserve_detail",
+    "pages/reserve/price_info/price_info",
+    "pages/reserve/reserve_confirm/reserve_confirm",
+    "pages/alarm/alarm_detail/alarm_detail",
+    "pages/info/reservation/reservation",
+    "pages/info/reservation/reservation_detail/reservation_detail",
+    "pages/board/board_detail/board_detail",
+    "pages/info/individual_info/individual_info",
+    "pages/info/help/help",
+    "pages/info/reservation_not_paid/reservation_not_paid",
+    "pages/info/reservation_not_paid/reservation_confirm/reservation_confirm"
   ],
   "window": {
+    "enablePullDownRefresh": true,
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#fff",
-    "navigationBarTitleText": "WeChat",
+    "navigationBarTitleText": "THU琴房预约",
     "navigationBarTextStyle": "black"
-  }
+  },
+  "tabBar": {
+    "color": "#a9b7b7",
+    "selectedColor": "rgba(102, 8, 116, 0.9)",
+    "borderStyle": "white",
+    "list": [
+      {
+        "selectedIconPath": "images/nav/board_select.png",
+        "iconPath": "images/nav/board.png",
+        "pagePath": "pages/board/board",
+        "text": "公告"
+      },
+      {
+        "selectedIconPath": "images/nav/alarm_select.png",
+        "iconPath": "images/nav/alarm.png",
+        "pagePath": "pages/alarm/alarm",
+        "text": "预约提醒"
+      },
+      {
+        "selectedIconPath": "images/nav/reserve_select.png",
+        "iconPath": "images/nav/reserve.png",
+        "pagePath": "pages/reserve/reserve",
+        "text": "资源预约"
+      },
+      {
+        "selectedIconPath": "images/nav/info_select.png",
+        "iconPath": "images/nav/info.png",
+        "pagePath": "pages/info/info",
+        "text": "个人中心"
+      }
+    ]
+  },
+  "debug": true
 }

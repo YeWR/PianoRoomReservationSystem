@@ -1,0 +1,133 @@
+<!--pages/reserve/reserve_detail/reserve_detail.wxml-->
+<view class="container">
+    <view class="top_board">
+
+    </view>
+
+    <view class="reserve-info">
+        <view class="fa-icon">
+            <text class="fa fa-list-alt fa-lg"></text>
+        </view>
+
+        <view class="date">
+            {{_pianoType}}({{_pianoPlace}})
+        </view>
+
+        <view class="reserve-info-cut">
+            <view class="reserve-info-cutline"></view>
+        </view>
+
+        <view class="progress-days">
+
+            <view class="progress">
+                <canvas canvas-id="pianoDetail" style="height:30rpx;"></canvas>
+            </view>
+
+            <view class="progress-time">
+                <text class="progress-time-each">08</text>
+                <text class="progress-time-each">10</text>
+                <text class="progress-time-each">12</text>
+                <text class="progress-time-each">14</text>
+                <text class="progress-time-each">16</text>
+                <text class="progress-time-each">18</text>
+                <text class="progress-time-each">20</text>
+                <text class="progress-time-each">22</text>
+            </view>
+        </view>
+    </view>
+
+    <view class="reserve-card">
+
+        <view class="date-view">
+            <view class="date-view-icon">
+                <text class="fa fa-calendar fa-lg"></text>
+            </view>
+            <view class="date-text">日期：
+            </view>
+
+            <view class="date-info">
+                {{_date}}
+                <!--2018-11-11-->
+            </view>
+        </view>
+
+        <view class="date-view">
+            <view class="date-view-icon">
+                <text class="fa fa-clock-o fa-lg"></text>
+            </view>
+            <view class="date-text">时间：
+            </view>
+
+            <view class="select_time">
+
+                <picker class="select_time_board" mode="multiSelector" value="{{_begTimeIndex}}"
+                        range="{{_begTimeArray}}"
+                        bindcolumnchange="bindBegTimeChange">
+                    <text wx:if="{{_begHour < 10}}">0{{_begHour}}</text>
+                    <text wx:else>{{_begHour}}</text>
+                    :
+                    <text wx:if="{{_begMinute < 10}}">0{{_begMinute}}</text>
+                    <text wx:else>{{_begMinute}}</text>
+                </picker>
+                <view class="select_time_--">--</view>
+
+                <picker class="select_time_board" mode="multiSelector" value="{{_endTimeIndex}}"
+                        range="{{_endTimeArray}}"
+                        bindcolumnchange="bindEndTimeChange">
+                    <text wx:if="{{_endHour < 10}}">0{{_endHour}}</text>
+                    <text wx:else>{{_endHour}}</text>
+                    :
+                    <text wx:if="{{_endMinute < 10}}">0{{_endMinute}}</text>
+                    <text wx:else>{{_endMinute}}</text>
+                </picker>
+            </view>
+        </view>
+
+
+        <view class="date-view">
+            <view class="date-view-icon">
+                <text class="fa fa-user fa-lg"></text>
+            </view>
+            <view class="date-text">人数：
+            </view>
+
+            <view class="select_people" wx:if="{{_chooseSingle}}">
+                <button class="people-btn-white" bindtap="bindSingleUser" style="background-color: #660874">
+                    单人
+                </button>
+
+                <button class="people-btn" bindtap="bindMultiUsers" style="background-color: #ffffff">
+                    多人
+                </button>
+            </view>
+
+            <view class="select_people" wx:if="{{!_chooseSingle}}">
+                <button class="people-btn" bindtap="bindSingleUser" style="background-color: #ffffff">
+                    单人
+                </button>
+                <button class="people-btn-white" bindtap="bindMultiUsers" style="background-color: #660874">
+                    多人
+                </button>
+            </view>
+        </view>
+
+        <view class="date-view">
+            <view class="date-view-icon">
+                <text class="fa fa-jpy fa-lg"></text>
+            </view>
+            <view class="date-text">金额：
+            </view>
+
+            <view class="money-info">
+                {{_pianoPrice}}元
+            </view>
+        </view>
+
+        <view class="reserve_btn_view">
+            <button class="reserve_btn" bindtap="submitReservation">提交</button>
+        </view>
+
+    </view>
+
+
+</view>

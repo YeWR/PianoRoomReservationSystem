@@ -1,4 +1,5 @@
 # PianoRoomReservationSystem
+* [![Build Status](https://travis-ci.com/YeWR/PianoRoomReservationSystem.svg?token=uJujS3v93YqFPXfQnm9M&branch=master)](https://travis-ci.com/YeWR/PianoRoomReservationSystem)
 * AppID:	wx9af8ee119208bf4e
 ## `github`使用说明
 
@@ -13,7 +14,7 @@
 ## 开发框架使用说明
 
 * 开发总框架：Node + 微信web开发者工具。
-* UI设计：`MockPlus v3.2.6`
+* UI设计：`磨刀`
 
 ## 工程文件说明
 
@@ -37,4 +38,30 @@
 
 > `src`目录下说明
 
+## 管理端前端Vue配置说明
+
+> 使用vue cli 3脚手架
+
+> 环境配置
+
+```shell
+npm install -g @vue/cli
+npm install -g @vue/cli-service-global
+```
+
+> setup
+
+```shell
+# install dependencies
+npm install
+
+# serve with hot reload at localhost:8989
+npm run serve
+
+# build for production with minification
+npm run build
+
+# build for production and view the bundle analyzer report
+npm run build --report
+```
 

@@ -1,19 +1,41 @@
 <!--pages/login_out_school/login_out_school.wxml-->
 <view class="container">
-    <view class="login_icon">
-        <!--<image class="login-img" src="../images/loginLog.jpg"></image>-->
+    <view class="up_board">
+        <text class="login_title">
+            登录
+        </text>
     </view>
-    <view class="login_from">
 
-        <!--账号-->
+    <view class="login_icon_los">
+        <image class="login_img_los" src="../../../images/bg/v2_phk5nq.jpg_t.png"></image>
+    </view>
+
+        <!--手机号-->
+    <view class="login_form_los">
+
+        <!--手机号-->
         <view class="input_view">
-            <input class="input_text" placeholder="请输入账号" bindinput="getUsername" />
+            <view class="fa-icon">
+                <text class="fa fa-user fa-lg"></text>
+            </view>
+            <input class="input_text" placeholder="手机号" bindinput="bindPhoneNumber" />
         </view>
 
-        <!--密码-->
-        <view class="input_view">
-            <input class="input_text" password="true" placeholder="请输入密码" bindinput="getPassword" />
-        </view>
+        <!--验证码-->
+
+            <view class = "Validate_view">
+                <view class="fa-icon_v">
+                    <text class="fa fa-lock fa-lg"></text>
+                </view>
+                <input class="input_text_v" placeholder="验证码" bindinput="bindValidateCode" />
+                <!--获取验证码-->
+                <view class="Validate_btn">
+                    <button class="login_btn_v" bindtap="getValidateCode" disabled="{{_disable}}">{{_validateCodeTitle}}</button>
+                </view>
+            </view>
+
+
+
 
         <!--登录-->
         <view class="login_btn_view">
@@ -22,8 +44,9 @@
 
         <!--注册-->
         <view class="login_btn_view">
-            <button class="register_btn" bindtap="register">注册</button>
+            <button class="register_btn" bindtap="toRegister">注册</button>
         </view>
 
     </view>
+
 </view>

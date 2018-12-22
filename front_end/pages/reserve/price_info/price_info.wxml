@@ -1,0 +1,73 @@
+<!--pages/reserve/price_info/price_info.wxml-->
+
+<view class="container">
+    <view class="up_board">
+        <text class="reserve_title">
+            价格详情
+        </text>
+    </view>
+
+    <view class="card">
+
+        <view class="up_title">
+
+            <view class="up_text">
+                <text class="title">{{_noticeTitle}}</text>
+                多人
+            </view>
+        </view>
+
+        <view class="bottom_up_title">
+            <view class="bottom_up_text">
+                <!--TODO：最多16中字 + ...-->
+                当一个练琴房中人数大于1时，无论使用者身份、钢琴种类，一律30元/小时
+            </view>
+        </view>
+
+        <view class="up_title">
+
+            <view class="up_text">
+                <text class="title">{{_noticeTitle}}</text>
+                单人
+            </view>
+        </view>
+
+        <view class="bottom_title">
+            <view class="bottom_text">
+                在校学生：
+            </view>
+        </view>
+        <view class="bottom_in_title">
+            <view class="bottom_in_text">
+                星海钢琴：10元/小时
+            </view>
+        </view>
+        <view class="bottom_in_title">
+            <view class="bottom_in_text">
+                雅马哈钢琴：10元/小时
+            </view>
+        </view>
+        <view class="bottom_in_title">
+            <view class="bottom_in_text">
+                哈瓦伊钢琴：15元/小时
+            </view>
+        </view>
+        <view class="bottom_title">
+            <view class="bottom_text">
+                <!--TODO：最多16中字 + ...-->
+                教职工：20元/小时
+            </view>
+        </view>
+        <view class="bottom_title">
+            <view class="bottom_text">
+                <!--TODO：最多16中字 + ...-->
+                校外人员：30元/小时
+            </view>
+        </view>
+        <view class="bottom_title">
+            <view class="bottom_text">
+                （不足一小时按一小时计算）
+            </view>
+        </view>
+    </view>
+</view>

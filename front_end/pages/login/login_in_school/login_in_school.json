@@ -1,1 +1,7 @@
-{}
+{
+  "enablePullDownRefresh": false,
+  "backgroundTextStyle": "light",
+  "navigationBarBackgroundColor": "#fff",
+  "navigationBarTitleText": "校内登录",
+  "navigationBarTextStyle": "black"
+}

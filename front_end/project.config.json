@@ -1,0 +1,134 @@
+{
+	"description": "项目配置文件",
+	"packOptions": {
+		"ignore": []
+	},
+	"setting": {
+		"urlCheck": false,
+		"es6": true,
+		"postcss": true,
+		"minified": true,
+		"newFeature": true
+	},
+	"compileType": "miniprogram",
+	"libVersion": "2.3.2",
+	"appid": "wx715248ea60f61941",
+	"projectname": "THU%E7%90%B4%E6%88%BF%E6%94%AF%E4%BB%98%E6%B5%8B%E8%AF%95",
+	"debugOptions": {
+		"hidedInDevtools": []
+	},
+	"isGameTourist": false,
+	"condition": {
+		"search": {
+			"current": -1,
+			"list": []
+		},
+		"conversation": {
+			"current": -1,
+			"list": []
+		},
+		"plugin": {
+			"current": 5,
+			"list": [
+				{
+					"id": 0,
+					"name": "正常情况",
+					"pathName": "pages/login/login",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "预约确认",
+					"pathName": "pages/reserve/reserve_confirm/reserve_confirm",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "预约空间",
+					"pathName": "pages/reserve/reserve",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "预约提醒",
+					"pathName": "pages/alarm/alarm",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "预约详情",
+					"pathName": "pages/alarm/alarm_detail/alarm_detail",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "注册",
+					"pathName": "pages/register/register_out_school/register_out_school",
+					"query": ""
+				}
+			]
+		},
+		"game": {
+			"currentL": -1,
+			"list": []
+		},
+		"miniprogram": {
+			"current": 8,
+			"list": [
+				{
+					"id": -1,
+					"name": "正常情况",
+					"pathName": "pages/login/login",
+					"query": ""
+				},
+				{
+					"id": 2,
+					"name": "预约空间",
+					"pathName": "pages/reserve/reserve",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "校外登录",
+					"pathName": "pages/login/login_out_school/login_out_school",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "公告",
+					"pathName": "pages/board/board",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "公告详情",
+					"pathName": "pages/board/board_detail/board_detail",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "注册",
+					"pathName": "pages/register/register_out_school/register_out_school",
+					"query": ""
+				},
+				{
+					"id": 6,
+					"name": "价格详情",
+					"pathName": "pages/reserve/price_info/price_info",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "预约提醒",
+					"pathName": "pages/alarm/alarm",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "shiyongbangzhu",
+					"pathName": "pages/info/help/help"
+				}
+			]
+		}
+	}
+}
