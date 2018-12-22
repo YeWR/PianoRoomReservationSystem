@@ -2,6 +2,6 @@
   "enablePullDownRefresh": false,
   "backgroundTextStyle": "light",
   "navigationBarBackgroundColor": "#fff",
-  "navigationBarTitleText": "预约提醒",
+  "navigationBarTitleText": "预约详情",
   "navigationBarTextStyle": "black"
 }

@@ -2,7 +2,7 @@
 <view class="container">
     <view class="up_board">
         <text class="reserve_title">
-            资源预约
+            琴房预约
         </text>
     </view>
 

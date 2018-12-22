@@ -3,7 +3,7 @@
 <view class="container">
     <view class="up_board">
         <text class="info_title">
-            个人信息
+            个人中心
         </text>
     </view>
 
