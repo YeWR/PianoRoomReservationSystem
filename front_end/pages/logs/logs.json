@@ -1,3 +1,8 @@
 {
-  "navigationBarTitleText": "查看启动日志"
+  "navigationBarTitleText": "查看启动日志",
+  "enablePullDownRefresh": false,
+  "backgroundTextStyle": "light",
+  "navigationBarBackgroundColor": "#fff",
+  "navigationBarTitleText": "日志",
+  "navigationBarTextStyle": "black"
 }

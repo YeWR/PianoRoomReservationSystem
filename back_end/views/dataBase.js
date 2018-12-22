@@ -241,6 +241,8 @@ let SocietyUserRegister = async function(socType, socId, socRealname, socTele, s
                             resolve(1);
                         }
                         else{
+                            console.log(err);
+                            console.log(info);
                             errorMsg = "新建用户失败";
                             resolve(0);
                         }
@@ -466,6 +468,8 @@ let UpdatePianoInfo = async function(pianoId, pianoRoom, pianoInfo, pianoStuvalu
         piano_type: pianoType,
         piano_status: pianoStatus,
     };
+    console.log("Updatepianoinfo");
+    console.log(info);
     for(let i in info)
     {
         if(info[i] === undefined || info[i] === null || info[i] === "")
@@ -473,6 +477,8 @@ let UpdatePianoInfo = async function(pianoId, pianoRoom, pianoInfo, pianoStuvalu
             delete info[i];
         }
     }
+    console.log("Updatepianoinfo");
+    console.log(info);
     let test = function(){
         return new Promise(resolve =>{
             db.where({ piano_id: pianoId }).update('piano', info, function (err) {
@@ -480,6 +486,7 @@ let UpdatePianoInfo = async function(pianoId, pianoRoom, pianoInfo, pianoStuvalu
                     resolve(1);
                 else
                 {
+                    console.log(err);
                     errorMsg = "修改琴房信息失败";
                     resolve(0);
                 }
@@ -1172,6 +1179,7 @@ let SearchItem = async function(count, offset, username, roomId, member, type, o
                 .limit(count, offset)
                 .order_by(sortOrder)
                 .get('item', function (err, res, fields) {
+                    console.log(res);
                 let _data = JSON.stringify(res);
                 let _info = JSON.parse(_data);
                 itemInfo = _info;
@@ -1452,7 +1460,6 @@ let GetNoticeInfo = async function(noticeId){
                 "info":errorMsg};
     }
     if(flag === 1){
-
         return {"data":noticeInfo,
                 "info":errorMsg};
     }
@@ -1676,5 +1683,3 @@ exports.SearchNotice = SearchNotice;
 exports.SearchLongItem = SearchLongItem;
 exports.AddLongItem = AddLongItem;
 exports.DeleteLongItem = DeleteLongItem;
-
-

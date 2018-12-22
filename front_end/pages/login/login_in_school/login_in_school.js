@@ -1,10 +1,26 @@
 // pages/login_in_school/login_in_school.js
+
+let app = getApp();
+let util = app.util;
+
 Page({
 
     /**
      * 页面的初始数据
      */
     data: {},
+
+    loginSuccMsg: function (e) {
+        let options = e.detail.data[0];
+        if (options && options.success) {
+            app.globalData._username = options.username;
+            app.globalData._userType = options.userType;
+            app.globalData._idNumber = options.idNumber;
+            let cookie = options.token;
+            wx.setStorageSync("cookie", cookie);
+        }
+    },
+
 
     /**
      * 生命周期函数--监听页面加载
@@ -61,4 +77,4 @@ Page({
     onShareAppMessage: function () {
 
     }
-})
+});

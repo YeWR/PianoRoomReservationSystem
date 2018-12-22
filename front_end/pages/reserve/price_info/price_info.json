@@ -1,0 +1,7 @@
+{
+  "enablePullDownRefresh": false,
+  "backgroundTextStyle": "light",
+  "navigationBarBackgroundColor": "#fff",
+  "navigationBarTitleText": "价格详情",
+  "navigationBarTextStyle": "black"
+}

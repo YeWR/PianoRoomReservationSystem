@@ -1,1 +1,7 @@
-{}
+{
+  "enablePullDownRefresh": false,
+  "backgroundTextStyle": "light",
+  "navigationBarBackgroundColor": "#fff",
+  "navigationBarTitleText": "THU琴房预约登录",
+  "navigationBarTextStyle": "black"
+}

@@ -1,0 +1,88 @@
+<!--pages/info/info.wxml-->
+
+<view class="container">
+    <view class="up_board">
+        <text class="info_title">
+            个人信息
+        </text>
+    </view>
+
+    <view class="top_board">
+
+    </view>
+
+    <view class="info_main_card">
+
+        <view class="info_main_card_line1" bindtap="bindPersonalInfo">
+            <view class = "info_main_card_line1_left" bindtap="bindPersonalInfo">
+                    <text class="fa fa-user fa-lg"></text>
+            </view>
+            <view class = "info_main_card_line1_right">
+                <view class = "card_line1_right1">
+                    <text >{{_realName}}</text>
+                </view>
+                <view class = "card_line1_right2">
+                    <text >({{_idNumberHiden}})</text>
+                </view>
+            </view>
+        </view>
+
+    </view>
+
+    <view class = "card">
+        <view class = "card_up">
+            <view class = "card_up_left">
+                <text class="fa fa-stack-overflow fa-lg"></text>
+            </view>
+            <view class = "card_up_middle" bindtap="bindReservationAll">
+                <text>预约记录</text>
+            </view>
+            <view class = "card_up_right" bindtap="bindReservationAll">
+                <text class="fa fa-location-arrow fa-lg"></text>
+            </view>
+        </view>
+        <view class = "card_middle">
+
+        </view>
+        <view class = "card_down">
+            <view class = "card_down_left">
+                <text class="fa fa-exclamation-circle fa-lg"></text>
+            </view>
+            <view class = "card_down_middle" bindtap="bindReservationNotPaid">
+                <text>未支付订单</text>
+            </view>
+            <view class = "card_down_right" bindtap="bindReservationNotPaid">
+                <text class="fa fa-location-arrow fa-lg"></text>
+            </view>
+        </view>
+    </view>
+
+    <view class = "card2">
+        <view class = "card_up">
+            <view class = "card_up_left">
+                <text class="fa fa-question-circle-o fa-lg"></text>
+            </view>
+            <view class = "card_up_middle" bindtap="bindHelp">
+                <text>使用帮助</text>
+            </view>
+            <view class = "card_up_right" bindtap="bindHelp">
+                <text class="fa fa-location-arrow fa-lg"></text>
+            </view>
+        </view>
+        <view class = "card_middle">
+
+        </view>
+        <view class = "card_down">
+            <view class = "card_down_left">
+                <text class="fa fa-external-link fa-lg"></text>
+            </view>
+            <view class = "card_down_middle" bindtap="bindLogout">
+                <text>退出登录</text>
+            </view>
+            <view class = "card_down_right"bindtap="bindLogout">
+                <text class="fa fa-location-arrow fa-lg"></text>
+            </view>
+        </view>
+    </view>
+
+</view>

@@ -1,0 +1,107 @@
+<!--pages/board/board.wxml-->
+
+<view class="container">
+    <view class="up_board">
+        <text class="new_board_title">
+            公告
+        </text>
+    </view>
+
+    <view class="nodata" wx:if="{{_noticeListShow.length == 0}}">
+        <image class="nodata-icon" mode="aspectFit" src="../../../images/bg/nodata.png"></image>
+        <view class="nodata-text">
+            <text>暂无公告~</text>
+        </view>
+    </view>
+
+    <view class="new_card" wx:if="{{_noticeListShow.length > 0}}" data-id="{{0}}" bindtap= "bindNoticeDetail">
+
+        <view class="new_up_title">
+            <view class="new_up_icon">
+                <view class="fa-icon-back" data-id="0">
+                    <text class="fa fa-file-text-o fa-lg"></text>
+                </view>
+            </view>
+
+            <view class="new_up_text">
+                <text class="new_title">{{_noticeListShow[0].noticeTitle}}</text>
+                <!--ToDo:11中字以内-->
+            </view>
+        </view>
+
+        <view class="new_middle_title">
+            <view class="new_middle_time">
+                <text class="new_middle_time_text">{{_noticeListShow[0].noticeTime}}</text>
+            </view>
+
+            <view class="new_middle_line">
+                <view class="new_middle_line_text"></view>
+            </view>
+        </view>
+
+        <view class="new_bottom_title">
+            <view class="new_bottom_text">
+                <!--TODO：最多18中字 + ...-->
+                <text class="new_bottom_time_text">{{_noticeListShow[0].noticeKey}}</text>
+            </view>
+
+            <view class="new_bottom_icon">
+                <view class="fa-icon-back">
+                    <text class="fa fa-chevron-right fa-lg"></text>
+                </view>
+            </view>
+        </view>
+
+    </view>
+
+    <scrollview class="preview" scroll-y="true" style="height: 200rpx;" wx:if="{{_noticeListShow.length > 1}}">
+
+        <view class="scroll-y">
+
+            <view class="card" wx:for="{{_noticeListShow}}" wx:for-index="id" wx:for-item="notice" wx:key="noticeId" data-id="{{id}}" bindtap= "bindNoticeDetail">
+
+                <view class="up_title" wx:if="{{id > 0}}">
+                    <view class="up_icon">
+                        <view class="fa-icon" data-id="{{id}}">
+                            <text class="fa fa-file-text-o fa-lg"></text>
+                        </view>
+                    </view>
+
+                    <view class="up_text">
+                        <text class="title">{{notice.noticeTitle}}</text>
+                        <!--ToDo:11中字以内-->
+                    </view>
+                </view>
+
+                <view class="middle_title" wx:if="{{id > 0}}">
+                    <view class="middle_time">
+                        <text class="middle_time_text">{{notice.noticeTime}}</text>
+                    </view>
+
+                    <view class="middle_line">
+                        <view class="middle_line_text"></view>
+                    </view>
+                </view>
+
+                <view class="bottom_title" wx:if="{{id > 0}}">
+                    <view class="bottom_text">
+                        <!--TODO：最多16中字 + ...-->
+                        <text class="bottom_time_text">{{notice.noticeKey}}</text>
+                    </view>
+
+                    <view class="bottom_icon">
+                        <view class="fa-icon">
+                            <text class="fa fa-chevron-right fa-lg"></text>
+                        </view>
+                    </view>
+                </view>
+            </view>
+
+            <view class="loadmore" hidden='{{!_showThis}}' bindtap='clickLoadMore'>
+                <!--<image class="icon {{_showThis?'active':''}}" src='../../img/loading.png' hidden='{{!_showThis}}'/>-->
+                <text>{{_text}}</text>
+            </view>
+        </view>
+    </scrollview>
+
+</view>

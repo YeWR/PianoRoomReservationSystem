@@ -1,0 +1,171 @@
+/* pages/reserve/reserve_detail/reserve_detail.wxss */
+.top_board {
+    background-color: rgba(102, 8, 116, 0.9);
+    height: 37%;
+    width: 100%;
+    border: 1px solid rgba(187, 187, 187, 1);
+}
+
+.reserve-info {
+    box-shadow: 5rpx 5rpx 10rpx 1rpx rgba(100, 100, 100, 1);
+    position: absolute;
+    margin-top: 16%;
+    border: 1px solid rgba(238, 238, 238, 1);
+    background-color: white;
+    height: 31%;
+    width: 86%;
+}
+
+.date {
+    margin-top: 6%;
+    font-size: xx-large;
+    text-align: center;
+    color: black;
+    font-weight: bolder;
+    font-family: SFUIText-regular;
+}
+
+.reserve-info-cut {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin-top: 6%;
+    height: 1%;
+}
+
+.reserve-info-cutline {
+    height: 100%;
+    width: 90%;
+    background-color: rgba(238, 238, 238, 1);
+}
+
+.progress-days {
+    margin-top: 8%;
+}
+
+.progress {
+    width: 83%;
+    margin-left: 8%;
+    height: 13rpx;
+    /*background-color: #660874;*/
+}
+
+.progress-time{
+    margin-top: 3%;
+    width: 100%;
+    font-size: 26rpx;
+    font-family: SFUIText-regular;
+}
+
+.progress-time-each {
+    margin-left: 7%;
+}
+
+.reserve-card {
+    box-shadow: 5rpx 5rpx 10rpx 1rpx rgba(187, 187, 187, 1);
+    align-items: center;
+    background-color: white;
+    margin-top: 20%;
+    height: 43%;
+    width: 86%;
+    color: rgba(0, 0, 0, 1);
+    display: flex;
+    flex-direction: column;
+    border-radius: 6 rpx;
+}
+
+.date-view {
+    margin-top: 5%;
+    width: 90%;
+    height: 10%;
+    display: flex;
+    color: rgba(102, 8, 116, 1);
+
+}
+.date-view-icon{
+    text-align: center;
+    height: 100%;
+    width: 15%;
+}
+.date-text {
+    height: 100%;
+    text-align: left;
+    width: 20%;
+    color: rgba(136, 136, 136, 1);
+    font-size: 36rpx;
+    font-family: Arial;
+}
+
+.date-info {
+    justify-content: center;
+    width: 65%;
+    border-bottom: 2rpx solid rgba(187, 187, 187, 1);
+    text-align: center;
+    color: black;
+}
+.money-info{
+    width: 65%;
+    text-align: center;
+    color: black;
+    font-size: 55rpx;
+    font-weight: bold;
+}
+
+.select_time_-- {
+
+}
+
+.select_time {
+    display: flex;
+    justify-content: space-between;
+    width: 65%;
+    border-bottom: 2rpx solid rgba(187, 187, 187, 1);
+    text-align: center;
+    color: black;
+}
+
+.select_time_board {
+    font-weight: bold;
+}
+
+.select_people{
+    display: flex;
+    height: 100%;
+    width: 65%;
+    justify-content: center;
+}
+.people-btn{
+    height: 100%;
+    width: 50%;
+    text-align: center;
+    font-size: 23rpx;
+    font-weight: bold;
+}
+.people-btn-white{
+    height: 100%;
+    width: 50%;
+    text-align: center;
+    font-size: 23rpx;
+    font-weight: bold;
+    color: white;
+}
+
+.reserve_btn_view {
+    margin-top:10%;
+    width: 80%;
+    color: white;
+    font-size:30rpx;
+    border-radius: 12rpx;
+    background-color: rgba(102, 8, 116, 0.9);
+    font-family: Arial;
+    border: 2rpx solid rgba(187, 187, 187, 1);
+}
+
+.reserve_btn{
+    /*margin-top: 3%;*/
+    text-align: center;
+    color: white;
+    font-size: 28rpx;
+    font-family: Arial;
+    background-color: rgba(102, 8, 116, 0.9);
+}

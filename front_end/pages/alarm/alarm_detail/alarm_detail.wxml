@@ -1,0 +1,117 @@
+<!--pages/alarm/alarm_detail/alarm_detail.wxml-->
+<view class="container">
+    <view class="up_board">
+        <text class="reserve_title">
+            预约信息
+        </text>
+    </view>
+    <view class="top">
+        <view class="top_background">
+
+            <view class="top_line1">
+                <text class="top_line1_text">预约信息</text>
+            </view>
+
+            <view class="top_line">
+                <view class="line_left">
+                    <text class="fa fa-file-text-o fa-lg"></text>
+                </view>
+                <view class="line_right">
+                    <view class="line_right_view">
+                        <text class="line_right_text">订单号：{{_reservationIdDis}}</text>
+                    </view>
+                </view>
+            </view>
+
+            <view class="top_line">
+                <view class="line_left">
+                    <text class="fa fa-user fa-lg"></text>
+                </view>
+                <view class="line_right">
+                    <view class="line_right_view">
+                        <text class="line_right_text">用户：{{_reservationUser}} ({{_userTypeDis}})</text>
+                    </view>
+                </view>
+            </view>
+
+            <view class="top_line">
+                <view class="line_left">
+                    <text class="fa fa-clock-o fa-lg"></text>
+                </view>
+                <view class="line_right">
+                    <view class="line_right_view">
+                        <text class="line_right_text">时间：{{_reservationDate}} {{_reservationWeekday}} {{_reservationBegTime}} - {{_reservationEndTime}}</text>
+                    </view>
+                </view>
+            </view>
+
+            <view class="top_line">
+                <view class="line_left">
+                    <text class="fa fa-map-marker fa-lg"></text>
+                </view>
+                <view class="line_right">
+                    <view class="line_right_view">
+                        <text class="line_right_text">房间号：{{_reservationPianoPlace}}</text>
+                    </view>
+                </view>
+            </view>
+
+            <view class="top_line">
+                <view class="line_left">
+                    <text class="fa fa-music fa-lg"></text>
+                </view>
+                <view class="line_right">
+                    <view class="line_right_view">
+                        <text class="line_right_text">钢琴类型：{{_reservationPianoType}}</text>
+                    </view>
+                </view>
+            </view>
+
+            <view class="top_line">
+                <view class="line_left">
+                    <text class="fa fa-address-book-o fa-lg"></text>
+                </view>
+                <view class="line_right">
+                    <view class="line_right_view">
+                        <text class="line_right_text">订单类型：{{_reservationTypeDis}}</text>
+                    </view>
+                </view>
+            </view>
+
+            <view class="top_line">
+                <view class="line_left">
+                    <text class="fa fa-check-square-o fa-lg"></text>
+                </view>
+                <view class="line_right">
+                    <view class="line_right_view">
+                        <text class="line_right_text">预约成功，{{_reservationStateDis}}</text>
+                    </view>
+                </view>
+            </view>
+
+            <view class="top_line3">
+                <view class="line_left">
+                    <text class="fa fa-jpy fa-lg"></text>
+                </view>
+                <view class="line3_right">
+                    <view class="line3_right_view">
+                        <text class="line3_right_text">{{_reservationPianoPrice}}</text>
+                    </view>
+                </view>
+            </view>
+
+        </view>
+    </view>
+
+    <view class="middle">
+        <view class = "middle_image">
+            <canvas class = "middle_image_QRcode"  canvas-id="reservationDetailQr"></canvas>
+        </view>
+    </view>
+
+    <!--<view class="bottom" wx:if="{{!_refundDisable}}">-->
+        <!--<button class="bottom_btn" disabled="{{_refundDisable}}" bindtap="bindRefund">-->
+            <!--退订-->
+        <!--</button>-->
+    <!--</view>-->
+</view>
