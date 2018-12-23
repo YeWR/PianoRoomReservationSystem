@@ -1683,3 +1683,5 @@ exports.SearchNotice = SearchNotice;
 exports.SearchLongItem = SearchLongItem;
 exports.AddLongItem = AddLongItem;
 exports.DeleteLongItem = DeleteLongItem;
+
+exports.getDateNum = getDateNum;
