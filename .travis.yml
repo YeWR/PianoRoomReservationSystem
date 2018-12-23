@@ -28,7 +28,7 @@ script:
     - npm run build:prod
     - cd ../back_end
     - mv mysqlTestConfig.json mysqlConfig.json
-    - mysql -uroot test < ~/test.sql
+    - mysql -uroot test < ./test.sql
     - mocha test/test_interface.js --exit
-    - mysql -uroot test < ~/test.sql
+    - mysql -uroot test < ./test.sql
     - mocha test/test_database.js --exit
