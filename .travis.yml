@@ -21,6 +21,8 @@ before_install:
     - tar xvf secrets.tar
 install:
     - npm install
+    - cd ../front_end_manage
+    - npm install
 script:
     - npm run unit
     - npm run build:prod
