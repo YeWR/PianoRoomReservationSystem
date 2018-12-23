@@ -3,6 +3,8 @@ const dataBase = require('../views/dataBase');
 const app = require('../app');
 const request = require('supertest').agent(app.listen());
 
+let uuid = ['4fc7520005ab11e99aab63509163c297','4fc7520005ab11e99aab63509163csda']
+
 const testUser = [{
     phoneNumber: "13220167398",
     validateCode: "1234",
@@ -29,6 +31,8 @@ const testRoom =[{
     type:'test',
     status:1
 }]
+
+let timeLength = 84;
 
 describe('#dataBase',()=>{
     describe('ChangeUserStatus',()=>{
@@ -138,7 +142,7 @@ describe('#dataBase',()=>{
             info = await dataBase.SocietyUserLogin(testUser[1].phoneNumber,testUser[1].validateCode);
             console.log(info)
             expect(info.success).to.equal(true);
-            expect(info.data).to.equal(1);
+            expect(info.username).to.equal(1);
         });
         it('fail1',async () =>{
             let info = await dataBase.SetLoginMsg(testUser[1].phoneNumber,testUser[1].validateCode);
@@ -265,6 +269,35 @@ describe('#dataBase',()=>{
             expect(result.success).to.equal(false);
         });
     })
+    describe('preparePianoForRule',()=>{
+        it('success',async () =>{
+            let now_date = new Date();
+            now_date.setDate(now_date.getDate())
+            now_date.setHours(now_date.getHours())
+            let result = await dataBase.preparePianoForRule(4,0,10,now_date);
+            expect(result.success).to.equal(true);
+            let res = await dataBase.GetPianoRoomAll()
+            console.log(res.data[3].piano_list)
+            for(let i = 0; i<10; i++){
+                expect(res.data[3].piano_list.data[i]).to.equal(50)
+            }
+        });
+        it('fail1',async () =>{
+            let now_date = new Date();
+            now_date.setDate(now_date.getDate())
+            now_date.setHours(now_date.getHours())
+            let result = await dataBase.preparePianoForRule(6,0,5,now_date)
+            expect(result.success).to.equal(false);
+            expect(result.info).to.equal("琴房不存在");         
+        });
+        it('fail2',async () =>{
+            let now_date = new Date();
+            now_date.setDate(now_date.getDate())
+            now_date.setHours(now_date.getHours())
+            let result = await dataBase.preparePianoForRule(1,0,10,now_date)
+            expect(result.success).to.equal(false);
+        });
+    })
     // to do
     describe('ChangePianoRule',()=>{
         it('success',async () =>{
@@ -284,57 +317,125 @@ describe('#dataBase',()=>{
             expect(result.info).to.equal("琴房不存在");         
         });
     })
-    // to change
-    // describe('InsertItem',()=>{
-    //     it('success',async () =>{
-    //         let now_date = new Date();
-    //         now_date.setDate(now_date.getDate())
-    //         now_date.setHours(now_date.getHours())
-    //         let result = await dataBase.ChangePianoRule(1,0,10,0,1);
-    //         expect(result.success).to.equal(true);
-    //         result = await dataBase.GetPianoRoomInfo(1,now_date)
-    //         for(let i = 0; i<10; i++){
-    //             expect(result.data.piano_list[i]).to.equal(1)
-    //         }
-    //     });
-    //     it('fail1',async () =>{
-    //         let result = await dataBase.preparePianoForInsert(6,0,5,0,1)
-    //         expect(result.success).to.equal(false);
-    //         expect(result.info).to.equal("琴房不存在");         
-    //     });
-    // })
-    // describe('InsertTempItem',()=>{
-    //     it('success',async () =>{
-    //         let now_date = new Date();
-    //         now_date.setDate(now_date.getDate())
-    //         now_date.setHours(now_date.getHours())
-    //         let result = await dataBase.ChangePianoRule(1,0,10,0,1);
-    //         expect(result.success).to.equal(true);
-    //         result = await dataBase.GetPianoRoomInfo(1,now_date)
-    //         for(let i = 0; i<10; i++){
-    //             expect(result.data.piano_list[i]).to.equal(1)
-    //         }
-    //     });
-    //     it('fail1',async () =>{
-    //         let result = await dataBase.preparePianoForInsert(6,0,5,0,1)
-    //         expect(result.success).to.equal(false);
-    //         expect(result.info).to.equal("琴房不存在");         
-    //     });
-    // })
-    describe('ItemCheckin',()=>{
+    describe('InsertItem',()=>{
         it('success',async () =>{
-            // to do
-            
-            let result = await dataBase.ItemCheckin();
-            expect(result.data.length).to.equal(2);
+            let res = await dataBase.GetUserUuidByNumber(testUser[0].phoneNumber);
+            let now_date = new Date();
+            now_date.setDate(now_date.getDate())
+            now_date.setHours(now_date.getHours())
+            let date = now_date.getFullYear()+'-'+now_date.getMonth()+'-'+now_date.getDate()+' '+now_date.getHours()+':'+now_date.getMinutes()+':'+now_date.getSeconds();
+            let result = await dataBase.InsertItem(date,res.data,2,1,0,50,10,0,uuid[0]);
+            expect(result.success).to.equal(true);
         });
         it('fail1',async () =>{
-            // 首先insert
-            
-            let result = await dataBase.ItemCheckin();
-            expect(result.data.length).to.equal(2);
+            let res = await dataBase.GetUserUuidByNumber(testUser[0].phoneNumber);
+            let now_date = new Date();
+            now_date.setDate(now_date.getDate())
+            now_date.setHours(now_date.getHours())
+            let date = now_date.getFullYear()+'-'+now_date.getMonth()+'-'+now_date.getDate();
+            let result = await dataBase.InsertItem(date,res.data,2,0,0,50,10,0,uuid[1]);
+            expect(result.success).to.equal(false);
+            expect(result.info).to.equal("预约失败");         
         });
-    })    
+    })
+    describe('GetItem',()=>{
+        it('success',async () =>{
+            let res = await dataBase.GetUserUuidByNumber(testUser[0].phoneNumber);
+            let result = await dataBase.GetItem(res.data);
+            expect(result.data[0].item_username).to.equal(res.data);
+        });
+        it('fail1',async () =>{
+            let result = await dataBase.GetItem("");
+            expect(result.data.length).to.equal(0);        
+        });
+    })
+    describe('ItemCheckin',()=>{
+        it('success',async () =>{
+            let res = await dataBase.GetUserUuidByNumber(testUser[0].phoneNumber);
+            let result = await dataBase.GetItem(res.data);
+            result = await dataBase.ItemCheckin(result.data[0].item_uuid);
+            expect(result.success).to.equal(true);
+            result = await dataBase.GetItem(res.data);
+            expect(result.data[0].item_type).to.equal(2);
+        });
+        it('fail1',async () =>{
+            let result = await dataBase.ItemCheckin("");
+            expect(result.success).to.equal(false)
+        });
+        it('fail2',async () =>{
+            let res = await dataBase.GetUserUuidByNumber(testUser[0].phoneNumber);
+            let result = await dataBase.GetItem(res.data);
+            result = await dataBase.ItemCheckin(result.data[0].item_uuid);
+            expect(result.success).to.equal(false);
+        });
+    })
+    describe('ItemPaySuccess',()=>{
+        it('success',async () =>{
+            let res = await dataBase.GetUserUuidByNumber(testUser[1].phoneNumber);
+            let now_date = new Date();
+            now_date.setDate(now_date.getDate())
+            now_date.setHours(now_date.getHours())
+            let date = now_date.getFullYear()+'-'+now_date.getMonth()+'-'+now_date.getDate()+' '+now_date.getHours()+':'+now_date.getMinutes()+':'+now_date.getSeconds();
+            let result = await dataBase.InsertItem(date,res.data,3,3,0,50,10,0,'4fc7520005ab11e99aab63509163csda');
+            expect(result.success).to.equal(true);
+
+            res = await dataBase.GetUserUuidByNumber(testUser[0].phoneNumber);
+            result = await dataBase.GetItem(res.data);
+            result = await dataBase.ItemPaySuccess(result.data[0].item_uuid);
+            expect(result.success).to.equal(true);
+            result = await dataBase.GetItem(res.data);
+            expect(result.data[0].item_type).to.equal(1);
+        });
+        it('fail1',async () =>{
+            let result = await dataBase.ItemPaySuccess("");
+            expect(result.success).to.equal(false)
+        });
+    })
+    describe('SearchItem',()=>{
+        it('success',async () =>{
+            let res = await dataBase.GetUserUuidByNumber(testUser[0].phoneNumber);
+            console.log(res)
+            let result = await dataBase.SearchItem(10,0,res.data,"","",1,"",null);
+            expect(result.count).to.equal(1)
+        });
+        it('fail1',async () =>{
+            let res = await dataBase.GetUserUuidByNumber(testUser[0].phoneNumber);
+            let result = await dataBase.SearchItem(10,0,"","","","","","");
+            expect(result.count).to.equal(0)
+        });
+    })
+    describe('GetItemByUuid',()=>{
+        it('success',async () =>{
+            let result = await dataBase.GetItemByUuid(uuid[0]);
+            expect(result.data.item_uuid).to.equal(uuid[0])
+        });
+        it('fail1',async () =>{
+            let result = await dataBase.GetItemByUuid("");
+            expect(result.data).to.equal(null)
+        });
+    })
+    describe('preparePianoForDel',()=>{
+        it('success',async () =>{
+            let now_date = new Date()
+            let result = await dataBase.GetItemByUuid(uuid[0]);
+            result = await dataBase.preparePianoForDel(result.data.item_roomId,result.data.item_begin,result.data.item_duration,now_date);
+            expect(result.success).to.equal(true)
+        });
+        it('fail1',async () =>{
+            let now_date = new Date()
+            let result = await dataBase.GetItemByUuid(uuid[0]);
+            result = await dataBase.preparePianoForDel(10,result.data.item_begin,result.data.item_duration,now_date);
+            expect(result.success).to.equal(false)
+        });
+    })
+    describe('DeleteItem',()=>{
+        it('success',async () =>{
+            let result = await dataBase.DeleteItem(uuid[0]);
+            expect(result.success).to.equal(true)
+            result = await dataBase.GetItemByUuid(uuid[0]);
+            expect(result.data.item_type).to.equal(0)
+        });
+    })
     describe('GetNoticeAll',()=>{
         it('success',async () =>{
             let result = await dataBase.GetNoticeAll();
@@ -342,15 +443,20 @@ describe('#dataBase',()=>{
         });
     })
     describe('SearchNotice',()=>{
-        it('success',async () =>{
-            let result = await dataBase.SearchNotice(2,0,null,null,null);
-            console.log(result)
-            expect(result.data.notice_id).to.equal(1);
+        it('success1',async () =>{
+            let result = await dataBase.SearchNotice(10,0,null,null,null);
+            expect(result.count).to.equal(2);
+        });
+        it('success2',async () =>{
+            let result = await dataBase.SearchNotice(10,0,null,'小吴同学',null);
+            expect(result.count).to.equal(2);
+            for(let i = 0; i<result.count; i++){
+                expect(result.data[i].notice_auth).to.equal('小吴同学');
+            }
         });
         it('fail1',async () =>{
-            let result = await dataBase.SearchNotice(2,0,null,null,null);
-            console.log(result)
-            expect(result).to.equal(1);
+            let result = await dataBase.SearchNotice(10,0,null,"to test",null);
+            expect(result.count).to.equal(0);
         });
     })
     describe('GetNoticeInfo',()=>{
@@ -381,6 +487,40 @@ describe('#dataBase',()=>{
             let result = await dataBase.DeleteNotice(1);
             result = await dataBase.GetNoticeInfo(1);
             expect(result.data.notice_type).to.equal(0);
+        });
+    })
+    describe('SearchLongItem',()=>{
+        it('success',async () =>{
+            let res = await dataBase.GetUserUuidByNumber(testUser[0].phoneNumber);
+            let result = await dataBase.AddLongItem(res.data,0,1,4,20,10);
+            result = await dataBase.SearchLongItem(10,0,res.data,"","","");
+            expect(result.count).to.equal(1);
+        });
+    })
+    describe('AddLongItem',()=>{
+        it('success',async () =>{
+            let res = await dataBase.GetUserUuidByNumber(testUser[0].phoneNumber);
+            let result = await dataBase.AddLongItem(res.data,0,1,4,40,10);
+            expect(result.success).to.equal(true);
+        });
+        it('fail1',async () =>{
+            let result = await dataBase.AddLongItem(uuid[0],0,1,4,20,10);
+            expect(result.success).to.equal(false);
+        });
+        // to do
+        // it('fail2',async () =>{
+        //     let res = await dataBase.GetUserUuidByNumber(testUser[0].phoneNumber);
+        //     let result = await dataBase.AddLongItem(res.data,0,1,4,20,10);
+        //     expect(result.success).to.equal(false);
+        // });
+    })
+    describe('DeleteLongItem',()=>{
+        it('success',async () =>{
+            let res = await dataBase.GetUserUuidByNumber(testUser[0].phoneNumber);
+            let result1 = await dataBase.SearchLongItem(10,0,res.data,"","","");
+            let result = await dataBase.DeleteLongItem(1);
+            let result2 = await dataBase.SearchLongItem(10,0,res.data,"","","");
+            expect(result1.count).to.equal(result2.count+1);
         });
     })
 });
