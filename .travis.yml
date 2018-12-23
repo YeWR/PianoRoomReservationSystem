@@ -4,6 +4,8 @@ node_js: stable
 branches:
     only:
     - master
+services:
+    - mysql
 addons:
   chrome: stable
 cache:
@@ -14,6 +16,9 @@ cache:
 before_install:
     - cd front_end_manage
     - export TZ='Asia/Shanghai' # 更改时区
+    - cd ../back_end
+    - openssl aes-256-cbc -K $encrypted_2d24de935b81_key -iv $encrypted_2d24de935b81_iv -in secrets.tar.enc -out secrets.tar -d
+    - tar xvf secrets.tar
 install:
     - npm install
 script:
