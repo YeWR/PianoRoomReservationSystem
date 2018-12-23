@@ -81,6 +81,19 @@ const routers = router.get("/list", async (ctx, next) => {
         };
         return;
     }
+    //检查现有长期预约
+    let longItemResult = await dataBase.SearchLongItem(2147483647,0,null,request.room,request.week,null);
+    for(let i of longItemResult.data)
+    {
+        if(i.item_long_begin > request.end && (i.item_long_begin+i.item_long_duration) < request.start)
+        {
+            ctx.response.status = 400;
+            ctx.response.body = {
+                "info": "与现有长期预约冲突!"
+            };
+            return;
+        }
+    }
     //检查规则
     let result = await dataBase.CheckPianoRule(request.room,request.start,request.start+request.end,request.week);
     console.log(result);
