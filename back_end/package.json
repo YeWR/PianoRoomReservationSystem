@@ -4,7 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "test": "mocha --exit"
+    "test": "mysql -uroot -p test < ~/test.sql && mv mysqlConfig.json mysqlConfigOld.json && mv mysqlTestConfig.json mysqlConfig.json && ((mocha test/test_interface.js --exit && mysql -uroot -p test < ~/test.sql && mocha test/test_database.js --exit) || : ) && mv mysqlConfig.json mysqlTestConfig.json && mv mysqlConfigOld.json mysqlConfig.json"
   },
   "author": "",
   "license": "MIT",
