@@ -15,8 +15,8 @@ cache:
         - back_end/node_modules
         - front_end_manage/node_modules
 before_install:
+    - mysql -e 'CREATE DATABASE IF NOT EXISTS test;'
     - echo "USE mysql;\nUPDATE user SET password=PASSWORD('1234') WHERE user='root';\nFLUSH PRIVILEGES;\n" | mysql -u root
-    - mysql -uroot -p1234 'CREATE DATABASE IF NOT EXISTS test;'
     - cd front_end_manage
     - export TZ='Asia/Shanghai' # 更改时区
     - cd ../back_end
