@@ -6,6 +6,7 @@ branches:
     - master
 services:
     - mysql
+    - redis-server
 addons:
   chrome: stable
 cache:
