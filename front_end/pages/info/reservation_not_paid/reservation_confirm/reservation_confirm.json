@@ -2,6 +2,6 @@
   "enablePullDownRefresh": false,
   "backgroundTextStyle": "light",
   "navigationBarBackgroundColor": "#fff",
-  "navigationBarTitleText": "支付订单",
+  "navigationBarTitleText": "未支付订单",
   "navigationBarTextStyle": "black"
 }

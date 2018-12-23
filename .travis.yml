@@ -4,6 +4,9 @@ node_js: stable
 branches:
     only:
     - master
+services:
+    - mysql
+    - redis-server
 addons:
   chrome: stable
 cache:
@@ -12,10 +15,24 @@ cache:
         - back_end/node_modules
         - front_end_manage/node_modules
 before_install:
-    - cd front_end_manage
     - export TZ='Asia/Shanghai' # 更改时区
+    - echo "USE mysql;\nUPDATE user SET password=PASSWORD('1234') WHERE user='root';\nFLUSH PRIVILEGES;\n" | mysql -u root	
+    - echo "SET global time_zone = '+8:00';\nSET time_zone = '+8:00';\nFLUSH PRIVILEGES;\n" | mysql -uroot -p1234
+    - mysql -uroot -p1234 -e 'CREATE DATABASE IF NOT EXISTS test;'
+    - cd front_end_manage
+    - cd ../back_end
+    - openssl aes-256-cbc -K $encrypted_2d24de935b81_key -iv $encrypted_2d24de935b81_iv -in secrets.tar.enc -out secrets.tar -d
+    - tar xvf secrets.tar
 install:
+    - npm install
+    - cd ../front_end_manage
     - npm install
 script:
     - npm run unit
     - npm run build:prod
+    - cd ../back_end
+    - mv mysqlTestConfig.json mysqlConfig.json
+    - mysql -uroot -p1234 test < ./test.sql
+    - mocha test/test_interface.js --exit
+    - mysql -uroot -p1234 test < ./test.sql
+    - mocha test/test_database.js --exit

@@ -2,7 +2,7 @@
 <view class="container">
     <view class="up_board">
         <text class="reserve_title">
-            预约信息
+            预约详情
         </text>
     </view>
     <view class="top">

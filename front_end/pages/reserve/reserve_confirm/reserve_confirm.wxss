@@ -1,5 +1,19 @@
 /* pages/reserve/reserve_confirm/reserve_confirm.wxss */
+.attention{
+    height: 10%;
+    width: 100%;
+    background-color: white;
+    text-align: center;
+    line-height: 150%;
+}
+.attention-line2{
+    font-weight: bolder;
+}
+.attention-line4{
+    color: red;
+}
 .reserve-card {
+    box-shadow: 5rpx 5rpx 10rpx 1rpx rgba(187, 187, 187, 1);
     align-items: center;
     background-color: white;
     margin-top: 10%;
@@ -14,7 +28,7 @@
 .date-view {
     margin-top: 4%;
     width: 90%;
-    height: 12%;
+    height: 8%;
     display: flex;
     color: rgba(102, 8, 116, 1);
 
@@ -50,12 +64,12 @@
     font-weight: bolder;
 }
 .reserve_btn_view {
-    margin-top:5%;
+    margin-top:10%;
     width: 80%;
     color: white;
     font-size:30rpx;
     border-radius: 12rpx;
-    background-color: rgba(102, 8, 116, 0.9);
+    /*background-color: rgba(102, 8, 116, 0.9);*/
     font-family: Arial;
     border: 2rpx solid rgba(187, 187, 187, 1);
 }
@@ -67,4 +81,46 @@
     font-size: 28rpx;
     font-family: Arial;
     background-color: rgba(102, 8, 116, 0.9);
+}
+.not_reserve_btn_view{
+    margin-top:3%;
+    display: flex;
+    width: 80%;
+}
+.unreserve_btn_view{
+    margin-top:5%;
+    width: 45%;
+    color: white;
+    font-size:30rpx;
+    border-radius: 12rpx;
+
+    font-family: Arial;
+    border: 2rpx solid rgba(187, 187, 187, 1);
+}
+.unreserve_btn{
+    /*margin-top: 3%;*/
+    text-align: center;
+    color: white;
+    font-size: 28rpx;
+    font-family: Arial;
+    background-color:rgba(187, 187, 187, 1);
+}
+.backreserve_btn_view{
+    margin-left: 10%;
+    margin-top:5%;
+    width: 45%;
+    color: white;
+    font-size:30rpx;
+    border-radius: 12rpx;
+
+    font-family: Arial;
+    border: 2rpx solid rgba(187, 187, 187, 1);
+}
+.backreserve_btn{
+    /*margin-top: 3%;*/
+    text-align: center;
+    color: white;
+    font-size: 28rpx;
+    font-family: Arial;
+    background-color:rgba(187, 187, 187, 1);
 }

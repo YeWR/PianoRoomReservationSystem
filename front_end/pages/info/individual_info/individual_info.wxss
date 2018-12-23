@@ -30,6 +30,7 @@
     align-items: center;
     color: #5a5e66;
     font-size: 40rpx;
+    overflow: hidden;
 }
 .card{
     margin-top: 70rpx;

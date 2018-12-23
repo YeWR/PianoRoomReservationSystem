@@ -33,7 +33,7 @@ let ChangeUserStatus = async function(userUuid, userStatus){
         });
     };
     let flag = await test();
-    console.log(flag);
+    // console.log(flag);
     if(flag === 0){
         return {"success":false,
                 "info":errorMsg};
@@ -65,7 +65,7 @@ let GetUserUuidByNumber = async function(userNumber){
         });
     };
     let flag = await test();
-    console.log(flag);
+    // console.log(flag);
     if(flag === 0){
         return {"data":null,
             "info":errorMsg};
@@ -111,7 +111,7 @@ let SearchUser = async function(count, offset, number, name, id, type, status){
     };
     let flag = await test();
     let flagCount = await getUserCount();
-    console.log(flag);
+    // console.log(flag);
     if(flag === 0){
         return {"data":userInfo,
             "count": userCount,
@@ -145,7 +145,7 @@ let GetUserInfo = async function(userUuid){
         });
     };
     let flag = await test();
-    console.log(flag);
+    // console.log(flag);
     if(flag === 0){
         return {"data":userInfo,
             "info":errorMsg};
@@ -181,7 +181,7 @@ let SetRegisterMsg = async function(socTele, socPassword) {
         });
     };
     let flag = await test();
-    console.log(flag);
+    // console.log(flag);
     if(flag === 0){
         return {"success":false,
                 "info":errorMsg};
@@ -214,7 +214,7 @@ let SocietyUserRegister = async function(socType, socId, socRealname, socTele, s
         });
     };
     let res = await checkMsg();
-    console.log(res);
+    // console.log(res);
     if(res === 0){
         return {"success":false,
                 "info":errorMsg};
@@ -241,8 +241,8 @@ let SocietyUserRegister = async function(socType, socId, socRealname, socTele, s
                             resolve(1);
                         }
                         else{
-                            console.log(err);
-                            console.log(info);
+                            // console.log(err);
+                            // console.log(info);
                             errorMsg = "新建用户失败";
                             resolve(0);
                         }
@@ -252,7 +252,7 @@ let SocietyUserRegister = async function(socType, socId, socRealname, socTele, s
         });
     };
     let flag = await test();
-    console.log(flag);
+    // console.log(flag);
     if(flag === 0){
         return {"success":false,
                 "info":errorMsg};
@@ -310,7 +310,7 @@ let CampusUserLogin = async function(type, name, number, uuid) {
         });
     }
     let flag = await test();
-    console.log(flag);
+    // console.log(flag);
     if(flag === 0){
         return {"success":false,
             "info":errorMsg};
@@ -347,7 +347,7 @@ let SetLoginMsg = async function(socTele, socPassword) {
         });
     };
     let flag = await test();
-    console.log(flag);
+    // console.log(flag);
     if(flag === 0){
         return {"success":false,
                 "info":errorMsg};
@@ -404,7 +404,7 @@ let SocietyUserLogin = async function(socTele, socPassword) {
         });
     };
     let flag = await test();
-    console.log(flag);
+    // console.log(flag);
     if(flag === 0){
         return {"success":false,
                 "username":realName,
@@ -446,7 +446,7 @@ let InsertPiano = async function(pianoRoom, pianoInfo, pianoStuvalue, pianoTeava
         });
     };
     let flag = await test();
-    console.log(flag);
+    // console.log(flag);
     if(flag === 0){
         return {"success":false,
                 "info":errorMsg};
@@ -468,8 +468,8 @@ let UpdatePianoInfo = async function(pianoId, pianoRoom, pianoInfo, pianoStuvalu
         piano_type: pianoType,
         piano_status: pianoStatus,
     };
-    console.log("Updatepianoinfo");
-    console.log(info);
+    // console.log("Updatepianoinfo");
+    // console.log(info);
     for(let i in info)
     {
         if(info[i] === undefined || info[i] === null || info[i] === "")
@@ -477,8 +477,8 @@ let UpdatePianoInfo = async function(pianoId, pianoRoom, pianoInfo, pianoStuvalu
             delete info[i];
         }
     }
-    console.log("Updatepianoinfo");
-    console.log(info);
+    // console.log("Updatepianoinfo");
+    // console.log(info);
     let test = function(){
         return new Promise(resolve =>{
             db.where({ piano_id: pianoId }).update('piano', info, function (err) {
@@ -486,7 +486,7 @@ let UpdatePianoInfo = async function(pianoId, pianoRoom, pianoInfo, pianoStuvalu
                     resolve(1);
                 else
                 {
-                    console.log(err);
+                    // console.log(err);
                     errorMsg = "修改琴房信息失败";
                     resolve(0);
                 }
@@ -494,7 +494,7 @@ let UpdatePianoInfo = async function(pianoId, pianoRoom, pianoInfo, pianoStuvalu
         });
     };
     let flag = await test();
-    console.log(flag);
+    // console.log(flag);
     if(flag === 0){
         return {"success":false,
             "info":errorMsg};
@@ -517,7 +517,7 @@ let GetPianoRoomAll = async function(){
         });
     };
     let flag = await test();
-    console.log(flag);
+    // console.log(flag);
     if(flag === 0){
         return {"data":pianoInfo,
                 "info":errorMsg};
@@ -562,7 +562,7 @@ let SearchPiano = async function(count, offset, piano_room, piano_type, piano_id
     };
     let flag = await test();
     let flagCount = await getPianoCount();
-    console.log(flag);
+    // console.log(flag);
     if(flag === 0){
         return {"data":pianoInfo,
             "count": pianoCount,
@@ -641,7 +641,7 @@ let GetPianoRoomInfo = async function(pianoId, date) {
         });
     };
     let flag = await test();
-    console.log(flag);
+    // console.log(flag);
     if(flag === 0){
         return {"data":pianoInfoRes,
                 "info":errorMsg};
@@ -683,7 +683,7 @@ let preparePianoForInsert = async function(itemRoomId, itemBegin, itemDuration, 
         });
     };
     let flag = await test();
-    console.log(flag);
+    // console.log(flag);
     if(flag === 0){
         return {"success":false,
                 "info":errorMsg};
@@ -763,7 +763,7 @@ let preparePianoForRule = async function(itemRoomId, itemBegin, itemDuration, it
         });
     };
     let flag = await test();
-    console.log(flag);
+    // console.log(flag);
     if(flag === 0){
         return {"success":false,
             "info":errorMsg};
@@ -838,7 +838,7 @@ let ChangePianoRule = async function(itemRoomId, itemBegin, itemDuration, itemDa
         });
     };
     let flag = await test();
-    console.log(flag);
+    // console.log(flag);
     if(flag === 0){
         return {"success":false,
             "info":errorMsg};
@@ -916,7 +916,7 @@ let CheckPianoRule = async function(itemRoomId, itemBegin, itemDuration, itemDay
         });
     };
     let flag = await test();
-    console.log(flag);
+    // console.log(flag);
     if(flag === 0){
         return {"success":false,
             "info":errorMsg};
@@ -954,11 +954,13 @@ let InsertItem = async function(itemDate, itemUsername, itemRoomId, itemType, it
                     item_begin: itemBegin,
                     item_uuid: itemUuid
                 }
+                console.log(_info)
                 db.insert('item', _info, function (err, info) {
                     if(!err){
                         resolve(1);
                     }
                     else{
+                        console.log(err)
                         errorMsg = "新建订单失败";
                         resolve(0);
                     }
@@ -971,7 +973,7 @@ let InsertItem = async function(itemDate, itemUsername, itemRoomId, itemType, it
         });
     };
     let flag = await test();
-    console.log(flag);
+    // console.log(flag);
     if(flag === 0){
         return {"success":false,
                 "info":errorMsg};
@@ -1035,7 +1037,7 @@ let ItemCheckin = async function(itemUuid){
         });
     };
     let flag = await test();
-    console.log(flag);
+    // console.log(flag);
     if(flag === 0){
         return {"success": false,
             "info":errorMsg};
@@ -1097,7 +1099,7 @@ let ItemPaySuccess = async function(itemUuid){
         });
     };
     let flag = await test();
-    console.log(flag);
+    // console.log(flag);
     if(flag === 0){
         return {"success": false,
             "info":errorMsg};
@@ -1130,7 +1132,7 @@ let GetItem = async function(itemUsername){
         });
     };
     let flag = await test();
-    console.log(flag);
+    // console.log(flag);
     if(flag === 0){
         return {"data":itemInfo,
                 "info":errorMsg};
@@ -1179,7 +1181,7 @@ let SearchItem = async function(count, offset, username, roomId, member, type, o
                 .limit(count, offset)
                 .order_by(sortOrder)
                 .get('item', function (err, res, fields) {
-                    console.log(res);
+                console.log(err)
                 let _data = JSON.stringify(res);
                 let _info = JSON.parse(_data);
                 itemInfo = _info;
@@ -1193,6 +1195,7 @@ let SearchItem = async function(count, offset, username, roomId, member, type, o
                 .where(dateQuery)
                 .where('item_type', type)
                 .count('item', function (err, res, fields) {
+                    console.log(err)
                     itemCount = res;
                     resolve(1);
                 });
@@ -1232,7 +1235,7 @@ let GetItemByUuid = async function(itemUuid){
         });
     };
     let flag = await test();
-    console.log(flag);
+    // console.log(flag);
     if(flag === 0){
         return {"data":itemInfo,
                 "info":errorMsg};
@@ -1270,7 +1273,7 @@ let preparePianoForDel = async function(itemRoomId, itemBegin, itemDuration, ite
         });
     };
     let flag = await test();
-    console.log(flag);
+    // console.log(flag);
     if(flag === 0){
         return {"success":false,
                 "info":errorMsg};
@@ -1346,7 +1349,7 @@ let DeleteItem = async function(itemUuid){
         });
     };
     let flag = await test();
-    console.log(flag);
+    // console.log(flag);
     if(flag === 0){
         return {"success":false,
                 "info":errorMsg};
@@ -1370,7 +1373,7 @@ let GetNoticeAll = async function(){
         });
     };
     let flag = await test();
-    console.log(flag);
+    // console.log(flag);
     if(flag === 0){
         return {"data":noticeInfo,
                 "info":errorMsg};
@@ -1427,7 +1430,7 @@ let SearchNotice = async function(count, offset, title, author, order){
     };
     let flag = await test();
     let flagCount = await getNoticeCount();
-    console.log(flag);
+    // console.log(flag);
     return {"data":noticeInfo,
         "count": noticeCount,
         "info":errorMsg};
@@ -1454,7 +1457,7 @@ let GetNoticeInfo = async function(noticeId){
         });
     };
     let flag = await test();
-    console.log(flag);
+    // console.log(flag);
     if(flag === 0){
         return {"data":noticeInfo,
                 "info":errorMsg};
@@ -1488,7 +1491,7 @@ let InsertNotice = async function(noticeTitle, noticeCont, noticeTime, noticeAut
         });
     };
     let flag = await test();
-    console.log(flag);
+    // console.log(flag);
     if(flag === 0){
         return {"success":false,
                 "info":errorMsg};
@@ -1514,7 +1517,7 @@ let DeleteNotice = async function(noticeId) {
         });
     };
     let flag = await test();
-    console.log(flag);
+    // console.log(flag);
     if (flag === 0) {
         return {
             "success": false,
@@ -1593,6 +1596,7 @@ let AddLongItem = async function(userUuid, userType, roomId, week, begin, durati
                     resolve(1);
                 }
                 else{
+                    console.log(err)
                     errorMsg = "新建长期预约失败";
                     resolve(0);
                 }
@@ -1600,7 +1604,7 @@ let AddLongItem = async function(userUuid, userType, roomId, week, begin, durati
         });
     };
     let flag = await test();
-    console.log(flag);
+    // console.log(flag);
     if(flag === 0){
         return {"success":false,
             "info":errorMsg};
@@ -1626,7 +1630,7 @@ let DeleteLongItem = async function(longItemId){
         });
     };
     let flag = await test();
-    console.log(flag);
+    // console.log(flag);
     if(flag === 0){
         return {"success":false,
             "info":errorMsg};
@@ -1684,4 +1688,5 @@ exports.SearchLongItem = SearchLongItem;
 exports.AddLongItem = AddLongItem;
 exports.DeleteLongItem = DeleteLongItem;
 
+// to test
 exports.getDateNum = getDateNum;

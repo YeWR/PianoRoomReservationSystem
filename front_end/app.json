@@ -49,7 +49,7 @@
         "selectedIconPath": "images/nav/reserve_select.png",
         "iconPath": "images/nav/reserve.png",
         "pagePath": "pages/reserve/reserve",
-        "text": "资源预约"
+        "text": "琴房预约"
       },
       {
         "selectedIconPath": "images/nav/info_select.png",
