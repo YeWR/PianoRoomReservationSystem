@@ -504,15 +504,9 @@ describe('#dataBase',()=>{
             expect(result.success).to.equal(true);
         });
         it('fail1',async () =>{
-            let result = await dataBase.AddLongItem(uuid[0],0,1,4,20,10);
+            let result = await dataBase.AddLongItem(uuid[0],0,1,4,40,10);
             expect(result.success).to.equal(false);
         });
-        // to do
-        // it('fail2',async () =>{
-        //     let res = await dataBase.GetUserUuidByNumber(testUser[0].phoneNumber);
-        //     let result = await dataBase.AddLongItem(res.data,0,1,4,20,10);
-        //     expect(result.success).to.equal(false);
-        // });
     })
     describe('DeleteLongItem',()=>{
         it('success',async () =>{
