@@ -1,6 +1,6 @@
 let file = require("fs");
 let Db = require("mysql-activerecord");
-
+let Redlock = require('redlock');
 let configFile = "mysqlConfig.json";
 let config = JSON.parse(file.readFileSync(configFile));
 
@@ -14,32 +14,65 @@ let db = new Db.Adapter({
 
 let redis = require("redis");
 let client = redis.createClient(config.redisPort,config.serverIp);
-
+let redlock = new Redlock([client]);
 let timeLength = 84;
+let totalTime = 10000
+let intervalTime = 50
+
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms))
+}
 
 let ChangeUserStatus = async function(userUuid, userStatus){
     let errorMsg = "";
-    let test = function(){
-        return new Promise(resolve =>{
-            db.where({uuid: userUuid }).update('user', {status: userStatus}, function (err) {
-                if(!err){
-                    resolve(1);
+    let lock = function(){
+        return new Promise(async function(resolve){
+            let tag = 0;
+            for(let j = 0; j<200; j++){
+                redlock.lock(userUuid, totalTime).then(async function(lock){
+                    tag = 1
+                    // to do
+                    let test = function(){
+                        return new Promise(resolve =>{
+                            db.where({uuid: userUuid }).update('user', {status: userStatus}, function (err) {
+                                if(!err){
+                                    resolve(1);
+                                }
+                                else{
+                                    errorMsg = "更改失败";
+                                    resolve(0);
+                                }
+                            });
+                        });
+                    };
+                    let flag = await test();
+                    if(flag === 0){
+                        lock.unlock().catch(function(err){})
+                        resolve(0)
+                    }
+                    if(flag === 1){
+                        lock.unlock().catch(function(err){})
+                        resolve(1)
+                    }
+                }).catch(()=>{})
+                if(tag === 1){
+                    break
                 }
-                else{
-                    errorMsg = "更改失败";
-                    resolve(0);
-                }
-            });
-        });
-    };
-    let flag = await test();
-    // console.log(flag);
-    if(flag === 0){
+                await sleep(intervalTime)
+            }
+            if(tag === 0){
+                errorMsg = "请求超时"
+                resolve(0)
+            }
+        })
+    }
+    let res = await lock()
+    if(res === 1){
+        return {"data":true};
+    }
+    else{
         return {"success":false,
                 "info":errorMsg};
-    }
-    if(flag === 1){
-        return {"success":true};
     }
 }
 
@@ -241,8 +274,6 @@ let SocietyUserRegister = async function(socType, socId, socRealname, socTele, s
                             resolve(1);
                         }
                         else{
-                            // console.log(err);
-                            // console.log(info);
                             errorMsg = "新建用户失败";
                             resolve(0);
                         }
@@ -468,8 +499,6 @@ let UpdatePianoInfo = async function(pianoId, pianoRoom, pianoInfo, pianoStuvalu
         piano_type: pianoType,
         piano_status: pianoStatus,
     };
-    // console.log("Updatepianoinfo");
-    // console.log(info);
     for(let i in info)
     {
         if(info[i] === undefined || info[i] === null || info[i] === "")
@@ -477,30 +506,55 @@ let UpdatePianoInfo = async function(pianoId, pianoRoom, pianoInfo, pianoStuvalu
             delete info[i];
         }
     }
-    // console.log("Updatepianoinfo");
-    // console.log(info);
-    let test = function(){
-        return new Promise(resolve =>{
-            db.where({ piano_id: pianoId }).update('piano', info, function (err) {
-                if(!err)
-                    resolve(1);
-                else
-                {
-                    // console.log(err);
-                    errorMsg = "修改琴房信息失败";
-                    resolve(0);
+    let lock = function(){
+        return new Promise(async function(resolve){
+            let tag = 0;
+            for(let j = 0; j<200; j++){
+                redlock.lock(pianoId.toString(), totalTime).then(async function(lock){
+                    tag = 1
+                    // to do
+                    let test = function(){
+                        return new Promise(resolve =>{
+                            db.where({ piano_id: pianoId }).update('piano', info, function (err) {
+                                if(!err)
+                                    resolve(1);
+                                else
+                                {
+                                    console.log(err)
+                                    errorMsg = "修改琴房信息失败";
+                                    resolve(0);
+                                }
+                            });
+                        });
+                    };
+                    let flag = await test();
+                    if(flag === 0){
+                        lock.unlock().catch(function(err){})
+                        resolve(0)
+                    }
+                    if(flag === 1){
+                        lock.unlock().catch(function(err){})
+                        resolve(1)
+                    }
+                }).catch(()=>{})
+                if(tag === 1){
+                    break
                 }
-            });
-        });
-    };
-    let flag = await test();
-    // console.log(flag);
-    if(flag === 0){
-        return {"success":false,
-            "info":errorMsg};
+                await sleep(intervalTime)
+            }
+            if(tag === 0){
+                errorMsg = "请求超时"
+                resolve(0)
+            }
+        })
     }
-    if(flag === 1){
+    let res = await lock()
+    if(res === 1){
         return {"success":true};
+    }
+    else{
+        return {"success":false,
+                "info":errorMsg};
     }
 };
 
@@ -517,7 +571,6 @@ let GetPianoRoomAll = async function(){
         });
     };
     let flag = await test();
-    // console.log(flag);
     if(flag === 0){
         return {"data":pianoInfo,
                 "info":errorMsg};
@@ -562,7 +615,6 @@ let SearchPiano = async function(count, offset, piano_room, piano_type, piano_id
     };
     let flag = await test();
     let flagCount = await getPianoCount();
-    // console.log(flag);
     if(flag === 0){
         return {"data":pianoInfo,
             "count": pianoCount,
@@ -578,7 +630,6 @@ let SearchPiano = async function(count, offset, piano_room, piano_type, piano_id
 let getDateNum = function(itemDate){
     let item_date = new Date(itemDate);
     let now_date = new Date();
-    //now_date.setHours(now_date.getHours()+8);
     if(now_date.getDate()>item_date.getDate()){
         return -1;
     }
@@ -641,7 +692,6 @@ let GetPianoRoomInfo = async function(pianoId, date) {
         });
     };
     let flag = await test();
-    // console.log(flag);
     if(flag === 0){
         return {"data":pianoInfoRes,
                 "info":errorMsg};
