@@ -3,7 +3,7 @@ const dataBase = require('../views/dataBase');
 const app = require('../app');
 const request = require('supertest').agent(app.listen());
 
-let uuid = ['4fc7520005ab11e99aab63509163c297','4fc7520005ab11e99aab63509163csda']
+let uuid = ['4fc7520005ab11e99aab63509163c297','4fc7520005ab11e99aab63509163csda','sda7520005ab11e99aab63509163c297']
 
 const testUser = [{
     phoneNumber: "13220167398",
@@ -17,6 +17,11 @@ const testUser = [{
     idNumber: "140100199001011234"
 },{
     phoneNumber: "18800121091",
+    validateCode: "1234",
+    realName: "吴海旭",
+    idNumber: "140100199001011234"
+},{
+    phoneNumber: "12234567890",
     validateCode: "1234",
     realName: "吴海旭",
     idNumber: "140100199001011234"
@@ -123,6 +128,20 @@ describe('#dataBase',()=>{
             info = await dataBase.SocietyUserRegister(1,'test',testUser[1].realName,testUser[1].phoneNumber,'test',"");
             expect(info.success).to.equal(false);
             expect(info.info).to.equal("请先发送验证码");
+        });
+    })
+    describe('CampusUserLogin',()=>{
+        it('success1',async () =>{
+            let info = await dataBase.CampusUserLogin(0,testUser[3].realName,testUser[3].phoneNumber,"campus test");
+            expect(info.success).to.equal(true);
+        });
+        it('success2',async () =>{
+            let info = await dataBase.CampusUserLogin(0,testUser[3].realName,testUser[3].phoneNumber,"campus test");
+            expect(info.success).to.equal(true);
+        });
+        it('fail1',async () =>{
+            let info = await dataBase.CampusUserLogin(0,testUser[3].realName,null);
+            expect(info.success).to.equal(false);
         });
     })
     describe('SetLoginMsg',()=>{
@@ -502,10 +521,6 @@ describe('#dataBase',()=>{
             let res = await dataBase.GetUserUuidByNumber(testUser[0].phoneNumber);
             let result = await dataBase.AddLongItem(res.data,0,1,4,40,10);
             expect(result.success).to.equal(true);
-        });
-        it('fail1',async () =>{
-            let result = await dataBase.AddLongItem(uuid[0],0,1,4,40,10);
-            expect(result.success).to.equal(false);
         });
     })
     describe('DeleteLongItem',()=>{
