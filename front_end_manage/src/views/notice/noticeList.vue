@@ -70,16 +70,16 @@
     <el-dialog :title="textMap[dialogStatus]" :visible.sync="newFormVisible">
       <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="70px" style="width: 450px; margin-left:50px;">
         <el-form-item :label="$t('table.title')" prop="title">
-          <el-input v-model="temp.title" :placeholder="$t('标题不可以超过10个字')"/>
+          <el-input v-model="temp.title" :placeholder="$t('item.titleLimit')"/>
         </el-form-item>
         <el-form-item :label="$t('table.author')" prop="author">
-          <el-input v-model="temp.author" :placeholder="$t('作者不可以超过5个字')"/>
+          <el-input v-model="temp.author" :placeholder="$t('item.authorLimit')"/>
         </el-form-item>
         <el-form-item :label="$t('table.date')" prop="timestamp">
           <el-input v-model="temp.timestamp.getFullYear()+'-'+(temp.timestamp.getMonth()+1)+'-'+temp.timestamp.getDate()" disabled = "disabled"/>
         </el-form-item>
         <el-form-item :label="$t('table.content')">
-        <el-input :autosize="{ minRows: 2, maxRows: 5}" v-model="temp.content" type="textarea"  :placeholder="$t('内容不可以超过100字')"/>
+        <el-input :autosize="{ minRows: 2, maxRows: 5}" v-model="temp.content" type="textarea"  :placeholder="$t('item.contentLimit')"/>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">

@@ -124,6 +124,9 @@ export default {
     room:'房间',
     user:'预约人',
     list:'序号',
+    titleLimit:'标题不可以超过10个字',
+    authorLimit:'作者不可以超过5个字',
+    contentLimit:'内容不可以超过100个字',
 },
   navbar: {
     logOut: '退出登录',

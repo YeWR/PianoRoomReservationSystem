@@ -122,6 +122,9 @@ export default {
     room:'room',
     user:'user',
     list:'id',
+    titleLimit:'no more than 10 words',
+    authorLimit:'no more than 5 words',
+    contentLimit:'no more than 100 words',
   },
   navbar: {
     logOut: 'Log Out',
