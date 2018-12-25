@@ -458,7 +458,7 @@ const routers = router.post("/cancel", async (ctx, next) => {
     let clientIP = getUserIp(ctx.req).replace(/::ffff:/, '');
     let itemInfo = await dataBase.GetItemByUuid(uuid);
     console.log(itemInfo);
-    if(itemInfo.data && itemInfo.data.item_type !== 0)
+    if(itemInfo.data &&(itemInfo.data.item_type === 3 || itemInfo.data.item_type === -1))
     {
         let result = await wechatPayment(clientIP, openId, itemInfo.data.item_value, uuid);
         if(result.success)
