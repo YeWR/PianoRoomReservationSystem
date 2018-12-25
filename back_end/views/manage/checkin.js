@@ -4,6 +4,7 @@ const dataBase = require("../dataBase");
 
 const routers = router.get("/", async (ctx, next) => {
     let uuid = ctx.query.id;
+    // add lock in itemCheckin
     let result = await dataBase.ItemCheckin(uuid);
     if(result.success)
     {

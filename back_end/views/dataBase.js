@@ -19,7 +19,7 @@ let timeLength = 84;
 let totalTime = 5000;
 let intervalTime = 50;
 
-function sleep(ms) {
+let sleep = function(ms) {
     return new Promise(resolve => setTimeout(resolve, ms))
 }
 
@@ -2020,3 +2020,4 @@ exports.DeleteLongItem = DeleteLongItem;
 
 // to test
 exports.getDateNum = getDateNum;
+exports.sleep = sleep;
