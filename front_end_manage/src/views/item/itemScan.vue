@@ -26,7 +26,7 @@
         </el-col>
       </div>
     </div>
-    <div v-if='1-flag' class="app-container" style="left: 30%">
+    <div v-else class="app-container" style="left: 30%; position:absolute">
       <el-card class="box-card" style="width: 400px; height: 200px">
         <div slot="header">
           <a class="link-type link-title" target="_blank">

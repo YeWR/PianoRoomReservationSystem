@@ -704,6 +704,13 @@ export default {
       return 1;
     },
     addRule(operate){
+      if(this.temp.week.length === 0){
+        this.$message({
+          type: 'info',
+          message: '请选择星期'
+        });
+        return 0
+      }
       if(!this.checkTime(this.temp.start,this.temp.end)){
         return 0
       }
