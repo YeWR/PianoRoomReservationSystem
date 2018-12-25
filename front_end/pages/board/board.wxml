@@ -89,7 +89,7 @@
                         <text class="bottom_time_text">{{notice.noticeKey}}</text>
                     </view>
 
-                    <view class="bottom_icon">
+                    <view class="bottom_icon_scroll">
                         <view class="fa-icon">
                             <text class="fa fa-chevron-right fa-lg"></text>
                         </view>

@@ -111,7 +111,6 @@ let testItem = [{
     uuid: null
 }];
 
-
 describe('#interfaceUser',()=>{
     describe('userRegister',()=>{
         it('CampusRegister',async () => {
@@ -911,7 +910,6 @@ describe('interfaceManager', ()=>{
     });
 });
 
-
 const md5 = (string) => {
     let rotateLeft = function (lValue, iShiftBits) {
         return (lValue << iShiftBits) | (lValue >>> (32 - iShiftBits));
@@ -1124,4 +1122,3 @@ const md5 = (string) => {
     let tempValue = wordToHex(a) + wordToHex(b) + wordToHex(c) + wordToHex(d);
     return tempValue.toLowerCase();
 };
-
