@@ -39,31 +39,10 @@ let getDateStr = function (date) {
     return dateStr;
 }
 
-let doUpdate = async function(id,buffer, use){
-    let checkUpdate = function(){
-        return new Promise(resolve =>{
-            db.where({piano_id: id}).update('piano',{piano_buffer:buffer, piano_list:use},function(err){
-                if(err){
-                    resolve(0);
-                }
-                else{
-                    resolve(1);
-                }
-            });
-        });
-    };
-    let check = await checkUpdate();
-    if(check === 0){
-        return 0;
-    }
-    else{
-        return 1;
-    }
-}
 
 // 每天23：00更新
 let update = async function(){
-    let now = new Date()
+    let now = new Date();
     let errorMsg = "";
     let pianoInfo;
     let test = function(){
@@ -71,61 +50,40 @@ let update = async function(){
             db.get('piano', function(err, rows, fields) {
                 let _data = JSON.stringify(rows);
                 pianoInfo = JSON.parse(_data);
-                console.log(pianoInfo)
+                let week = (now.getDay()+2)%7;
                 let count = 0;
                 for(let i = 0; i<pianoInfo.length; i++){
-                    let buffer =  ""
-                    for(let j = 1*timeLength; j<(pianoInfo[i].piano_buffer.data).length; j++){
-                        if(pianoInfo[i].piano_buffer.data[j] == '0' || pianoInfo[i].piano_buffer.data[j] == 48){
-                            buffer += '0';
+                    let list = "";
+                    for(let j = 0; j < timeLength * 2; j++)
+                    {
+                        if(pianoInfo[i].piano_list.data[j+timeLength] === '0' || pianoInfo[i].piano_list.data[j+timeLength] ===48){
+                            list += '0';
                         }
-                        else if(pianoInfo[i].piano_buffer.data[j] === '1' || pianoInfo[i].piano_buffer.data[j] == 49)
+                        else if(pianoInfo[i].piano_list.data[j+timeLength] === '1' || pianoInfo[i].piano_list.data[j+timeLength] === 49)
                         {
-                            buffer += '1';
+                            list += '1';
                         }
                         else{
-                            buffer += '2';
+                            list += '2';
                         }
                     }
-                    for(let j = (now.getDay()-1)*timeLength; j<(now.getDay())*timeLength; j++){
-                        if(pianoInfo[i].piano_rule.data[j] == '0' || pianoInfo[i].piano_rule.data[j] == 48){
-                            buffer += '0'
+                    for(let j = week * timeLength; j < (week+1) * timeLength; j++)
+                    {
+                        if(pianoInfo[i].piano_rule.data[j] === '0' || pianoInfo[i].piano_rule.data[j] === 48){
+                            list += '0';
                         }
-                        else if(pianoInfo[i].piano_rule.data[j] === '1' || pianoInfo[i].piano_rule.data[j] == 49)
+                        else if(pianoInfo[i].piano_rule.data[j] === '1' || pianoInfo[i].piano_rule.data[j] === 49)
                         {
-                            buffer += '1';
+                            list += '1';
                         }
                         else{
-                            buffer += '2'
+                            list += '2';
                         }
                     }
-                    let use = "";
-                    for(let j = 1*timeLength; j<(pianoInfo[i].piano_list.data).length; j++){
-                        if(pianoInfo[i].piano_list.data[j] == '0' || pianoInfo[i].piano_list.data[j] == 48){
-                            use += '0'
-                        }
-                        else if(pianoInfo[i].piano_list.data[j] == '1' || pianoInfo[i].piano_list.data[j] == 49)
-                        {
-                            use += '1'
-                        }
-                        else{
-                            use += '2'
-                        }
-                    }
-                    for(let j = 2*timeLength; j<3*timeLength; j++){
-                        if(buffer[j] == '0' || buffer[j] == 48){
-                            use += '0'
-                        }
-                        else if(buffer[j] == '1' || buffer[j] == 49){
-                            use += '1'
-                        }
-                        else{
-                            use += '2'
-                        }
-                    }
-                    db.where({piano_id: pianoInfo[i].piano_id}).update('piano',{piano_list:use},function(err){
+                    console.log(list);
+                    db.where({piano_id: pianoInfo[i].piano_id}).update('piano',{piano_list:list},function(err){
                         count ++;
-                        if(count == pianoInfo.length){
+                        if(count === pianoInfo.length){
                             if(err){
                                 resolve(0);
                             }
@@ -140,11 +98,11 @@ let update = async function(){
     };
     let flag = await test();
     console.log(flag);
-    if(flag == 0){
+    if(flag === 0){
         return {"success":false,
             "info":errorMsg};
     }
-    if(flag == 1){
+    if(flag === 1){
         return {"success":true};
     }
 };
@@ -353,7 +311,6 @@ let SearchLongItem = async function(count, offset, userUuid, roomId, week, type)
 };
 
 let GetPianoRoomInfo = async function(pianoId) {
-    let num = getDateNum(date);
     let errorMsg = "";
     let pianoInfo = null;
     let pianoInfoRes = null;
@@ -392,15 +349,16 @@ let GetPianoRoomInfo = async function(pianoId) {
 
 let InsertLongItem = async function () {
     let date = new Date();
-    date = date + 2*24*60*60*1000;
+    date.setDate(date.getDate()+2);
     let dateStr = getDateStr(date);
-    dateStr = dateStr.concat(" 08:00:00");
+    console.log(dateStr);
     let week = date.getDay();
-    let items = SearchLongItem(2147483647,0,null,null,week,null);
-    for(let item of items)
+    let items = await SearchLongItem(2147483647,0,null,null,week,null);
+    console.log(items);
+    for(let item of items.data)
     {
         let price = await GetPianoRoomInfo(item.item_long_pianoId);
-        let itemPrice = price.data[item.item_long_type] * Math.ceil((endIndex - startIndex) / 6);
+        let itemPrice = price.data[item.item_long_type] * Math.ceil(item.item_long_duration / 6);
         let itemUuid = uuid.v1().toString();
         itemUuid = itemUuid.replace(/\-/g,'');
         let result = await InsertItem(dateStr,item.item_long_userid,item.item_long_pianoId,-1,item.item_long_type,itemPrice,item.item_long_duration,item.item_long_begin,itemUuid);

@@ -326,6 +326,7 @@ const routers = router.get("/list", async (ctx, next) => {
                 await dataBase.sleep(dataBase.intervalTime)
             }
             if(tag === 0){
+
                 ctx.response.status = 400;
                 ctx.response.body = {
                     "info": "请求超时!"
