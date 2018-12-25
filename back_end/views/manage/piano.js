@@ -113,7 +113,7 @@ const routers = router.get("/list", async (ctx, next) => {
             let tag = 0;
             for(let j = 0; j<200; j++){
                 let key = request.id+"piano";
-                dataBase.redlock.lock(key, totalTime).then(async function(lock){
+                dataBase.redlock.lock(key, dataBase.totalTime).then(async function(lock){
                     if(tag === 1){
                         lock.unlock().catch(function(err){})
                     }
@@ -158,7 +158,7 @@ const routers = router.get("/list", async (ctx, next) => {
                 if(tag === 1){
                     break
                 }
-                await dataBase.sleep(intervalTime)
+                await dataBase.sleep(dataBase.intervalTime)
             }
             if(tag === 0){
                 ctx.response.status = 400;
@@ -245,7 +245,7 @@ const routers = router.get("/list", async (ctx, next) => {
             let tag = 0;
             for(let j = 0; j<200; j++){
                 let key = request.id+"piano";
-                dataBase.redlock.lock(key, totalTime).then(async function(lock){
+                dataBase.redlock.lock(key, dataBase.totalTime).then(async function(lock){
                     if(tag === 1){
                         lock.unlock().catch(function(err){})
                     }
@@ -323,7 +323,7 @@ const routers = router.get("/list", async (ctx, next) => {
                 if(tag === 1){
                     break
                 }
-                await dataBase.sleep(intervalTime)
+                await dataBase.sleep(dataBase.intervalTime)
             }
             if(tag === 0){
                 ctx.response.status = 400;

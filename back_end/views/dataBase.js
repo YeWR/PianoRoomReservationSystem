@@ -2021,3 +2021,6 @@ exports.DeleteLongItem = DeleteLongItem;
 // to test
 exports.getDateNum = getDateNum;
 exports.sleep = sleep;
+exports.redlock = redlock;
+exports.totalTime = totalTime;
+exports.intervalTime = intervalTime;

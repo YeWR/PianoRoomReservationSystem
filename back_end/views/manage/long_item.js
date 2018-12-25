@@ -87,7 +87,7 @@ const routers = router.get("/list", async (ctx, next) => {
             let tag = 0;
             for(let j = 0; j<200; j++){
                 let key = request.room+"piano";
-                dataBase.redlock.lock(key, totalTime).then(async function(lock){
+                dataBase.redlock.lock(key, dataBase.totalTime).then(async function(lock){
                     if(tag === 1){
                         lock.unlock().catch(function(err){})
                     }
@@ -98,7 +98,7 @@ const routers = router.get("/list", async (ctx, next) => {
                         let longItemResult = await dataBase.SearchLongItem(2147483647,0,null,request.room,request.week,null);
                         for(let i of longItemResult.data)
                         {
-                            if(i.item_long_begin > request.end && (i.item_long_begin+i.item_long_duration) < request.start)
+                            if(i.item_long_begin < request.end && (i.item_long_begin+i.item_long_duration) > request.start)
                             {
                                 ctx.response.status = 400;
                                 ctx.response.body = {
@@ -145,7 +145,7 @@ const routers = router.get("/list", async (ctx, next) => {
                 if(tag === 1){
                     break
                 }
-                await dataBase.sleep(intervalTime)
+                await dataBase.sleep(dataBase.intervalTime)
             }
             if(tag === 0){
                 ctx.response.status = 400;
