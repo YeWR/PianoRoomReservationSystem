@@ -92,7 +92,8 @@
 }
 
 .new_bottom_icon{
-    width: 10%;
+    width: 8%;
+    line-height: 100%;
 }
 
 .preview{
@@ -105,8 +106,8 @@
 .card {
     box-shadow: 5rpx 5rpx 10rpx 1rpx rgba(187, 187, 187, 1);
     background-color: white;
-    margin-top: 5%;
-    height: 18%;
+    margin-top: 7%;
+    height: 15%;
     width: 100%;
     color: rgba(0, 0, 0, 1);
     display: flex;
@@ -133,7 +134,7 @@
 }
 
 .title{
-    font-size: 42rpx;
+    font-size: 38rpx;
     font-weight: bolder;
     font-family: SFUIText-regular;
 }

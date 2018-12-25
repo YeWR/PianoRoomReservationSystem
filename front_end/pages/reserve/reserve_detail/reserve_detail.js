@@ -162,7 +162,7 @@ Page({
                     setTimeout(() => {
                         paras["reservationId"] = res.data.reservationId;
                         let url = util.setUrl("../reserve_confirm/reserve_confirm", paras);
-                        wx.reLaunch({
+                        wx.navigateTo({
                             url: url
                         });
                     }, 500);

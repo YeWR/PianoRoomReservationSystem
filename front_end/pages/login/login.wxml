@@ -1,20 +1,23 @@
 <!--login.wxml-->
 <view class="container" xmlns:wx="http://www.w3.org/1999/xhtml">
-  <view class="up_board">
-    <text class="login_title">
-      清华大学琴房预约系统
-    </text>
-  </view>
-  <view class="login_img">
-    <view class="login_img_bg"></view>
-    <!--<image class="login_img_img" mode="aspectFit" src="../../../images/icon/calendar.png"></image>-->
-  </view>
-  <view class="login_btn_view">
-    <button class="login_btn_in_school" bindtap="loginInSchool">
-      校内师生登录入口
-    </button>
-    <button class="login_btn_out_school" bindtap="loginOutSchool">
-      校外用户登录入口
-    </button>
-  </view>
+    <view class="up_board">
+        <text class="login_title">
+            清华大学琴房预约系统
+        </text>
+    </view>
+    <view class="login_img">
+        <view class="login_img_img">
+            <image class="login_img_in" mode="aspectFill" src="../../../images/bg/background.jpg"></image>
+        </view>
+        <view class="login_img_bg"></view>
+
+    </view>
+    <view class="login_btn_view">
+        <button class="login_btn_in_school" bindtap="loginInSchool">
+            校内师生登录入口
+        </button>
+        <button class="login_btn_out_school" bindtap="loginOutSchool">
+            校外用户登录入口
+        </button>
+    </view>
 </view>

@@ -2,9 +2,6 @@
 
 <view class="container">
     <view class="up_board">
-        <view class = "timeshow">
-            <text class="fa fa-clock-o fa-lg"></text><text > {{_timeShow}}</text>
-        </view>
         <text class="register_title">
             未支付订单
         </text>
@@ -80,6 +77,9 @@
         </view>
 
         <view class="reserve_btn_view">
+            <view class = "timeshow">
+                <text class="fa fa-clock-o fa-lg"></text><text > {{_timeShow}}</text>
+            </view>
             <button class="reserve_btn" bindtap="confirmReservation">确认支付</button>
 
         </view>

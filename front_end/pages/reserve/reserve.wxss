@@ -178,8 +178,6 @@ progress/* pages/reserve/reserve_space/reserve.wxss */
     width: 83%;
     height: 30rpx;
     margin-left: 8%;
-    /*box-shadow: 5rpx 5rpx 10rpx 1rpx rgba(187, 187, 187, 1);*/
-
 }
 .progress-time{
     width: 100%;

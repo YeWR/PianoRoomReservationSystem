@@ -5,7 +5,7 @@ page{
     width: 100%;
 }
 .login_img {
-    height:35%;
+    height:40%;
     width: 100%;
     line-height: 15rpx;
     text-align: center;
@@ -22,11 +22,16 @@ page{
     z-index:1;
 }
 .login_img_img {
-    height:20%;
+    position: absolute;
+    height:35%;
     width: 100%;
-    line-height: 20rpx;
-    font-size: 14rpx;
-    text-align: center;
+    margin-top: 8%;
+}
+.login_img_in{
+    width: 85%;
+    height: 75%;
+    box-shadow: 0rpx 0rpx 20rpx 1rpx rgba(100, 100, 100, 1);
+    border-radius: 12rpx;
 }
 .login_btn_view {
     height: 60%;
