@@ -5,7 +5,7 @@ import { getToken } from '@/utils/auth'
 
 // create an axios instance
 const service = axios.create({
-  baseURL: 'https://958107.iterator-traits.com', // api 的 base_url
+  baseURL: process.env.BASE_API, // api 的 base_url
   timeout: 5000 // request timeout
 })
 
@@ -67,7 +67,7 @@ service.interceptors.response.use(
     if (!msg){
       msg = '网络错误或服务器异常'
     }
-  
+
     Message({
       message: msg,
       type: 'warning',
