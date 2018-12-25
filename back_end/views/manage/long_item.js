@@ -43,6 +43,7 @@ const routers = router.get("/list", async (ctx, next) => {
     console.log("createLong");
     console.log(request);
     //检查用户
+    // 用户被加黑名单
     let userId = await dataBase.GetUserUuidByNumber(request.id);
     let userInfo = null;
     if(userId.data)
