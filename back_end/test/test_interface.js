@@ -93,7 +93,6 @@ let testItem = [{
     uuid: null
 }];
 
-
 describe('#interfaceUser',()=>{
     describe('userRegister',()=>{
         it('CampusRegister',async () => {
@@ -659,5 +658,3 @@ describe('interfaceManager', ()=>{
 
     });
 });
-
-

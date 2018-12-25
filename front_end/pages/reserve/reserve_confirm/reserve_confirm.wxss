@@ -1,16 +1,14 @@
 /* pages/reserve/reserve_confirm/reserve_confirm.wxss */
-.attention{
+
+.timeshow{
+    position: absolute;
+    width: 25%;
+    margin-left: 75%;
+    margin-top: 4%;
     height: 10%;
-    width: 100%;
-    background-color: white;
-    text-align: center;
-    line-height: 150%;
-}
-.attention-line2{
-    font-weight: bolder;
-}
-.attention-line4{
-    color: red;
+    line-height: 70%;
+    font-size: 30rpx;
+    color: white;
 }
 .reserve-card {
     box-shadow: 5rpx 5rpx 10rpx 1rpx rgba(187, 187, 187, 1);
@@ -78,6 +76,7 @@
     /*margin-top: 3%;*/
     text-align: center;
     color: white;
+    height: 10%;
     font-size: 28rpx;
     font-family: Arial;
     background-color: rgba(102, 8, 116, 0.9);
@@ -90,6 +89,8 @@
 .unreserve_btn_view{
     margin-top:5%;
     width: 45%;
+    margin-top:1%;
+    height: 10%;
     color: white;
     font-size:30rpx;
     border-radius: 12rpx;
@@ -107,20 +108,28 @@
 }
 .backreserve_btn_view{
     margin-left: 10%;
-    margin-top:5%;
+    margin-top:1%;
+    height: 10%;
     width: 45%;
     color: white;
     font-size:30rpx;
     border-radius: 12rpx;
-
     font-family: Arial;
     border: 2rpx solid rgba(187, 187, 187, 1);
 }
 .backreserve_btn{
-    /*margin-top: 3%;*/
     text-align: center;
     color: white;
     font-size: 28rpx;
     font-family: Arial;
     background-color:rgba(187, 187, 187, 1);
+}
+.infoview{
+    font-size: 25rpx;
+    color: #aaaaaa;
+    height: 8%;
+    line-height: 240%;
+}
+.infoview-line2{
+    font-weight: bolder;
 }

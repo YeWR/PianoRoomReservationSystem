@@ -2,18 +2,12 @@
 
 <view class="container">
     <view class="up_board">
+        <view class = "timeshow">
+            <text class="fa fa-clock-o fa-lg"></text><text > {{_timeShow}}</text>
+        </view>
         <text class="register_title">
             订单信息（未支付）
         </text>
-    </view>
-
-    <view class="attention">
-        <view>
-            <text class="attention-line1">返回后可在</text>
-            <text class="attention-line2"> 个人中心 - 未支付订单</text>
-            <text class="attention-line3"> 中支付</text>
-        </view>
-        <text class="attention-line4">支付剩余时间：{{_timeShow}}</text>
     </view>
 
     <view class="reserve-card">
@@ -95,6 +89,11 @@
             <view class="backreserve_btn_view">
                 <button class="backreserve_btn" bindtap="goOut">返回</button>
             </view>
+        </view>
+        <view class="infoview">
+            <text class = "infoview-line1">返回后仍可在</text>
+            <text class = "infoview-line2"> 个人中心->未支付订单 </text>
+            <text class = "infoview-line3">中查看</text>
         </view>
     </view>
 
