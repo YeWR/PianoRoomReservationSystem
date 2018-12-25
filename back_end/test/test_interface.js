@@ -647,16 +647,16 @@ describe('interfaceManager', ()=>{
                 .send(testRule[0])
                 .expect(200);
         });
-        it('orderTest2',async () => {
-            testItem[1].pianoPrice = Math.ceil((testItem[1].endTimeIndex-testItem[1].begTimeIndex)/6)*pianoDetail.multiValue;
-            let res = await request.post('/user/reservation/order')
-                .send(testItem[1])
-                .expect(200);
-            res = JSON.parse(res.text);
-            console.log(res);
-            expect(res.success).equal(true);
-        });
-
+        // it('orderTest2',async () => {
+        //     testItem[1].pianoPrice = Math.ceil((testItem[1].endTimeIndex-testItem[1].begTimeIndex)/6)*pianoDetail.multiValue;
+        //     let res = await request.post('/user/reservation/order')
+        //         .send(testItem[1])
+        //         .expect(200);
+        //     res = JSON.parse(res.text);
+        //     console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+        //     console.log(res.info)
+        //     expect(res.success).equal(true);
+        // });
     });
 });
 

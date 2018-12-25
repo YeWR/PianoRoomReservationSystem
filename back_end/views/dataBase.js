@@ -54,10 +54,12 @@ let ChangeUserStatus = async function(userUuid, userStatus){
                         if(flag === 0){
                             lock.unlock().catch(function(err){})
                             resolve(0)
+                            return;
                         }
                         if(flag === 1){
                             lock.unlock().catch(function(err){})
                             resolve(1)
+                            return ;
                         }
                     }
                 }).catch(()=>{})
@@ -69,6 +71,7 @@ let ChangeUserStatus = async function(userUuid, userStatus){
             if(tag === 0){
                 errorMsg = "请求超时"
                 resolve(0)
+                return ;
             }
         })
     }
@@ -542,10 +545,12 @@ let UpdatePianoInfo = async function(pianoId, pianoRoom, pianoInfo, pianoStuvalu
                         if(flag === 0){
                             lock.unlock().catch(function(err){})
                             resolve(0)
+                            return ;
                         }
                         if(flag === 1){
                             lock.unlock().catch(function(err){})
                             resolve(1)
+                            return ;
                         }
                     }
                 }).catch(()=>{})
@@ -557,6 +562,7 @@ let UpdatePianoInfo = async function(pianoId, pianoRoom, pianoInfo, pianoStuvalu
             if(tag === 0){
                 errorMsg = "请求超时"
                 resolve(0)
+                return ;
             }
         })
     }
@@ -760,6 +766,7 @@ let preparePianoForInsert = async function(itemRoomId, itemBegin, itemDuration, 
                         if(flag === 0){
                             lock.unlock().catch(function(err){});
                             resolve(0);
+                            return ;
                         }
                         if(flag === 1){
                             // to do 更新数据
@@ -786,6 +793,7 @@ let preparePianoForInsert = async function(itemRoomId, itemBegin, itemDuration, 
                             let checkUpdate = function(){
                                 return new Promise(resolve =>{
                                     db.where({piano_id: itemRoomId}).update('piano',{piano_list:newList},function(err){
+                                        console.log("==================for insert")
                                         if(err){
                                             resolve(0);
                                         }
@@ -800,10 +808,12 @@ let preparePianoForInsert = async function(itemRoomId, itemBegin, itemDuration, 
                                 lock.unlock().catch(function(err){});
                                 errorMsg = "更新失败";
                                 resolve(0)
+                                return;
                             }
                             else{
                                 lock.unlock().catch(function(err){});
                                 resolve(1)
+                                return ;
                             }
                         }
                         // to do
@@ -839,80 +849,88 @@ let preparePianoForRule = async function(itemRoomId, itemBegin, itemDuration, it
         return new Promise(async function(resolve){
             let tag = 0;
             for(let j = 0; j<200; j++){
-                let key = itemRoomId.toString()+"pianoRule"
+                let key = itemRoomId.toString()+"preparePianoRule"
                 redlock.lock(key, totalTime).then(async function(lock){
-                    tag = 1
-                    // to do
-                    let test = function(){
-                        return new Promise(resolve =>{
-                            db.where({ piano_id: itemRoomId }).get('piano', function (err, res, fields) {
-                                let _select = res;
-                                if(_select.length === 0){
-                                    errorMsg = "琴房不存在";
-                                    resolve(0);
-                                }
-                                else{
-                                    let _data = JSON.stringify(_select);
-                                    let _info = JSON.parse(_data);
-                                    pianoInfo = _info[0];
-                                    for(let i = itemBegin; i<itemEnd; i++){
-                                        if(pianoInfo.piano_list.data[i] === '1' || pianoInfo.piano_list.data[i] === 49){
-                                            resolve(0);
-                                        }
-                                    }
-                                    resolve(1);
-                                }
-                            });
-                        });
-                    };
-                    let flag = await test();
-                    if(flag === 0){
+                    if(tag === 1){
                         lock.unlock().catch(function(err){})
-                        resolve(0)
-                    }
-                    if(flag === 1){
-                        // to do 更新数据
-                        let newList = "";
-                        let len = pianoInfo.piano_list.data.length;
-                        for(let i = 0; i<len; i++){
-                            if(i < itemEnd){
-                                if(i >= itemBegin){
-                                    newList += '2';
-                                    continue;
-                                }
-                            }
-                            if(pianoInfo.piano_list.data[i] === '0' || pianoInfo.piano_list.data[i] === 48){
-                                newList += '0';
-                            }
-                            else if(pianoInfo.piano_list.data[i] === '1' || pianoInfo.piano_list.data[i] === 49){
-                                newList += '1';
-                            }
-                            else
-                            {
-                                newList += '2';
-                            }
-                        }
-                        let checkUpdate = function(){
+                    }else{
+                        tag = 1
+                        // to do
+                        let test = function(){
                             return new Promise(resolve =>{
-                                db.where({piano_id: itemRoomId}).update('piano',{piano_list:newList},function(err){
-                                    if(err){
+                                db.where({ piano_id: itemRoomId }).get('piano', function (err, res, fields) {
+                                    let _select = res;
+                                    if(_select.length === 0){
+                                        errorMsg = "琴房不存在";
                                         resolve(0);
                                     }
                                     else{
+                                        let _data = JSON.stringify(_select);
+                                        let _info = JSON.parse(_data);
+                                        pianoInfo = _info[0];
+                                        for(let i = itemBegin; i<itemEnd; i++){
+                                            if(pianoInfo.piano_list.data[i] === '1' || pianoInfo.piano_list.data[i] === 49){
+                                                resolve(0);
+                                            }
+                                        }
                                         resolve(1);
                                     }
                                 });
                             });
                         };
-                        let check = await checkUpdate()
-                        if(check === 0){
-                            errorMsg = "更新失败";
+                        let flag = await test();
+                        if(flag === 0){
                             lock.unlock().catch(function(err){})
                             resolve(0)
+                            return ;
                         }
-                        else{
-                            lock.unlock().catch(function(err){})
-                            resolve(1)
+                        if(flag === 1){
+                            // to do 更新数据
+                            let newList = "";
+                            let len = pianoInfo.piano_list.data.length;
+                            for(let i = 0; i<len; i++){
+                                if(i < itemEnd){
+                                    if(i >= itemBegin){
+                                        newList += '2';
+                                        continue;
+                                    }
+                                }
+                                if(pianoInfo.piano_list.data[i] === '0' || pianoInfo.piano_list.data[i] === 48){
+                                    newList += '0';
+                                }
+                                else if(pianoInfo.piano_list.data[i] === '1' || pianoInfo.piano_list.data[i] === 49){
+                                    newList += '1';
+                                }
+                                else
+                                {
+                                    newList += '2';
+                                }
+                            }
+                            let checkUpdate = function(){
+                                return new Promise(resolve =>{
+                                    db.where({piano_id: itemRoomId}).update('piano',{piano_list:newList},function(err){
+                                        console.log('====================================== for rule', newList)
+                                        if(err){
+                                            resolve(0);
+                                        }
+                                        else{
+                                            resolve(1);
+                                        }
+                                    });
+                                });
+                            };
+                            let check = await checkUpdate()
+                            if(check === 0){
+                                errorMsg = "更新失败";
+                                lock.unlock().catch(function(err){})
+                                resolve(0)
+                                return ;
+                            }
+                            else{
+                                lock.unlock().catch(function(err){})
+                                resolve(1)
+                                return ;
+                            }
                         }
                     }
                 }).catch(()=>{})
@@ -975,6 +993,7 @@ let ChangePianoRule = async function(itemRoomId, itemBegin, itemDuration, itemDa
                         if(flag === 0){
                             lock.unlock().catch(function(err){})
                             resolve(0)
+                            return;
                         }
                         if(flag === 1){
                             let newList = "";
@@ -1000,6 +1019,7 @@ let ChangePianoRule = async function(itemRoomId, itemBegin, itemDuration, itemDa
                             let checkUpdate = function(){
                                 return new Promise(resolve =>{
                                     db.where({piano_id: itemRoomId}).update('piano',{piano_rule:newList},function(err){
+                                        console.log("----------------------------------rule ", newList)
                                         if(err){
                                             resolve(0);
                                         }
@@ -1014,10 +1034,12 @@ let ChangePianoRule = async function(itemRoomId, itemBegin, itemDuration, itemDa
                                 errorMsg = "更新失败";
                                 lock.unlock().catch(function(err){})
                                 resolve(0)
+                                return;
                             }
                             else{
                                 lock.unlock().catch(function(err){})
                                 resolve(1)
+                                return;
                             }
                         }
                     }
@@ -1080,15 +1102,15 @@ let CheckPianoRule = async function(itemRoomId, itemBegin, itemDuration, itemDay
         return {"success":true};
     }
 }
-// uuid: itemUsername 传入uuid
-// begin is the begin index, duration is the length
+
+// lock finish
 let InsertItem = async function(itemDate, itemUsername, itemRoomId, itemType, itemMember, itemValue, itemDuration, itemBegin, itemUuid){
     let errorMsg = "";
     let lock = function(){
         return new Promise(async function(resolve){
             let tag = 0;
             for(let j = 0; j<200; j++){
-                let key = itemRoomId.toString()+"insterItem";
+                let key = itemRoomId.toString()+"InsertItem";
                 redlock.lock(key, totalTime).then(async function(lock){
                     if(tag === 1){
                         lock.unlock().catch(function(err){})
@@ -1100,11 +1122,11 @@ let InsertItem = async function(itemDate, itemUsername, itemRoomId, itemType, it
                             errorMsg = "预约失败";
                             lock.unlock().catch(function(err){})
                             resolve(0)
+                            return ;
                         }
                         //插入订单
                         let test = function(){
                             return new Promise(resolve =>{
-                                try{
                                     let _info = {
                                         item_date: itemDate,
                                         item_username: itemUsername,
@@ -1127,21 +1149,18 @@ let InsertItem = async function(itemDate, itemUsername, itemRoomId, itemType, it
                                             resolve(0);
                                         }
                                     });
-                                }
-                                catch{
-                                    errorMsg = "预约失败";
-                                    resolve(0);
-                                }
                             });
                         };
                         let flag = await test();
                         if(flag === 0){
                             lock.unlock().catch(function(err){})
                             resolve(0);
+                            return ;
                         }
                         if(flag === 1){
                             lock.unlock().catch(function(err){})
                             resolve(1);
+                            return ;
                         }
                     }
                 }).catch(()=>{})
@@ -1234,16 +1253,19 @@ let ItemCheckin = async function(itemUuid){
                         if(flag === 0){
                             lock.unlock().catch(function(err){})
                             resolve(0)
+                            return ;
                         }
                         if(flag === 1){
                             flag = await checkin();
                             if(flag === 0){
                                 lock.unlock().catch(function(err){})
                                 resolve(0)
+                                return ;
                             }
                             if(flag === 1){
                                 lock.unlock().catch(function(err){})
                                 resolve(1)
+                                return ;
                             }
                         }
                     }
@@ -1276,7 +1298,7 @@ let ItemPaySuccess = async function(itemUuid){
         return new Promise(async function(resolve){
             let tag = 0;
             for(let j = 0; j<200; j++){
-                let key = itemUuid.toString()+"itemPay";
+                let key = itemUuid.toString()+"ItemPaySuccess";
                 redlock.lock(key, totalTime).then(async function(lock){
                     if(tag === 1){
                         lock.unlock().catch(function(err){})
@@ -1327,16 +1349,19 @@ let ItemPaySuccess = async function(itemUuid){
                         if(flag === 0){
                             lock.unlock().catch(function(err){})
                             resolve(0)
+                            return ;
                         }
                         if(flag === 1){
                             flag = await payfinish();
                             if(flag === 0){
                                 lock.unlock().catch(function(err){})
                                 resolve(0)
+                                return;
                             }
                             if(flag === 1){
                                 lock.unlock().catch(function(err){})
                                 resolve(1)
+                                return ;
                             }
                         }
                     }
@@ -1357,8 +1382,7 @@ let ItemPaySuccess = async function(itemUuid){
         return {"success":true,"data":itemInfo};
     }
     else{
-        return {"success":false,
-                "info":errorMsg};
+        return {"success":false,"info":errorMsg};
     }
 };
 
@@ -1530,6 +1554,7 @@ let preparePianoForDel = async function(itemRoomId, itemBegin, itemDuration, ite
                         if(flag === 0){
                             lock.unlock().catch(function(err){})
                             resolve(0)
+                            return ;
                         }
                         if(flag === 1){
                             // to do 更新数据
@@ -1556,6 +1581,7 @@ let preparePianoForDel = async function(itemRoomId, itemBegin, itemDuration, ite
                             let checkUpdate = function(){
                                 return new Promise(resolve =>{
                                     db.where({piano_id: itemRoomId}).update('piano',{piano_list:newList},function(err){
+                                        console.log("----------------------------------", newList)
                                         if(err){
                                             resolve(0);
                                         }
@@ -1570,10 +1596,12 @@ let preparePianoForDel = async function(itemRoomId, itemBegin, itemDuration, ite
                                 errorMsg = "更新失败";
                                 lock.unlock().catch(function(err){})
                                 resolve(0)
+                                return ;
                             }
                             else{
                                 lock.unlock().catch(function(err){})
                                 resolve(1)
+                                return ;
                             }
                         }
                     }
