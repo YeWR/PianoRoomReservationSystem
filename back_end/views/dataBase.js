@@ -29,7 +29,7 @@ let ChangeUserStatus = async function(userUuid, userStatus){
         return new Promise(async function(resolve){
             let tag = 0;
             for(let j = 0; j<200; j++){
-                let key = userUuid+"user"
+                let key = userUuid+"user";
                 redlock.lock(key, totalTime).then(async function(lock){
                     if(tag === 1){
                         lock.unlock().catch(function(err){})
@@ -519,7 +519,7 @@ let UpdatePianoInfo = async function(pianoId, pianoRoom, pianoInfo, pianoStuvalu
         return new Promise(async function(resolve){
             let tag = 0;
             for(let j = 0; j<200; j++){
-                let key = pianoId.toString()+"piano"
+                let key = pianoId.toString()+"pianoInfo"
                 redlock.lock(key, totalTime).then(async function(lock){
                     if(tag === 1){
                         lock.unlock().catch(function(err){})
@@ -730,7 +730,7 @@ let preparePianoForInsert = async function(itemRoomId, itemBegin, itemDuration, 
         return new Promise(async function(resolve){
             let tag = 0;
             for(let j = 0; j<200; j++){
-                let key = itemRoomId.toString()+"item"
+                let key = itemRoomId.toString()+"prepareForInsert"
                 redlock.lock(key, totalTime).then(async function(lock){
                     if(tag == 1){
                         lock.unlock().catch(function(err){});
@@ -849,7 +849,7 @@ let preparePianoForRule = async function(itemRoomId, itemBegin, itemDuration, it
         return new Promise(async function(resolve){
             let tag = 0;
             for(let j = 0; j<200; j++){
-                let key = itemRoomId.toString()+"preparePianoRule"
+                let key = itemRoomId.toString()+"prepareForRule"
                 redlock.lock(key, totalTime).then(async function(lock){
                     if(tag === 1){
                         lock.unlock().catch(function(err){})
@@ -909,7 +909,6 @@ let preparePianoForRule = async function(itemRoomId, itemBegin, itemDuration, it
                             let checkUpdate = function(){
                                 return new Promise(resolve =>{
                                     db.where({piano_id: itemRoomId}).update('piano',{piano_list:newList},function(err){
-                                        console.log('====================================== for rule', newList)
                                         if(err){
                                             resolve(0);
                                         }
@@ -1019,7 +1018,6 @@ let ChangePianoRule = async function(itemRoomId, itemBegin, itemDuration, itemDa
                             let checkUpdate = function(){
                                 return new Promise(resolve =>{
                                     db.where({piano_id: itemRoomId}).update('piano',{piano_rule:newList},function(err){
-                                        console.log("----------------------------------rule ", newList)
                                         if(err){
                                             resolve(0);
                                         }
@@ -1110,7 +1108,7 @@ let InsertItem = async function(itemDate, itemUsername, itemRoomId, itemType, it
         return new Promise(async function(resolve){
             let tag = 0;
             for(let j = 0; j<200; j++){
-                let key = itemRoomId.toString()+"InsertItem";
+                let key = itemRoomId.toString()+"piano";
                 redlock.lock(key, totalTime).then(async function(lock){
                     if(tag === 1){
                         lock.unlock().catch(function(err){})
@@ -1526,7 +1524,7 @@ let preparePianoForDel = async function(itemRoomId, itemBegin, itemDuration, ite
         return new Promise(async function(resolve){
             let tag = 0;
             for(let j = 0; j<200; j++){
-                let key = itemRoomId.toString()+"forDel";
+                let key = itemRoomId.toString()+"prepareForDel";
                 redlock.lock(key, totalTime).then(async function(lock){
                     if(tag === 1){
                         lock.unlock().catch(function(err){})
@@ -1581,7 +1579,6 @@ let preparePianoForDel = async function(itemRoomId, itemBegin, itemDuration, ite
                             let checkUpdate = function(){
                                 return new Promise(resolve =>{
                                     db.where({piano_id: itemRoomId}).update('piano',{piano_list:newList},function(err){
-                                        console.log("----------------------------------", newList)
                                         if(err){
                                             resolve(0);
                                         }
@@ -1631,33 +1628,69 @@ let DeleteItem = async function(itemUuid){
     // 更改piano数据
     let item = await GetItemByUuid(itemUuid);
     let errorMsg = "";
-    let result = await preparePianoForDel(item.data.item_roomId, item.data.item_begin, item.data.item_duration, item.data.item_date);
-    if(result.success === false){
-        errorMsg = "退订失败";
-        return {"success":false,
-                "info":errorMsg};
-    }
-    // 更新item数据
-    let test = function(){
-        return new Promise(resolve =>{
-            db.where({item_uuid: itemUuid }).update('item', {item_type: 0}, function (err) {
-                if(!err){
-                    resolve(1);
+    let lock = function(){
+        return new Promise(async function(resolve){
+            let tag = 0;
+            for(let j = 0; j<200; j++){
+                let key = itemUuid.toString()+"itemDel";
+                redlock.lock(key, totalTime).then(async function(lock){
+                    if(tag === 1){
+                        lock.unlock().catch(function(err){})
+                    }
+                    else{
+                        tag = 1
+                        let result = await preparePianoForDel(item.data.item_roomId, item.data.item_begin, item.data.item_duration, item.data.item_date);
+                        if(result.success === false){
+                            errorMsg = "退订失败";
+                            lock.unlock().catch(function(err){})
+                            resolve(0)
+                            return ;
+                        }
+                        // 更新item数据
+                        let test = function(){
+                            return new Promise(resolve =>{
+                                db.where({item_uuid: itemUuid }).update('item', {item_type: 0}, function (err) {
+                                    if(!err){
+                                        resolve(1);
+                                    }
+                                    else{
+                                        errorMsg = "退订失败";
+                                        resolve(0);
+                                    }
+                                });
+                            });
+                        };
+                        let flag = await test();
+                        if(flag === 0){
+                            lock.unlock().catch(function(err){})
+                            resolve(0)
+                            return ;
+                        }
+                        if(flag === 1){
+                            lock.unlock().catch(function(err){})
+                            resolve(1)
+                            return ;
+                        }
+                    }
+                }).catch(()=>{})
+                if(tag === 1){
+                    break
                 }
-                else{
-                    errorMsg = "退订失败";
-                    resolve(0);
-                }
-            });
-        });
-    };
-    let flag = await test();
-    if(flag === 0){
-        return {"success":false,
-                "info":errorMsg};
+                await sleep(intervalTime);
+            }
+            if(tag === 0){
+                errorMsg = "请求超时";
+                resolve(0);
+            }
+        })
     }
-    if(flag === 1){
+    let res = await lock()
+    if(res === 1){
         return {"success":true,
+                "info":errorMsg};
+    }
+    else{
+        return {"success":false,
                 "info":errorMsg};
     }
 }
@@ -1903,7 +1936,6 @@ let AddLongItem = async function(userUuid, userType, roomId, week, begin, durati
         });
     };
     let flag = await test();
-    // console.log(flag);
     if(flag === 0){
         return {"success":false,
             "info":errorMsg};
