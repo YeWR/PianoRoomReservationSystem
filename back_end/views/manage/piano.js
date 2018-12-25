@@ -202,9 +202,11 @@ const routers = router.get("/list", async (ctx, next) => {
         let date = new Date();
         date.setDate(date.getDate() + day);
         let dateStr = utils.getDateStr(date);
-        result = await dataBase.preparePianoForDel(request.id, oldstartIndex, oldendIndex - oldstartIndex, dateStr);
+        result = await dataBase.preparePianoForDel(request.id, parseInt(oldstartIndex), oldendIndex - oldstartIndex, dateStr);
+        console.log("del1");
     }
     result = await dataBase.ChangePianoRule(request.id,parseInt(oldstartIndex), oldendIndex - oldstartIndex,parseInt(request.week), 0);
+    console.log("change1");
     if (!result.success) {
         ctx.response.status = 400;
         ctx.response.body = {"info": "修改规则失败,请联系开发人员"};
@@ -220,8 +222,11 @@ const routers = router.get("/list", async (ctx, next) => {
             if(i.item_long_begin > newendIndex && (i.item_long_begin+i.item_long_duration) < newstartIndex)
             {
                 //写回旧规则
+
                 result = await dataBase.preparePianoForRule(request.id, oldstartIndex, oldendIndex - oldstartIndex, dateStr);
+                console.log("aaaaa1");
                 result = await dataBase.ChangePianoRule(request.id,parseInt(oldstartIndex), oldendIndex - oldstartIndex,parseInt(request.week), 2);
+                console.log("change2");
                 ctx.response.status = 400;
                 ctx.response.body = {"info": "与现有长期预约冲突，请联系用户处理！"};
                 return;
@@ -234,11 +239,16 @@ const routers = router.get("/list", async (ctx, next) => {
         let date = new Date();
         date.setDate(date.getDate() + day);
         let dateStr = utils.getDateStr(date);
+
         result = await dataBase.preparePianoForRule(request.id, newstartIndex, newendIndex - newstartIndex, dateStr);
+        console.log("aaaaa2");
         if (!result.success) {
             //写回旧规则
+
             result = await dataBase.preparePianoForRule(request.id, oldstartIndex, oldendIndex - oldstartIndex, dateStr);
+            console.log("aaaaa3");
             result = await dataBase.ChangePianoRule(request.id,parseInt(oldstartIndex), oldendIndex - oldstartIndex,parseInt(request.week), 2);
+            console.log("change3");
             ctx.response.status = 400;
             ctx.response.body = {"info": "与现有订单冲突，请联系用户处理！"};
             return;
@@ -246,6 +256,7 @@ const routers = router.get("/list", async (ctx, next) => {
     }
     //插入新规则
     result = await dataBase.ChangePianoRule(request.id,parseInt(newstartIndex), newendIndex - newstartIndex,parseInt(request.week), 2);
+    console.log("change4");
     if (!result.success) {
         ctx.response.status = 400;
         ctx.response.body = {"info": "修改规则失败,请联系开发人员"};
