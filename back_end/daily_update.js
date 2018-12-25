@@ -5,7 +5,6 @@ let configFile = "mysqlConfig.json";
 let config = JSON.parse(file.readFileSync(configFile));
 const uuid = require("node-uuid");
 
-
 let db = new Db.Adapter({
     server: config.serverIp,
     username: config.userName,
@@ -40,7 +39,7 @@ let getDateStr = function (date) {
 }
 
 
-// 每天23：00更新
+// 每天23：55更新
 let update = async function(){
     let now = new Date();
     let errorMsg = "";
@@ -163,7 +162,6 @@ let InsertItem = async function(itemDate, itemUsername, itemRoomId, itemType, it
 let getDateNum = function(itemDate){
     let item_date = new Date(itemDate);
     let now_date = new Date();
-    //now_date.setHours(now_date.getHours()+8);
     if(now_date.getDate()>item_date.getDate()){
         return -1;
     }
@@ -366,6 +364,7 @@ let InsertLongItem = async function () {
 }
 let run = async function()
 {
+    
     await update();
     await InsertLongItem();
 }
