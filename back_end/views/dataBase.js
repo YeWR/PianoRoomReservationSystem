@@ -19,7 +19,7 @@ let timeLength = 84;
 let totalTime = 5000;
 let intervalTime = 50;
 
-function sleep(ms) {
+let sleep = function(ms) {
     return new Promise(resolve => setTimeout(resolve, ms))
 }
 
@@ -689,6 +689,9 @@ let GetPianoRoomInfo = async function(pianoId, date) {
                             pianoList.push(0);
                         }
                         if(pianoInfo.piano_list.data[i] === 49){
+                            pianoList.push(1);
+                        }
+                        if(pianoInfo.piano_list.data[i] === 50){
                             pianoList.push(1);
                         }
                     }
@@ -2020,3 +2023,7 @@ exports.DeleteLongItem = DeleteLongItem;
 
 // to test
 exports.getDateNum = getDateNum;
+exports.sleep = sleep;
+exports.redlock = redlock;
+exports.totalTime = totalTime;
+exports.intervalTime = intervalTime;

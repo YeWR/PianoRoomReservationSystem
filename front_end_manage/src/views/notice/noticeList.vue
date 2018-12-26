@@ -70,16 +70,16 @@
     <el-dialog :title="textMap[dialogStatus]" :visible.sync="newFormVisible">
       <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="70px" style="width: 450px; margin-left:50px;">
         <el-form-item :label="$t('table.title')" prop="title">
-          <el-input v-model="temp.title"/>
+          <el-input v-model="temp.title" :placeholder="$t('item.titleLimit')"/>
         </el-form-item>
         <el-form-item :label="$t('table.author')" prop="author">
-          <el-input v-model="temp.author"/>
+          <el-input v-model="temp.author" :placeholder="$t('item.authorLimit')"/>
         </el-form-item>
         <el-form-item :label="$t('table.date')" prop="timestamp">
-          <el-input v-model="temp.timestamp.getFullYear()+'-'+(temp.timestamp.getMonth()+1)+'-'+temp.timestamp.getDate()"/>
+          <el-input v-model="temp.timestamp.getFullYear()+'-'+(temp.timestamp.getMonth()+1)+'-'+temp.timestamp.getDate()" disabled = "disabled"/>
         </el-form-item>
         <el-form-item :label="$t('table.content')">
-        <el-input :autosize="{ minRows: 2, maxRows: 5}" v-model="temp.content" type="textarea"/>
+        <el-input :autosize="{ minRows: 2, maxRows: 5}" v-model="temp.content" type="textarea"  :placeholder="$t('item.contentLimit')"/>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -221,6 +221,27 @@ export default {
       })
     },
     createData() {
+      if(this.temp.title.length > 10){
+            this.$message({
+            type: 'info',
+            message: '公告标题不可以超过10个字'
+          }); 
+          return;  
+      }
+      if(this.temp.author.length > 4){
+            this.$message({
+            type: 'info',
+            message: '作者姓名不可以超过5个字'
+          }); 
+          return;  
+      }
+      if(this.temp.content.length > 100){
+            this.$message({
+            type: 'info',
+            message: '内容不可以超过100个字'
+          }); 
+          return;  
+      }
         this.$confirm('此操作将发布此公告, 是否继续?', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
@@ -296,6 +317,7 @@ export default {
               const index = this.list.indexOf(row);
               this.list.splice(index, 1);
               this.total = this.total -1;
+              this.getList()
             }
             else{
               this.$notify({

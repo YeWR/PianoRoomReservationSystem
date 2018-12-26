@@ -21,7 +21,7 @@ module.exports = function karmaConfig(config) {
     },
 
     frameworks: ['mocha', 'sinon-chai'],
-    reporters: ['progress'],
+    reporters: ['progress','coverage'],
     files: ['./index.js'],
     preprocessors: {
       './index.js': ['webpack']

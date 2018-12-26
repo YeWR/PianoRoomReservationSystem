@@ -264,6 +264,13 @@ export default {
       })
     },
     createData() {
+      if(this.temp.week === "" || this.temp.room === "" || this.temp.room === undefined || this.temp.week === undefined){
+          this.$message({
+            type: 'info',
+            message: '订单信息尚未完成，请继续填写'
+          });  
+        return 0;
+      }
       if(!this.checkTime(this.temp.start,this.temp.end)){
         return 0;
       }

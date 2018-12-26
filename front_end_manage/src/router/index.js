@@ -73,6 +73,42 @@ export default new Router({
 
 export const asyncRouterMap = [
   {
+    path: '/notice',
+    component: Layout,
+    redirect: '/notice/list',
+    name: 'notice',
+    meta: {
+      title: 'Notice',
+      icon: 'message'
+    },
+    children: [
+      {
+        path: 'list',
+        component: () => import('@/views/notice/noticeList'),
+        name: 'Notice',
+        meta: { title: 'Notice' }
+      }
+    ]
+  },
+  {
+    path: '/room',
+    component: Layout,
+    redirect: '/room/list',
+    name: 'room',
+    meta: {
+      title: 'Room',
+      icon: 'list'
+    },
+    children: [
+      {
+        path: 'list',
+        component: () => import('@/views/room/roomList'),
+        name: 'Room',
+        meta: { title: 'Room' }
+      }
+    ]
+  },
+  {
     path: '/item',
     component: Layout,
     alwaysShow: true,
@@ -118,42 +154,6 @@ export const asyncRouterMap = [
         component: () => import('@/views/user/blackLIST'),
         name: 'blackLIST',
         meta: { title: 'blackList' }
-      }
-    ]
-  },
-  {
-    path: '/notice',
-    component: Layout,
-    redirect: '/notice/list',
-    name: 'notice',
-    meta: {
-      title: 'Notice',
-      icon: 'message'
-    },
-    children: [
-      {
-        path: 'list',
-        component: () => import('@/views/notice/noticeList'),
-        name: 'Notice',
-        meta: { title: 'Notice' }
-      }
-    ]
-  },
-  {
-    path: '/room',
-    component: Layout,
-    redirect: '/room/list',
-    name: 'room',
-    meta: {
-      title: 'Room',
-      icon: 'list'
-    },
-    children: [
-      {
-        path: 'list',
-        component: () => import('@/views/room/roomList'),
-        name: 'Room',
-        meta: { title: 'Room' }
       }
     ]
   },
