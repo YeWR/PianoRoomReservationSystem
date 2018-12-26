@@ -1,6 +1,6 @@
 language: node_js
 sudo: required
-node_js: 6.4.1
+node_js: stable
 branches:
     only:
     - master
@@ -29,7 +29,6 @@ install:
     - npm install
 script:
     - npm run unit
-    - npm run build:sit
     - cd ../back_end
     - mv mysqlTestConfig.json mysqlConfig.json
     - mysql -uroot -p1234 test < ./test.sql
