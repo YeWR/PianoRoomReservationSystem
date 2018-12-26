@@ -46,8 +46,7 @@ let getDateStr = function (date) {
     return dateStr;
 }
 
-
-// 每天23：57更新
+// 手动对齐，将今天的对齐
 let update = async function(){
     let now = new Date();
     let errorMsg = "";
@@ -57,24 +56,11 @@ let update = async function(){
             db.get('piano', function(err, rows, fields) {
                 let _data = JSON.stringify(rows);
                 pianoInfo = JSON.parse(_data);
-                let week = (now.getDay()+2)%7;
+                let week = (now.getDay()-1+7)%7;
                 let count = 0;
                 for(let i = 0; i<pianoInfo.length; i++){
                     let list = "";
-                    for(let j = 0; j < timeLength * 2; j++)
-                    {
-                        if(pianoInfo[i].piano_list.data[j+timeLength] === '0' || pianoInfo[i].piano_list.data[j+timeLength] ===48){
-                            list += '0';
-                        }
-                        else if(pianoInfo[i].piano_list.data[j+timeLength] === '1' || pianoInfo[i].piano_list.data[j+timeLength] === 49)
-                        {
-                            list += '1';
-                        }
-                        else{
-                            list += '2';
-                        }
-                    }
-                    for(let j = week * timeLength; j < (week+1) * timeLength; j++)
+                    for(let j = week * timeLength; j < (week+3) * timeLength; j++)
                     {
                         if(pianoInfo[i].piano_rule.data[j%(7*timeLength)] === '0' || pianoInfo[i].piano_rule.data[j%(7*timeLength)] === 48){
                             list += '0';
