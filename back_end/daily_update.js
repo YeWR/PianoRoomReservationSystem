@@ -13,7 +13,15 @@ let db = new Db.Adapter({
     reconnectTimeout: config.TimeOut
 });
 
+let redis = require("redis");
+let client = redis.createClient(config.redisPort,config.serverIp);
+let redlock = new Redlock([client]);
 let timeLength = 84;
+let totalTime = 180000;
+let intervalTime = 500;
+let sleep = function(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms))
+}
 
 let getDateStr = function (date) {
     let dateStr = date.getFullYear().toString() + "-";
@@ -39,7 +47,7 @@ let getDateStr = function (date) {
 }
 
 
-// 每天23：55更新
+// 每天23：57更新
 let update = async function(){
     let now = new Date();
     let errorMsg = "";
@@ -364,9 +372,52 @@ let InsertLongItem = async function () {
 }
 let run = async function()
 {
-    
+    let res = []
+    let test = function(){
+        return new Promise(resolve =>{
+            db.get('piano', function(err, rows, fields) {
+                let _data = JSON.stringify(rows);
+                pianoInfo = JSON.parse(_data);
+                for(let i = 0; i<pianoInfo.length; i++){
+                    let tag = 0;
+                    let lock = function(){
+                        return new Promise(async function(resolve){
+                            while(tag === 0){
+                                let key = pianoInfo[i].piano_id+"piano";
+                                redlock.lock(key, totalTime).then(async function(lock){
+                                    res.push(lock);
+                                    tag = 1
+                                }).catch(()=>{})
+                                if(tag === 1){
+                                    break
+                                }
+                                await sleep(intervalTime)
+                            }
+                            if(tag === 0){
+                                errorMsg = "请求超时"
+                                resolve(0)
+                                return ;
+                            }
+                        })
+                    }
+                    let waitLock = await lock();
+                }
+                if(res.length === pianoInfo.length){
+                    resolve(1)
+                }
+                else{
+                    resolve(0)
+                }
+            });
+        });
+    };
+    await test();
     await update();
     await InsertLongItem();
+    await sleep(totalTime)
+    for(let i = 0; i<res.length; i++){
+        res[i].unlock().catch(function(err){})
+    }
 }
 
 run().then(val => {
