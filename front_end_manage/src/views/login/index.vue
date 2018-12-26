@@ -117,11 +117,12 @@ export default {
           this.$store.dispatch('LoginByUsername', this.loginForm).then(() => {
             this.loading = false
             this.$router.push({ path: this.redirect || '/' })
+            return true
           }).catch(() => {
             this.loading = false
+            return false
           })
         } else {
-          console.log('error submit!!')
           return false
         }
       })

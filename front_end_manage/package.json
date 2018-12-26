@@ -60,6 +60,7 @@
     "screenfull": "3.3.3",
     "showdown": "1.8.6",
     "sortablejs": "1.7.0",
+    "test-utils": "^1.1.1",
     "tui-editor": "1.2.7",
     "vue": "^2.5.17",
     "vue-count-to": "1.0.13",
