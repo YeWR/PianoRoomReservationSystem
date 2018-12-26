@@ -375,7 +375,7 @@ let run = async function()
     let res = []
     let test = function(){
         return new Promise(resolve =>{
-            db.get('piano', function(err, rows, fields) {
+            db.get('piano', async function(err, rows, fields) {
                 let _data = JSON.stringify(rows);
                 pianoInfo = JSON.parse(_data);
                 for(let i = 0; i<pianoInfo.length; i++){
