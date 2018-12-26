@@ -24,6 +24,14 @@
     font-weight: bolder;
     font-family: SFUIText-regular;
 }
+.reserve-info-descpt{
+    width: 100%;
+
+
+}
+.reserve-info-description{
+
+}
 
 .reserve-info-cut {
     display: flex;
