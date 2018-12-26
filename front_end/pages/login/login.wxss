@@ -5,14 +5,14 @@ page{
     width: 100%;
 }
 .login_img {
-    height:40%;
+    height:60%;
     width: 100%;
     line-height: 15rpx;
     text-align: center;
     z-index: 0;
 }
 .login_img_bg {
-    height:80%;
+    height:60%;
     width: 100%;
     line-height: 20rpx;
     background-color: rgba(94, 55, 99, 0.9);
