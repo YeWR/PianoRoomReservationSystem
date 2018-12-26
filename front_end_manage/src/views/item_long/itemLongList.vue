@@ -214,7 +214,7 @@ export default {
             week:tmp_items[i].item_long_week,
             type:tmp_items[i].item_long_type
           }
-          let week = [,'星期日','星期一','星期二','星期三','星期四','星期五','星期六']
+          let week = ['星期日','星期一','星期二','星期三','星期四','星期五','星期六']
           data.week = week[data.week]
           if(data.type == '3'){
             data.type = '多人'
@@ -335,7 +335,7 @@ export default {
       }
       let x = parseInt(m)-8
       let y = parseInt(parseInt(n)/10)
-      return x*6+y
+      return x*6+y;
     },
     deleteItem(row){
       let s = ['星期日','星期一','星期二','星期三','星期四','星期五','星期六']
