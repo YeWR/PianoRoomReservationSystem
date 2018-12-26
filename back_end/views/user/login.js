@@ -173,7 +173,7 @@ const routers = router.post("/outSchool", async (ctx, next) => {
         ctx.response.type = 'html';
         ctx.response.body = "<script type=\"text/javascript\" src=\"https://res.wx.qq.com/open/js/jweixin-1.3.2.js\"></script><script>wx.miniProgram.getEnv(function (res) {if (res.miniprogram) {wx.miniProgram.switchTab({url: '/pages/alarm/alarm'});wx.miniProgram.postMessage({data: " + JSON.stringify(data) + "});}})</script>";
     }
-    console.log(ctx.response.body);
+    // console.log(ctx.response.body);
 });
 
 module.exports = routers;

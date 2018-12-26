@@ -263,7 +263,7 @@ let SearchUnpaidItemAndDelete = async function(){
     let itemInfo1 = null;
     let test = function(){
         return new Promise(resolve =>{
-            db.where('item_type', [0,3])
+            db.where('item_type', [3])
                 .get('item', function (err, res, fields) {
                     let _data = JSON.stringify(res);
                     let _info = JSON.parse(_data);
@@ -290,7 +290,7 @@ let SearchUnpaidLongItemAndDelete = async function(){
     let itemInfo2 = null;
     let test2 = function(){
         return new Promise(resolve =>{
-            db.where('item_type', [0,-1])
+            db.where('item_type', [-1])
                 .get('item', function (err, res, fields) {
                     let _data = JSON.stringify(res);
                     let _info = JSON.parse(_data);

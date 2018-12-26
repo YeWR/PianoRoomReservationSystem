@@ -389,6 +389,7 @@ let SetLoginMsg = async function(socTele, socPassword) {
 // to do check if already online
 let SocietyUserLogin = async function(socTele, socPassword) {
     let errorMsg = "";
+    let userName = null;
     let getUser = function(){
         return new Promise(resolve =>{
             db.where({ number: socTele }).get('user', function (err, res, fields) {
@@ -401,15 +402,16 @@ let SocietyUserLogin = async function(socTele, socPassword) {
                     let _data = JSON.stringify(_select);
                     let _info = JSON.parse(_data);
                     let user = _info[0];
+                    userName = user.realname;
                     resolve(1);
                 }
             });
         });
     };
-    let realName = await getUser();
-    if(realName === 0){
+    let testGet = await getUser();
+    if(testGet === 0){
         return {"success":false,
-                "username": realName,
+                "username": userName,
                 "info":errorMsg};
     }
     let test = function(){
@@ -436,12 +438,12 @@ let SocietyUserLogin = async function(socTele, socPassword) {
     // console.log(flag);
     if(flag === 0){
         return {"success":false,
-                "username":realName,
+                "username":userName,
                 "info":errorMsg};
     }
     if(flag === 1){
         return {"success":true,
-                "username":realName};
+                "username":userName};
     }
 }
 
@@ -523,7 +525,7 @@ let UpdatePianoInfo = async function(pianoId, pianoRoom, pianoInfo, pianoStuvalu
                                         resolve(1);
                                     else
                                     {
-                                        console.log(err)
+                                        // console.log(err)
                                         errorMsg = "修改琴房信息失败";
                                         resolve(0);
                                     }
@@ -1127,13 +1129,12 @@ let InsertItem = async function(itemDate, itemUsername, itemRoomId, itemType, it
                                         item_begin: itemBegin,
                                         item_uuid: itemUuid
                                     }
-                                    console.log(_info)
+                                    // console.log(_info)
                                     db.insert('item', _info, function (err, info) {
                                         if(!err){
                                             resolve(1);
                                         }
                                         else{
-                                            console.log(err)
                                             errorMsg = "新建订单失败";
                                             resolve(0);
                                         }
@@ -1438,7 +1439,6 @@ let SearchItem = async function(count, offset, username, roomId, member, type, o
                 .limit(count, offset)
                 .order_by(sortOrder)
                 .get('item', function (err, res, fields) {
-                console.log(err)
                 let _data = JSON.stringify(res);
                 let _info = JSON.parse(_data);
                 itemInfo = _info;
@@ -1452,7 +1452,6 @@ let SearchItem = async function(count, offset, username, roomId, member, type, o
                 .where(dateQuery)
                 .where('item_type', type)
                 .count('item', function (err, res, fields) {
-                    console.log(err)
                     itemCount = res;
                     resolve(1);
                 });
@@ -1961,6 +1960,84 @@ let DeleteLongItem = async function(longItemId){
     }
 };
 
+let SetPrepayId = async function(itemUuid, prepayId) {
+    let errorMsg = "";
+    let test = function(){
+        return new Promise(resolve =>{
+            db.where({ item_uuid: itemUuid }).get('item', function (err, res, fields) {
+                let _select = res;
+                if (_select.length === 0) {
+                    errorMsg = "订单不存在"; // to do
+                    resolve(0);
+                }
+                else {
+                    try{
+                        client.set(itemUuid, prepayId);
+                        client.expire(itemUuid, 60*60);
+                        resolve(1);
+                    }
+                    catch(err){
+                        errorMsg = "存储失败";
+                        resolve(0);
+                    }
+                }
+            });
+        });
+    };
+    let flag = await test();
+    // console.log(flag);
+    if(flag === 0){
+        return {"success":false,
+            "info":errorMsg};
+    }
+    if(flag === 1){
+        return {"success":true};
+    }
+}
+
+let GetPrepayId = async function(itemUuid) {
+    let errorMsg = "";
+    let prePayId = "";
+    let test = function () {
+        return new Promise(resolve => {
+            db.where({item_uuid: itemUuid}).get('item', function (err, res, fields) {
+                let _select = res;
+                if (_select.length === 0) {
+                    errorMsg = "订单不存在"; // to do
+                    resolve(0);
+                }
+                else {
+                    client.get(itemUuid, function (err, reply) {
+                        if (reply) {
+                            prePayId = reply.toString();
+                            client.del(itemUuid, function (err, reply) {
+                            });
+                            resolve(1);
+                        }
+                        else {
+                            errorMsg = "验证码错误";
+                            resolve(0);
+                        }
+                    });
+                }
+            });
+        });
+    }
+    let flag = await test();
+    // console.log(flag);
+    if (flag === 0) {
+        return {
+            "success": false,
+            "info": errorMsg,
+            "prePayId": prePayId
+        };
+    }
+    if (flag === 1) {
+        return {"success": true,
+            "prePayId": prePayId
+        };
+    }
+}
 // 订单
 exports.InsertItem = InsertItem;            // 新增订单
 exports.ItemCheckin = ItemCheckin;            // 更新订单
@@ -1969,6 +2046,8 @@ exports.ItemPaySuccess = ItemPaySuccess;
 exports.SearchItem = SearchItem;            // 查询订单(管理端)
 exports.GetItemByUuid = GetItemByUuid;      // 获取订单信息，由uuid
 exports.DeleteItem = DeleteItem;            // 删除订单-需要改写琴房信息
+exports.SetPrepayId = SetPrepayId;
+exports.GetPrepayId = GetPrepayId;
 
 // 琴房
 exports.GetPianoRoomInfo = GetPianoRoomInfo;// 获取单个琴房信息
