@@ -4,7 +4,7 @@ let Db = require("mysql-activerecord");
 let configFile = "mysqlConfig.json";
 let config = JSON.parse(file.readFileSync(configFile));
 const uuid = require("node-uuid");
-
+let Redlock = require('redlock');
 let db = new Db.Adapter({
     server: config.serverIp,
     username: config.userName,
@@ -375,7 +375,7 @@ let run = async function()
     let res = []
     let test = function(){
         return new Promise(resolve =>{
-            db.get('piano', function(err, rows, fields) {
+            db.get('piano', async function(err, rows, fields) {
                 let _data = JSON.stringify(rows);
                 pianoInfo = JSON.parse(_data);
                 for(let i = 0; i<pianoInfo.length; i++){
@@ -387,6 +387,8 @@ let run = async function()
                                 redlock.lock(key, totalTime).then(async function(lock){
                                     res.push(lock);
                                     tag = 1
+                                    resolve(1)
+                                    return ;
                                 }).catch(()=>{})
                                 if(tag === 1){
                                     break

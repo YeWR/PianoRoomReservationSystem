@@ -209,7 +209,7 @@ export default {
   },
   user:{
     name: '姓名',
-    telephone: '手机号码',
+    telephone: '手机号码/学号',
     IDnumber: '证件号码',
     telephone_IDnumber: '手机号码/证件号码',
     type: '用户类型',

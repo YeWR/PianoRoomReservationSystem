@@ -4,7 +4,7 @@ let Db = require("mysql-activerecord");
 let configFile = "mysqlConfig.json";
 let config = JSON.parse(file.readFileSync(configFile));
 const uuid = require("node-uuid");
-
+let Redlock = require('redlock');
 let db = new Db.Adapter({
     server: config.serverIp,
     username: config.userName,
@@ -17,8 +17,8 @@ let redis = require("redis");
 let client = redis.createClient(config.redisPort,config.serverIp);
 let redlock = new Redlock([client]);
 let timeLength = 84;
-let totalTime = 180000;
-let intervalTime = 500;
+let totalTime = 10000;
+let intervalTime = 50;
 let sleep = function(ms) {
     return new Promise(resolve => setTimeout(resolve, ms))
 }
@@ -340,28 +340,30 @@ let GetPianoRoomInfo = async function(pianoId) {
 }
 
 let InsertLongItem = async function () {
-    let date = new Date();
-    date.setDate(date.getDate()+2);
-    let dateStr = getDateStr(date);
-    console.log(dateStr);
-    let week = date.getDay();
-    let items = await SearchLongItem(2147483647,0,null,null,week,null);
-    console.log(items);
-    for(let item of items.data)
-    {
-        let price = await GetPianoRoomInfo(item.item_long_pianoId);
-        let itemPrice = price.data[item.item_long_type] * Math.ceil(item.item_long_duration / 6);
-        let itemUuid = uuid.v1().toString();
-        itemUuid = itemUuid.replace(/\-/g,'');
-        let result = await InsertItem(dateStr,item.item_long_userid,item.item_long_pianoId,-1,item.item_long_type,itemPrice,item.item_long_duration,item.item_long_begin,itemUuid);
+    for(let i = 0; i<3; i++){
+        let date = new Date();
+        date.setDate(date.getDate()+i);
+        let dateStr = getDateStr(date);
+        console.log(dateStr);
+        let week = date.getDay();
+        let items = await SearchLongItem(2147483647,0,null,null,week,null);
+        for(let item of items.data)
+        {
+            let price = await GetPianoRoomInfo(item.item_long_pianoId);
+            let itemPrice = price.data[item.item_long_type] * Math.ceil(item.item_long_duration / 6);
+            let itemUuid = uuid.v1().toString();
+            itemUuid = itemUuid.replace(/\-/g,'');
+            let result = await InsertItem(dateStr,item.item_long_userid,item.item_long_pianoId,-1,item.item_long_type,itemPrice,item.item_long_duration,item.item_long_begin,itemUuid);
+        }
     }
 }
 let run = async function()
 {
+    console.log('sdadasdasfasf')
     let res = []
     let test = function(){
         return new Promise(resolve =>{
-            db.get('piano', function(err, rows, fields) {
+            db.get('piano', async function(err, rows, fields) {
                 let _data = JSON.stringify(rows);
                 pianoInfo = JSON.parse(_data);
                 for(let i = 0; i<pianoInfo.length; i++){
@@ -373,10 +375,13 @@ let run = async function()
                                 redlock.lock(key, totalTime).then(async function(lock){
                                     res.push(lock);
                                     tag = 1
+                                    resolve(1)
+                                    return ;
                                 }).catch(()=>{})
                                 if(tag === 1){
-                                    break
+                                    break;
                                 }
+                                console.log(tag)
                                 await sleep(intervalTime)
                             }
                             if(tag === 0){
@@ -391,16 +396,15 @@ let run = async function()
                 if(res.length === pianoInfo.length){
                     resolve(1)
                 }
-                else{
-                    resolve(0)
-                }
             });
         });
     };
     await test();
+    console.log('test finish')
     await update();
+    console.log('update finish')
     await InsertLongItem();
-    await sleep(totalTime)
+    console.log('long-item finish')
     for(let i = 0; i<res.length; i++){
         res[i].unlock().catch(function(err){})
     }
