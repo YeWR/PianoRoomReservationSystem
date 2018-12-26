@@ -100,13 +100,11 @@ export default {
     item_3: 'multi users',
 
     status_all: 'all',
-    status_3: 'refunded',
-    status_4: 'not used',
-    status_5: 'used already',
-    status_6: 'not paid',
-    status_2: 'long term item without paid',
-    status_1: 'long term item with paid',
-    status_0: 'long term item used',
+    status_4: 'not paid',
+    status_3: 'used',
+    status_2: 'not used',
+    status_1: 'canceled',
+    status_0: 'long term not paid',
 
     timeAsc: 'Time Ascending',
     timeDes: 'Time Descending',
@@ -213,6 +211,7 @@ export default {
   user:{
     name: 'Userame',
     telephone: 'Phone Number',
+    telephone_IDnumber: 'Phone Number/ID Number',
     IDnumber: 'ID Number',
     type: 'User Type',
     detail: 'List Details',
