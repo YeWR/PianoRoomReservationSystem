@@ -355,7 +355,7 @@ let GetPianoRoomInfo = async function(pianoId) {
 
 let InsertLongItem = async function () {
     let date = new Date();
-    date.setDate(date.getDate()+2);
+    date.setDate(date.getDate()+3);
     let dateStr = getDateStr(date);
     console.log(dateStr);
     let week = date.getDay();
