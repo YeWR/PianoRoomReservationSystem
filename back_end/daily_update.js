@@ -4,7 +4,7 @@ let Db = require("mysql-activerecord");
 let configFile = "mysqlConfig.json";
 let config = JSON.parse(file.readFileSync(configFile));
 const uuid = require("node-uuid");
-
+let Redlock = require('redlock');
 let db = new Db.Adapter({
     server: config.serverIp,
     username: config.userName,
@@ -387,6 +387,8 @@ let run = async function()
                                 redlock.lock(key, totalTime).then(async function(lock){
                                     res.push(lock);
                                     tag = 1
+                                    resolve(1)
+                                    return ;
                                 }).catch(()=>{})
                                 if(tag === 1){
                                     break
