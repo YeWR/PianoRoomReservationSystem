@@ -161,7 +161,7 @@ describe('#dataBase',()=>{
             info = await dataBase.SocietyUserLogin(testUser[1].phoneNumber,testUser[1].validateCode);
             console.log(info)
             expect(info.success).to.equal(true);
-            expect(info.username).to.equal(1);
+            expect(info.username).to.equal("赵哲晖");
         });
         it('fail1',async () =>{
             let info = await dataBase.SetLoginMsg(testUser[1].phoneNumber,testUser[1].validateCode);
