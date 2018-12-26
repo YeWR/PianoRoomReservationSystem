@@ -26,8 +26,10 @@
 }
 .reserve-info-descpt{
     width: 100%;
-
-
+    height: 10%;
+    margin-top: 5%;
+    text-align: center;
+    color: #9b9b9b;
 }
 .reserve-info-description{
 
@@ -37,7 +39,7 @@
     display: flex;
     justify-content: center;
     width: 100%;
-    margin-top: 6%;
+    margin-top: 3%;
     height: 1%;
 }
 
@@ -48,7 +50,7 @@
 }
 
 .progress-days {
-    margin-top: 8%;
+    margin-top: 3%;
 }
 
 .progress {
@@ -59,7 +61,7 @@
 }
 
 .progress-time{
-    margin-top: 3%;
+    margin-top: 4%;
     width: 100%;
     font-size: 26rpx;
     font-family: SFUIText-regular;

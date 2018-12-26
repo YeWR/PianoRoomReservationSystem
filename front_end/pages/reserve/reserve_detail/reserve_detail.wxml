@@ -14,7 +14,8 @@
         </view>
 
         <view class="reserve-info-descpt">
-            <view class="reserve-info-description"></view>
+            <!--todo-->
+            <text class="reserve-info-description">该钢琴手感细腻，音色动听</text>
         </view>
 
         <view class="reserve-info-cut">
@@ -96,7 +97,7 @@
             </view>
 
             <view class="select_people" wx:if="{{_chooseSingle}}">
-                <button class="people-btn-white" bindtap="bindSingleUser" style="background-color: #660874">
+                <button class="people-btn-white" bindtap="bindSingleUser" style="background-color: rgba(94, 55, 99, 1)">
                     单人
                 </button>
 
@@ -109,7 +110,7 @@
                 <button class="people-btn" bindtap="bindSingleUser" style="background-color: #ffffff">
                     单人
                 </button>
-                <button class="people-btn-white" bindtap="bindMultiUsers" style="background-color: #660874">
+                <button class="people-btn-white" bindtap="bindMultiUsers" style="background-color: rgba(94, 55, 99, 1)">
                     多人
                 </button>
             </view>
