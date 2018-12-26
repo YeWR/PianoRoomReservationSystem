@@ -103,12 +103,14 @@ const routers = router.post("/outSchool", async (ctx, next) => {
     userIP = userIP.split(".").join("_");
     let requestUrl = "https://id-tsinghua-test.iterator-traits.com/thuser/authapi/checkticket/" + configs.tsinghua_APPID +
         "/" + ticket + "/" + userIP;
+    console.log(requestUrl);
     if(ticket)
     {
-        //let res = await getInfo(requestUrl);
-        let res = "code=0:zjh=2014013432:yhm=lizy14:xm=李肇阳:yhlb=X0031:dw=软件学院:email="; //mock
+        let res = await getInfo(requestUrl);
+        //let res = "code=0:zjh=2014013432:yhm=lizy14:xm=李肇阳:yhlb=X0031:dw=软件学院:email="; //mock
         console.log(res);
         let info = parseInfo(res);
+        console.log(info);
         if(info.code !== 0)
         {
             let data = {
@@ -123,6 +125,7 @@ const routers = router.post("/outSchool", async (ctx, next) => {
         {
             let useruuid = uuid.v1().replace(/\-/g,'').substring(0,16);
             let result = await dataBase.CampusUserLogin(info.type,info.name,info.number, useruuid);
+            console.log(result);
             if(result.success) {
                 const userToken = {
                     "userId": result.info.uuid,
@@ -133,9 +136,9 @@ const routers = router.post("/outSchool", async (ctx, next) => {
                 let data = {
                     "success": true,
                     "token": token,
-                    "userType": result.info.type,
-                    "idNumber": result.info.number,
-                    "username": result.info.realname
+                    "userType": info.type,
+                    "idNumber": info.number,
+                    "username": info.name
                 };
                 let dataString = JSON.stringify(data);
                 let navigateUrl = "/pages/alarm/alarm?a=1";

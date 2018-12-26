@@ -14,7 +14,7 @@ const routers = router.get("/list", async (ctx, next) => {
     }
     else
     {
-        query.status = parseInt(query.status) - 3;
+        query.status = parseInt(query.status) - 1;
     }
     let userId = null;
     if(ctx.query.idNumber)
@@ -49,7 +49,7 @@ const routers = router.get("/list", async (ctx, next) => {
                     "userType": userInfo.data.type,
                     "pianoType": i.piano_type,
                     "price": p.item_value,
-                    "status": parseInt(p.item_type) + 3,
+                    "status": parseInt(p.item_type) + 1,
                     "time": dateStr,
                     "itemId": p.item_uuid
                 };
@@ -82,8 +82,6 @@ const routers = router.get("/list", async (ctx, next) => {
                 let date = new Date(p.item_date);
                 let dateStr = utils.getDateStr_Index(date, p);
                 let userInfo = await dataBase.GetUserInfo(p.item_username);
-                console.log(p);
-                console.log(userInfo);
                 let info = {
                     "idNumber": userInfo.data.number,
                     "room": i.piano_room,
@@ -91,7 +89,7 @@ const routers = router.get("/list", async (ctx, next) => {
                     "userType": userInfo.data.type,
                     "pianoType": i.piano_type,
                     "price": p.item_value,
-                    "status": parseInt(p.item_type) + 3,
+                    "status": parseInt(p.item_type) + 1,
                     "time": dateStr,
                     "itemId": p.item_uuid
                 };

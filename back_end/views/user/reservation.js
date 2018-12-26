@@ -300,7 +300,7 @@ const routers = router.post("/cancel", async (ctx, next) => {
                         ordertime.setMinutes(10*(p.item_begin%6));
                         ordertime.setSeconds(0,0);
                         ordertime -= 30*60*1000;
-                        ordertime = ordertime.getTime();
+                        //ordertime = ordertime.getTime();
                     }
                     let info = {
                         "pianoPlace": i.piano_room,

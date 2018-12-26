@@ -325,20 +325,9 @@ let CampusUserLogin = async function(type, name, number, uuid) {
                         uuid: uuid
                     };
                     db.insert('user', _info, function (err, info) {
-                        if (!err) {
-                            db.where({number: number}).get('user', function (err, res, fields) {
-                                let _select = res;
-                                if (_select.length !== 0) {
-                                    let _data = JSON.stringify(_select);
-                                    let _info = JSON.parse(_data);
-                                    info = _info[0];
-                                    resolve(1);
-                                }
-                                else {
-                                    errorMsg = "新建用户失败";
-                                    resolve(0);
-                                }
-                            });
+                        if (!err)
+                        {
+                            resolve(1);
                         }
                         else {
                             errorMsg = "新建用户失败";
@@ -733,9 +722,9 @@ let preparePianoForInsert = async function(itemRoomId, itemBegin, itemDuration, 
         return new Promise(async function(resolve){
             let tag = 0;
             for(let j = 0; j<200; j++){
-                let key = itemRoomId.toString()+"prepareForInsert"
+                let key = itemRoomId.toString()+"prepareForInsert";
                 redlock.lock(key, totalTime).then(async function(lock){
-                    if(tag == 1){
+                    if(tag === 1){
                         lock.unlock().catch(function(err){});
                     }
                     else{
@@ -796,7 +785,6 @@ let preparePianoForInsert = async function(itemRoomId, itemBegin, itemDuration, 
                             let checkUpdate = function(){
                                 return new Promise(resolve =>{
                                     db.where({piano_id: itemRoomId}).update('piano',{piano_list:newList},function(err){
-                                        console.log("==================for insert")
                                         if(err){
                                             resolve(0);
                                         }
