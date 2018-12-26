@@ -266,13 +266,13 @@ export default {
         { key: '0', display_name: '关闭（close）' }
       ],
       weekptions :[
-        {key:0, label:'星期一'},
-        {key:1, label:'星期二'},
-        {key:2, label:'星期三'},
-        {key:3, label:'星期四'},
-        {key:4, label:'星期五'},
-        {key:5, label:'星期六'},
-        {key:6, label:'星期日'}
+        {key:1, label:'星期一'},
+        {key:2, label:'星期二'},
+        {key:3, label:'星期三'},
+        {key:4, label:'星期四'},
+        {key:5, label:'星期五'},
+        {key:6, label:'星期六'},
+        {key:0, label:'星期日'}
       ],
       dialogFormVisible: false,
       newFormVisible: false, 
@@ -569,7 +569,7 @@ export default {
       return x*6+y
     },
     deleteRule(row){
-      let s = ['星期一','星期二','星期三','星期四','星期五','星期六','星期日']
+      let s = ['星期日','星期一','星期二','星期三','星期四','星期五','星期六']
       let key = 0
       for(let i = 0; i<s.length; i++){
         if(row.week === s[i]){
@@ -764,7 +764,7 @@ export default {
       if(!this.checkTime(row.startTime,row.endTime)){
         return 0
       }
-      let s = ['星期一','星期二','星期三','星期四','星期五','星期六','星期日']
+      let s = ['星期日','星期一','星期二','星期三','星期四','星期五','星期六']
       let key = 0
       for(let i = 0; i<s.length; i++){
         if(row.week === s[i]){
@@ -840,7 +840,7 @@ export default {
     },
     analysisDisabledWithoutChange(list){
       let tmp = []
-      let weekStr = ['星期一','星期二','星期三','星期四','星期五','星期六','星期日']
+      let weekStr = ['星期日','星期一','星期二','星期三','星期四','星期五','星期六']
       let id = 0
       for(let i = 0; i<7; i++){
         let flag = 0
@@ -880,7 +880,7 @@ export default {
     },
     analysisDisabled(list){
       let tmp = []
-      let weekStr = ['星期一','星期二','星期三','星期四','星期五','星期六','星期日']
+      let weekStr = ['星期日','星期一','星期二','星期三','星期四','星期五','星期六']
       let id = 0
       for(let i = 0; i<7; i++){
         let flag = 0

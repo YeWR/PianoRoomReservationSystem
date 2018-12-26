@@ -25,7 +25,7 @@ function dayCheck(day) {
             else
                 return day - today;
     }
-
+    
 }
 
 const routers = router.get("/list", async (ctx, next) => {
