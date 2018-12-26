@@ -13,7 +13,7 @@
     text-align: center;
 }
 .new_card {
-    background-color: rgba(102, 8, 116, 0.9);
+    background-color: rgba(94, 55, 99, 0.9);
     margin-top: 5%;
     height: 18%;
     width: 95%;

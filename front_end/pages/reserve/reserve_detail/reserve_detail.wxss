@@ -1,6 +1,6 @@
 /* pages/reserve/reserve_detail/reserve_detail.wxss */
 .top_board {
-    background-color: rgba(102, 8, 116, 0.9);
+    background-color: rgba(94, 55, 99, 0.9);
     height: 37%;
     width: 100%;
     border: 1px solid rgba(187, 187, 187, 1);
@@ -87,7 +87,7 @@
     width: 90%;
     height: 10%;
     display: flex;
-    color: rgba(102, 8, 116, 1);
+    color: rgba(94, 55, 99, 1);
 
 }
 .date-view-icon{
@@ -164,7 +164,7 @@
     color: white;
     font-size:30rpx;
     border-radius: 12rpx;
-    background-color: rgba(102, 8, 116, 0.9);
+    background-color: rgba(94, 55, 99, 0.9);
     font-family: Arial;
     border: 2rpx solid rgba(187, 187, 187, 1);
 }
@@ -175,5 +175,5 @@
     color: white;
     font-size: 28rpx;
     font-family: Arial;
-    background-color: rgba(102, 8, 116, 0.9);
+    background-color: rgba(94, 55, 99, 0.9);
 }
