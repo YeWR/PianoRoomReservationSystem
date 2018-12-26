@@ -13,6 +13,10 @@
             {{_pianoType}}({{_pianoPlace}})
         </view>
 
+        <view class="reserve-info-descpt">
+            <view class="reserve-info-description"></view>
+        </view>
+
         <view class="reserve-info-cut">
             <view class="reserve-info-cutline"></view>
         </view>

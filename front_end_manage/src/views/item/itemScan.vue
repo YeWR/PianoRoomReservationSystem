@@ -1,7 +1,6 @@
 <template>
   <div>
-    <div v-if='flag'>
-      <div>
+    <div v-if='flag' class = "scan-all">
         <el-row :gutter="40" v-loading="listLoading" class="panel-group" :list="list">
           <div v-for="item in list" :key="item.id" class="board-item" v-on:click="setTemp(item)">
             <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
@@ -17,8 +16,7 @@
             </el-col>
           </div>
         </el-row>
-      </div>
-      <div style="top: 30px; left: 30px">
+      <div style="top: 30px; left: 30px" class="kankan-group">
         <el-col :xs="{span: 24}" :sm="{span: 12}" :md="{span: 12}" :lg="{span: 6}" :xl="{span: 6}"
                 style="margin-bottom:30px; ">
           <BoxCard v-loading="tempLoading" :key="2" :temp="temp" :headerText="itemDetail" :options="options"
@@ -26,6 +24,7 @@
         </el-col>
       </div>
     </div>
+
     <div v-else class="app-container" style="left: 30%; position:absolute">
       <el-card class="box-card" style="width: 400px; height: 200px">
         <div slot="header">
@@ -39,6 +38,7 @@
       </el-card>
     </div>
   </div>
+
 </template>
 <script>
   import BoxCard from './components/BoxCard'
@@ -104,13 +104,15 @@
   }
 </script>
 <style lang="scss">
-  .board {
-    width: 1600px;
-    margin-left: 20px;
+
+  .scan-all {
+    width: 100%;
     display: flex;
-    justify-content: space-around;
-    flex-direction: row;
-    align-items: flex-start;
+    justify-content: space-between;
+  }
+  .kankan-group{
+    /*position: absolute;*/
+    top: 400px;
   }
   .kanban {
     &.todo {
@@ -130,8 +132,12 @@
     }
   }
   .panel-group {
-    margin-top: 18px;
+    margin-top: 25px;
+    width: 100%;
+    /*background-color: #1e6abc;*/
     .card-panel-col {
+      width:45%;
+      margin-left: 25px;
       margin-bottom: 32px;
     }
     .card-panel {
@@ -139,7 +145,7 @@
       cursor: pointer;
       font-size: 12px;
       position: relative;
-      overflow: hidden;
+      overflow: auto;
       color: #666;
       background: #fff;
       box-shadow: 4px 4px 40px rgba(0, 0, 0, .05);

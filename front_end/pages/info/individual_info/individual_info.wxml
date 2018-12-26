@@ -32,7 +32,7 @@
                 <text>绑定手机</text>
             </view>
             <view class="card_up_right">
-                <text >188****7716</text>
+                <text >{{_idNumberHiden}}</text>
             </view>
         </view>
 
