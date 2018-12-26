@@ -73,7 +73,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 9,
+			"current": 8,
 			"list": [
 				{
 					"id": -1,
@@ -125,8 +125,8 @@
 				},
 				{
 					"id": 8,
-					"name": "预约详情",
-					"pathName": "pages/reserve/reserve_detail/reserve_detail",
+					"name": "使用帮助",
+					"pathName": "pages/info/help/help",
 					"query": ""
 				},
 				{

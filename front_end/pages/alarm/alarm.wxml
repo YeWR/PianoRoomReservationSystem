@@ -25,7 +25,7 @@
 
             <view class="right_text">
                 <view class="line1">
-                    <text class="line1_text">{{_reservationListShow[0].reservationPianoPlace}} {{_reservationListShow[0].reservationStateDis}}
+                    <text class="line1_text">{{_reservationListShow[0].reservationPianoPlace}} {{_reservationListShow[0].reservationPianoType}} ({{_reservationListShow[0].reservationStateDis}})
                     </text>
                 </view>
 

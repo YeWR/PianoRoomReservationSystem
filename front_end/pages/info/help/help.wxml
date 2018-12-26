@@ -12,7 +12,7 @@
 
             <view class="up_text">
                 <text class="title">{{_noticeTitle}}</text>
-                预约说明
+                一、预约说明
             </view>
         </view>
 
@@ -26,7 +26,7 @@
 
             <view class="up_text">
                 <text class="title">{{_noticeTitle}}</text>
-                预约记录
+                二、预约记录
             </view>
         </view>
 
@@ -40,7 +40,7 @@
 
             <view class="up_text">
                 <text class="title">{{_noticeTitle}}</text>
-                公告栏
+                三、公告栏
             </view>
         </view>
 
