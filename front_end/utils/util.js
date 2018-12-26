@@ -918,16 +918,13 @@ const drawTimeTable = (pianoList, canvasId, date, idAdd) => {
  */
 const toMinuteSecond = (timeStamp) => {
     let ans = [];
-    // day
-    ans[0] = Math.floor(timeStamp / (60 * 60 * 24));
     // hour
-    let temp = timeStamp % (60 * 60 * 24);
-    ans[1] = Math.floor(temp / (60 * 60));
+    ans[0] = Math.floor(timeStamp / (60 * 60));
     // minute
-    temp = timeStamp % (60 * 60);
-    ans[2] = Math.floor(temp / 60);
+    let temp = timeStamp % (60 * 60);
+    ans[1] = Math.floor(temp / 60);
     // second
-    ans[3] = timeStamp % 60;
+    ans[2] = timeStamp % 60;
     return ans
 };
 
