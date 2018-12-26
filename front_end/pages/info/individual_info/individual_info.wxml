@@ -8,7 +8,7 @@
     </view>
 
     <view class="top_board"style="opacity:{{0.4}}">
-        <image class="top_board_img" mode="aspectFill" src="../../../images/bg/v2_phk5nq.jpg_t.png"></image>
+        <image class="top_board_img" mode="aspectFill" src="../../../images/bg/user-back.jpg"></image>
         <!--<open-data type="userAvatarUrl"class="top_board_img"></open-data>-->
 
     </view>

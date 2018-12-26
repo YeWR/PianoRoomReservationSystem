@@ -125,8 +125,14 @@
 				},
 				{
 					"id": 8,
-					"name": "预约详情",
-					"pathName": "pages/reserve/reserve_detail/reserve_detail",
+					"name": "使用帮助",
+					"pathName": "pages/info/help/help",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "校外登录",
+					"pathName": "pages/login/login_out_school/login_out_school",
 					"query": ""
 				}
 			]

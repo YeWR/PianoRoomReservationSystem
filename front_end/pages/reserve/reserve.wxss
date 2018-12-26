@@ -98,7 +98,7 @@ progress/* pages/reserve/reserve_space/reserve.wxss */
 .select_time_board{
     margin-top: 1%;
     justify-content: center;
-    margin-left: 6%;
+    margin-left: 7%;
     border-bottom:1px solid rgba(187, 187, 187, 1);
     border-top:1px solid rgba(187, 187, 187, 1);
 
@@ -132,6 +132,9 @@ progress/* pages/reserve/reserve_space/reserve.wxss */
 }
 
 .title-container{
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
     margin-top: 3%;
     margin-left: 6%;
     width: 85%;
