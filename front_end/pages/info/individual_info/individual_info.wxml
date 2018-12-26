@@ -29,7 +29,7 @@
     <view class="card">
         <view class="card_up">
             <view class="card_up_middle" bindtap="bindReservationAll">
-                <text>绑定手机</text>
+                <text>绑定手机/学号/工号</text>
             </view>
             <view class="card_up_right">
                 <text >{{_idNumberHiden}}</text>
@@ -45,7 +45,7 @@
                 <text>身份类型</text>
             </view>
             <view class="card_down_right">
-                <text>校外用户</text>
+                <text>{{_userTypeDis}}</text>
             </view>
         </view>
     </view>

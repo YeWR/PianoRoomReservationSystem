@@ -11,12 +11,13 @@ Page({
         _realName: "",
         _idNumber: "",
         _idNumberHiden: "",
+        _userTypeDis: "",
     },
 
 
     reLogin: function () {
         wx.redirectTo({
-            url: "../login/login"
+            url: "../../login/login"
         });
     },
 
@@ -31,6 +32,7 @@ Page({
 
         this.setData({
             _realName: app.globalData._username,
+            _userTypeDis: util.setUserTypeDiscription(app.globalData._userType),
             _idNumber: app.globalData._idNumber,
             _idNumberHiden: util.shwoHidenIdNumber(app.globalData._idNumber, app.globalData._userType),
         });
