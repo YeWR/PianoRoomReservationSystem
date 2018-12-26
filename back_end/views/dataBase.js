@@ -691,6 +691,9 @@ let GetPianoRoomInfo = async function(pianoId, date) {
                         if(pianoInfo.piano_list.data[i] === 49){
                             pianoList.push(1);
                         }
+                        if(pianoInfo.piano_list.data[i] === 50){
+                            pianoList.push(1);
+                        }
                     }
                     pianoInfoRes = {
                         "piano_list": pianoList,

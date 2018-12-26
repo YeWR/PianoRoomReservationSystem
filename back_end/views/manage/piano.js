@@ -180,53 +180,94 @@ const routers = router.get("/list", async (ctx, next) => {
     let endIndex = request.end;
     let day = dayCheck(request.week);
     let result = null;
-    if(request.type === 2) //添加规则
-    {
-        //检查长期预约
-        result = await dataBase.SearchLongItem(2147483647,0,null,request.id,request.week,null);
-        if(result.count > 0)
-        {
-            for(let i in result.data)
-            {
-                if(i.item_long_begin > endIndex && (i.item_long_begin+i.item_long_duration) < startIndex)
-                {
-                    ctx.response.status = 400;
-                    ctx.response.body = {"info": "与现有长期预约冲突，请联系用户处理！"};
-                    return;
+    let lock = function(){
+        return new Promise(async function(resolve){
+            let tag = 0;
+            for(let j = 0; j<200; j++){
+                let key = request.id+"piano";
+                dataBase.redlock.lock(key, dataBase.totalTime).then(async function(lock){
+                    if(tag === 1){
+                        lock.unlock().catch(function(err){})
+                    }
+                    else{
+                        tag = 1
+                        // to do
+                        if(request.type === 2) //添加规则
+                        {
+                            //检查长期预约
+                            result = await dataBase.SearchLongItem(2147483647,0,null,request.id,request.week,null);
+                            if(result.count > 0)
+                            {
+                                for(let i in result.data)
+                                {
+                                    if(i.item_long_begin > endIndex && (i.item_long_begin+i.item_long_duration) < startIndex)
+                                    {
+                                        ctx.response.status = 400;
+                                        ctx.response.body = {"info": "与现有长期预约冲突，请联系用户处理！"};
+                                        lock.unlock().catch(function(err){})
+                                        resolve(0)
+                                        return;
+                                    }
+                                }
+                            }
+                            //检查3天内订单
+                            if (day >= 0)
+                            {
+                                let date = new Date();
+                                date.setDate(date.getDate() + day);
+                                let dateStr = utils.getDateStr(date);
+                                result = await dataBase.preparePianoForRule(request.id, startIndex, endIndex - startIndex, dateStr);
+                                if (!result.success) {
+                                    ctx.response.status = 400;
+                                    ctx.response.body = {"info": "与现有订单冲突，请联系用户处理！"};
+                                    lock.unlock().catch(function(err){})
+                                    resolve(0)
+                                    return;
+                                }
+                            }
+                        }
+                        else if(request.type === 0) //删除规则
+                        {
+                            if (day >= 0)
+                            {
+                                let date = new Date();
+                                date.setDate(date.getDate() + day);
+                                let dateStr = utils.getDateStr(date);
+                                result = await dataBase.preparePianoForDel(request.id, startIndex, endIndex - startIndex, dateStr);
+                            }
+                        }
+                        result = await dataBase.ChangePianoRule(request.id,parseInt(startIndex), endIndex - startIndex,parseInt(request.week), request.type);
+                        if (!result.success) {
+                            ctx.response.status = 400;
+                            ctx.response.body = {"info": "修改规则失败,请联系开发人员"};
+                            lock.unlock().catch(function(err){})
+                            resolve(0)
+                            return;
+                        }
+                        else{
+                            ctx.response.status = 200;
+                            lock.unlock().catch(function(err){})
+                            resolve(1)
+                            return;
+                        }
+                    }
+                }).catch(()=>{})
+                if(tag === 1){
+                    break
                 }
+                await dataBase.sleep(dataBase.intervalTime)
             }
-        }
-        //检查3天内订单
-        if (day >= 0)
-        {
-            let date = new Date();
-            date.setDate(date.getDate() + day);
-            let dateStr = utils.getDateStr(date);
-            result = await dataBase.preparePianoForRule(request.id, startIndex, endIndex - startIndex, dateStr);
-            if (!result.success) {
+            if(tag === 0){
                 ctx.response.status = 400;
-                ctx.response.body = {"info": "与现有订单冲突，请联系用户处理！"};
-                return;
+                ctx.response.body = {
+                    "info": "请求超时,请重试!"
+                };
+                resolve(0)
+                return ;
             }
-        }
+        })
     }
-    else if(request.type === 0) //删除规则
-    {
-        if (day >= 0)
-        {
-            let date = new Date();
-            date.setDate(date.getDate() + day);
-            let dateStr = utils.getDateStr(date);
-            result = await dataBase.preparePianoForDel(request.id, startIndex, endIndex - startIndex, dateStr);
-        }
-    }
-    result = await dataBase.ChangePianoRule(request.id,parseInt(startIndex), endIndex - startIndex,parseInt(request.week), request.type);
-    if (!result.success) {
-        ctx.response.status = 400;
-        ctx.response.body = {"info": "修改规则失败,请联系开发人员"};
-        return;
-    }
-    ctx.response.status = 200;
+    let res = await lock()
 }).post("/ruleChange", async (ctx, next) => {
     let request = ctx.request.body;
     console.log("ruleChange");
@@ -238,8 +279,6 @@ const routers = router.get("/list", async (ctx, next) => {
     let day = dayCheck(request.week);
     console.log("day:" + day.toString());
     let result = null;
-
-
     let lock = function(){
         return new Promise(async function(resolve){
             let tag = 0;
