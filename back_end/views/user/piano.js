@@ -22,8 +22,12 @@ const routers = router.get("/all", async (ctx, next) => {
             if(p.piano_status)
             {
                 let timeList = [];
+                console.log(p.piano_list.data);
                 for (let i = 0; i < p.piano_list.data.length; i++) {
-                    timeList.push(p.piano_list.data[i] - 48);
+                    if(p.piano_list.data[i] === "0" || p.piano_list.data[i] === 48)
+                        timeList.push(0);
+                    else
+                        timeList.push(1);
                 }
                 let info = {
                     "pianoId": p.piano_id,

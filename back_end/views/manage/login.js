@@ -9,7 +9,7 @@ const jwt = require("jsonwebtoken");
 
 const routers = router.post("/", async (ctx, next) => {
     let username = ctx.request.body.userName,
-        usertype = ctx.request.body.userType,
+        usertype = ctx.request.body.userType.toString(),
         password = ctx.request.body.password;
     for(let manager of configs.managerInfo)
     {

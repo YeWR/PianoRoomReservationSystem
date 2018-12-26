@@ -327,7 +327,6 @@ const routers = router.post("/cancel", async (ctx, next) => {
                 }
             }
         }
-        console.log(reservationList);
         ctx.response.body = {
             "success": true,
             "reservationList": reservationList
@@ -530,7 +529,7 @@ const routers = router.post("/cancel", async (ctx, next) => {
         dateStr.concat(" 08:00:00");
         let duration = endTimeIndex - begTimeIndex;
         let itemUuid = uuid.v1();
-        let result = await dataBase.InsertItemTemp(dateStr, userId, pianoId, 1, reserveType, pianoPrice, duration, begTimeIndex, itemUuid);
+        let result = await dataBase.InsertItem(dateStr, userId, pianoId, 1, reserveType, pianoPrice, duration, begTimeIndex, itemUuid);
         ctx.response.body = result;
     }
     else

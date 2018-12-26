@@ -70,6 +70,14 @@ const routers = router.post("/outSchool", async (ctx, next) => {
     console.log(ctx.request.body);
     let tele = ctx.request.body.phoneNumber,
         code = ctx.request.body.validateCode;
+    if(!tele || !code)
+    {
+        ctx.response.body = {
+            "success": false,
+            "info": "手机号和验证码不能为空!"
+        }
+        return;
+    }
     console.log(`login with tele: ${tele}`);
     let result = await dataBase.SocietyUserLogin(tele,code);
     if(result.success === true)
@@ -81,8 +89,7 @@ const routers = router.post("/outSchool", async (ctx, next) => {
              "userType": constVariable.USERTYPE_OUTSCHOOL
          };
         const secret = configs.app_key[0];
-        const token = jwt.sign(userToken,secret, {"expiresIn": 10*24*60*60*1});
-        result.token = token;
+        result.token = jwt.sign(userToken,secret, {"expiresIn": 10*24*60*60*1});
         ctx.response.body = result;
     }
     else
