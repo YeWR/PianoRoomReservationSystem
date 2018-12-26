@@ -18,8 +18,12 @@ const MINTIMEINTERVAL = 3;
 
 // pay app id
 const PAYAPPID = "wx715248ea60f61941";
+// app secret
+const APPSECRETID = "";
 // pay secret id
 const PAYSECRETID = "b0e72051903b19032968b7b586aa8e61";
+// template id
+const TEMPLATEID = "Ov-o4BTt6nnN96FlKU2vod3JFhuXJ5d2n9VSkx36n1g";
 
 const formatNumber = (n) => {
     n = n.toString();
@@ -967,6 +971,8 @@ module.exports = {
     moneyToPay: moneyToPay,
     PAYAPPID: PAYAPPID,
     PAYSECRETID: PAYSECRETID,
+    TEMPLATEID: TEMPLATEID,
+    APPSECRETID: APPSECRETID,
     randomString: randomString,
     drawTimeTable: drawTimeTable,
     toMinuteSecond: toMinuteSecond
