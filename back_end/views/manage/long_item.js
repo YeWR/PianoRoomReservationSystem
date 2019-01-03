@@ -40,6 +40,8 @@ const routers = router.get("/list", async (ctx, next) => {
     };
 }).post("/create", async (ctx, next) => {
     let request = ctx.request.body;
+    request.end = parseInt(request.end);
+    request.start = parseInt(request.start);
     console.log("createLong");
     console.log(request);
     //检查用户

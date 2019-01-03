@@ -18,7 +18,7 @@ const routers = router.get("/", async (ctx, next) => {
     {
         ctx.response.status = 401;
         ctx.response.body = {
-            "info": "Invalid token"
+            "info": "登录状态已失效, 请重新登录!"
         };
         return
     }
