@@ -28,7 +28,7 @@
         </template>
       </el-table-column>
 
-      <el-table-column :label="$t('user.telephone')" min-width="200px" align="center">
+      <el-table-column :label="$t('user.telephone_IDnumber')" min-width="200px" align="center">
         <template slot-scope="scope">
           <span>{{ scope.row.telephone }}</span>
         </template>
@@ -186,12 +186,12 @@
             setTimeout(() => {
               this.listLoading = false
             }, 1.5 * 1000)
-          }) 
+          })
         }).catch(() => {
           this.$message({
             type: 'info',
             message: '已取消移入'
-          });          
+          });
         });
       },
       checkList(telephone){

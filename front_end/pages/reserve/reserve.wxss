@@ -6,7 +6,7 @@ progress/* pages/reserve/reserve_space/reserve.wxss */
     justify-content: center;
 }
 .middle_board{
-    background-color: rgba(102, 8, 116, 0.9);
+    background-color: rgba(94, 55, 99, 0.9);
     height: 30%;
     width: 100%;
     border: 2rpx solid rgba(187, 187, 187, 1);
@@ -42,7 +42,7 @@ progress/* pages/reserve/reserve_space/reserve.wxss */
     width: 18%;
     height: 50%;
     background-color: rgba(245, 245, 245, 1);
-    box-shadow: 0 0 2px 2px rgba(102, 8, 116, 0.9);
+    box-shadow: 0 0 2px 2px rgba(94, 55, 99, 0.9);
 }
 
 .unavailable{
@@ -58,7 +58,7 @@ progress/* pages/reserve/reserve_space/reserve.wxss */
     width: 18%;
     height: 50%;
     background-color: #aaaaaa;
-    box-shadow: 0 0 2px 2px rgba(102, 8, 116, 0.9);
+    box-shadow: 0 0 2px 2px rgba(94, 55, 99, 0.9);
 }
 .right{
     display: flex;
@@ -98,7 +98,7 @@ progress/* pages/reserve/reserve_space/reserve.wxss */
 .select_time_board{
     margin-top: 1%;
     justify-content: center;
-    margin-left: 6%;
+    margin-left: 7%;
     border-bottom:1px solid rgba(187, 187, 187, 1);
     border-top:1px solid rgba(187, 187, 187, 1);
 
@@ -132,6 +132,9 @@ progress/* pages/reserve/reserve_space/reserve.wxss */
 }
 
 .title-container{
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
     margin-top: 3%;
     margin-left: 6%;
     width: 85%;

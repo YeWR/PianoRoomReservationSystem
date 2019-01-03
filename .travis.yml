@@ -29,7 +29,6 @@ install:
     - npm install
 script:
     - npm run unit
-    - npm run build:prod
     - cd ../back_end
     - mv mysqlTestConfig.json mysqlConfig.json
     - mysql -uroot -p1234 test < ./test.sql

@@ -25,7 +25,7 @@ function dayCheck(day) {
             else
                 return day - today;
     }
-
+    
 }
 
 const routers = router.get("/list", async (ctx, next) => {
@@ -176,8 +176,8 @@ const routers = router.get("/list", async (ctx, next) => {
     let request = ctx.request.body;
     console.log("rule");
     console.log(request);
-    let startIndex = request.start;
-    let endIndex = request.end;
+    let startIndex = parseInt(request.start);
+    let endIndex = parseInt(request.end);
     let day = 0;
     if(request.week || request.week === 0)
     {
@@ -208,9 +208,9 @@ const routers = router.get("/list", async (ctx, next) => {
                             result = await dataBase.SearchLongItem(2147483647,0,null,request.id,request.week,null);
                             if(result.count > 0)
                             {
-                                for(let i in result.data)
+                                for(let i of result.data)
                                 {
-                                    if(i.item_long_begin > endIndex && (i.item_long_begin+i.item_long_duration) < startIndex)
+                                    if(i.item_long_begin < endIndex && (i.item_long_begin+i.item_long_duration) > startIndex)
                                     {
                                         ctx.response.status = 400;
                                         ctx.response.body = {"info": "与现有长期预约冲突，请联系用户处理！"};
@@ -332,7 +332,7 @@ const routers = router.get("/list", async (ctx, next) => {
                         result = await dataBase.SearchLongItem(2147483647,0,null,request.id,request.week,null);
                         if(result.count > 0)
                         {
-                            for(let i in result.data)
+                            for(let i of result.data)
                             {
                                 if(i.item_long_begin > newendIndex && (i.item_long_begin+i.item_long_duration) < newstartIndex)
                                 {

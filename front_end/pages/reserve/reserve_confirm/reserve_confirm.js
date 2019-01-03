@@ -126,7 +126,7 @@ Page({
     /*
      * cancel reservation
      */
-    cancelReservation: function(e){
+    cancelReservation: function (e) {
         let that = this;
         wx.request({
             url: "https://958107.iterator-traits.com/user/reservation/cancel",
@@ -157,7 +157,7 @@ Page({
     /*
      * go out
      */
-    goOut: function(e){
+    goOut: function (e) {
         this.toAlarm();
     },
 
@@ -173,9 +173,9 @@ Page({
     /*
      * set time show
      */
-    setTimeShow: function(times){
-        let formatTime = function(number){
-            if (number < 10){
+    setTimeShow: function (times) {
+        let formatTime = function (number) {
+            if (number < 10) {
                 number = "0" + number;
             }
             else {
@@ -185,23 +185,19 @@ Page({
         };
 
         let ans = "";
-        if (times[0] > 0){
-            ans = ans +  formatTime(times[0]) + "天";
+        for(let i = 0; i < times.length; ++i){
+            if (i > 0){
+                ans += ":";
+            }
+            ans = ans + formatTime(times[i]);
         }
-        if (times[1] > 0){
-            ans = ans + formatTime(times[1]) + "时";
-        }
-        if (times[2] > 0){
-            ans = ans + formatTime(times[2]) + "分";
-        }
-        ans = ans + formatTime(times[3]) + "秒";
         return ans;
     },
 
     /*
      * set time counter
      */
-    setCounter: function(that){
+    setCounter: function (that) {
         let timeLeft = 60 * 30;
         let temp = util.toMinuteSecond(timeLeft);
         that.setData({

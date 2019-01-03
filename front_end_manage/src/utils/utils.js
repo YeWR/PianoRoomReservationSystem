@@ -31,11 +31,11 @@ const setUserTypeDiscription = (userType) => {
  * reservation state
  */
 const RESERVATIONSTATE = {};
+RESERVATIONSTATE.CANCELED = 0;
 RESERVATIONSTATE.NOTUSED = 1;
 RESERVATIONSTATE.USED = 2;
+RESERVATIONSTATE.NOTPAID = 3;
 RESERVATIONSTATE.LONGNOTPAYED = -1;
-RESERVATIONSTATE.LONGPAYED = -2;
-RESERVATIONSTATE.LONGUSED = -3;
 
 const setRsvStateDiscription = (reservationState) => {
   let dis = "信息获取错误";
@@ -47,13 +47,13 @@ const setRsvStateDiscription = (reservationState) => {
       dis = "已使用";
       break;
     case RESERVATIONSTATE.LONGNOTPAYED:
-      dis = "长期未缴费";
+      dis = "长期预约未支付";
       break;
-    case RESERVATIONSTATE.LONGPAYED:
-      dis = "长期已缴费";
+    case RESERVATIONSTATE.CANCELED:
+      dis = "已取消";
       break;
-    case RESERVATIONSTATE.LONGUSED:
-      dis = "长期已使用";
+    case RESERVATIONSTATE.NOTPAID:
+      dis = "普通预约未支付";
       break;
   }
   return dis;

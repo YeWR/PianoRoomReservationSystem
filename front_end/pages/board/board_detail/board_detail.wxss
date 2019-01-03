@@ -4,7 +4,7 @@
 
     background-color: white;
     margin-top: 5%;
-    height: 30%;
+    height: 50%;
     width: 90%;
     color: rgba(0, 0, 0, 1);
     display: flex;
@@ -16,7 +16,7 @@
 .up_title{
     margin-top: 2%;
     width: 90%;
-    height: 18%;
+    height: 14%;
     display: flex;
     flex-direction: row;
 }
@@ -30,20 +30,17 @@
 }
 
 .title{
-    font-size: 42rpx;
-    font-weight: bolder;
+    font-size: 38rpx;
+    font-weight: bold;
     font-family: SFUIText-regular;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .middle_title{
-    margin-top: 1%;
     width: 90%;
-    height: 15%;
-    display: flex;
-    /*text-align: center;*/
-    align-items: center;
-    /*flex-direction: row;*/
-
+    height: 12%;
 }
 
 .middle_time{
@@ -61,7 +58,7 @@
 }
 
 .middle_line_text{
-    height: 50%;
+    height: 55%;
     border-bottom: 2rpx solid #660874;
 
 }
@@ -71,15 +68,15 @@
     display: flex;
     width: 90%;
     margin-top: 2%;
+    line-height: 50rpx;
+    color: #5a5e66;
 }
 
 .bottom_text{
     width: 90%;
     font-size: 35rpx;
-
     text-indent: 60rpx;
     text-align: left;
-
     font-family: SFUIText-regular;
 }
 

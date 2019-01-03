@@ -13,7 +13,7 @@
     text-align: center;
 }
 .new_card {
-    background-color: rgba(102, 8, 116, 0.9);
+    background-color: rgba(94, 55, 99, 0.9);
     margin-top: 5%;
     height: 18%;
     width: 95%;
@@ -43,8 +43,9 @@
 }
 
 .new_title{
-    font-size: 42rpx;
-    font-weight: bolder;
+    font-size: 35rpx;
+    letter-spacing:2rpx;
+    font-weight: bold;
     font-family: SFUIText-regular;
 }
 
@@ -57,16 +58,16 @@
 }
 
 .new_middle_time{
-    width: 50%;
+    width: 40%;
 }
 
 .new_middle_time_text{
-    font-size: 30rpx;
+    font-size: 27rpx;
     font-family: SFUIText-regular;
 }
 
 .new_middle_line{
-    width: 40%;
+    width: 50%;
 }
 
 .new_middle_line_text{
@@ -83,7 +84,7 @@
 
 .new_bottom_text{
     width: 90%;
-    font-size: 30rpx;
+    font-size: 26rpx;
     font-family: SFUIText-regular;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -134,8 +135,9 @@
 }
 
 .title{
-    font-size: 38rpx;
-    font-weight: bolder;
+    font-size: 34rpx;
+    font-weight: bold;
+    letter-spacing: 2rpx;
     font-family: SFUIText-regular;
 }
 
@@ -144,20 +146,19 @@
     height: 30%;
     display: flex;
     /*flex-direction: row;*/
-
 }
 
 .middle_time{
-    width: 50%;
+    width: 40%;
 }
 
 .middle_time_text{
-    font-size: 30rpx;
+    font-size: 25rpx;
     font-family: SFUIText-regular;
 }
 
 .middle_line{
-    width: 40%;
+    width: 50%;
 }
 
 .middle_line_text{
@@ -174,7 +175,7 @@
 
 .bottom_text{
     width: 90%;
-    font-size: 30rpx;
+    font-size: 26rpx;
     font-family: SFUIText-regular;
 }
 

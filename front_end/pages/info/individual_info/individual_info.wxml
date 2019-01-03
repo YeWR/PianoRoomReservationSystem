@@ -8,7 +8,7 @@
     </view>
 
     <view class="top_board"style="opacity:{{0.4}}">
-        <image class="top_board_img" mode="aspectFill" src="../../../images/bg/v2_phk5nq.jpg_t.png"></image>
+        <image class="top_board_img" mode="aspectFill" src="../../../images/bg/user-back.jpg"></image>
         <!--<open-data type="userAvatarUrl"class="top_board_img"></open-data>-->
 
     </view>
@@ -29,10 +29,10 @@
     <view class="card">
         <view class="card_up">
             <view class="card_up_middle" bindtap="bindReservationAll">
-                <text>绑定手机</text>
+                <text>绑定手机/学号/工号</text>
             </view>
             <view class="card_up_right">
-                <text >188****7716</text>
+                <text >{{_idNumberHiden}}</text>
             </view>
         </view>
 
@@ -45,7 +45,7 @@
                 <text>身份类型</text>
             </view>
             <view class="card_down_right">
-                <text>校外用户</text>
+                <text>{{_userTypeDis}}</text>
             </view>
         </view>
     </view>

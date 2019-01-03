@@ -1,7 +1,7 @@
 <template>
   <div class="mixin-components-container">
-    <el-row style="width:700px">
-      <el-card class="box-card">
+    <el-row style="width:100%" type="flex" justify="center">
+      <el-card class="box-card"style="width:60%">
         <div slot="header" class="clearfix">
           <span>检票</span>
         </div>
@@ -62,7 +62,7 @@ export default {
           this.$message({
             type: 'info',
             message: '检票成功'
-          });  
+          });
         }
         setTimeout(() => {
         }, 1.5 * 1000)

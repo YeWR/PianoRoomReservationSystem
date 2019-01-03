@@ -38,7 +38,7 @@ page{
 .input_icon{
     width: 50rpx;
     height: 50rpx;
-    background-color: rgba(102, 8, 116, 1);
+    background-color: rgba(94, 55, 99, 1);
 }
 
 .input_text{
@@ -64,7 +64,7 @@ page{
     color: white;
     font-size:30rpx;
     border-radius: 12rpx;
-    background-color: rgba(102, 8, 116, 0.9);
+    background-color: rgba(94, 55, 99, 0.9);
     font-family: Arial;
 }
 .register_btn_login{
@@ -95,7 +95,7 @@ page{
 }
 .fa-icon_v{
     margin-top:8%;
-    color: rgba(102, 8, 116, 1);
+    color: rgba(94, 55, 99, 1);
 }
 .input_text_v{
     width: 30%;

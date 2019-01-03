@@ -18,8 +18,12 @@ const MINTIMEINTERVAL = 3;
 
 // pay app id
 const PAYAPPID = "wx715248ea60f61941";
+// app secret
+const APPSECRETID = "";
 // pay secret id
 const PAYSECRETID = "b0e72051903b19032968b7b586aa8e61";
+// template id
+const TEMPLATEID = "Ov-o4BTt6nnN96FlKU2vod3JFhuXJ5d2n9VSkx36n1g";
 
 const formatNumber = (n) => {
     n = n.toString();
@@ -667,12 +671,11 @@ const setReservationTypeDiscription = (reservationType) => {
  * reservation state
  */
 const RESERVATIONSTATE = {};
+RESERVATIONSTATE.CANCELED = 0;
 RESERVATIONSTATE.NOTUSED = 1;
 RESERVATIONSTATE.USED = 2;
 RESERVATIONSTATE.NOTPAID = 3;
 RESERVATIONSTATE.LONGNOTPAYED = -1;
-RESERVATIONSTATE.LONGPAYED = -2;
-RESERVATIONSTATE.LONGUSED = -3;
 
 const setRsvStateDiscription = (reservationState) => {
     let dis = "信息获取错误";
@@ -683,17 +686,14 @@ const setRsvStateDiscription = (reservationState) => {
         case RESERVATIONSTATE.USED:
             dis = "已使用";
             break;
-        case RESERVATIONSTATE.NOTPAID:
-            dis = "未支付";
-            break;
         case RESERVATIONSTATE.LONGNOTPAYED:
-            dis = "长期未缴费";
+            dis = "长期预约未支付";
             break;
-        case RESERVATIONSTATE.LONGPAYED:
-            dis = "长期已缴费";
+        case RESERVATIONSTATE.CANCELED:
+            dis = "已取消";
             break;
-        case RESERVATIONSTATE.LONGUSED:
-            dis = "长期已使用";
+        case RESERVATIONSTATE.NOTPAID:
+            dis = "普通预约未支付";
             break;
     }
     return dis;
@@ -918,16 +918,13 @@ const drawTimeTable = (pianoList, canvasId, date, idAdd) => {
  */
 const toMinuteSecond = (timeStamp) => {
     let ans = [];
-    // day
-    ans[0] = Math.floor(timeStamp / (60 * 60 * 24));
     // hour
-    let temp = timeStamp % (60 * 60 * 24);
-    ans[1] = Math.floor(temp / (60 * 60));
+    ans[0] = Math.floor(timeStamp / (60 * 60));
     // minute
-    temp = timeStamp % (60 * 60);
-    ans[2] = Math.floor(temp / 60);
+    let temp = timeStamp % (60 * 60);
+    ans[1] = Math.floor(temp / 60);
     // second
-    ans[3] = timeStamp % 60;
+    ans[2] = timeStamp % 60;
     return ans
 };
 
@@ -971,6 +968,8 @@ module.exports = {
     moneyToPay: moneyToPay,
     PAYAPPID: PAYAPPID,
     PAYSECRETID: PAYSECRETID,
+    TEMPLATEID: TEMPLATEID,
+    APPSECRETID: APPSECRETID,
     randomString: randomString,
     drawTimeTable: drawTimeTable,
     toMinuteSecond: toMinuteSecond

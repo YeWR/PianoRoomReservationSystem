@@ -168,7 +168,7 @@
             label: this.$t('item.status') + ': ' + this.toItemStatus(''),
             key: ''
           })
-          for (let i = 0; i <= 5; ++i) {
+          for (let i = 0; i <= 4; ++i) {
             ans.push({
               label: this.$t('item.status') + ': ' + this.toItemStatus(i),
               key: i

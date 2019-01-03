@@ -5,17 +5,17 @@ page{
     width: 100%;
 }
 .login_img {
-    height:40%;
+    height:60%;
     width: 100%;
     line-height: 15rpx;
     text-align: center;
     z-index: 0;
 }
 .login_img_bg {
-    height:80%;
+    height:60%;
     width: 100%;
     line-height: 20rpx;
-    background-color: rgba(102, 8, 116, 0.9);
+    background-color: rgba(94, 55, 99, 0.9);
     font-size: 14rpx;
     text-align: center;
     border: 2rpx solid rgba(187, 187, 187, 1);
@@ -42,7 +42,7 @@ page{
     color: white;
     font-size:30rpx;
     border-radius: 12rpx;
-    background-color: rgba(102, 8, 116, 0.9);
+    background-color: rgba(94, 55, 99, 0.9);
     text-align: center;
     font-family: Arial;
     border: 2rpx solid rgba(187, 187, 187, 1);
@@ -53,7 +53,7 @@ page{
     color: white;
     font-size:30rpx;
     border-radius: 12rpx;
-    background-color: rgba(102, 8, 116, 0.9);
+    background-color: rgba(94, 55, 99, 0.9);
     text-align: center;
     font-family: Arial;
     border: 2rpx solid rgba(187, 187, 187, 1);

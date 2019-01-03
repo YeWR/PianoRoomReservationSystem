@@ -247,10 +247,10 @@ Page({
         }
         that.setData({
             _pianoAvailable: pianoAvailable,
-            _pianoAvailableShow: pianoAvailable.slice(0, that.data._pianoLimit),
+            _pianoAvailableShow: pianoAvailable,//.slice(0, that.data._pianoLimit),
             _pianoIsAvailable: pianoIsAvailable
         }, function () {
-            util.drawTimeTable(pianoAvailable, "piano", that.data._jsDate, 1);
+            util.drawTimeTable(that.data._pianoAvailableShow, "piano", that.data._jsDate, 1);
         });
     },
 
@@ -533,26 +533,26 @@ Page({
      * 页面上拉触底事件的处理函数
      */
     onReachBottom: function () {
-        let that = this;
-        let limit = Math.min(that.data._pianoLimit + 3, that.data._pianoAvailable.length);
-        that.setData({
-            _showThis: true
-        }, function () {
-            if(that.data._pianoLimit >= that.data._pianoAvailable.length){
-                that.setData({
-                    _text: "已经到底啦~",
-                })
-            }
-            else {
-                setTimeout(function () {
-                    that.setData({
-                        _pianoLimit: limit,
-                        _pianoAvailableShow: that.data._pianoAvailable.slice(0, limit),
-                        _showThis: false
-                    });
-                }, 500);
-            }
-        });
+        // let that = this;
+        // let limit = Math.min(that.data._pianoLimit + 3, that.data._pianoAvailable.length);
+        // that.setData({
+        //     _showThis: true
+        // }, function () {
+        //     if(that.data._pianoLimit >= that.data._pianoAvailable.length){
+        //         that.setData({
+        //             _text: "已经到底啦~",
+        //         })
+        //     }
+        //     else {
+        //         setTimeout(function () {
+        //             that.setData({
+        //                 _pianoLimit: limit,
+        //                 _pianoAvailableShow: that.data._pianoAvailable.slice(0, limit),
+        //                 _showThis: false
+        //             });
+        //         }, 500);
+        //     }
+        // });
     },
 
     /**
