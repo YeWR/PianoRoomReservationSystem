@@ -23,13 +23,21 @@
     color: black;
     font-weight: bolder;
     font-family: SFUIText-regular;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 .reserve-info-descpt{
     width: 100%;
-    height: 10%;
+    height: 13%;
     margin-top: 5%;
     text-align: center;
     color: #9b9b9b;
+    font-size: 30rpx;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 .reserve-info-description{
 

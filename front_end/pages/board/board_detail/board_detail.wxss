@@ -30,20 +30,17 @@
 }
 
 .title{
-    font-size: 42rpx;
-    font-weight: bolder;
+    font-size: 38rpx;
+    font-weight: bold;
     font-family: SFUIText-regular;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .middle_title{
-    margin-top: 1%;
     width: 90%;
     height: 12%;
-    display: flex;
-    /*text-align: center;*/
-    align-items: center;
-    /*flex-direction: row;*/
-
 }
 
 .middle_time{
@@ -71,15 +68,15 @@
     display: flex;
     width: 90%;
     margin-top: 2%;
+    line-height: 50rpx;
+    color: #5a5e66;
 }
 
 .bottom_text{
     width: 90%;
     font-size: 35rpx;
-
     text-indent: 60rpx;
     text-align: left;
-
     font-family: SFUIText-regular;
 }
 

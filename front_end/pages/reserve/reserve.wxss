@@ -132,6 +132,9 @@ progress/* pages/reserve/reserve_space/reserve.wxss */
 }
 
 .title-container{
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
     margin-top: 3%;
     margin-left: 6%;
     width: 85%;
