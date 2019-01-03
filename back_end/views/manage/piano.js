@@ -178,7 +178,17 @@ const routers = router.get("/list", async (ctx, next) => {
     console.log(request);
     let startIndex = parseInt(request.start);
     let endIndex = parseInt(request.end);
-    let day = dayCheck(request.week);
+    let day = 0;
+    if(request.week || request.week === 0)
+    {
+        day = dayCheck(request.week);
+    }
+    else
+    {
+        ctx.response.status = 400;
+        ctx.response.body = {"info": "星期不能为空!"};
+        return;
+    }
     let result = null;
     let lock = function(){
         return new Promise(async function(resolve){
@@ -276,7 +286,17 @@ const routers = router.get("/list", async (ctx, next) => {
     let oldendIndex = request.oldEnd;
     let newstartIndex = request.newStart;
     let newendIndex = request.newEnd;
-    let day = dayCheck(request.week);
+    let day = 0;
+    if(request.week || request.week === 0)
+    {
+        day = dayCheck(request.week);
+    }
+    else
+    {
+        ctx.response.status = 400;
+        ctx.response.body = {"info": "星期不能为空!"};
+        return;
+    }
     console.log("day:" + day.toString());
     let result = null;
     let lock = function(){

@@ -27,7 +27,7 @@ const routers = router.get("/", async (ctx, next) => {
         ctx.response.body = {
             "info": "Invalid token"
         };
-        return
+        return;
     }
     console.log(token);
     if(token.userId && token.userType !== null && token.userType !== undefined)

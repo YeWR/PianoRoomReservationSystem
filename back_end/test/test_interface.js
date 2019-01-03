@@ -113,16 +113,21 @@ let testItem = [{
 
 describe('#interfaceUser',()=>{
     describe('userRegister',()=>{
+        // it('CampusRegister',async () => {
+        //
+        //     let res = await request.get('/user/login/inSchool')
+        //         .query({ticket: "test"})
+        //         .expect(200);
+        //     let user = await dataBase.SearchUser(1,0,testCampusUser.number,testCampusUser.name,null,testCampusUser.type,1);
+        //     expect(user.count).equal(1);
+        //     console.log(user.data);
+        //     expect(user.data[0].uuid.length).equal(16);
+        //     testCampusUser.uuid = user.data[0].uuid;
+        // });
         it('CampusRegister',async () => {
-            //todo:取消mock后测试
-            let res = await request.get('/user/login/inSchool')
-                .query({ticket: "test"})
-                .expect(200);
-            let user = await dataBase.SearchUser(1,0,testCampusUser.number,testCampusUser.name,null,testCampusUser.type,1);
-            expect(user.count).equal(1);
-            console.log(user.data);
-            expect(user.data[0].uuid.length).equal(16);
-            testCampusUser.uuid = user.data[0].uuid;
+            let useruuid = uuid.v1().replace(/\-/g,'').substring(0,16);
+            let result = await dataBase.CampusUserLogin(testCampusUser.type,testCampusUser.name,testCampusUser.number, useruuid);
+            expect(result.success).equal(true);
         });
         it('Societyregister',async () => {
             let result = await dataBase.SetRegisterMsg(testUser[0].phoneNumber,testUser[0].validateCode);

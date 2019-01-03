@@ -4,7 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "test": "mysql -uroot -p test < ~/test.sql && mv mysqlConfig.json mysqlConfigOld.json && mv mysqlTestConfig.json mysqlConfig.json && ((mocha test/test_database.js --exit && mysql -uroot -p test < ~/test.sql && mocha test/test_interface.js --exit) || : ) && mv mysqlConfig.json mysqlTestConfig.json && mv mysqlConfigOld.json mysqlConfig.json"
+    "test": "mysql -uroot -p test < ~/test.sql && mv mysqlConfig.json mysqlConfigOld.json && mv mysqlTestConfig.json mysqlConfig.json && ((nyc mocha test/test_database.js --exit && mysql -uroot -p test < ~/test.sql && nyc mocha test/test_interface.js --exit) || : ) && mv mysqlConfig.json mysqlTestConfig.json && mv mysqlConfigOld.json mysqlConfig.json"
   },
   "author": "",
   "license": "MIT",
@@ -21,12 +21,12 @@
     "@alicloud/sms-sdk": "*",
     "xml2js": "*",
     "node-uuid": "*",
-    "crypto": "*",
     "redis": "*",
     "koa-session": "*",
     "koa-static": "*",
     "md5-node": "*",
-    "redlock": "*"
+    "redlock": "*",
+    "node-schedule": "*"
   },
   "devDependencies": {
     "mocha": "*",

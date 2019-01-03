@@ -27,7 +27,7 @@ const routers = router.get("/", async (ctx, next) => {
         if(token.userId === manager.name && token.userType === manager.type)
         {
             let roles = "";
-            if(manager.type === "0")
+            if(manager.type === "0" || manager.type === 0)
             {
                 roles = "admin";
             }

@@ -70,6 +70,14 @@ const routers = router.post("/outSchool", async (ctx, next) => {
     console.log(ctx.request.body);
     let tele = ctx.request.body.phoneNumber,
         code = ctx.request.body.validateCode;
+    if(!tele || !code)
+    {
+        ctx.response.body = {
+            "success": false,
+            "info": "手机号和验证码不能为空!"
+        }
+        return;
+    }
     console.log(`login with tele: ${tele}`);
     let result = await dataBase.SocietyUserLogin(tele,code);
     if(result.success === true)
@@ -81,8 +89,7 @@ const routers = router.post("/outSchool", async (ctx, next) => {
              "userType": constVariable.USERTYPE_OUTSCHOOL
          };
         const secret = configs.app_key[0];
-        const token = jwt.sign(userToken,secret, {"expiresIn": 10*24*60*60*1});
-        result.token = token;
+        result.token = jwt.sign(userToken,secret, {"expiresIn": 10*24*60*60*1});
         ctx.response.body = result;
     }
     else
@@ -96,12 +103,14 @@ const routers = router.post("/outSchool", async (ctx, next) => {
     userIP = userIP.split(".").join("_");
     let requestUrl = "https://id-tsinghua-test.iterator-traits.com/thuser/authapi/checkticket/" + configs.tsinghua_APPID +
         "/" + ticket + "/" + userIP;
+    console.log(requestUrl);
     if(ticket)
     {
-        //let res = await getInfo(requestUrl);
-        let res = "code=0:zjh=2014013432:yhm=lizy14:xm=李肇阳:yhlb=X0031:dw=软件学院:email="; //mock
+        let res = await getInfo(requestUrl);
+        //let res = "code=0:zjh=2014013432:yhm=lizy14:xm=李肇阳:yhlb=X0031:dw=软件学院:email="; //mock
         console.log(res);
         let info = parseInfo(res);
+        console.log(info);
         if(info.code !== 0)
         {
             let data = {
@@ -116,6 +125,7 @@ const routers = router.post("/outSchool", async (ctx, next) => {
         {
             let useruuid = uuid.v1().replace(/\-/g,'').substring(0,16);
             let result = await dataBase.CampusUserLogin(info.type,info.name,info.number, useruuid);
+            console.log(result);
             if(result.success) {
                 const userToken = {
                     "userId": result.info.uuid,
@@ -126,9 +136,9 @@ const routers = router.post("/outSchool", async (ctx, next) => {
                 let data = {
                     "success": true,
                     "token": token,
-                    "userType": result.info.type,
-                    "idNumber": result.info.number,
-                    "username": result.info.realname
+                    "userType": info.type,
+                    "idNumber": info.number,
+                    "username": info.name
                 };
                 let dataString = JSON.stringify(data);
                 let navigateUrl = "/pages/alarm/alarm?a=1";
@@ -163,7 +173,7 @@ const routers = router.post("/outSchool", async (ctx, next) => {
         ctx.response.type = 'html';
         ctx.response.body = "<script type=\"text/javascript\" src=\"https://res.wx.qq.com/open/js/jweixin-1.3.2.js\"></script><script>wx.miniProgram.getEnv(function (res) {if (res.miniprogram) {wx.miniProgram.switchTab({url: '/pages/alarm/alarm'});wx.miniProgram.postMessage({data: " + JSON.stringify(data) + "});}})</script>";
     }
-    console.log(ctx.response.body);
+    // console.log(ctx.response.body);
 });
 
 module.exports = routers;
