@@ -398,7 +398,7 @@ describe('interfaceManager', ()=>{
             let res = await request.post('/manager/login')
                 .send({
                     "userType": "0",
-                    "userName": "liuqiang",
+                    "userName": "admin",
                     "password": "1234"
                 })
                 .expect(200);
@@ -410,7 +410,7 @@ describe('interfaceManager', ()=>{
             let res = await request.post('/manager/login')
                 .send({
                     userType: "1",
-                    userName: "liuqiang",
+                    userName: "admin",
                     password: "1234"
                 })
                 .expect(401);
@@ -422,7 +422,7 @@ describe('interfaceManager', ()=>{
                 })
                 .expect(200);
             res = JSON.parse(res.text);
-            expect(res.name).equals("刘强");
+            expect(res.name).equals("admin");
             expect(res.roles[0]).equals("admin");
         });
         it('logout', async () => {
@@ -436,7 +436,7 @@ describe('interfaceManager', ()=>{
             let res = await request.post('/manager/login')
                 .send({
                     "userType": "1",
-                    "userName": "zhaoyang",
+                    "userName": "guard",
                     "password": "1234"
                 })
                 .expect(200);
@@ -451,7 +451,7 @@ describe('interfaceManager', ()=>{
                 })
                 .expect(200);
             res = JSON.parse(res.text);
-            expect(res.name).equals("李肇阳");
+            expect(res.name).equals("guard");
             expect(res.roles[0]).equals("editor");
         });
     });

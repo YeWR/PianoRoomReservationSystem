@@ -342,7 +342,7 @@ describe('#dataBase',()=>{
             let now_date = new Date();
             now_date.setDate(now_date.getDate())
             now_date.setHours(now_date.getHours())
-            let date = now_date.getFullYear()+'-'+now_date.getMonth()+'-'+now_date.getDate()+' '+now_date.getHours()+':'+now_date.getMinutes()+':'+now_date.getSeconds();
+            let date = now_date.getFullYear()+'-'+(now_date.getMonth()+1)+'-'+now_date.getDate()+' '+now_date.getHours()+':'+now_date.getMinutes()+':'+now_date.getSeconds();
             let result = await dataBase.InsertItem(date,res.data,2,1,0,50,10,0,uuid[0]);
             expect(result.success).to.equal(true);
         });
@@ -351,7 +351,7 @@ describe('#dataBase',()=>{
             let now_date = new Date();
             now_date.setDate(now_date.getDate())
             now_date.setHours(now_date.getHours())
-            let date = now_date.getFullYear()+'-'+now_date.getMonth()+'-'+now_date.getDate();
+            let date = now_date.getFullYear()+'-'+(now_date.getMonth()+1)+'-'+now_date.getDate();
             let result = await dataBase.InsertItem(date,res.data,2,0,0,50,10,0,uuid[1]);
             expect(result.success).to.equal(false);
             expect(result.info).to.equal("预约失败");         
@@ -394,7 +394,7 @@ describe('#dataBase',()=>{
             let now_date = new Date();
             now_date.setDate(now_date.getDate())
             now_date.setHours(now_date.getHours())
-            let date = now_date.getFullYear()+'-'+now_date.getMonth()+'-'+now_date.getDate()+' '+now_date.getHours()+':'+now_date.getMinutes()+':'+now_date.getSeconds();
+            let date = now_date.getFullYear()+'-'+(now_date.getMonth()+1)+'-'+now_date.getDate()+' '+now_date.getHours()+':'+now_date.getMinutes()+':'+now_date.getSeconds();
             let result = await dataBase.InsertItem(date,res.data,3,3,0,50,10,0,'4fc7520005ab11e99aab63509163csda');
             expect(result.success).to.equal(true);
 
