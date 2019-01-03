@@ -5,7 +5,6 @@ const utils = require("../utils");
 
 const routers = router.get("/list", async (ctx, next) => {
     let query = ctx.query;
-    console.log(query);
     let page = query.page;
     let limit = parseInt(query.limit);
     if(!query.status)

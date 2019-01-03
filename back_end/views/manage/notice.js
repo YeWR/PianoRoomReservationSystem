@@ -6,16 +6,8 @@ const utils = require("../utils");
 const routers = router.get("/list", async (ctx, next) => {
     let query = ctx.query;
     console.log(query);
-    let page = 1;
-    if(query.page)
-    {
-        page = parseInt(query.page);
-    }
-    let limit = 20;
-    if(query.limit)
-    {
-        limit = parseInt(query.limit);
-    }
+    let page = parseInt(query.page);
+    let limit = parseInt(query.limit);
     let title = query.title;
     let author = query.author;
     let order = query.dateSort;

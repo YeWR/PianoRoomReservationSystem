@@ -564,30 +564,26 @@ const routers = router.post("/cancel", async (ctx, next) => {
     let result = ctx.request.body;
     console.log("body");
     console.log(result);
-    if (result.xml.return_code === 'SUCCESS' && result.xml.result_code === 'SUCCESS')
-    {
+    if (result.xml.return_code === 'SUCCESS' && result.xml.result_code === 'SUCCESS') {
         let resultdb = await dataBase.ItemPaySuccess(id);
         console.log(result.xml);
-        if(resultdb.success)
-        {
+        if (resultdb.success) {
             //获取access_token
             await getAccessToken();
             console.log(access_token);
             console.log(expire);
-            if(access_token && expire)
-            {
+            if (access_token && expire) {
                 let prepayResult = await dataBase.GetPrepayId(id);
                 console.log("prepayResult");
                 console.log(prepayResult);
                 let info = await dataBase.GetItemByUuid(id);
                 console.log(info);
                 info = info.data;
-                if(info)
-                {
-                    let timeStr = utils.getDateStr_Index(new Date(info.item_date),info);
+                if (info) {
+                    let timeStr = utils.getDateStr_Index(new Date(info.item_date), info);
                     let room = await dataBase.GetPianoRoomInfo(info.item_roomId);
                     let itemTimeStr = utils.getDatetimeStr(new Date(info.item_time));
-                    await sendTemplateMsg(result.xml.openid, prepayResult.prePayId,"琴房预约",itemTimeStr,id,timeStr,room.data.piano_room,info.item_value);
+                    await sendTemplateMsg(result.xml.openid, prepayResult.prePayId, "琴房预约", itemTimeStr, id, timeStr, room.data.piano_room, info.item_value);
                 }
                 console.log("finish");
             }
@@ -597,43 +593,42 @@ const routers = router.post("/cancel", async (ctx, next) => {
                 "<return_msg><![CDATA[OK]]></return_msg>" +
                 "</xml>";
         }
-        else
-        {
+        else {
             console.log("确认支付失败");
             ctx.response.status = 404;
         }
     }
-    else
-    {
+    else {
         console.log("支付失败");
         ctx.response.status = 404;
     }
-}).post('/ordertest', async (ctx, next) => {
-    let number = ctx.request.body.number;
-    let userId = await dataBase.GetUserUuidByNumber(number);
-    userId = userId.data;
-    let userInfo = await dataBase.GetUserInfo(userId);
-    if(userInfo.data.status)
-    {
-        let pianoId = ctx.request.body.pianoId;
-        let reserveType = parseInt(ctx.request.body.reservationType);
-        let pianoPrice = parseInt(ctx.request.body.pianoPrice);
-        let begTimeIndex = parseInt(ctx.request.body.begTimeIndex);
-        let endTimeIndex = parseInt(ctx.request.body.endTimeIndex);
-        let dateStr = ctx.request.body.date;
-        dateStr.concat(" 08:00:00");
-        let duration = endTimeIndex - begTimeIndex;
-        let itemUuid = uuid.v1();
-        let result = await dataBase.InsertItem(dateStr, userId, pianoId, 1, reserveType, pianoPrice, duration, begTimeIndex, itemUuid);
-        ctx.response.body = result;
-    }
-    else
-    {
-        ctx.response.body = {
-            "success": false,
-            "info": "您已被加入黑名单，无法预约，请联系管理员!"
-        }
-    }
-});
+})
+// }).post('/ordertest', async (ctx, next) => {
+//     let number = ctx.request.body.number;
+//     let userId = await dataBase.GetUserUuidByNumber(number);
+//     userId = userId.data;
+//     let userInfo = await dataBase.GetUserInfo(userId);
+//     if(userInfo.data.status)
+//     {
+//         let pianoId = ctx.request.body.pianoId;
+//         let reserveType = parseInt(ctx.request.body.reservationType);
+//         let pianoPrice = parseInt(ctx.request.body.pianoPrice);
+//         let begTimeIndex = parseInt(ctx.request.body.begTimeIndex);
+//         let endTimeIndex = parseInt(ctx.request.body.endTimeIndex);
+//         let dateStr = ctx.request.body.date;
+//         dateStr.concat(" 08:00:00");
+//         let duration = endTimeIndex - begTimeIndex;
+//         let itemUuid = uuid.v1();
+//         let result = await dataBase.InsertItem(dateStr, userId, pianoId, 1, reserveType, pianoPrice, duration, begTimeIndex, itemUuid);
+//         ctx.response.body = result;
+//     }
+//     else
+//     {
+//         ctx.response.body = {
+//             "success": false,
+//             "info": "您已被加入黑名单，无法预约，请联系管理员!"
+//         }
+//     }
+// });
 
 module.exports = routers;

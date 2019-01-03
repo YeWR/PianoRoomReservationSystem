@@ -824,6 +824,11 @@ describe('interfaceManager', ()=>{
             expect(res.list.length).equal(1);
             refundId = res.list[0].itemId;
         });
+        it('checkin', async () => {
+            let res = await request.get('/manager/checkin')
+                .query({id: refundId})
+                .expect(200);
+        });
         it('refundment', async () => {
             let res = await request.post('/manager/item/refundment')
                 .send({
@@ -840,6 +845,11 @@ describe('interfaceManager', ()=>{
                 .expect(200);
             res = JSON.parse(res.text);
             expect(res.total).equal(3);
+        });
+        it('checkinFalse', async () => {
+            let res = await request.get('/manager/checkin')
+                .query({id: refundId})
+                .expect(400);
         });
     });
     describe('longItem', ()=>{
