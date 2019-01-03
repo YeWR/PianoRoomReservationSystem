@@ -18,6 +18,7 @@ let redlock = new Redlock([client]);
 let timeLength = 84;
 let totalTime = 5000;
 let intervalTime = 50;
+let requestNum = 100;
 
 let sleep = function(ms) {
     return new Promise(resolve => setTimeout(resolve, ms))
@@ -28,7 +29,7 @@ let ChangeUserStatus = async function(userUuid, userStatus){
     let lock = function(){
         return new Promise(async function(resolve){
             let tag = 0;
-            for(let j = 0; j<200; j++){
+            for(let j = 0; j<requestNum; j++){
                 let key = userUuid+"user";
                 redlock.lock(key, totalTime).then(async function(lock){
                     if(tag === 1){
@@ -509,7 +510,7 @@ let UpdatePianoInfo = async function(pianoId, pianoRoom, pianoInfo, pianoStuvalu
     let lock = function(){
         return new Promise(async function(resolve){
             let tag = 0;
-            for(let j = 0; j<200; j++){
+            for(let j = 0; j<requestNum; j++){
                 let key = pianoId.toString()+"pianoInfo"
                 redlock.lock(key, totalTime).then(async function(lock){
                     if(tag === 1){
@@ -723,7 +724,7 @@ let preparePianoForInsert = async function(itemRoomId, itemBegin, itemDuration, 
     let lock = function(){
         return new Promise(async function(resolve){
             let tag = 0;
-            for(let j = 0; j<200; j++){
+            for(let j = 0; j<requestNum; j++){
                 let key = itemRoomId.toString()+"prepareForInsert";
                 redlock.lock(key, totalTime).then(async function(lock){
                     if(tag === 1){
@@ -841,7 +842,7 @@ let preparePianoForRule = async function(itemRoomId, itemBegin, itemDuration, it
     let lock = function(){
         return new Promise(async function(resolve){
             let tag = 0;
-            for(let j = 0; j<200; j++){
+            for(let j = 0; j<requestNum; j++){
                 let key = itemRoomId.toString()+"prepareForRule"
                 redlock.lock(key, totalTime).then(async function(lock){
                     if(tag === 1){
@@ -955,7 +956,7 @@ let ChangePianoRule = async function(itemRoomId, itemBegin, itemDuration, itemDa
     let lock = function(){
         return new Promise(async function(resolve){
             let tag = 0;
-            for(let j = 0; j<200; j++){
+            for(let j = 0; j<requestNum; j++){
                 let key = itemRoomId.toString()+"changePianoRule"
                 redlock.lock(key, totalTime).then(async function(lock){
                     if(tag === 1){
@@ -1100,7 +1101,7 @@ let InsertItem = async function(itemDate, itemUsername, itemRoomId, itemType, it
     let lock = function(){
         return new Promise(async function(resolve){
             let tag = 0;
-            for(let j = 0; j<200; j++){
+            for(let j = 0; j<requestNum; j++){
                 let key = itemRoomId.toString()+"piano";
                 redlock.lock(key, totalTime).then(async function(lock){
                     if(tag === 1){
@@ -1181,7 +1182,7 @@ let ItemCheckin = async function(itemUuid){
     let lock = function(){
         return new Promise(async function(resolve){
             let tag = 0;
-            for(let j = 0; j<200; j++){
+            for(let j = 0; j<requestNum; j++){
                 let key = itemUuid.toString()+"ItemCheckin";
                 redlock.lock(key, totalTime).then(async function(lock){
                     if(tag === 1){
@@ -1287,7 +1288,7 @@ let ItemPaySuccess = async function(itemUuid){
     let lock = function(){
         return new Promise(async function(resolve){
             let tag = 0;
-            for(let j = 0; j<200; j++){
+            for(let j = 0; j<requestNum; j++){
                 let key = itemUuid.toString()+"ItemPaySuccess";
                 redlock.lock(key, totalTime).then(async function(lock){
                     if(tag === 1){
@@ -1513,7 +1514,7 @@ let preparePianoForDel = async function(itemRoomId, itemBegin, itemDuration, ite
     let lock = function(){
         return new Promise(async function(resolve){
             let tag = 0;
-            for(let j = 0; j<200; j++){
+            for(let j = 0; j<requestNum; j++){
                 let key = itemRoomId.toString()+"prepareForDel";
                 redlock.lock(key, totalTime).then(async function(lock){
                     if(tag === 1){
@@ -1621,7 +1622,7 @@ let DeleteItem = async function(itemUuid){
     let lock = function(){
         return new Promise(async function(resolve){
             let tag = 0;
-            for(let j = 0; j<200; j++){
+            for(let j = 0; j<requestNum; j++){
                 let key = itemUuid.toString()+"itemDel";
                 redlock.lock(key, totalTime).then(async function(lock){
                     if(tag === 1){
