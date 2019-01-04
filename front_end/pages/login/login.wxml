@@ -7,7 +7,9 @@
     </view>
     <view class="login_img">
         <view class="login_img_img">
-            <image class="login_img_in" mode="aspectFill" src="../../../images/bg/background.jpg"></image>
+            <!--<image class="login_img_in" mode="aspectFill" src="../../../images/bg/background.jpg"></image>-->
+            <image class="login_img_in" mode="aspectFill" src="https://958107.iterator-traits.com/background.jpg"></image>
+
         </view>
         <view class="login_img_bg"></view>
 
