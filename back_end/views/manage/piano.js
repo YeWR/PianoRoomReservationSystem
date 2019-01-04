@@ -138,6 +138,16 @@ const routers = router.get("/list", async (ctx, next) => {
                                     return;
                                 }
                             }
+                            //检查长期预约
+                            let longItem = await dataBase.SearchLongItem(100,0,null,request.id,null,null);
+                            if(longItem.count !== 0)
+                            {
+                                ctx.response.status = 400;
+                                ctx.response.body = {"info": "该琴房仍有长期预约，请联系用户处理！"};
+                                lock.unlock().catch(function(err){});
+                                resolve(0);
+                                return;
+                            }
                         }
                         let result = await dataBase.UpdatePianoInfo(request.id,null,null,null,null,null,null,null,request.status);
                         if(result.success){
