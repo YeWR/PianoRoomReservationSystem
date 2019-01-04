@@ -7,7 +7,7 @@
     </view>
 
     <view class="login_icon_los">
-        <image class="login_img_los" src="../../../images/bg/v2_phk5nq.jpg_t.png"></image>
+        <image class="login_img_los" src="https://958107.iterator-traits.com/v2_phk5nq.jpg_t.png"></image>
     </view>
 
         <!--手机号-->

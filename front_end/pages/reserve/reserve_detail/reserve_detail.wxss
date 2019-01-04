@@ -9,7 +9,7 @@
 .reserve-info {
     box-shadow: 5rpx 5rpx 10rpx 1rpx rgba(100, 100, 100, 1);
     position: absolute;
-    margin-top: 16%;
+    margin-top: 100rpx;
     border: 1px solid rgba(238, 238, 238, 1);
     background-color: white;
     height: 31%;
