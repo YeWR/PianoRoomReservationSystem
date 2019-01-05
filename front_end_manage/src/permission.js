@@ -58,6 +58,12 @@ router.beforeEach((to, from, next) => {
   }
 })
 
-router.afterEach(() => {
+router.afterEach((to, from) => {
+  if(to.meta.title){
+    document.title = to.meta.title;
+  }
+  else{
+    document.title = 'THU piano reservation system';
+  }
   NProgress.done() // finish progress bar
 })

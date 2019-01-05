@@ -10,11 +10,6 @@ import Layout from '@/views/layout/Layout'
 // import componentsRouter from './modules/components'
 // import chartsRouter from './modules/charts'
 // import nestedRouter from './modules/nested'
-
-/** note: Submenu only appear when children.length>=1
- *  detail see  https://panjiachen.github.io/vue-element-admin-site/guide/essentials/router-and-nav.html
- **/
-
 /**
  * hidden: true                   if `hidden:true` will not show in the sidebar(default is false)
  * alwaysShow: true               if set true, will always show the root menu, whatever its child routes length
