@@ -1,7 +1,7 @@
 <!--pages/alarm/alarm.wxml-->
 <view class="container">
     <view class="nodata" wx:if="{{_reservationListShow.length == 0}}">
-        <image class="nodata-icon" mode="aspectFit" src="../../../images/bg/nodata.png"></image>
+        <image class="nodata-icon" mode="aspectFit" src="https://958107.iterator-traits.com/nodata.png"></image>
         <view class="nodata-text">
             <text>暂无预约记录~</text>
         </view>

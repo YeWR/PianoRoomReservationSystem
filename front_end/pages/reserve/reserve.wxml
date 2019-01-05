@@ -34,7 +34,6 @@
         <view class="space"></view>
 
         <view class="select_time">
-            <!--<image class="icon_time" mode="aspectFit" src="../../../images/icon/clock.png"></image>-->
             <view class="fa-icon-clock">
                 <text class="fa fa-clock-o fa-lg"></text>
             </view>
@@ -142,7 +141,7 @@
         </view>
 
         <view class="nodata" wx:else>
-            <image class="nodata-icon" mode="aspectFit" src="../../../images/bg/nodata.png"></image>
+            <image class="nodata-icon" mode="aspectFit" src="https://958107.iterator-traits.com/nodata.png"></image>
             <view class="nodata-text">
                 <text>此时间段无可用琴房哦~</text>
             </view>
