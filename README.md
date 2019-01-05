@@ -1,5 +1,6 @@
 # PianoRoomReservationSystem
-* [![Build Status](https://travis-ci.com/YeWR/PianoRoomReservationSystem.svg?token=uJujS3v93YqFPXfQnm9M&branch=master)](https://travis-ci.com/YeWR/PianoRoomReservationSystem)
+[![Build Status](https://travis-ci.com/YeWR/PianoRoomReservationSystem.svg?token=uJujS3v93YqFPXfQnm9M&branch=master)](https://travis-ci.com/YeWR/PianoRoomReservationSystem)
+![](https://img.shields.io/badge/license-MIT-000000.svg)
 
 清华大学艺教中心琴房预约系统
 
@@ -23,7 +24,7 @@
 * 后端 Web 框架: Koa
 * 数据库: Mysql + Redis
 * 用户端前端: 微信小程序
-* 管理端前端: Vue (在 vue-element-admin 的基础上二次开发)
+* 管理端前端: Vue (在 [vue-element-admin](https://github.com/PanJiaChen/vue-element-admin) 的基础上二次开发)
 
 
 ## 相关说明文档
@@ -33,7 +34,17 @@
 * `architecture.md`：类的继承关系，设计框架图，思维导图，使用流程等图表以及相关说明
   * `architecture/`：放置相关图片
 * `database.md`：数据库设计
-* `deployment.md`：部署说明，相关配置说明，迭代版本记录等
-* `src`：放置项目源码
+
+## 部署方法
+
+* 管理端前端:
+    * `npm install`: 安装依赖包
+    * `npm run build:prod`: 构建项目
+* 后端:
+    * `npm install`: 安装依赖包
+    * `node app.js`: 启动服务
+
+
+
 
 
