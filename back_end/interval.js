@@ -22,7 +22,7 @@ let intervalTime = 50;
 
 let sleep = function(ms) {
     return new Promise(resolve => setTimeout(resolve, ms))
-}
+};
 
 let GetItemByUuid = async function(itemUuid){
     let errorMsg = "";
@@ -52,7 +52,7 @@ let GetItemByUuid = async function(itemUuid){
         return {"data":itemInfo,
             "info":errorMsg};
     }
-}
+};
 
 let getDateNum = function(itemDate){
     let item_date = new Date(itemDate);
@@ -72,7 +72,7 @@ let getDateNum = function(itemDate){
             return 2;
         }
     }
-}
+};
 
 // to do加上读写锁
 let preparePianoForDel = async function(itemRoomId, itemBegin, itemDuration, itemDate){
@@ -93,7 +93,7 @@ let preparePianoForDel = async function(itemRoomId, itemBegin, itemDuration, ite
                         lock.unlock().catch(function(err){})
                     }
                     else{
-                        tag = 1
+                        tag = 1;
                         let test = function(){
                             return new Promise(resolve =>{
                                 db.where({ piano_id: itemRoomId }).get('piano', function (err, res, fields) {
@@ -113,8 +113,8 @@ let preparePianoForDel = async function(itemRoomId, itemBegin, itemDuration, ite
                         };
                         let flag = await test();
                         if(flag === 0){
-                            lock.unlock().catch(function(err){})
-                            resolve(0)
+                            lock.unlock().catch(function(err){});
+                            resolve(0);
                             return ;
                         }
                         if(flag === 1){
@@ -151,21 +151,21 @@ let preparePianoForDel = async function(itemRoomId, itemBegin, itemDuration, ite
                                     });
                                 });
                             };
-                            let check = await checkUpdate()
+                            let check = await checkUpdate();
                             if(check === 0){
                                 errorMsg = "更新失败";
-                                lock.unlock().catch(function(err){})
-                                resolve(0)
+                                lock.unlock().catch(function(err){});
+                                resolve(0);
                                 return ;
                             }
                             else{
-                                lock.unlock().catch(function(err){})
-                                resolve(1)
+                                lock.unlock().catch(function(err){});
+                                resolve(1);
                                 return ;
                             }
                         }
                     }
-                }).catch(()=>{})
+                }).catch(()=>{});
                 if(tag === 1){
                     break
                 }
@@ -176,8 +176,8 @@ let preparePianoForDel = async function(itemRoomId, itemBegin, itemDuration, ite
                 resolve(0);
             }
         })
-    }
-    let res = await lock()
+    };
+    let res = await lock();
     if(res === 1){
         return {"success":true};
     }
@@ -185,7 +185,7 @@ let preparePianoForDel = async function(itemRoomId, itemBegin, itemDuration, ite
         return {"success":false,
             "info":errorMsg};
     }
-}
+};
 
 let DeleteItem = async function(itemUuid){
     // 更改piano数据
@@ -201,12 +201,12 @@ let DeleteItem = async function(itemUuid){
                         lock.unlock().catch(function(err){})
                     }
                     else{
-                        tag = 1
+                        tag = 1;
                         let result = await preparePianoForDel(item.data.item_roomId, item.data.item_begin, item.data.item_duration, item.data.item_date);
                         if(result.success === false){
                             errorMsg = "退订失败";
-                            lock.unlock().catch(function(err){})
-                            resolve(0)
+                            lock.unlock().catch(function(err){});
+                            resolve(0);
                             return ;
                         }
                         // 更新item数据
@@ -225,17 +225,17 @@ let DeleteItem = async function(itemUuid){
                         };
                         let flag = await test();
                         if(flag === 0){
-                            lock.unlock().catch(function(err){})
-                            resolve(0)
+                            lock.unlock().catch(function(err){});
+                            resolve(0);
                             return ;
                         }
                         if(flag === 1){
-                            lock.unlock().catch(function(err){})
-                            resolve(1)
+                            lock.unlock().catch(function(err){});
+                            resolve(1);
                             return ;
                         }
                     }
-                }).catch(()=>{})
+                }).catch(()=>{});
                 if(tag === 1){
                     break
                 }
@@ -246,8 +246,8 @@ let DeleteItem = async function(itemUuid){
                 resolve(0);
             }
         })
-    }
-    let res = await lock()
+    };
+    let res = await lock();
     if(res === 1){
         return {"success":true,
             "info":errorMsg};
@@ -256,7 +256,7 @@ let DeleteItem = async function(itemUuid){
         return {"success":false,
             "info":errorMsg};
     }
-}
+};
 
 
 let SearchUnpaidItemAndDelete = async function(){
@@ -266,8 +266,7 @@ let SearchUnpaidItemAndDelete = async function(){
             db.where('item_type', [3])
                 .get('item', function (err, res, fields) {
                     let _data = JSON.stringify(res);
-                    let _info = JSON.parse(_data);
-                    itemInfo1 = _info;
+                    itemInfo1 = JSON.parse(_data);
                     resolve(1);
                 });
         });
@@ -293,8 +292,7 @@ let SearchUnpaidLongItemAndDelete = async function(){
             db.where('item_type', [-1])
                 .get('item', function (err, res, fields) {
                     let _data = JSON.stringify(res);
-                    let _info = JSON.parse(_data);
-                    itemInfo2 = _info;
+                    itemInfo2 = JSON.parse(_data);
                     resolve(1);
                 });
         });
@@ -318,7 +316,7 @@ let run = async function()
 {
     await SearchUnpaidItemAndDelete();
     await SearchUnpaidLongItemAndDelete();
-}
+};
 
 run().then(val => {
     console.log(new Date());

@@ -21,7 +21,7 @@ let totalTime = 180000;
 let intervalTime = 500;
 let sleep = function(ms) {
     return new Promise(resolve => setTimeout(resolve, ms))
-}
+};
 
 let getDateStr = function (date) {
     let dateStr = date.getFullYear().toString() + "-";
@@ -44,7 +44,7 @@ let getDateStr = function (date) {
         dateStr = dateStr + day.toString();
     }
     return dateStr;
-}
+};
 
 
 // 每天23：57更新
@@ -139,7 +139,7 @@ let InsertItem = async function(itemDate, itemUsername, itemRoomId, itemType, it
                     item_duration: itemDuration,
                     item_begin: itemBegin,
                     item_uuid: itemUuid
-                }
+                };
                 db.insert('item', _info, function (err, info) {
                     if(!err){
                         resolve(1);
@@ -165,7 +165,7 @@ let InsertItem = async function(itemDate, itemUsername, itemRoomId, itemType, it
     if(flag === 1){
         return {"success":true};
     }
-}
+};
 
 let getDateNum = function(itemDate){
     let item_date = new Date(itemDate);
@@ -256,7 +256,7 @@ let preparePianoForInsert = async function(itemRoomId, itemBegin, itemDuration, 
                 });
             });
         };
-        let check = await checkUpdate()
+        let check = await checkUpdate();
         if(check === 0){
             errorMsg = "更新失败";
             return {"success":false,
@@ -335,7 +335,7 @@ let GetPianoRoomInfo = async function(pianoId) {
                     pianoInfoRes = [pianoInfo.piano_stuvalue,
                             pianoInfo.piano_teavalue,
                             pianoInfo.piano_socvalue,
-                            pianoInfo.piano_multivalue]
+                            pianoInfo.piano_multivalue];
                     resolve(1);
                 }
             });
@@ -372,12 +372,12 @@ let InsertLongItem = async function () {
 }
 let run = async function()
 {
-    let res = []
+    let res = [];
     let test = function(){
         return new Promise(resolve =>{
             db.get('piano', async function(err, rows, fields) {
                 let _data = JSON.stringify(rows);
-                pianoInfo = JSON.parse(_data);
+                let pianoInfo = JSON.parse(_data);
                 for(let i = 0; i<pianoInfo.length; i++){
                     let tag = 0;
                     let lock = function(){
@@ -386,22 +386,22 @@ let run = async function()
                                 let key = pianoInfo[i].piano_id+"piano";
                                 redlock.lock(key, totalTime).then(async function(lock){
                                     res.push(lock);
-                                    tag = 1
-                                    resolve(1)
-                                    return ;
-                                }).catch(()=>{})
+                                    tag = 1;
+                                    resolve(1);
+                                    return;
+                                }).catch(()=>{});
                                 if(tag === 1){
                                     break
                                 }
                                 await sleep(intervalTime)
                             }
                             if(tag === 0){
-                                errorMsg = "请求超时"
-                                resolve(0)
-                                return ;
+                                let errorMsg = "请求超时";
+                                resolve(0);
+                                return;
                             }
                         })
-                    }
+                    };
                     let waitLock = await lock();
                 }
                 if(res.length === pianoInfo.length){
@@ -416,7 +416,7 @@ let run = async function()
     await test();
     await update();
     await InsertLongItem();
-    await sleep(totalTime)
+    await sleep(totalTime);
     for(let i = 0; i<res.length; i++){
         res[i].unlock().catch(function(err){})
     }

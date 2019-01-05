@@ -16,10 +16,9 @@ const routers = router.post("/", async (ctx, next) => {
         ctx.response.body = {
             "success": false,
             "info": "字段不能为空!"
-        }
+        };
         return;
     }
-    let result = await dataBase.SocietyUserRegister(constVariable.USERTYPE_OUTSCHOOL,idNumber,realname,phoneNumber,useruuid,validateCode);
-    ctx.response.body = result;
+    ctx.response.body = await dataBase.SocietyUserRegister(constVariable.USERTYPE_OUTSCHOOL, idNumber, realname, phoneNumber, useruuid, validateCode);
 });
 module.exports = routers;

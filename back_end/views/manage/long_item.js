@@ -5,7 +5,6 @@ const utils = require("../utils");
 
 const routers = router.get("/list", async (ctx, next) => {
     let query = ctx.query;
-    console.log(query);
     let page = query.page;
     let limit = parseInt(query.limit);
     let userId = ctx.query.number;
@@ -31,7 +30,6 @@ const routers = router.get("/list", async (ctx, next) => {
         i.item_long_userid = user.data.number;
         i.item_long_pianoId = piano.data[0].piano_room;
     }
-    console.log(result);
     ctx.response.status = 200;
     ctx.response.body = {
         "items": result.data,
@@ -42,8 +40,6 @@ const routers = router.get("/list", async (ctx, next) => {
     let request = ctx.request.body;
     request.end = parseInt(request.end);
     request.start = parseInt(request.start);
-    console.log("createLong");
-    console.log(request);
     //检查用户
     // 用户被加黑名单
     let userId = await dataBase.GetUserUuidByNumber(request.id);
@@ -94,7 +90,7 @@ const routers = router.get("/list", async (ctx, next) => {
                         lock.unlock().catch(function(err){})
                     }
                     else{
-                        tag = 1
+                        tag = 1;
                         // to do
                         //检查现有长期预约
                         let longItemResult = await dataBase.SearchLongItem(2147483647,0,null,request.room,request.week,null);
@@ -106,14 +102,13 @@ const routers = router.get("/list", async (ctx, next) => {
                                 ctx.response.body = {
                                     "info": "与现有长期预约冲突!"
                                 };
-                                lock.unlock().catch(function(err){})
-                                resolve(0)
+                                lock.unlock().catch(function(err){});
+                                resolve(0);
                                 return;
                             }
                         }
                         //检查规则
                         let result = await dataBase.CheckPianoRule(request.room,request.start,request.end-request.start,request.week);
-                        console.log(result);
                         if(result.success)
                         {
                             let type = 0;
@@ -128,8 +123,8 @@ const routers = router.get("/list", async (ctx, next) => {
                             //添加长期预约
                             await dataBase.AddLongItem(userId,type,request.room,request.week,request.start,request.end-request.start);
                             ctx.response.status = 200;
-                            lock.unlock().catch(function(err){})
-                            resolve(1)
+                            lock.unlock().catch(function(err){});
+                            resolve(1);
                             return;
                         }
                         else
@@ -138,12 +133,12 @@ const routers = router.get("/list", async (ctx, next) => {
                             ctx.response.body = {
                                 "info": "与琴房可用时间冲突!"
                             };
-                            lock.unlock().catch(function(err){})
-                            resolve(0)
+                            lock.unlock().catch(function(err){});
+                            resolve(0);
                             return;
                         }
                     }
-                }).catch(()=>{})
+                }).catch(()=>{});
                 if(tag === 1){
                     break
                 }
@@ -154,11 +149,11 @@ const routers = router.get("/list", async (ctx, next) => {
                 ctx.response.body = {
                     "info": "请求超时!"
                 };
-                resolve(0)
+                resolve(0);
                 return ;
             }
         })
-    }
+    };
     let res = await lock()
 }).post("/delete", async (ctx, next) => {
     let id = ctx.request.body.id;

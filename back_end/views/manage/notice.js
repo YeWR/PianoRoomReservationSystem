@@ -5,14 +5,12 @@ const utils = require("../utils");
 
 const routers = router.get("/list", async (ctx, next) => {
     let query = ctx.query;
-    console.log(query);
     let page = parseInt(query.page);
     let limit = parseInt(query.limit);
     let title = query.title;
     let author = query.author;
     let order = query.dateSort;
     let result = await dataBase.SearchNotice(limit, (page-1)*limit, title, author, order);
-    console.log(result);
     let noticeList = [];
     for(let notice of result.data)
     {
@@ -36,7 +34,6 @@ const routers = router.get("/list", async (ctx, next) => {
     let content = ctx.request.body.content;
     let time = ctx.request.body.time;
     let auth = ctx.request.body.author;
-    console.log(ctx.request.body);
     let result = await dataBase.InsertNotice(title,content,time,auth,1);
     ctx.response.status = 200;
 }).post("/delete", async (ctx, next) => {

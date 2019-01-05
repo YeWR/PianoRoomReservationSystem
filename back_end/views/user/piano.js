@@ -4,7 +4,6 @@ const dataBase = require("../dataBase");
 
 
 const routers = router.get("/all", async (ctx, next) => {
-    // console.log(ctx.request.body);
     let result = await dataBase.GetPianoRoomAll();
     if(result.data === null)
     {
@@ -22,7 +21,6 @@ const routers = router.get("/all", async (ctx, next) => {
             if(p.piano_status)
             {
                 let timeList = [];
-                // console.log(p.piano_list.data);
                 for (let i = 0; i < p.piano_list.data.length; i++) {
                     if(p.piano_list.data[i] === "0" || p.piano_list.data[i] === 48)
                         timeList.push(0);
@@ -43,9 +41,7 @@ const routers = router.get("/all", async (ctx, next) => {
             "pianoList": pianolist
         };
     }
-    //console.log(ctx.response.body);
 }).get("/detail", async (ctx, next) => {
-    // console.log(ctx.query);
     let pianoId = ctx.query.pianoId;
     let dateStr = ctx.query.date;
     dateStr.concat(" 08:00:00");
@@ -74,7 +70,6 @@ const routers = router.get("/all", async (ctx, next) => {
             "pianoInfo": result.data.piano_info
         };
     }
-    //console.log(ctx.response.body);
 });
 
 module.exports = routers;

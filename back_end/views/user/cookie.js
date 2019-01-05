@@ -29,7 +29,6 @@ const routers = router.get("/", async (ctx, next) => {
         };
         return;
     }
-    console.log(token);
     if(token.userId && token.userType !== null && token.userType !== undefined)
     {
         let userInfo = await dataBase.GetUserInfo(token.userId);
