@@ -1,7 +1,9 @@
 # PianoRoomReservationSystem
 [![Build Status](https://travis-ci.com/YeWR/PianoRoomReservationSystem.svg?token=uJujS3v93YqFPXfQnm9M&branch=master)](https://travis-ci.com/YeWR/PianoRoomReservationSystem)
-[![](https://img.shields.io/badge/license-MIT-000000.svg)](https://github.com/YeWR/PianoRoomReservationSystem/blob/master/LICENSE)
+[![](https://img.shields.io/badge/license-MIT-green.svg)](https://github.com/YeWR/PianoRoomReservationSystem/blob/master/LICENSE)
+[![](https://img.shields.io/badge/vue-v2.5.7-green.svg)](https://github.com/vuejs/vue)
 [![](https://img.shields.io/badge/vue_element_admin-v3.10.0-blue.svg)](https://github.com/PanJiaChen/vue-element-admin)
+
 
 清华大学艺教中心琴房预约系统
 
