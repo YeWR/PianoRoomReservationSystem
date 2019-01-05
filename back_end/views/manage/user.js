@@ -222,7 +222,6 @@ const routers = router.get("/list", async (ctx, next) => {
     if(query.IDnumber)
     {
         query.IDnumber = md5(query.IDnumber);
-        console.log(query.IDnumber);
     }
     let result = await dataBase.SearchUser(limit, (page-1)*limit,query.number, query.id, query.IDnumber, query.type, query.blackOrnot);
     let userList = [];

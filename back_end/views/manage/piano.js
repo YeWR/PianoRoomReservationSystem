@@ -118,23 +118,21 @@ const routers = router.get("/list", async (ctx, next) => {
                         lock.unlock().catch(function(err){})
                     }
                     else{
-                        tag = 1
+                        tag = 1;
                         // to do
                         if(request.status === 0)
                         {
-                            console.log("check");
                             for(let i = 0; i <= 2; i++)
                             {
                                 let itemDate = new Date();
                                 itemDate.setDate(itemDate.getDate() + i);
                                 let result = await dataBase.SearchItem(100, 0, null, request.id, null,[1],"+",null);
-                                console.log(result);
                                 if(result.count !== 0)
                                 {
                                     ctx.response.status = 400;
                                     ctx.response.body = {"info": "该琴房仍有未使用订单，请联系用户处理！"};
-                                    lock.unlock().catch(function(err){})
-                                    resolve(0)
+                                    lock.unlock().catch(function(err){});
+                                    resolve(0);
                                     return;
                                 }
                             }
@@ -152,19 +150,19 @@ const routers = router.get("/list", async (ctx, next) => {
                         let result = await dataBase.UpdatePianoInfo(request.id,null,null,null,null,null,null,null,request.status);
                         if(result.success){
                             ctx.response.status = 200;
-                            lock.unlock().catch(function(err){})
-                            resolve(1)
+                            lock.unlock().catch(function(err){});
+                            resolve(1);
                             return;
                         }
                         else
                         {
                             ctx.response.status = 400;
-                            lock.unlock().catch(function(err){})
-                            resolve(0)
+                            lock.unlock().catch(function(err){});
+                            resolve(0);
                             return;
                         }
                     }
-                }).catch(()=>{})
+                }).catch(()=>{});
                 if(tag === 1){
                     break
                 }
@@ -175,17 +173,15 @@ const routers = router.get("/list", async (ctx, next) => {
                 ctx.response.body = {
                     "info": "请求超时!"
                 };
-                resolve(0)
+                resolve(0);
                 return ;
             }
         })
-    }
+    };
     let res = await lock()
     
 }).post("/rule", async (ctx, next) => {
     let request = ctx.request.body;
-    console.log("rule");
-    console.log(request);
     let startIndex = parseInt(request.start);
     let endIndex = parseInt(request.end);
     let day = 0;
@@ -210,7 +206,7 @@ const routers = router.get("/list", async (ctx, next) => {
                         lock.unlock().catch(function(err){})
                     }
                     else{
-                        tag = 1
+                        tag = 1;
                         // to do
                         if(request.type === 2) //添加规则
                         {
@@ -224,8 +220,8 @@ const routers = router.get("/list", async (ctx, next) => {
                                     {
                                         ctx.response.status = 400;
                                         ctx.response.body = {"info": "与现有长期预约冲突，请联系用户处理！"};
-                                        lock.unlock().catch(function(err){})
-                                        resolve(0)
+                                        lock.unlock().catch(function(err){});
+                                        resolve(0);
                                         return;
                                     }
                                 }
@@ -240,8 +236,8 @@ const routers = router.get("/list", async (ctx, next) => {
                                 if (!result.success) {
                                     ctx.response.status = 400;
                                     ctx.response.body = {"info": "与现有订单冲突，请联系用户处理！"};
-                                    lock.unlock().catch(function(err){})
-                                    resolve(0)
+                                    lock.unlock().catch(function(err){});
+                                    resolve(0);
                                     return;
                                 }
                             }
@@ -260,18 +256,18 @@ const routers = router.get("/list", async (ctx, next) => {
                         if (!result.success) {
                             ctx.response.status = 400;
                             ctx.response.body = {"info": "修改规则失败,请联系开发人员"};
-                            lock.unlock().catch(function(err){})
-                            resolve(0)
+                            lock.unlock().catch(function(err){});
+                            resolve(0);
                             return;
                         }
                         else{
                             ctx.response.status = 200;
-                            lock.unlock().catch(function(err){})
-                            resolve(1)
+                            lock.unlock().catch(function(err){});
+                            resolve(1);
                             return;
                         }
                     }
-                }).catch(()=>{})
+                }).catch(()=>{});
                 if(tag === 1){
                     break
                 }
@@ -282,16 +278,14 @@ const routers = router.get("/list", async (ctx, next) => {
                 ctx.response.body = {
                     "info": "请求超时,请重试!"
                 };
-                resolve(0)
+                resolve(0);
                 return ;
             }
         })
-    }
+    };
     let res = await lock()
 }).post("/ruleChange", async (ctx, next) => {
     let request = ctx.request.body;
-    console.log("ruleChange");
-    console.log(request);
     let oldstartIndex = request.oldStart;
     let oldendIndex = request.oldEnd;
     let newstartIndex = request.newStart;
@@ -307,7 +301,6 @@ const routers = router.get("/list", async (ctx, next) => {
         ctx.response.body = {"info": "星期不能为空!"};
         return;
     }
-    console.log("day:" + day.toString());
     let result = null;
     let lock = function(){
         return new Promise(async function(resolve){
@@ -319,8 +312,7 @@ const routers = router.get("/list", async (ctx, next) => {
                         lock.unlock().catch(function(err){})
                     }
                     else{
-                        tag = 1
-                        // to do
+                        tag = 1;
                         //删除旧规则
                         if (day >= 0)
                         {
@@ -333,8 +325,8 @@ const routers = router.get("/list", async (ctx, next) => {
                         if (!result.success) {
                             ctx.response.status = 400;
                             ctx.response.body = {"info": "修改规则失败,请联系开发人员"};
-                            lock.unlock().catch(function(err){})
-                            resolve(0)
+                            lock.unlock().catch(function(err){});
+                            resolve(0);
                             return;
                         }
                         //检查新规则
@@ -351,8 +343,8 @@ const routers = router.get("/list", async (ctx, next) => {
                                     result = await dataBase.ChangePianoRule(request.id,parseInt(oldstartIndex), oldendIndex - oldstartIndex,parseInt(request.week), 2);
                                     ctx.response.status = 400;
                                     ctx.response.body = {"info": "与现有长期预约冲突，请联系用户处理！"};
-                                    lock.unlock().catch(function(err){})
-                                    resolve(0)
+                                    lock.unlock().catch(function(err){});
+                                    resolve(0);
                                     return;
                                 }
                             }
@@ -370,8 +362,8 @@ const routers = router.get("/list", async (ctx, next) => {
                                 result = await dataBase.ChangePianoRule(request.id,parseInt(oldstartIndex), oldendIndex - oldstartIndex,parseInt(request.week), 2);
                                 ctx.response.status = 400;
                                 ctx.response.body = {"info": "与现有订单冲突，请联系用户处理！"};
-                                lock.unlock().catch(function(err){})
-                                resolve(0)
+                                lock.unlock().catch(function(err){});
+                                resolve(0);
                                 return;
                             }
                         }
@@ -380,15 +372,15 @@ const routers = router.get("/list", async (ctx, next) => {
                         if (!result.success) {
                             ctx.response.status = 400;
                             ctx.response.body = {"info": "修改规则失败,请联系开发人员"};
-                            lock.unlock().catch(function(err){})
-                            resolve(0)
+                            lock.unlock().catch(function(err){});
+                            resolve(0);
                             return;
                         }
                         ctx.response.status = 200;
-                        lock.unlock().catch(function(err){})
+                        lock.unlock().catch(function(err){});
                         resolve(1)
                     }
-                }).catch(()=>{})
+                }).catch(()=>{});
                 if(tag === 1){
                     break
                 }
@@ -400,11 +392,11 @@ const routers = router.get("/list", async (ctx, next) => {
                 ctx.response.body = {
                     "info": "请求超时!"
                 };
-                resolve(0)
+                resolve(0);
                 return ;
             }
         })
-    }
+    };
     let res = await lock()
 });
 

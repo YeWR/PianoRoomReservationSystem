@@ -12,7 +12,6 @@ const secretAccessKey = configs.secretAccessKey;
 let smsClient = new SMSClient({accessKeyId, secretAccessKey});
 
 const routers = router.post("/", async (ctx, next) => {
-    console.log(ctx.request.body);
     let tele = ctx.request.body.phoneNumber;
     let code = Math.floor(Math.random()*8999)+1000;
     let state = parseInt(ctx.request.body.state);
@@ -34,11 +33,9 @@ const routers = router.post("/", async (ctx, next) => {
     }).then(function (res) {
             let {Code}=res;
             if (Code === 'OK') {
-                console.log(res);
                 return {"success": true};
             }
         }, function (err) {
-            console.log(err);
             return {"success": false, "info": err.data.Message};
         });
     ctx.response.body = sendsms;

@@ -7,7 +7,7 @@ let fs = require("fs");
 const configs = JSON.parse(fs.readFileSync(configPath));
 const request = require('request');
 const parseString = require('xml2js').parseString;
-const cryptoMO = require('crypto');
+const cryptoMO = require("crypto");
 const utils = require("../utils");
 let access_token = null;
 let expire = 0;
@@ -101,7 +101,6 @@ async function wechatPayment(ip, openid, price, uuid) {
         );
         bodyData += '<sign>' + sign + '</sign>';
         bodyData += '</xml>';
-        //console.log(bodyData);
         let returnValue = {};
         // 微信小程序统一下单接口
         let urlStr = 'https://api.mch.weixin.qq.com/pay/unifiedorder';
@@ -184,7 +183,7 @@ function paysignjs(appid, nonceStr, pkg, signType, timeStamp) {
 
 function raw1(args) {
     let keys = Object.keys(args);
-    keys = keys.sort()
+    keys = keys.sort();
     let newArgs = {};
     keys.forEach(function(key) {
         newArgs[key] = args[key];
@@ -203,22 +202,19 @@ const getUserIp = (req) => {
         req.connection.remoteAddress ||
         req.socket.remoteAddress ||
         req.connection.socket.remoteAddress;
-}
+};
 
 let getAccessToken = async function() {
     return new Promise((resolve, reject) => {
         let time = new Date().getTime();
         if (!access_token || time > expire) {
             let accessTokenUrl = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=" + configs.appid + "&secret=" + configs.appsecret;
-            console.log("accessTokenUrl");
-            console.log(accessTokenUrl);
             request.get({
                 url: accessTokenUrl,
                 method: 'GET',
             }, function (error, response, body) {
                 if (!error) {
                     body = JSON.parse(body);
-                    console.log(body);
                     access_token = body.access_token;
                     expire = body.expires_in + time - 100;
                     resolve(1);
@@ -268,7 +264,6 @@ let sendTemplateMsg = async function(openId,formId,keyword1,keyword2,keyword3,ke
             },
             body: JSON.stringify(bodyData)
         }, function (error, response, body) {
-            console.log(body);
             resolve(1);
         });
     });
@@ -276,9 +271,7 @@ let sendTemplateMsg = async function(openId,formId,keyword1,keyword2,keyword3,ke
 
 const routers = router.post("/cancel", async (ctx, next) => {
     let uuid = ctx.request.body.reservationId;
-    console.log(uuid);
-    let result = await dataBase.DeleteItem(uuid);
-    ctx.response.body = result;
+    ctx.response.body = await dataBase.DeleteItem(uuid);
 }).get("/all", async (ctx, next) => {
     let number = ctx.query.number;
     let userId = await dataBase.GetUserUuidByNumber(number);
@@ -372,7 +365,6 @@ const routers = router.post("/cancel", async (ctx, next) => {
                         ordertime.setMinutes(10*(p.item_begin%6));
                         ordertime.setSeconds(0,0);
                         ordertime -= 30*60*1000;
-                        //ordertime = ordertime.getTime();
                     }
                     let info = {
                         "pianoPlace": i.piano_room,
@@ -459,7 +451,6 @@ const routers = router.post("/cancel", async (ctx, next) => {
         };
     }
 }).post("/order", async (ctx, next) => {
-    console.log(ctx.request.body);
     let number = ctx.request.body.number;
     let userId = await dataBase.GetUserUuidByNumber(number);
     userId = userId.data;
@@ -488,7 +479,7 @@ const routers = router.post("/cancel", async (ctx, next) => {
             ctx.response.body = {
                 "success": false,
                 "info": "金额不匹配"
-            }
+            };
             return;
         }
         let dateStr = ctx.request.body.date;
@@ -521,12 +512,10 @@ const routers = router.post("/cancel", async (ctx, next) => {
         }
     }
 }).post("/pay", async (ctx, next) => {
-    console.log(ctx.request.body);
     let uuid = ctx.request.body.reservationId;
     let openId = ctx.request.body.openid;
     let clientIP = getUserIp(ctx.req).replace(/::ffff:/, '');
     let itemInfo = await dataBase.GetItemByUuid(uuid);
-    console.log(itemInfo);
     if(itemInfo.data &&(itemInfo.data.item_type === 3 || itemInfo.data.item_type === -1))
     {
         let result = await wechatPayment(clientIP, openId, itemInfo.data.item_value, uuid);
@@ -562,22 +551,14 @@ const routers = router.post("/cancel", async (ctx, next) => {
 }).post("/validate/:uuid", async (ctx, next) => {
     let id = ctx.params.uuid;
     let result = ctx.request.body;
-    console.log("body");
-    console.log(result);
     if (result.xml.return_code === 'SUCCESS' && result.xml.result_code === 'SUCCESS') {
         let resultdb = await dataBase.ItemPaySuccess(id);
-        console.log(result.xml);
         if (resultdb.success) {
             //获取access_token
             await getAccessToken();
-            console.log(access_token);
-            console.log(expire);
             if (access_token && expire) {
                 let prepayResult = await dataBase.GetPrepayId(id);
-                console.log("prepayResult");
-                console.log(prepayResult);
                 let info = await dataBase.GetItemByUuid(id);
-                console.log(info);
                 info = info.data;
                 if (info) {
                     let timeStr = utils.getDateStr_Index(new Date(info.item_date), info);
@@ -585,7 +566,6 @@ const routers = router.post("/cancel", async (ctx, next) => {
                     let itemTimeStr = utils.getDatetimeStr(new Date(info.item_time));
                     await sendTemplateMsg(result.xml.openid, prepayResult.prePayId, "琴房预约", itemTimeStr, id, timeStr, room.data.piano_room, info.item_value);
                 }
-                console.log("finish");
             }
             ctx.response.status = 200;
             ctx.response.body = "<xml>" +
@@ -602,33 +582,7 @@ const routers = router.post("/cancel", async (ctx, next) => {
         console.log("支付失败");
         ctx.response.status = 404;
     }
-})
-// }).post('/ordertest', async (ctx, next) => {
-//     let number = ctx.request.body.number;
-//     let userId = await dataBase.GetUserUuidByNumber(number);
-//     userId = userId.data;
-//     let userInfo = await dataBase.GetUserInfo(userId);
-//     if(userInfo.data.status)
-//     {
-//         let pianoId = ctx.request.body.pianoId;
-//         let reserveType = parseInt(ctx.request.body.reservationType);
-//         let pianoPrice = parseInt(ctx.request.body.pianoPrice);
-//         let begTimeIndex = parseInt(ctx.request.body.begTimeIndex);
-//         let endTimeIndex = parseInt(ctx.request.body.endTimeIndex);
-//         let dateStr = ctx.request.body.date;
-//         dateStr.concat(" 08:00:00");
-//         let duration = endTimeIndex - begTimeIndex;
-//         let itemUuid = uuid.v1();
-//         let result = await dataBase.InsertItem(dateStr, userId, pianoId, 1, reserveType, pianoPrice, duration, begTimeIndex, itemUuid);
-//         ctx.response.body = result;
-//     }
-//     else
-//     {
-//         ctx.response.body = {
-//             "success": false,
-//             "info": "您已被加入黑名单，无法预约，请联系管理员!"
-//         }
-//     }
-// });
+});
+
 
 module.exports = routers;
