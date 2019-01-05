@@ -51,7 +51,7 @@ let getDateStr_Index = function  (date, p) {
         }
     }
     return dateStr;
-}
+};
 
 let getDatetimeStr = function (date) {
     let dateStr = date.getFullYear().toString() + "-";
@@ -92,7 +92,7 @@ let getDatetimeStr = function (date) {
         dateStr = dateStr + ":" + minute.toString();
     }
     return dateStr;
-}
+};
 
 let getDateStr = function (date) {
     let dateStr = date.getFullYear().toString() + "-";
@@ -115,12 +115,11 @@ let getDateStr = function (date) {
         dateStr = dateStr + day.toString();
     }
     return dateStr;
-}
+};
 
 let compTime = function (nowdate, date, endIndex)
 {
     date.setHours(8+Math.floor(endIndex/6),10*(endIndex%6),0);
-    //console.log("nowdate ", nowdate, "date ", date);
     if(date.getTime() - nowdate.getTime() > 0)
     {
         return 1;
@@ -129,7 +128,7 @@ let compTime = function (nowdate, date, endIndex)
     {
         return 0;
     }
-}
+};
 
 exports.getDateStr_Index = getDateStr_Index;
 exports.getDatetimeStr = getDatetimeStr;
