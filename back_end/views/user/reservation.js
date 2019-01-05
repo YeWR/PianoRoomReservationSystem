@@ -55,17 +55,6 @@ function getNonceStr(len)
     return str;
 }
 
-function itemTimeout(itemuuid)
-{
-    let result = dataBase.GetItemByUuid(itemuuid);
-    if(result.data)
-    {
-        if(result.data.item_type === 3)
-        {
-            dataBase.DeleteItem(itemuuid);
-        }
-    }
-}
 
 //source: https://blog.csdn.net/zhuming3834/article/details/73168056
 async function wechatPayment(ip, openid, price, uuid) {
@@ -444,7 +433,6 @@ const routers = router.post("/cancel", async (ctx, next) => {
                 }
             }
         }
-        //reservationList = reservationList.sort(sortItemAlarm);
         ctx.response.body = {
             "success": true,
             "reservationList": reservationList
