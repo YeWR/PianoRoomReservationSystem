@@ -74,12 +74,6 @@
       </el-table-column>
     </el-table>
 
-    <!--<el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">-->
-    <!--<el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="200px"-->
-    <!--style="width: 400px; margin-left:50px;">-->
-    <!--</el-form>-->
-    <!--</el-dialog>-->
-
     <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit"
                 @pagination="getList"/>
 
@@ -120,196 +114,229 @@
 </template>
 
 <script>
-  import { getItemList, deleteItem } from '@/api/item'
-  import waves from '@/directive/waves' // Waves directive
-  import { parseTime } from '@/utils'
-  import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
+import { getItemList, deleteItem } from "@/api/item";
+import waves from "@/directive/waves"; // Waves directive
+import { parseTime } from "@/utils";
+import Pagination from "@/components/Pagination"; // Secondary package based on el-pagination
 
-  export default {
-    name: 'ItemAll',
-    components: { Pagination },
-    directives: { waves },
-    data() {
-      return {
-        tableKey: 0,
-        list: null,
-        total: 0,
-        listLoading: true,
-        listQuery: {
-          page: 1,
-          limit: 20,
-          idNumber: '',
-          room: '',
-          itemType: '',
-          status: '',
-          timeSort: '+'
-        },
-
-        timeSortOptions: () => {
-          return [{ label: this.$t('item.timeDes'), key: '-' }, { label: this.$t('item.timeAsc'), key: '+' }]
-        },
-        itemTypeSortOptions: () => {
-          let ans = []
-          ans.push({
-            label: this.$t('item.itemType') + ': ' + this.toItemType(''),
-            key: ''
-          })
-          for (let i = 0; i < 4; ++i) {
-            ans.push({
-              label: this.$t('item.itemType') + ': ' + this.toItemType(i),
-              key: i
-            })
-          }
-          return ans
-        },
-        statusSortOptions: () => {
-          let ans = []
-          ans.push({
-            label: this.$t('item.status') + ': ' + this.toItemStatus(''),
-            key: ''
-          })
-          for (let i = 0; i <= 4; ++i) {
-            ans.push({
-              label: this.$t('item.status') + ': ' + this.toItemStatus(i),
-              key: i
-            })
-          }
-          return ans
-        },
-        statusOptions: ['published', 'draft', 'deleted'],
-        temp: {
-          itemId: '',
-          idNumber: '',
-          room: '',
-          userType: 0,
-          itemType: 0,
-          pianoType: '',
-          price: '10',
-          time: '',
-          status: 0
-        },
-        dialogFormVisible: false,
-        dialogStatus: '',
-        textMap: {
-          update: this.$t('item.view')
-        },
-        dialogPvVisible: true,
-        pvData: [],
-        rules: {
-          type: [{ required: true, message: 'type is required', trigger: 'change' }],
-          timestamp: [{ type: 'date', required: true, message: 'timestamp is required', trigger: 'change' }],
-          title: [{ required: true, message: 'title is required', trigger: 'blur' }]
-        },
-        downloadLoading: false
-      }
-    },
-
-    created() {
-      this.getList()
-      this.listQuery.idNumber = this.$route.query.telephone
-      console.log('query:', this.$route, this.$route.params)
-    },
-    methods: {
-      getList() {
-        this.listLoading = true
-        getItemList(this.listQuery).then(response => {
-          this.list = response.data.list
-          this.total = response.data.total
-          // Just to simulate the time of the request
-          setTimeout(() => {
-            this.listLoading = false
-          }, 0.5 * 1000)
-
-        })
-
+export default {
+  name: "ItemAll",
+  components: { Pagination },
+  directives: { waves },
+  data() {
+    return {
+      tableKey: 0,
+      list: null,
+      total: 0,
+      listLoading: true,
+      listQuery: {
+        page: 1,
+        limit: 20,
+        idNumber: "",
+        room: "",
+        itemType: "",
+        status: "",
+        timeSort: "+"
       },
-      handleFilter() {
-        this.listQuery.page = 1
-        this.getList()
-      },
-      handleDeleteItem(row) {
 
-        let that = this
-        that.$confirm(that.$t('item.confirm') + that.$t('item.delete') + '?', that.$t('item.warning'), {
-          confirmButtonText: that.$t('item.confirm'),
-          cancelButtonText: that.$t('item.cancel'),
-          type: 'warning'
-        }).then(() => {
+      timeSortOptions: () => {
+        return [
+          { label: this.$t("item.timeDes"), key: "-" },
+          { label: this.$t("item.timeAsc"), key: "+" }
+        ];
+      },
+      itemTypeSortOptions: () => {
+        let ans = [];
+        ans.push({
+          label: this.$t("item.itemType") + ": " + this.toItemType(""),
+          key: ""
+        });
+        for (let i = 0; i < 4; ++i) {
+          ans.push({
+            label: this.$t("item.itemType") + ": " + this.toItemType(i),
+            key: i
+          });
+        }
+        return ans;
+      },
+      statusSortOptions: () => {
+        let ans = [];
+        ans.push({
+          label: this.$t("item.status") + ": " + this.toItemStatus(""),
+          key: ""
+        });
+        for (let i = 0; i <= 4; ++i) {
+          ans.push({
+            label: this.$t("item.status") + ": " + this.toItemStatus(i),
+            key: i
+          });
+        }
+        return ans;
+      },
+      statusOptions: ["published", "draft", "deleted"],
+      temp: {
+        itemId: "",
+        idNumber: "",
+        room: "",
+        userType: 0,
+        itemType: 0,
+        pianoType: "",
+        price: "10",
+        time: "",
+        status: 0
+      },
+      dialogFormVisible: false,
+      dialogStatus: "",
+      textMap: {
+        update: this.$t("item.view")
+      },
+      dialogPvVisible: true,
+      pvData: [],
+      rules: {
+        type: [
+          { required: true, message: "type is required", trigger: "change" }
+        ],
+        timestamp: [
+          {
+            type: "date",
+            required: true,
+            message: "timestamp is required",
+            trigger: "change"
+          }
+        ],
+        title: [
+          { required: true, message: "title is required", trigger: "blur" }
+        ]
+      },
+      downloadLoading: false
+    };
+  },
+
+  created() {
+    this.getList();
+    this.listQuery.idNumber = this.$route.query.telephone;
+    console.log("query:", this.$route, this.$route.params);
+  },
+  methods: {
+    getList() {
+      this.listLoading = true;
+      getItemList(this.listQuery).then(response => {
+        this.list = response.data.list;
+        this.total = response.data.total;
+        // Just to simulate the time of the request
+        setTimeout(() => {
+          this.listLoading = false;
+        }, 0.5 * 1000);
+      });
+    },
+    handleFilter() {
+      this.listQuery.page = 1;
+      this.getList();
+    },
+    handleDeleteItem(row) {
+      let that = this;
+      that
+        .$confirm(
+          that.$t("item.confirm") + that.$t("item.delete") + "?",
+          that.$t("item.warning"),
+          {
+            confirmButtonText: that.$t("item.confirm"),
+            cancelButtonText: that.$t("item.cancel"),
+            type: "warning"
+          }
+        )
+        .then(() => {
           deleteItem(row.itemId).then(response => {
             that.$message({
-              message: that.$t('item.success'),
-              type: 'success'
-            })
+              message: that.$t("item.success"),
+              type: "success"
+            });
 
-            that.getList()
-          })
-        }).catch(() => {
+            that.getList();
+          });
         })
-        // row.status = status
-      },
-      sortChange(data) {
-        const { prop, order } = data
-        if (prop === 'time') {
-          this.sortByID(order)
-        }
-      },
-      sortByID(order) {
-        if (order === 'ascending') {
-          this.listQuery.timeSort = '+'
-        } else {
-          this.listQuery.timeSort = '-'
-        }
-        this.handleFilter()
-      },
-      handleView(row) {
-        this.temp = Object.assign({}, row) // copy obj
-        this.dialogStatus = 'update'
-        this.dialogFormVisible = true
-        this.$nextTick(() => {
-          this.$refs['dataForm'].clearValidate()
-        })
-      },
-      handleDownload() {
-        this.downloadLoading = true
-        import('@/vendor/Export2Excel').then(excel => {
-          const tHeader = [this.$t('item.itemId'), this.$t('item.idNumber'), this.$t('item.userType'),
-            this.$t('item.time'), this.$t('item.room'), this.$t('item.pianoType'), this.$t('item.itemType'),
-            this.$t('item.status'), this.$t('item.price')]
-          const filterVal = ['itemId', 'idNumber', 'userType',
-            'time', 'room', 'pianoType', 'itemType',
-            'status', 'price']
-          const data = this.formatJson(filterVal, this.list)
-          excel.export_json_to_excel({
-            header: tHeader,
-            data,
-            filename: 'table-list'
-          })
-          this.downloadLoading = false
-        })
-      },
-      formatJson(filterVal, jsonData) {
-        return jsonData.map(v => filterVal.map(j => {
-          if (j === 'userType' || j === 'itemType') {
-            return this.toItemType(v[j])
-          }
-          else if (j === 'status') {
-            return this.toItemStatus(v[j])
-          }
-          else if (j === 'price') {
-            return '￥' + v[j]
-          }
-          return v[j]
-        }))
-      },
-      toItemType(type) {
-        return this.$t('item.item_' + type)
-      },
-      toItemStatus(status) {
-        if (status === '') {
-          status = 'all'
-        }
-        return this.$t('item.status_' + status)
+        .catch(() => {});
+      // row.status = status
+    },
+    sortChange(data) {
+      const { prop, order } = data;
+      if (prop === "time") {
+        this.sortByID(order);
       }
+    },
+    sortByID(order) {
+      if (order === "ascending") {
+        this.listQuery.timeSort = "+";
+      } else {
+        this.listQuery.timeSort = "-";
+      }
+      this.handleFilter();
+    },
+    handleView(row) {
+      this.temp = Object.assign({}, row); // copy obj
+      this.dialogStatus = "update";
+      this.dialogFormVisible = true;
+      this.$nextTick(() => {
+        this.$refs["dataForm"].clearValidate();
+      });
+    },
+    handleDownload() {
+      this.downloadLoading = true;
+      import("@/vendor/Export2Excel").then(excel => {
+        const tHeader = [
+          this.$t("item.itemId"),
+          this.$t("item.idNumber"),
+          this.$t("item.userType"),
+          this.$t("item.time"),
+          this.$t("item.room"),
+          this.$t("item.pianoType"),
+          this.$t("item.itemType"),
+          this.$t("item.status"),
+          this.$t("item.price")
+        ];
+        const filterVal = [
+          "itemId",
+          "idNumber",
+          "userType",
+          "time",
+          "room",
+          "pianoType",
+          "itemType",
+          "status",
+          "price"
+        ];
+        const data = this.formatJson(filterVal, this.list);
+        excel.export_json_to_excel({
+          header: tHeader,
+          data,
+          filename: "table-list"
+        });
+        this.downloadLoading = false;
+      });
+    },
+    formatJson(filterVal, jsonData) {
+      return jsonData.map(v =>
+        filterVal.map(j => {
+          if (j === "userType" || j === "itemType") {
+            return this.toItemType(v[j]);
+          } else if (j === "status") {
+            return this.toItemStatus(v[j]);
+          } else if (j === "price") {
+            return "￥" + v[j];
+          }
+          return v[j];
+        })
+      );
+    },
+    toItemType(type) {
+      return this.$t("item.item_" + type);
+    },
+    toItemStatus(status) {
+      if (status === "") {
+        status = "all";
+      }
+      return this.$t("item.status_" + status);
     }
   }
+};
 </script>

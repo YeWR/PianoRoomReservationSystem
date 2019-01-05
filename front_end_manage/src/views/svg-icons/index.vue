@@ -21,25 +21,25 @@
 </template>
 
 <script>
-import icons from './requireIcons'
-import clipboard from '@/utils/clipboard'
+import icons from "./requireIcons";
+import clipboard from "@/utils/clipboard";
 
 export default {
-  name: 'Icons',
+  name: "Icons",
   data() {
     return {
       iconsMap: icons
-    }
+    };
   },
   methods: {
     generateIconCode(symbol) {
-      return `<svg-icon icon-class="${symbol}" />`
+      return `<svg-icon icon-class="${symbol}" />`;
     },
     handleClipboard(text, event) {
-      clipboard(text, event)
+      clipboard(text, event);
     }
   }
-}
+};
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>
@@ -64,7 +64,7 @@ export default {
     font-size: 24px;
     margin-top: 10px;
   }
-  .disabled{
+  .disabled {
     pointer-events: none;
   }
 }

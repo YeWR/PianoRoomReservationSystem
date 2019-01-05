@@ -19,35 +19,35 @@
 </template>
 
 <script>
-import { fetchList } from '@/api/transaction'
+import { fetchList } from "@/api/transaction";
 
 export default {
   filters: {
     statusFilter(status) {
       const statusMap = {
-        success: 'success',
-        pending: 'danger'
-      }
-      return statusMap[status]
+        success: "success",
+        pending: "danger"
+      };
+      return statusMap[status];
     },
     orderNoFilter(str) {
-      return str.substring(0, 30)
+      return str.substring(0, 30);
     }
   },
   data() {
     return {
       list: null
-    }
+    };
   },
   created() {
-    this.fetchData()
+    this.fetchData();
   },
   methods: {
     fetchData() {
       fetchList().then(response => {
-        this.list = response.data.items.slice(0, 8)
-      })
+        this.list = response.data.items.slice(0, 8);
+      });
     }
   }
-}
+};
 </script>
