@@ -22,7 +22,7 @@ let requestNum = 100;
 
 let sleep = function(ms) {
     return new Promise(resolve => setTimeout(resolve, ms))
-}
+};
 
 let ChangeUserStatus = async function(userUuid, userStatus){
     let errorMsg = "";
@@ -36,7 +36,7 @@ let ChangeUserStatus = async function(userUuid, userStatus){
                         lock.unlock().catch(function(err){})
                     }
                     else{
-                        tag = 1
+                        tag = 1;
                         // to do
                         let test = function(){
                             return new Promise(resolve =>{
@@ -53,30 +53,30 @@ let ChangeUserStatus = async function(userUuid, userStatus){
                         };
                         let flag = await test();
                         if(flag === 0){
-                            lock.unlock().catch(function(err){})
-                            resolve(0)
+                            lock.unlock().catch(function(err){});
+                            resolve(0);
                             return;
                         }
                         if(flag === 1){
-                            lock.unlock().catch(function(err){})
-                            resolve(1)
+                            lock.unlock().catch(function(err){});
+                            resolve(1);
                             return ;
                         }
                     }
-                }).catch(()=>{})
+                }).catch(()=>{});
                 if(tag === 1){
                     break
                 }
                 await sleep(intervalTime)
             }
             if(tag === 0){
-                errorMsg = "请求超时"
-                resolve(0)
+                errorMsg = "请求超时";
+                resolve(0);
                 return ;
             }
         })
-    }
-    let res = await lock()
+    };
+    let res = await lock();
     if(res === 1){
         return {"data":true};
     }
@@ -84,7 +84,7 @@ let ChangeUserStatus = async function(userUuid, userStatus){
         return {"success":false,
                 "info":errorMsg};
     }
-}
+};
 
 // uuid:改为使用uuid
 let GetUserUuidByNumber = async function(userNumber){
@@ -95,7 +95,7 @@ let GetUserUuidByNumber = async function(userNumber){
             db.where({ number: userNumber }).get('user', function (err, res, fields) {
                 let _select = res;
                 if (_select.length === 0) {
-                    errorMsg = "用户不存在"; // to do
+                    errorMsg = "用户不存在";
                     resolve(0);
                 }
                 else {
@@ -108,7 +108,6 @@ let GetUserUuidByNumber = async function(userNumber){
         });
     };
     let flag = await test();
-    // console.log(flag);
     if(flag === 0){
         return {"data":null,
             "info":errorMsg};
@@ -116,7 +115,7 @@ let GetUserUuidByNumber = async function(userNumber){
     if(flag === 1){
         return {"data":userInfo.uuid};
     }
-}
+};
 
 let SearchUser = async function(count, offset, number, name, id, type, status){
     let errorMsg = "";
@@ -135,10 +134,8 @@ let SearchUser = async function(count, offset, number, name, id, type, status){
             db.where(query)
                 .limit(count,offset)
                 .get('user', function (err, res, fields) {
-                let _select = res;
-                    let _data = JSON.stringify(_select);
-                    let _info = JSON.parse(_data);
-                    userInfo = _info;
+                    let _data = JSON.stringify(res);
+                    userInfo = JSON.parse(_data);
                     resolve(1);
             });
         });
@@ -154,7 +151,6 @@ let SearchUser = async function(count, offset, number, name, id, type, status){
     };
     let flag = await test();
     let flagCount = await getUserCount();
-    // console.log(flag);
     if(flag === 0){
         return {"data":userInfo,
             "count": userCount,
@@ -164,7 +160,7 @@ let SearchUser = async function(count, offset, number, name, id, type, status){
         return {"data":userInfo,
         "count": userCount};
     }
-}
+};
 
 // uuid:改为使用uuid
 let GetUserInfo = async function(userUuid){
@@ -188,7 +184,6 @@ let GetUserInfo = async function(userUuid){
         });
     };
     let flag = await test();
-    // console.log(flag);
     if(flag === 0){
         return {"data":userInfo,
             "info":errorMsg};
@@ -196,7 +191,7 @@ let GetUserInfo = async function(userUuid){
     if(flag === 1){
         return {"data":userInfo};
     }
-}
+};
 
 // to do check tele
 let SetRegisterMsg = async function(socTele, socPassword) {
@@ -204,8 +199,7 @@ let SetRegisterMsg = async function(socTele, socPassword) {
     let test = function(){
         return new Promise(resolve =>{
             db.where({ number: socTele }).get('user', function (err, res, fields) {
-                let _select = res;
-                if (_select.length != 0) {
+                if (res.length !== 0) {
                     errorMsg = "手机号已经被使用"; // to do 
                     resolve(0);
                 }
@@ -224,7 +218,6 @@ let SetRegisterMsg = async function(socTele, socPassword) {
         });
     };
     let flag = await test();
-    // console.log(flag);
     if(flag === 0){
         return {"success":false,
                 "info":errorMsg};
@@ -232,7 +225,7 @@ let SetRegisterMsg = async function(socTele, socPassword) {
     if(flag === 1){
         return {"success":true};
     }
-}
+};
 // uuid:增加参数uuid
 let SocietyUserRegister = async function(socType, socId, socRealname, socTele, socUuid, socPassword) {
     let errorMsg = "";
@@ -257,7 +250,6 @@ let SocietyUserRegister = async function(socType, socId, socRealname, socTele, s
         });
     };
     let res = await checkMsg();
-    // console.log(res);
     if(res === 0){
         return {"success":false,
                 "info":errorMsg};
@@ -265,8 +257,7 @@ let SocietyUserRegister = async function(socType, socId, socRealname, socTele, s
     let test = function(){
         return new Promise(resolve =>{
             db.where({ number: socTele }).get('user', function (err, res, fields) {
-                let _select = res;
-                if (_select.length !== 0) {
+                if (res.length !== 0) {
                     errorMsg = "手机号已经被使用"; // to do 
                     resolve(0);
                 }
@@ -293,7 +284,6 @@ let SocietyUserRegister = async function(socType, socId, socRealname, socTele, s
         });
     };
     let flag = await test();
-    // console.log(flag);
     if(flag === 0){
         return {"success":false,
                 "info":errorMsg};
@@ -301,7 +291,7 @@ let SocietyUserRegister = async function(socType, socId, socRealname, socTele, s
     if(flag === 1){
         return {"success":true};
     }
-}
+};
 
 let CampusUserLogin = async function(type, name, number, uuid) {
     let errorMsg = "";
@@ -338,9 +328,8 @@ let CampusUserLogin = async function(type, name, number, uuid) {
                 }
             });
         });
-    }
+    };
     let flag = await test();
-    // console.log(flag);
     if(flag === 0){
         return {"success":false,
             "info":errorMsg};
@@ -349,7 +338,7 @@ let CampusUserLogin = async function(type, name, number, uuid) {
         return {"success":true,
             "info":info};
     }
-}
+};
 
 // to do check tele
 let SetLoginMsg = async function(socTele, socPassword) {
@@ -357,8 +346,7 @@ let SetLoginMsg = async function(socTele, socPassword) {
     let test = function(){
         return new Promise(resolve =>{
             db.where({ number: socTele }).get('user', function (err, res, fields) {
-                let _select = res;
-                if (_select.length === 0) {
+                if (res.length === 0) {
                     errorMsg = "手机号未注册"; // to do 
                     resolve(0);
                 }
@@ -377,7 +365,6 @@ let SetLoginMsg = async function(socTele, socPassword) {
         });
     };
     let flag = await test();
-    // console.log(flag);
     if(flag === 0){
         return {"success":false,
                 "info":errorMsg};
@@ -385,7 +372,7 @@ let SetLoginMsg = async function(socTele, socPassword) {
     if(flag === 1){
         return {"success":true};
     }
-}
+};
 
 // to do check if already online
 let SocietyUserLogin = async function(socTele, socPassword) {
@@ -436,7 +423,6 @@ let SocietyUserLogin = async function(socTele, socPassword) {
         });
     };
     let flag = await test();
-    // console.log(flag);
     if(flag === 0){
         return {"success":false,
                 "username":userName,
@@ -446,12 +432,12 @@ let SocietyUserLogin = async function(socTele, socPassword) {
         return {"success":true,
                 "username":userName};
     }
-}
+};
 
 let InsertPiano = async function(pianoRoom, pianoInfo, pianoStuvalue, pianoTeavalue, pianoSocvalue, pianoMultivalue, pianoType, pianoStatus) {
     let errorMsg = "";
-    let pianoList = "0".repeat(84*3);
-    let pianoRule = "0".repeat(84*7);
+    let pianoList = "0".repeat(timeLength*3);
+    let pianoRule = "0".repeat(timeLength*7);
     let test = function(){
         return new Promise(resolve =>{
             let _info = {
@@ -478,7 +464,6 @@ let InsertPiano = async function(pianoRoom, pianoInfo, pianoStuvalue, pianoTeava
         });
     };
     let flag = await test();
-    // console.log(flag);
     if(flag === 0){
         return {"success":false,
                 "info":errorMsg};
@@ -486,7 +471,7 @@ let InsertPiano = async function(pianoRoom, pianoInfo, pianoStuvalue, pianoTeava
     if(flag === 1){
         return {"success":true};
     }
-}
+};
 
 let UpdatePianoInfo = async function(pianoId, pianoRoom, pianoInfo, pianoStuvalue, pianoTeavalue, pianoSocvalue, pianoMultivalue, pianoType, pianoStatus) {
     let errorMsg = "";
@@ -511,13 +496,13 @@ let UpdatePianoInfo = async function(pianoId, pianoRoom, pianoInfo, pianoStuvalu
         return new Promise(async function(resolve){
             let tag = 0;
             for(let j = 0; j<requestNum; j++){
-                let key = pianoId.toString()+"pianoInfo"
+                let key = pianoId.toString()+"pianoInfo";
                 redlock.lock(key, totalTime).then(async function(lock){
                     if(tag === 1){
                         lock.unlock().catch(function(err){})
                     }
                     else{
-                        tag = 1
+                        tag = 1;
                         // to do
                         let test = function(){
                             return new Promise(resolve =>{
@@ -526,7 +511,6 @@ let UpdatePianoInfo = async function(pianoId, pianoRoom, pianoInfo, pianoStuvalu
                                         resolve(1);
                                     else
                                     {
-                                        // console.log(err)
                                         errorMsg = "修改琴房信息失败";
                                         resolve(0);
                                     }
@@ -535,30 +519,30 @@ let UpdatePianoInfo = async function(pianoId, pianoRoom, pianoInfo, pianoStuvalu
                         };
                         let flag = await test();
                         if(flag === 0){
-                            lock.unlock().catch(function(err){})
-                            resolve(0)
+                            lock.unlock().catch(function(err){});
+                            resolve(0);
                             return ;
                         }
                         if(flag === 1){
-                            lock.unlock().catch(function(err){})
-                            resolve(1)
+                            lock.unlock().catch(function(err){});
+                            resolve(1);
                             return ;
                         }
                     }
-                }).catch(()=>{})
+                }).catch(()=>{});
                 if(tag === 1){
                     break
                 }
                 await sleep(intervalTime)
             }
             if(tag === 0){
-                errorMsg = "请求超时"
-                resolve(0)
+                errorMsg = "请求超时";
+                resolve(0);
                 return ;
             }
         })
-    }
-    let res = await lock()
+    };
+    let res = await lock();
     if(res === 1){
         return {"success":true};
     }
@@ -655,7 +639,7 @@ let getDateNum = function(itemDate){
             return 2;
         }
     }
-}
+};
 
 let GetPianoRoomInfo = async function(pianoId, date) {
     let num = getDateNum(date);
@@ -698,7 +682,7 @@ let GetPianoRoomInfo = async function(pianoId, date) {
                         "piano_socvalue": pianoInfo.piano_socvalue,
                         "piano_multivalue": pianoInfo.piano_multivalue,
                         "piano_type": pianoInfo.piano_type
-                    }
+                    };
                     resolve(1);
                 }
             });
@@ -713,7 +697,7 @@ let GetPianoRoomInfo = async function(pianoId, date) {
         return {"data":pianoInfoRes,
                 "info":errorMsg};
     }
-}
+};
 
 // to do加上读写锁
 let preparePianoForInsert = async function(itemRoomId, itemBegin, itemDuration, itemDate){
@@ -731,7 +715,7 @@ let preparePianoForInsert = async function(itemRoomId, itemBegin, itemDuration, 
                         lock.unlock().catch(function(err){});
                     }
                     else{
-                        tag = 1
+                        tag = 1;
                         // to do
                         let test = function(){
                             return new Promise(resolve =>{
@@ -797,34 +781,34 @@ let preparePianoForInsert = async function(itemRoomId, itemBegin, itemDuration, 
                                     });
                                 });
                             };
-                            let check = await checkUpdate()
+                            let check = await checkUpdate();
                             if(check === 0){
                                 lock.unlock().catch(function(err){});
                                 errorMsg = "更新失败";
-                                resolve(0)
+                                resolve(0);
                                 return;
                             }
                             else{
                                 lock.unlock().catch(function(err){});
-                                resolve(1)
+                                resolve(1);
                                 return ;
                             }
                         }
                         // to do
                     }
-                }).catch(()=>{})
+                }).catch(()=>{});
                 if(tag === 1){
                     break
                 }
                 await sleep(intervalTime)
             }
             if(tag === 0){
-                errorMsg = "请求超时"
+                errorMsg = "请求超时";
                 resolve(0)
             }
         })
-    }
-    let res = await lock()
+    };
+    let res = await lock();
     if(res === 1){
         return {"success":true};
     }
@@ -832,7 +816,7 @@ let preparePianoForInsert = async function(itemRoomId, itemBegin, itemDuration, 
         return {"success":false,
                 "info":errorMsg};
     }
-}
+};
 
 let preparePianoForRule = async function(itemRoomId, itemBegin, itemDuration, itemDate){
     let errorMsg = "";
@@ -843,12 +827,12 @@ let preparePianoForRule = async function(itemRoomId, itemBegin, itemDuration, it
         return new Promise(async function(resolve){
             let tag = 0;
             for(let j = 0; j<requestNum; j++){
-                let key = itemRoomId.toString()+"prepareForRule"
+                let key = itemRoomId.toString()+"prepareForRule";
                 redlock.lock(key, totalTime).then(async function(lock){
                     if(tag === 1){
                         lock.unlock().catch(function(err){})
                     }else{
-                        tag = 1
+                        tag = 1;
                         // to do
                         let test = function(){
                             return new Promise(resolve =>{
@@ -874,8 +858,8 @@ let preparePianoForRule = async function(itemRoomId, itemBegin, itemDuration, it
                         };
                         let flag = await test();
                         if(flag === 0){
-                            lock.unlock().catch(function(err){})
-                            resolve(0)
+                            lock.unlock().catch(function(err){});
+                            resolve(0);
                             return ;
                         }
                         if(flag === 1){
@@ -912,33 +896,33 @@ let preparePianoForRule = async function(itemRoomId, itemBegin, itemDuration, it
                                     });
                                 });
                             };
-                            let check = await checkUpdate()
+                            let check = await checkUpdate();
                             if(check === 0){
                                 errorMsg = "更新失败";
-                                lock.unlock().catch(function(err){})
-                                resolve(0)
+                                lock.unlock().catch(function(err){});
+                                resolve(0);
                                 return ;
                             }
                             else{
-                                lock.unlock().catch(function(err){})
-                                resolve(1)
+                                lock.unlock().catch(function(err){});
+                                resolve(1);
                                 return ;
                             }
                         }
                     }
-                }).catch(()=>{})
+                }).catch(()=>{});
                 if(tag === 1){
                     break
                 }
                 await sleep(intervalTime)
             }
             if(tag === 0){
-                errorMsg = "请求超时"
+                errorMsg = "请求超时";
                 resolve(0)
             }
         })
-    }
-    let res = await lock()
+    };
+    let res = await lock();
     if(res === 1){
         return {"success":true};
     }
@@ -946,7 +930,7 @@ let preparePianoForRule = async function(itemRoomId, itemBegin, itemDuration, it
         return {"success":false,
                 "info":errorMsg};
     }
-}
+};
 
 let ChangePianoRule = async function(itemRoomId, itemBegin, itemDuration, itemDay, ruleType){
     let errorMsg = "";
@@ -957,13 +941,13 @@ let ChangePianoRule = async function(itemRoomId, itemBegin, itemDuration, itemDa
         return new Promise(async function(resolve){
             let tag = 0;
             for(let j = 0; j<requestNum; j++){
-                let key = itemRoomId.toString()+"changePianoRule"
+                let key = itemRoomId.toString()+"changePianoRule";
                 redlock.lock(key, totalTime).then(async function(lock){
                     if(tag === 1){
                         lock.unlock().catch(function(err){})
                     }
                     else{
-                        tag = 1
+                        tag = 1;
                         let test = function(){
                             return new Promise(resolve =>{
                                 db.where({ piano_id: itemRoomId }).get('piano', function (err, res, fields) {
@@ -984,8 +968,8 @@ let ChangePianoRule = async function(itemRoomId, itemBegin, itemDuration, itemDa
                         };
                         let flag = await test();
                         if(flag === 0){
-                            lock.unlock().catch(function(err){})
-                            resolve(0)
+                            lock.unlock().catch(function(err){});
+                            resolve(0);
                             return;
                         }
                         if(flag === 1){
@@ -1021,33 +1005,33 @@ let ChangePianoRule = async function(itemRoomId, itemBegin, itemDuration, itemDa
                                     });
                                 });
                             };
-                            let check = await checkUpdate()
+                            let check = await checkUpdate();
                             if(check === 0){
                                 errorMsg = "更新失败";
-                                lock.unlock().catch(function(err){})
-                                resolve(0)
+                                lock.unlock().catch(function(err){});
+                                resolve(0);
                                 return;
                             }
                             else{
-                                lock.unlock().catch(function(err){})
-                                resolve(1)
+                                lock.unlock().catch(function(err){});
+                                resolve(1);
                                 return;
                             }
                         }
                     }
-                }).catch(()=>{})
+                }).catch(()=>{});
                 if(tag === 1){
                     break
                 }
                 await sleep(intervalTime)
             }
             if(tag === 0){
-                errorMsg = "请求超时"
+                errorMsg = "请求超时";
                 resolve(0)
             }
         })
-    }
-    let res = await lock()
+    };
+    let res = await lock();
     if(res === 1){
         return {"success":true};
     }
@@ -1055,7 +1039,7 @@ let ChangePianoRule = async function(itemRoomId, itemBegin, itemDuration, itemDa
         return {"success":false,
                 "info":errorMsg};
     }
-}
+};
 
 let CheckPianoRule = async function(itemRoomId, itemBegin, itemDuration, itemDay){
     let errorMsg = "";
@@ -1093,7 +1077,7 @@ let CheckPianoRule = async function(itemRoomId, itemBegin, itemDuration, itemDay
     {
         return {"success":true};
     }
-}
+};
 
 // lock finish
 let InsertItem = async function(itemDate, itemUsername, itemRoomId, itemType, itemMember, itemValue, itemDuration, itemBegin, itemUuid){
@@ -1108,12 +1092,12 @@ let InsertItem = async function(itemDate, itemUsername, itemRoomId, itemType, it
                         lock.unlock().catch(function(err){})
                     }
                     else{
-                        tag = 1
+                        tag = 1;
                         let result = await preparePianoForInsert(itemRoomId, itemBegin, itemDuration, itemDate);
                         if (result.success === false) {
                             errorMsg = "预约失败";
-                            lock.unlock().catch(function(err){})
-                            resolve(0)
+                            lock.unlock().catch(function(err){});
+                            resolve(0);
                             return ;
                         }
                         //插入订单
@@ -1129,8 +1113,7 @@ let InsertItem = async function(itemDate, itemUsername, itemRoomId, itemType, it
                                         item_duration: itemDuration,
                                         item_begin: itemBegin,
                                         item_uuid: itemUuid
-                                    }
-                                    // console.log(_info)
+                                    };
                                     db.insert('item', _info, function (err, info) {
                                         if(!err){
                                             resolve(1);
@@ -1144,17 +1127,17 @@ let InsertItem = async function(itemDate, itemUsername, itemRoomId, itemType, it
                         };
                         let flag = await test();
                         if(flag === 0){
-                            lock.unlock().catch(function(err){})
+                            lock.unlock().catch(function(err){});
                             resolve(0);
                             return ;
                         }
                         if(flag === 1){
-                            lock.unlock().catch(function(err){})
+                            lock.unlock().catch(function(err){});
                             resolve(1);
                             return ;
                         }
                     }
-                }).catch(()=>{})
+                }).catch(()=>{});
                 if(tag === 1){
                     break
                 }
@@ -1165,8 +1148,8 @@ let InsertItem = async function(itemDate, itemUsername, itemRoomId, itemType, it
                 resolve(0);
             }
         })
-    }
-    let res = await lock()
+    };
+    let res = await lock();
     if(res === 1){
         return {"success":true};
     }
@@ -1174,7 +1157,7 @@ let InsertItem = async function(itemDate, itemUsername, itemRoomId, itemType, it
         return {"success":false,
                 "info":errorMsg};
     }
-}
+};
 
 let ItemCheckin = async function(itemUuid){
     let errorMsg = "";
@@ -1189,7 +1172,7 @@ let ItemCheckin = async function(itemUuid){
                         lock.unlock().catch(function(err){})
                     }
                     else{
-                        tag = 1
+                        tag = 1;
                         let test = function(){
                             return new Promise(resolve =>{
                                 db.where({ item_uuid: itemUuid }).get('item', function (err, res, fields) {
@@ -1242,25 +1225,25 @@ let ItemCheckin = async function(itemUuid){
                         };
                         let flag = await test();
                         if(flag === 0){
-                            lock.unlock().catch(function(err){})
-                            resolve(0)
+                            lock.unlock().catch(function(err){});
+                            resolve(0);
                             return ;
                         }
                         if(flag === 1){
                             flag = await checkin();
                             if(flag === 0){
-                                lock.unlock().catch(function(err){})
-                                resolve(0)
+                                lock.unlock().catch(function(err){});
+                                resolve(0);
                                 return ;
                             }
                             if(flag === 1){
-                                lock.unlock().catch(function(err){})
-                                resolve(1)
+                                lock.unlock().catch(function(err){});
+                                resolve(1);
                                 return ;
                             }
                         }
                     }
-                }).catch(()=>{})
+                }).catch(()=>{});
                 if(tag === 1){
                     break
                 }
@@ -1271,8 +1254,8 @@ let ItemCheckin = async function(itemUuid){
                 resolve(0);
             }
         })
-    }
-    let res = await lock()
+    };
+    let res = await lock();
     if(res === 1){
         return {"success":true,"data":itemInfo};
     }
@@ -1295,7 +1278,7 @@ let ItemPaySuccess = async function(itemUuid){
                         lock.unlock().catch(function(err){})
                     }
                     else{
-                        tag = 1
+                        tag = 1;
                         let test = function(){
                             return new Promise(resolve =>{
                                 db.where({ item_uuid: itemUuid }).get('item', function (err, res, fields) {
@@ -1338,25 +1321,25 @@ let ItemPaySuccess = async function(itemUuid){
                         };
                         let flag = await test();
                         if(flag === 0){
-                            lock.unlock().catch(function(err){})
-                            resolve(0)
+                            lock.unlock().catch(function(err){});
+                            resolve(0);
                             return ;
                         }
                         if(flag === 1){
                             flag = await payfinish();
                             if(flag === 0){
-                                lock.unlock().catch(function(err){})
-                                resolve(0)
+                                lock.unlock().catch(function(err){});
+                                resolve(0);
                                 return;
                             }
                             if(flag === 1){
-                                lock.unlock().catch(function(err){})
-                                resolve(1)
+                                lock.unlock().catch(function(err){});
+                                resolve(1);
                                 return ;
                             }
                         }
                     }
-                }).catch(()=>{})
+                }).catch(()=>{});
                 if(tag === 1){
                     break
                 }
@@ -1367,8 +1350,8 @@ let ItemPaySuccess = async function(itemUuid){
                 resolve(0);
             }
         })
-    }
-    let res = await lock()
+    };
+    let res = await lock();
     if(res === 1){
         return {"success":true,"data":itemInfo};
     }
@@ -1385,8 +1368,7 @@ let GetItem = async function(itemUsername){
         return new Promise(resolve =>{
             db.where({ item_username: itemUsername }).get('item', function (err, res, fields) {
                 let _data = JSON.stringify(res);
-                let _info = JSON.parse(_data);
-                itemInfo = _info;
+                itemInfo = JSON.parse(_data);
                 resolve(1);
             });
         });
@@ -1400,7 +1382,7 @@ let GetItem = async function(itemUsername){
         return {"data":itemInfo,
                 "info":errorMsg};
     }
-}
+};
 
 let SearchItem = async function(count, offset, username, roomId, member, type, order, date){
     let errorMsg = "";
@@ -1441,8 +1423,7 @@ let SearchItem = async function(count, offset, username, roomId, member, type, o
                 .order_by(sortOrder)
                 .get('item', function (err, res, fields) {
                 let _data = JSON.stringify(res);
-                let _info = JSON.parse(_data);
-                itemInfo = _info;
+                    itemInfo = JSON.parse(_data);
                 resolve(1);
             });
         });
@@ -1500,7 +1481,7 @@ let GetItemByUuid = async function(itemUuid){
         return {"data":itemInfo,
                 "info":errorMsg};
     }
-}
+};
 
 // to do加上读写锁
 let preparePianoForDel = async function(itemRoomId, itemBegin, itemDuration, itemDate){
@@ -1521,7 +1502,7 @@ let preparePianoForDel = async function(itemRoomId, itemBegin, itemDuration, ite
                         lock.unlock().catch(function(err){})
                     }
                     else{
-                        tag = 1
+                        tag = 1;
                         let test = function(){
                             return new Promise(resolve =>{
                                 db.where({ piano_id: itemRoomId }).get('piano', function (err, res, fields) {
@@ -1541,8 +1522,8 @@ let preparePianoForDel = async function(itemRoomId, itemBegin, itemDuration, ite
                         };
                         let flag = await test();
                         if(flag === 0){
-                            lock.unlock().catch(function(err){})
-                            resolve(0)
+                            lock.unlock().catch(function(err){});
+                            resolve(0);
                             return ;
                         }
                         if(flag === 1){
@@ -1579,21 +1560,21 @@ let preparePianoForDel = async function(itemRoomId, itemBegin, itemDuration, ite
                                     });
                                 });
                             };
-                            let check = await checkUpdate()
+                            let check = await checkUpdate();
                             if(check === 0){
                                 errorMsg = "更新失败";
-                                lock.unlock().catch(function(err){})
-                                resolve(0)
+                                lock.unlock().catch(function(err){});
+                                resolve(0);
                                 return ;
                             }
                             else{
-                                lock.unlock().catch(function(err){})
-                                resolve(1)
+                                lock.unlock().catch(function(err){});
+                                resolve(1);
                                 return ;
                             }
                         }
                     }
-                }).catch(()=>{})
+                }).catch(()=>{});
                 if(tag === 1){
                     break
                 }
@@ -1604,8 +1585,8 @@ let preparePianoForDel = async function(itemRoomId, itemBegin, itemDuration, ite
                 resolve(0);
             }
         })
-    }
-    let res = await lock()
+    };
+    let res = await lock();
     if(res === 1){
         return {"success":true};
     }
@@ -1613,7 +1594,7 @@ let preparePianoForDel = async function(itemRoomId, itemBegin, itemDuration, ite
         return {"success":false,
                 "info":errorMsg};
     }
-}
+};
 
 let DeleteItem = async function(itemUuid){
     // 更改piano数据
@@ -1629,12 +1610,12 @@ let DeleteItem = async function(itemUuid){
                         lock.unlock().catch(function(err){})
                     }
                     else{
-                        tag = 1
+                        tag = 1;
                         let result = await preparePianoForDel(item.data.item_roomId, item.data.item_begin, item.data.item_duration, item.data.item_date);
                         if(result.success === false){
                             errorMsg = "退订失败";
-                            lock.unlock().catch(function(err){})
-                            resolve(0)
+                            lock.unlock().catch(function(err){});
+                            resolve(0);
                             return ;
                         }
                         // 更新item数据
@@ -1653,17 +1634,17 @@ let DeleteItem = async function(itemUuid){
                         };
                         let flag = await test();
                         if(flag === 0){
-                            lock.unlock().catch(function(err){})
-                            resolve(0)
+                            lock.unlock().catch(function(err){});
+                            resolve(0);
                             return ;
                         }
                         if(flag === 1){
-                            lock.unlock().catch(function(err){})
-                            resolve(1)
+                            lock.unlock().catch(function(err){});
+                            resolve(1);
                             return ;
                         }
                     }
-                }).catch(()=>{})
+                }).catch(()=>{});
                 if(tag === 1){
                     break
                 }
@@ -1674,8 +1655,8 @@ let DeleteItem = async function(itemUuid){
                 resolve(0);
             }
         })
-    }
-    let res = await lock()
+    };
+    let res = await lock();
     if(res === 1){
         return {"success":true,
                 "info":errorMsg};
@@ -1684,7 +1665,7 @@ let DeleteItem = async function(itemUuid){
         return {"success":false,
                 "info":errorMsg};
     }
-}
+};
 
 let GetNoticeAll = async function(){
     let errorMsg = "";
@@ -1707,7 +1688,7 @@ let GetNoticeAll = async function(){
         return {"data":noticeInfo,
                 "info":errorMsg};
     }
-}
+};
 
 let SearchNotice = async function(count, offset, title, author, order){
     let errorMsg = "";
@@ -1774,7 +1755,7 @@ let GetNoticeInfo = async function(noticeId){
                 else{
                     let _data = JSON.stringify(_select);
                     let _info = JSON.parse(_data);
-                    noticeInfo = _info[0]
+                    noticeInfo = _info[0];
                     resolve(1);
                 }
             });
@@ -1789,7 +1770,7 @@ let GetNoticeInfo = async function(noticeId){
         return {"data":noticeInfo,
                 "info":errorMsg};
     }
-}
+};
 
 let InsertNotice = async function(noticeTitle, noticeCont, noticeTime, noticeAuth, noticeType) {
     let errorMsg = "";
@@ -1801,7 +1782,7 @@ let InsertNotice = async function(noticeTitle, noticeCont, noticeTime, noticeAut
                 notice_time: noticeTime,
                 notice_auth: noticeAuth,
                 notice_type: noticeType
-            }
+            };
             db.insert('notice', _info, function (err, info) {
                 if(!err){
                     resolve(1);
@@ -1814,7 +1795,6 @@ let InsertNotice = async function(noticeTitle, noticeCont, noticeTime, noticeAut
         });
     };
     let flag = await test();
-    // console.log(flag);
     if(flag === 0){
         return {"success":false,
                 "info":errorMsg};
@@ -1822,7 +1802,7 @@ let InsertNotice = async function(noticeTitle, noticeCont, noticeTime, noticeAut
     if(flag === 1){
         return {"success":true};
     }
-}
+};
 
 let DeleteNotice = async function(noticeId) {
     let errorMsg = "";
@@ -1840,7 +1820,6 @@ let DeleteNotice = async function(noticeId) {
         });
     };
     let flag = await test();
-    // console.log(flag);
     if (flag === 0) {
         return {
             "success": false,
@@ -1870,8 +1849,7 @@ let SearchLongItem = async function(count, offset, userUuid, roomId, week, type)
                 .limit(count, offset)
                 .get('item_long', function (err, res, fields) {
                     let _data = JSON.stringify(res);
-                    let _info = JSON.parse(_data);
-                    itemInfo = _info;
+                    itemInfo = JSON.parse(_data);
                     resolve(1);
                 });
         });
@@ -1919,7 +1897,6 @@ let AddLongItem = async function(userUuid, userType, roomId, week, begin, durati
                     resolve(1);
                 }
                 else{
-                    console.log(err)
                     errorMsg = "新建长期预约失败";
                     resolve(0);
                 }
@@ -1966,8 +1943,7 @@ let SetPrepayId = async function(itemUuid, prepayId) {
     let test = function(){
         return new Promise(resolve =>{
             db.where({ item_uuid: itemUuid }).get('item', function (err, res, fields) {
-                let _select = res;
-                if (_select.length === 0) {
+                if (res.length === 0) {
                     errorMsg = "订单不存在"; // to do
                     resolve(0);
                 }
@@ -1986,7 +1962,6 @@ let SetPrepayId = async function(itemUuid, prepayId) {
         });
     };
     let flag = await test();
-    // console.log(flag);
     if(flag === 0){
         return {"success":false,
             "info":errorMsg};
@@ -1994,7 +1969,7 @@ let SetPrepayId = async function(itemUuid, prepayId) {
     if(flag === 1){
         return {"success":true};
     }
-}
+};
 
 let GetPrepayId = async function(itemUuid) {
     let errorMsg = "";
@@ -2002,8 +1977,7 @@ let GetPrepayId = async function(itemUuid) {
     let test = function () {
         return new Promise(resolve => {
             db.where({item_uuid: itemUuid}).get('item', function (err, res, fields) {
-                let _select = res;
-                if (_select.length === 0) {
+                if (res.length === 0) {
                     errorMsg = "订单不存在"; // to do
                     resolve(0);
                 }
@@ -2023,9 +1997,8 @@ let GetPrepayId = async function(itemUuid) {
                 }
             });
         });
-    }
+    };
     let flag = await test();
-    // console.log(flag);
     if (flag === 0) {
         return {
             "success": false,
@@ -2038,7 +2011,7 @@ let GetPrepayId = async function(itemUuid) {
             "prePayId": prePayId
         };
     }
-}
+};
 // 订单
 exports.InsertItem = InsertItem;            // 新增订单
 exports.ItemCheckin = ItemCheckin;            // 更新订单

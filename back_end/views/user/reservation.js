@@ -77,9 +77,9 @@ async function wechatPayment(ip, openid, price, uuid) {
         let total_fee = '1'; // 订单价格 单位是 分
         let timestamp = Math.round(new Date().getTime() / 1000); // 当前时间
         let bodyData = '<xml>';
-        bodyData += '<appid>' + configs.pay_appid + '</appid>';  // 小程序ID
+        bodyData += '<appid>' + configs.appid + '</appid>';  // 小程序ID
         bodyData += '<body>' + body + '</body>'; // 商品描述
-        bodyData += '<mch_id>' + configs.pay_mchid + '</mch_id>'; // 商户号
+        bodyData += '<mch_id>' + configs.mchid + '</mch_id>'; // 商户号
         bodyData += '<nonce_str>' + nonce_str + '</nonce_str>'; // 随机字符串
         bodyData += '<notify_url>' + notify_url + '</notify_url>'; // 支付成功的回调地址
         bodyData += '<openid>' + openid + '</openid>'; // 用户标识
@@ -89,9 +89,9 @@ async function wechatPayment(ip, openid, price, uuid) {
         bodyData += '<trade_type>JSAPI</trade_type>'; // 交易类型 小程序取值如下：JSAPI
         // 签名
         let sign = paysignjsapi(
-            configs.pay_appid,
+            configs.appid,
             body,
-            configs.pay_mchid,
+            configs.mchid,
             nonce_str,
             notify_url,
             openid,
@@ -119,7 +119,7 @@ async function wechatPayment(ip, openid, price, uuid) {
                         returnValue.timeStamp = timestamp.toString(); // 时间戳
                         returnValue.package = 'prepay_id=' + result.xml.prepay_id[0]; // 统一下单接口返回的 prepay_id 参数值
                         returnValue.prepayId = result.xml.prepay_id[0];
-                        returnValue.paySign = paysignjs(configs.pay_appid, returnValue.nonceStr, returnValue.package, 'MD5', timestamp); // 签名
+                        returnValue.paySign = paysignjs(configs.appid, returnValue.nonceStr, returnValue.package, 'MD5', timestamp); // 签名
                     } else {
                         returnValue.msg = result.xml.return_msg[0];
                         returnValue.success = false;
@@ -149,7 +149,7 @@ function paysignjsapi(appid,body,mch_id,nonce_str,notify_url,openid,out_trade_no
         trade_type: 'JSAPI'
     };
     let str = raw(ret);
-    str = str + '&key='+configs.pay_mchkey;
+    str = str + '&key='+configs.mchkey;
     let md5Str = cryptoMO.createHash('md5').update(str).digest('hex');
     md5Str = md5Str.toUpperCase();
     return md5Str;
@@ -178,7 +178,7 @@ function paysignjs(appid, nonceStr, pkg, signType, timeStamp) {
         timeStamp: timeStamp
     };
     let str = raw1(ret);
-    str = str + '&key='+configs.pay_mchkey;
+    str = str + '&key='+configs.mchkey;
     return cryptoMO.createHash('md5').update(str).digest('hex');
 }
 
@@ -209,7 +209,7 @@ let getAccessToken = async function() {
     return new Promise((resolve, reject) => {
         let time = new Date().getTime();
         if (!access_token || time > expire) {
-            let accessTokenUrl = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=" + configs.pay_appid + "&secret=" + configs.pay_appsecret;
+            let accessTokenUrl = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=" + configs.appid + "&secret=" + configs.appsecret;
             console.log("accessTokenUrl");
             console.log(accessTokenUrl);
             request.get({

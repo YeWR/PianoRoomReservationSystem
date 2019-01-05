@@ -21,7 +21,7 @@ let totalTime = 10000;
 let intervalTime = 50;
 let sleep = function(ms) {
     return new Promise(resolve => setTimeout(resolve, ms))
-}
+};
 
 let getDateStr = function (date) {
     let dateStr = date.getFullYear().toString() + "-";
@@ -44,7 +44,7 @@ let getDateStr = function (date) {
         dateStr = dateStr + day.toString();
     }
     return dateStr;
-}
+};
 
 // 手动对齐，将今天的对齐
 let update = async function(){
@@ -125,7 +125,7 @@ let InsertItem = async function(itemDate, itemUsername, itemRoomId, itemType, it
                     item_duration: itemDuration,
                     item_begin: itemBegin,
                     item_uuid: itemUuid
-                }
+                };
                 db.insert('item', _info, function (err, info) {
                     if(!err){
                         resolve(1);
@@ -151,7 +151,7 @@ let InsertItem = async function(itemDate, itemUsername, itemRoomId, itemType, it
     if(flag === 1){
         return {"success":true};
     }
-}
+};
 
 let getDateNum = function(itemDate){
     let item_date = new Date(itemDate);
@@ -171,7 +171,7 @@ let getDateNum = function(itemDate){
             return 2;
         }
     }
-}
+};
 
 let preparePianoForInsert = async function(itemRoomId, itemBegin, itemDuration, itemDate){
     let errorMsg = "";
@@ -242,7 +242,7 @@ let preparePianoForInsert = async function(itemRoomId, itemBegin, itemDuration, 
                 });
             });
         };
-        let check = await checkUpdate()
+        let check = await checkUpdate();
         if(check === 0){
             errorMsg = "更新失败";
             return {"success":false,
@@ -252,7 +252,7 @@ let preparePianoForInsert = async function(itemRoomId, itemBegin, itemDuration, 
             return {"success":true};
         }
     }
-}
+};
 
 let SearchLongItem = async function(count, offset, userUuid, roomId, week, type){
     let errorMsg = "";
@@ -321,7 +321,7 @@ let GetPianoRoomInfo = async function(pianoId) {
                     pianoInfoRes = [pianoInfo.piano_stuvalue,
                             pianoInfo.piano_teavalue,
                             pianoInfo.piano_socvalue,
-                            pianoInfo.piano_multivalue]
+                            pianoInfo.piano_multivalue];
                     resolve(1);
                 }
             });
@@ -337,7 +337,7 @@ let GetPianoRoomInfo = async function(pianoId) {
         return {"data":pianoInfoRes,
             "info":errorMsg};
     }
-}
+};
 
 let InsertLongItem = async function () {
     for(let i = 0; i<3; i++){
@@ -356,11 +356,11 @@ let InsertLongItem = async function () {
             let result = await InsertItem(dateStr,item.item_long_userid,item.item_long_pianoId,-1,item.item_long_type,itemPrice,item.item_long_duration,item.item_long_begin,itemUuid);
         }
     }
-}
+};
 let run = async function()
 {
-    console.log('sdadasdasfasf')
-    let res = []
+    console.log('sdadasdasfasf');
+    let res = [];
     let test = function(){
         return new Promise(resolve =>{
             db.get('piano', async function(err, rows, fields) {
@@ -374,23 +374,23 @@ let run = async function()
                                 let key = pianoInfo[i].piano_id+"piano";
                                 redlock.lock(key, totalTime).then(async function(lock){
                                     res.push(lock);
-                                    tag = 1
-                                    resolve(1)
+                                    tag = 1;
+                                    resolve(1);
                                     return ;
-                                }).catch(()=>{})
+                                }).catch(()=>{});
                                 if(tag === 1){
                                     break;
                                 }
-                                console.log(tag)
+                                console.log(tag);
                                 await sleep(intervalTime)
                             }
                             if(tag === 0){
-                                errorMsg = "请求超时"
-                                resolve(0)
+                                errorMsg = "请求超时";
+                                resolve(0);
                                 return ;
                             }
                         })
-                    }
+                    };
                     let waitLock = await lock();
                 }
                 if(res.length === pianoInfo.length){
@@ -400,15 +400,15 @@ let run = async function()
         });
     };
     await test();
-    console.log('test finish')
+    console.log('test finish');
     await update();
-    console.log('update finish')
+    console.log('update finish');
     await InsertLongItem();
-    console.log('long-item finish')
+    console.log('long-item finish');
     for(let i = 0; i<res.length; i++){
         res[i].unlock().catch(function(err){})
     }
-}
+};
 
 run().then(val => {
     console.log("DailyUpdate Finish");
