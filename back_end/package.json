@@ -22,11 +22,8 @@
     "xml2js": "*",
     "node-uuid": "*",
     "redis": "*",
-    "koa-session": "*",
-    "koa-static": "*",
     "md5-node": "*",
-    "redlock": "*",
-    "node-schedule": "*"
+    "redlock": "*"
   },
   "devDependencies": {
     "mocha": "*",

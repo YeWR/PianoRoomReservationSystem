@@ -12,7 +12,7 @@ let db = new Db.Adapter({
     reconnectTimeout: config.TimeOut
 });
 
-let timeLength = 84
+let timeLength = 84;
 
 // 只在开始的时候执行一次
 let doInit = async function(id, buffer, use){
@@ -28,17 +28,17 @@ let doInit = async function(id, buffer, use){
             });
         });
     };
-    let check = await init()
-    if(check == 0){
+    let check = await init();
+    if(check === 0){
         return 0;
     }
     else{
         return 1;
     }
-}
+};
 
 let init = async function(){
-    let now = new Date()
+    let now = new Date();
     let errorMsg = "";
     let pianoInfo;
     let test = function(){
@@ -46,20 +46,20 @@ let init = async function(){
             db.get('piano', function(err, rows, fields) { 
                 let _data = JSON.stringify(rows);
                 pianoInfo = JSON.parse(_data);
-                console.log(pianoInfo)
+                console.log(pianoInfo);
                 for(let i = 0; i<pianoInfo.length; i++){
-                    let buffer =  ""
+                    let buffer =  "";
                     for(let j = (now.getDay()-1)*timeLength; j<(now.getDay()+6)*timeLength; j++){
-                        if(pianoInfo[i].piano_rule.data[j%(7*timeLength)] == '0' || pianoInfo[i].piano_rule.data[j%(7*timeLength)] == 48){
+                        if(pianoInfo[i].piano_rule.data[j%(7*timeLength)] === '0' || pianoInfo[i].piano_rule.data[j%(7*timeLength)] === 48){
                             buffer += '0'
                         }
                         else{
                             buffer += '1'
                         }
                     }
-                    let use = ""
+                    let use = "";
                     for(let j = 0; j<3*timeLength; j++){
-                        if(buffer[j] == '0' || buffer[j] == 48){
+                        if(buffer[j] === '0' || buffer[j] === 48){
                             use += '0'
                         }
                         else{
@@ -74,14 +74,14 @@ let init = async function(){
     };
     let flag = await test();
     console.log(flag);
-    if(flag == 0){
+    if(flag === 0){
         return {"success":false,
                 "info":errorMsg};
     }
-    if(flag == 1){
+    if(flag === 1){
         return {"success":true};
     }
-}
+};
 
-init()
+init();
 

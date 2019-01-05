@@ -1,47 +1,7 @@
 const Router = require("koa-router");
 const router = new Router();
 const dataBase = require("../dataBase");
-
-function getDateStr (date) {
-    let dateStr = date.getFullYear().toString() + "-";
-    let month = date.getMonth()+1;
-    let day = date.getDate();
-    let hour = date.getHours();
-    let minute = date.getMinutes();
-    if(month < 10)
-    {
-        dateStr = dateStr + "0" + month.toString() + "-";
-    }
-    else
-    {
-        dateStr = dateStr + month.toString() + "-";
-    }
-    if(day < 10)
-    {
-        dateStr = dateStr + "0" + day.toString();
-    }
-    else
-    {
-        dateStr = dateStr + day.toString();
-    }
-    if(hour < 10)
-    {
-        dateStr = dateStr + " " + "0" + hour.toString();
-    }
-    else
-    {
-        dateStr = dateStr + " " + hour.toString();
-    }
-    if(minute < 10)
-    {
-        dateStr = dateStr + ":0" + minute.toString();
-    }
-    else
-    {
-        dateStr = dateStr + ":" + minute.toString();
-    }
-    return dateStr;
-}
+const utils = require("../utils");
 
 const routers = router.get("/all", async (ctx, next) => {
     let result = await dataBase.GetNoticeAll();
@@ -49,7 +9,7 @@ const routers = router.get("/all", async (ctx, next) => {
     for(let notice of result.data)
     {
         let date = new Date(notice.notice_time);
-        let dateStr = getDateStr(date);
+        let dateStr = utils.getDatetimeStr(date);
         let noticeKey = "";
         if(notice.notice_cont.length > 10)
         {
@@ -81,7 +41,7 @@ const routers = router.get("/all", async (ctx, next) => {
     {
         let notice = result.data;
         let date = new Date(notice.notice_time);
-        let dateStr = getDateStr(date);
+        let dateStr = utils.getDatetimeStr(date);
         let info = {
             "noticeTitle": notice.notice_title,
             "noticeTime": dateStr,

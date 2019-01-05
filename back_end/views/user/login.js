@@ -86,7 +86,7 @@ const routers = router.post("/outSchool", async (ctx, next) => {
              "userType": constVariable.USERTYPE_OUTSCHOOL
          };
         const secret = configs.app_key[0];
-        result.token = jwt.sign(userToken,secret, {"expiresIn": 10*24*60*60*1});
+        result.token = jwt.sign(userToken,secret, {"expiresIn": configs.expire_day * 24 * 60 * 60});
         ctx.response.body = result;
     }
     else
@@ -125,7 +125,7 @@ const routers = router.post("/outSchool", async (ctx, next) => {
                     "userType": result.info.type,
                 };
                 const secret = configs.app_key[0];
-                const token = jwt.sign(userToken, secret, {"expiresIn": 10 * 24 * 60 * 60 * 1});
+                const token = jwt.sign(userToken, secret, {"expiresIn": configs.expire_day * 24 * 60 * 60});
                 let data = {
                     "success": true,
                     "token": token,
