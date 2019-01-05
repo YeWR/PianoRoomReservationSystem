@@ -57,146 +57,153 @@
 </template>
 
 <script>
-  import { fetchUserList } from '@/api/user'
-  import { joinToBlacklist } from '@/api/user'
-  import waves from '@/directive/waves' // Waves directive
-  import { parseTime } from '@/utils'
-  import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
+import { fetchUserList } from "@/api/user";
+import { joinToBlacklist } from "@/api/user";
+import waves from "@/directive/waves"; // Waves directive
+import { parseTime } from "@/utils";
+import Pagination from "@/components/Pagination"; // Secondary package based on el-pagination
 
-  const calendarTypeOptions = [
-    { key: 'CN', display_name: 'China' },
-    { key: 'US', display_name: 'USA' },
-    { key: 'JP', display_name: 'Japan' },
-    { key: 'EU', display_name: 'Eurozone' }
-  ]
+const calendarTypeOptions = [
+  { key: "CN", display_name: "China" },
+  { key: "US", display_name: "USA" },
+  { key: "JP", display_name: "Japan" },
+  { key: "EU", display_name: "Eurozone" }
+];
 
-  // arr to obj ,such as { CN : "China", US : "USA" }
-  const calendarTypeKeyValue = calendarTypeOptions.reduce((acc, cur) => {
-    acc[cur.key] = cur.display_name
-    return acc
-  }, {})
+// arr to obj ,such as { CN : "China", US : "USA" }
+const calendarTypeKeyValue = calendarTypeOptions.reduce((acc, cur) => {
+  acc[cur.key] = cur.display_name;
+  return acc;
+}, {});
 
-  export default {
-    name: 'ComplexTable',
-    components: { Pagination },
-    directives: { waves },
-    data() {
-      return {
-        tableKey: 0,
-        list: null,
-        total: 0,
-        listLoading: true,
-        redirect: '/item/all',
+export default {
+  name: "ComplexTable",
+  components: { Pagination },
+  directives: { waves },
+  data() {
+    return {
+      tableKey: 0,
+      list: null,
+      total: 0,
+      listLoading: true,
+      redirect: "/item/all",
 
-        listQuery: {
-          page: 1,
-          limit: 20,
-          id: undefined,
-          telephone: undefined,
-          IDnumber: undefined,
-          type: '',
-          blackOrnot:1
-        },
-        typeOptions: () => {
-          return [{label: this.$t('user.type_0'), key: 0}, {label: this.$t('user.type_1'), key: 1}, {label: this.$t('user.type_2'), key: 2}]
-        },
-        temp: {
-          id: 'myn',
-          number: '18800000000',
-          IDnumber: '2016011111',
-          type: '1'
-        },
-        downloadLoading: false
-      }
+      listQuery: {
+        page: 1,
+        limit: 20,
+        id: undefined,
+        telephone: undefined,
+        IDnumber: undefined,
+        type: "",
+        blackOrnot: 1
+      },
+      typeOptions: () => {
+        return [
+          { label: this.$t("user.type_0"), key: 0 },
+          { label: this.$t("user.type_1"), key: 1 },
+          { label: this.$t("user.type_2"), key: 2 }
+        ];
+      },
+      temp: {
+        id: "myn",
+        number: "18800000000",
+        IDnumber: "2016011111",
+        type: "1"
+      },
+      downloadLoading: false
+    };
+  },
+  created() {
+    this.getList();
+  },
+  methods: {
+    getList() {
+      this.listLoading = true;
+      fetchUserList(this.listQuery).then(response => {
+        console.log(response);
+        this.list = response.data.list;
+        this.total = response.data.total;
+        console.log(response);
+        setTimeout(() => {
+          this.listLoading = false;
+        }, 1.5 * 1000);
+      });
     },
-    created() {
-      this.getList()
+    handleFilter() {
+      this.listQuery.page = 1;
+      this.getList();
     },
-    methods: {
-      getList() {
-        this.listLoading = true
-        fetchUserList(this.listQuery).then(response => {
-          console.log(response)
-          this.list = response.data.list
-          this.total = response.data.total
-          console.log(response)
-          setTimeout(() => {
-            this.listLoading = false
-          }, 1.5 * 1000)
-        })
-      },
-      handleFilter() {
-        this.listQuery.page = 1
-        this.getList()
-      },
-      handleDownload() {
-        this.downloadLoading = true
-        import('@/vendor/Export2Excel').then(excel => {
-          const tHeader = [ 'id', 'telephone', 'IDnumber', 'type']
-          const filterVal = [ 'id', 'telephone', 'IDnumber', 'type']
-          const data = this.formatJson(filterVal, this.list)
-          excel.export_json_to_excel({
-            header: tHeader,
-            data,
-            filename: 'table-list'
-          })
-          this.downloadLoading = false
-        })
-      },
+    handleDownload() {
+      this.downloadLoading = true;
+      import("@/vendor/Export2Excel").then(excel => {
+        const tHeader = ["id", "telephone", "IDnumber", "type"];
+        const filterVal = ["id", "telephone", "IDnumber", "type"];
+        const data = this.formatJson(filterVal, this.list);
+        excel.export_json_to_excel({
+          header: tHeader,
+          data,
+          filename: "table-list"
+        });
+        this.downloadLoading = false;
+      });
+    },
 
-      formatJson(filterVal, jsonData) {
-        return jsonData.map(v => filterVal.map(j => {
-          if (j === 'timestamp') {
-            return parseTime(v[j])
+    formatJson(filterVal, jsonData) {
+      return jsonData.map(v =>
+        filterVal.map(j => {
+          if (j === "timestamp") {
+            return parseTime(v[j]);
           } else {
-            return v[j]
+            return v[j];
           }
-        }))
-      },
+        })
+      );
+    },
 
-      toUserType(type) {
-        return this.$t('user.type_' + type)
-      },
+    toUserType(type) {
+      return this.$t("user.type_" + type);
+    },
 
-      toBlack(id){
-        this.$confirm('此操作将把此用户移入黑名单, 是否继续?', '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          type: 'warning'
-        }).then(() => {
+    toBlack(id) {
+      this.$confirm("此操作将把此用户移入黑名单, 是否继续?", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      })
+        .then(() => {
           this.listLoading = true;
           joinToBlacklist(id).then(response => {
-            if(response.status === 200){
+            if (response.status === 200) {
               this.$notify({
-                title: '成功',
-                message: '加入黑名单成功',
-                type: 'success',
+                title: "成功",
+                message: "加入黑名单成功",
+                type: "success",
                 duration: 2000
-              })
-              this.getList()
-            }
-            else{
+              });
+              this.getList();
+            } else {
               this.$notify({
-                title: '失败',
+                title: "失败",
                 message: response.data,
-                type: 'fail',
+                type: "fail",
                 duration: 2000
-              })
+              });
             }
             setTimeout(() => {
-              this.listLoading = false
-            }, 1.5 * 1000)
-          })
-        }).catch(() => {
+              this.listLoading = false;
+            }, 1.5 * 1000);
+          });
+        })
+        .catch(() => {
           this.$message({
-            type: 'info',
-            message: '已取消移入'
+            type: "info",
+            message: "已取消移入"
           });
         });
-      },
-      checkList(telephone){
-        this.$router.push({ path: this.redirect + '?telephone=' + telephone})
-      }
+    },
+    checkList(telephone) {
+      this.$router.push({ path: this.redirect + "?telephone=" + telephone });
     }
   }
+};
 </script>

@@ -91,21 +91,27 @@
 </template>
 
 <script>
-import { fetchList, fetchPv, createNotice,fetchDetail,DeleteNotice} from '@/api/notice'
-import waves from '@/directive/waves' // Waves directive
-import { parseTime } from '@/utils'
-import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
+import {
+  fetchList,
+  fetchPv,
+  createNotice,
+  fetchDetail,
+  DeleteNotice
+} from "@/api/notice";
+import waves from "@/directive/waves"; // Waves directive
+import { parseTime } from "@/utils";
+import Pagination from "@/components/Pagination"; // Secondary package based on el-pagination
 export default {
-  name: 'ComplexTable',
+  name: "ComplexTable",
   components: { Pagination },
   directives: { waves },
   filters: {
     statusFilter(status) {
       const statusMap = {
-        deleted: 'danger'
-      }
-      return statusMap[status]
-    },
+        deleted: "danger"
+      };
+      return statusMap[status];
+    }
   },
   // to do sort & query
   data() {
@@ -115,252 +121,280 @@ export default {
       total: 0,
       listLoading: true,
       listQuery: {
-        page: 1,  // 第几页
-        limit: 10,      // 一页的个数
-        title: '',
-        author: '', // 没有则为空
-        sort: 'date', // 后端不用管这个 
-        dateSort: '+' // -表示减，+表示加
+        page: 1, // 第几页
+        limit: 10, // 一页的个数
+        title: "",
+        author: "", // 没有则为空
+        sort: "date", // 后端不用管这个
+        dateSort: "+" // -表示减，+表示加
       },
-      sortOptions: [{ label: 'Date Ascending', key: 'date' }, { label: 'Date Descending', key: '-date' }],
+      sortOptions: [
+        { label: "Date Ascending", key: "date" },
+        { label: "Date Descending", key: "-date" }
+      ],
       temp: {
-        id: '',
-        uuid:'',
+        id: "",
+        uuid: "",
         timestamp: new Date(),
-        title: '',
-        type: '1',
-        author:'',
-        content: ''
+        title: "",
+        type: "1",
+        author: "",
+        content: ""
       },
       dialogFormVisible: false,
-      newFormVisible: false, 
-      dialogStatus: '',
+      newFormVisible: false,
+      dialogStatus: "",
       textMap: {
-        detail: 'Detail',
-        create: 'Create',
+        detail: "Detail",
+        create: "Create"
       },
       rules: {
-        type: [{ required: true, message: 'type is required', trigger: 'change' }],
-        timestamp: [{ type: 'date', required: true, message: 'timestamp is required', trigger: 'change' }],
-        title: [{ required: true, message: 'title is required', trigger: 'blur' }]
+        type: [
+          { required: true, message: "type is required", trigger: "change" }
+        ],
+        timestamp: [
+          {
+            type: "date",
+            required: true,
+            message: "timestamp is required",
+            trigger: "change"
+          }
+        ],
+        title: [
+          { required: true, message: "title is required", trigger: "blur" }
+        ]
       },
       downloadLoading: false
-    }
+    };
   },
   created() {
-    this.getList()
+    this.getList();
   },
   methods: {
     getList() {
       this.listLoading = true;
       fetchList(this.listQuery).then(response => {
-        let tmp_items = response.data.items
-        this.total = response.data.total
-        let tmp = []
-        for(let i = 0; i<tmp_items.length; i++){
+        let tmp_items = response.data.items;
+        this.total = response.data.total;
+        let tmp = [];
+        for (let i = 0; i < tmp_items.length; i++) {
           tmp.push({
-            id:tmp_items[i].id,
-            uuid:i+(this.listQuery.page-1)*this.listQuery.limit+1,
-            timestamp:new Date(Date.parse(tmp_items[i].date)),
-            author:tmp_items[i].author,
-            title:tmp_items[i].title,
-            content:undefined
-          })
+            id: tmp_items[i].id,
+            uuid: i + (this.listQuery.page - 1) * this.listQuery.limit + 1,
+            timestamp: new Date(Date.parse(tmp_items[i].date)),
+            author: tmp_items[i].author,
+            title: tmp_items[i].title,
+            content: undefined
+          });
         }
-        this.list = tmp
+        this.list = tmp;
         setTimeout(() => {
-          this.listLoading = false
-        }, 1.5 * 1000)
-      })
+          this.listLoading = false;
+        }, 1.5 * 1000);
+      });
     },
     handleFilter() {
-      if(this.listQuery.sort === 'date'){
-        this.listQuery.dateSort = '+'
+      if (this.listQuery.sort === "date") {
+        this.listQuery.dateSort = "+";
+      } else {
+        this.listQuery.dateSort = "-";
       }
-      else{
-        this.listQuery.dateSort = '-'
-      }
-      this.listQuery.page = 1
-      this.getList()
+      this.listQuery.page = 1;
+      this.getList();
     },
     sortChange(data) {
-      const { prop, order } = data
-      if (prop === 'date') {
-        this.sortByID(order)
+      const { prop, order } = data;
+      if (prop === "date") {
+        this.sortByID(order);
       }
     },
     sortByID(order) {
-      if (order === 'ascending') {
-        this.listQuery.sort = 'Date Ascending'
-        this.listQuery.dateSort = '+'
+      if (order === "ascending") {
+        this.listQuery.sort = "Date Ascending";
+        this.listQuery.dateSort = "+";
       } else {
-        this.listQuery.sort = 'Date Descending'
-        this.listQuery.dateSort = '-'
+        this.listQuery.sort = "Date Descending";
+        this.listQuery.dateSort = "-";
       }
-      this.handleFilter()
+      this.handleFilter();
     },
     resetTemp() {
       this.temp = {
         id: undefined,
-        uuid:undefined,
+        uuid: undefined,
         importance: 1,
-        remark: '',
+        remark: "",
         timestamp: new Date(),
-        title: '',
-        status: 'published',
-        type: ''
-      }
+        title: "",
+        status: "published",
+        type: ""
+      };
     },
     handleCreate() {
-      this.resetTemp()
-      this.temp.author = ''; // huoqudenglu
-      this.dialogStatus = 'create';
+      this.resetTemp();
+      this.temp.author = ""; // huoqudenglu
+      this.dialogStatus = "create";
       this.newFormVisible = true;
       this.$nextTick(() => {
-        this.$refs['dataForm'].clearValidate()
-      })
+        this.$refs["dataForm"].clearValidate();
+      });
     },
     createData() {
-      if(this.temp.title.length > 10){
-            this.$message({
-            type: 'info',
-            message: '公告标题不可以超过10个字'
-          }); 
-          return;  
+      if (this.temp.title.length > 10) {
+        this.$message({
+          type: "info",
+          message: "公告标题不可以超过10个字"
+        });
+        return;
       }
-      if(this.temp.author.length > 4){
-            this.$message({
-            type: 'info',
-            message: '作者姓名不可以超过5个字'
-          }); 
-          return;  
+      if (this.temp.author.length > 4) {
+        this.$message({
+          type: "info",
+          message: "作者姓名不可以超过5个字"
+        });
+        return;
       }
-      if(this.temp.content.length > 100){
-            this.$message({
-            type: 'info',
-            message: '内容不可以超过100个字'
-          }); 
-          return;  
+      if (this.temp.content.length > 100) {
+        this.$message({
+          type: "info",
+          message: "内容不可以超过100个字"
+        });
+        return;
       }
-        this.$confirm('此操作将发布此公告, 是否继续?', '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          type: 'warning'
-        }).then(() => {
-            let data = {
-              title: this.temp.title,
-              time: this.temp.timestamp.getFullYear()+'-'+(this.temp.timestamp.getMonth()+1)+'-'+this.temp.timestamp.getDate()+' '+this.temp.timestamp.getHours()+':'+this.temp.timestamp.getMinutes()+':'+this.temp.timestamp.getSeconds(),
-              author: this.temp.author,
-              content: this.temp.content
+      this.$confirm("此操作将发布此公告, 是否继续?", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      })
+        .then(() => {
+          let data = {
+            title: this.temp.title,
+            time:
+              this.temp.timestamp.getFullYear() +
+              "-" +
+              (this.temp.timestamp.getMonth() + 1) +
+              "-" +
+              this.temp.timestamp.getDate() +
+              " " +
+              this.temp.timestamp.getHours() +
+              ":" +
+              this.temp.timestamp.getMinutes() +
+              ":" +
+              this.temp.timestamp.getSeconds(),
+            author: this.temp.author,
+            content: this.temp.content
+          };
+          createNotice(data).then(response => {
+            if (response.status === 200) {
+              this.$notify({
+                title: "成功",
+                message: "添加成功",
+                type: "success",
+                duration: 2000
+              });
+              this.newFormVisible = false;
+              this.getList();
+            } else {
+              this.$notify({
+                title: "失败",
+                message: response.data,
+                type: "fail",
+                duration: 2000
+              });
             }
-            createNotice(data).then(response => {
-              if(response.status === 200){
-                    this.$notify({
-                      title: '成功',
-                      message: '添加成功',
-                      type: 'success',
-                      duration: 2000
-                    })
-                    this.newFormVisible = false;
-                    this.getList()
-              }
-              else{
-                    this.$notify({
-                      title: '失败',
-                      message: response.data,
-                      type: 'fail',
-                      duration: 2000
-                    })
-              }
-              setTimeout(() => {
-                this.listLoading = false
-              }, 1.5 * 1000)
-            })
-        }).catch(() => {
+            setTimeout(() => {
+              this.listLoading = false;
+            }, 1.5 * 1000);
+          });
+        })
+        .catch(() => {
           this.$message({
-            type: 'info',
-            message: '已取消'
-          });          
+            type: "info",
+            message: "已取消"
+          });
         });
     },
     handleDetail(row) {
-      this.dialogFormVisible = false
+      this.dialogFormVisible = false;
       this.listLoading = true;
-      this.dialogStatus = 'detail';
+      this.dialogStatus = "detail";
       fetchDetail(row.id).then(response => {
-        this.temp = Object.assign({}, row) // copy obj
-        this.temp.content = response.data.content
-        this.dialogFormVisible = true
+        this.temp = Object.assign({}, row); // copy obj
+        this.temp.content = response.data.content;
+        this.dialogFormVisible = true;
         setTimeout(() => {
-          this.listLoading = false
-        }, 1.5 * 1000)
-      })
+          this.listLoading = false;
+        }, 1.5 * 1000);
+      });
     },
-    handleDelete(row){
-        this.$confirm('此操作将删除此公告, 是否继续?', '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          type: 'warning'
-        }).then(() => {
+    handleDelete(row) {
+      this.$confirm("此操作将删除此公告, 是否继续?", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      })
+        .then(() => {
           this.listLoading = true;
           let data = {
             id: row.id
-          }
+          };
           DeleteNotice(data).then(response => {
-            if(response.status === 200){
+            if (response.status === 200) {
               this.$notify({
-                title: '成功',
-                message: '删除成功',
-                type: 'success',
+                title: "成功",
+                message: "删除成功",
+                type: "success",
                 duration: 2000
-              })
+              });
               const index = this.list.indexOf(row);
               this.list.splice(index, 1);
-              this.total = this.total -1;
-              this.getList()
-            }
-            else{
+              this.total = this.total - 1;
+              this.getList();
+            } else {
               this.$notify({
-                title: '失败',
+                title: "失败",
                 message: response.data,
-                type: 'fail',
+                type: "fail",
                 duration: 2000
-              })
+              });
             }
             setTimeout(() => {
-              this.listLoading = false
-            }, 1.5 * 1000)
-          }) 
-        }).catch(() => {
+              this.listLoading = false;
+            }, 1.5 * 1000);
+          });
+        })
+        .catch(() => {
           this.$message({
-            type: 'info',
-            message: '已取消删除'
-          });          
+            type: "info",
+            message: "已取消删除"
+          });
         });
     },
     handleDownload() {
-      this.downloadLoading = true
-      import('@/vendor/Export2Excel').then(excel => {
-        const tHeader = ['id', 'title', 'author', 'time']
-        const filterVal = ['uuid', 'title', 'author', 'timestamp']
-        const data = this.formatJson(filterVal, this.list)
+      this.downloadLoading = true;
+      import("@/vendor/Export2Excel").then(excel => {
+        const tHeader = ["id", "title", "author", "time"];
+        const filterVal = ["uuid", "title", "author", "timestamp"];
+        const data = this.formatJson(filterVal, this.list);
         excel.export_json_to_excel({
           header: tHeader,
           data,
-          filename: 'notice-list'
-        })
-        this.downloadLoading = false
-      })
+          filename: "notice-list"
+        });
+        this.downloadLoading = false;
+      });
     },
     formatJson(filterVal, jsonData) {
-      return jsonData.map(v => filterVal.map(j => {
-        if (j === 'timestamp') {
-          return parseTime(v[j])
-        } else {
-          return v[j]
-        }
-      }))
+      return jsonData.map(v =>
+        filterVal.map(j => {
+          if (j === "timestamp") {
+            return parseTime(v[j]);
+          } else {
+            return v[j];
+          }
+        })
+      );
     }
   }
-}
+};
 </script>

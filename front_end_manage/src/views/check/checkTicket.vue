@@ -15,14 +15,14 @@
 </template>
 
 <script>
-import { fetchList} from '@/api/checkTicket'
-import PanThumb from '@/components/PanThumb'
-import MdInput from '@/components/MDinput'
-import Mallki from '@/components/TextHoverEffect/Mallki'
-import DropdownMenu from '@/components/Share/dropdownMenu'
-import waves from '@/directive/waves/index.js' // 水波纹指令
+import { fetchList } from "@/api/checkTicket";
+import PanThumb from "@/components/PanThumb";
+import MdInput from "@/components/MDinput";
+import Mallki from "@/components/TextHoverEffect/Mallki";
+import DropdownMenu from "@/components/Share/dropdownMenu";
+import waves from "@/directive/waves/index.js"; // 水波纹指令
 export default {
-  name: 'ComponentMixinDemo',
+  name: "ComponentMixinDemo",
   components: {
     PanThumb,
     MdInput,
@@ -35,43 +35,44 @@ export default {
   data() {
     const validate = (rule, value, callback) => {
       if (value.length !== 6) {
-        callback(new Error('请输入六个字符'))
+        callback(new Error("请输入六个字符"));
       } else {
-        callback()
+        callback();
       }
-    }
+    };
     return {
-      res: '',
-      query:{
-        id:''
+      res: "",
+      query: {
+        id: ""
       },
       demo: {
-        title: ''
+        title: ""
       },
       demoRules: {
-        title: [{ required: true, trigger: 'change', validator: validate }]
-      },
-    }
+        title: [{ required: true, trigger: "change", validator: validate }]
+      }
+    };
   },
-  methods:{
-    checkin(){
-      fetchList(this.query.id).then(response => {
-        console.log(response)
-        if(response.status === 200){
-          this.res = '检票成功，请通过'
-          this.$message({
-            type: 'info',
-            message: '检票成功'
-          });
-        }
-        setTimeout(() => {
-        }, 1.5 * 1000)
-      }).catch(()=>{
-        this.res = '检票失败'
-      });
+  methods: {
+    checkin() {
+      fetchList(this.query.id)
+        .then(response => {
+          console.log(response);
+          if (response.status === 200) {
+            this.res = "检票成功，请通过";
+            this.$message({
+              type: "info",
+              message: "检票成功"
+            });
+          }
+          setTimeout(() => {}, 1.5 * 1000);
+        })
+        .catch(() => {
+          this.res = "检票失败";
+        });
     }
   }
-}
+};
 </script>
 
 <style scoped>
@@ -80,7 +81,7 @@ export default {
   padding: 30px;
   min-height: calc(100vh - 84px);
 }
-.component-item{
+.component-item {
   min-height: 100px;
 }
 </style>

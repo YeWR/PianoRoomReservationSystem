@@ -22,13 +22,13 @@
 
 <script>
 export default {
-  name: 'Todo',
+  name: "Todo",
   directives: {
     focus(el, { value }, { context }) {
       if (value) {
         context.$nextTick(() => {
-          el.focus()
-        })
+          el.focus();
+        });
       }
     }
   },
@@ -36,44 +36,44 @@ export default {
     todo: {
       type: Object,
       default: function() {
-        return {}
+        return {};
       }
     }
   },
   data() {
     return {
       editing: false
-    }
+    };
   },
   methods: {
     deleteTodo(todo) {
-      this.$emit('deleteTodo', todo)
+      this.$emit("deleteTodo", todo);
     },
     editTodo({ todo, value }) {
-      this.$emit('editTodo', { todo, value })
+      this.$emit("editTodo", { todo, value });
     },
     toggleTodo(todo) {
-      this.$emit('toggleTodo', todo)
+      this.$emit("toggleTodo", todo);
     },
     doneEdit(e) {
-      const value = e.target.value.trim()
-      const { todo } = this
+      const value = e.target.value.trim();
+      const { todo } = this;
       if (!value) {
         this.deleteTodo({
           todo
-        })
+        });
       } else if (this.editing) {
         this.editTodo({
           todo,
           value
-        })
-        this.editing = false
+        });
+        this.editing = false;
       }
     },
     cancelEdit(e) {
-      e.target.value = this.todo.text
-      this.editing = false
+      e.target.value = this.todo.text;
+      this.editing = false;
     }
   }
-}
+};
 </script>

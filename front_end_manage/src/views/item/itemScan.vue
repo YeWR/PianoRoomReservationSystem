@@ -41,170 +41,166 @@
 
 </template>
 <script>
-  import BoxCard from './components/BoxCard'
-  import {getItemScan} from '@/api/item'
-  export default {
-    name: 'ItemScan',
-    components: {
-      BoxCard,
-    },
-    data() {
-      return {
-        flag : 1,
-        options: {
-          group: 'mission'
-        },
-        list: [],
-        temp: {
-          itemId: '',
-          idNumber: '',
-          room: '',
-          userType: 0,
-          itemType: 0,
-          pianoType: '',
-          price: '10',
-          time: '',
-          status: 0,
-        },
-        itemDetail: '',
-        listLoading: true,
-        tempLoading: true
-      }
-    },
-    created() {
-      this.getList();
-    },
-    methods: {
-      getList() {
-        this.itemDetail = this.$t('route.itemDetail')
-        this.listLoading = true
-        getItemScan().then(response => {
-          this.list = response.data.list
-          if (this.list.length > 0) {
-            this.temp = this.list[0]
-          }
-          else{
-            this.flag = 0
-          }
-          console.log('gg', this.list)
-          setTimeout(() => {
-            this.listLoading = false
-            this.tempLoading = false
-          }, 0.5 * 1000)
-        })
+import BoxCard from "./components/BoxCard";
+import { getItemScan } from "@/api/item";
+export default {
+  name: "ItemScan",
+  components: {
+    BoxCard
+  },
+  data() {
+    return {
+      flag: 1,
+      options: {
+        group: "mission"
       },
-      setTemp(item) {
-        this.temp = item
-        this.tempLoading = true
+      list: [],
+      temp: {
+        itemId: "",
+        idNumber: "",
+        room: "",
+        userType: 0,
+        itemType: 0,
+        pianoType: "",
+        price: "10",
+        time: "",
+        status: 0
+      },
+      itemDetail: "",
+      listLoading: true,
+      tempLoading: true
+    };
+  },
+  created() {
+    this.getList();
+  },
+  methods: {
+    getList() {
+      this.itemDetail = this.$t("route.itemDetail");
+      this.listLoading = true;
+      getItemScan().then(response => {
+        this.list = response.data.list;
+        if (this.list.length > 0) {
+          this.temp = this.list[0];
+        } else {
+          this.flag = 0;
+        }
+        console.log("gg", this.list);
         setTimeout(() => {
-          this.tempLoading = false
-        }, 0.5 * 1000)
-      }
+          this.listLoading = false;
+          this.tempLoading = false;
+        }, 0.5 * 1000);
+      });
+    },
+    setTemp(item) {
+      this.temp = item;
+      this.tempLoading = true;
+      setTimeout(() => {
+        this.tempLoading = false;
+      }, 0.5 * 1000);
     }
   }
+};
 </script>
 <style lang="scss">
-
-  .scan-all {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-  }
-  .kankan-group{
-    /*position: absolute;*/
-    top: 400px;
-  }
-  .kanban {
-    &.todo {
-      .board-column-header {
-        background: #4A9FF9;
-      }
-    }
-    &.working {
-      .board-column-header {
-        background: #f9944a;
-      }
-    }
-    &.done {
-      .board-column-header {
-        background: #2ac06d;
-      }
+.scan-all {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+.kankan-group {
+  top: 400px;
+}
+.kanban {
+  &.todo {
+    .board-column-header {
+      background: #4a9ff9;
     }
   }
-  .panel-group {
-    margin-top: 25px;
-    width: 100%;
-    /*background-color: #1e6abc;*/
-    .card-panel-col {
-      width:45%;
-      margin-left: 25px;
-      margin-bottom: 32px;
+  &.working {
+    .board-column-header {
+      background: #f9944a;
     }
-    .card-panel {
-      height: 108px;
-      cursor: pointer;
-      font-size: 12px;
-      position: relative;
-      overflow: auto;
-      color: #666;
-      background: #fff;
-      box-shadow: 4px 4px 40px rgba(0, 0, 0, .05);
-      border-color: rgba(0, 0, 0, .05);
-      &:hover {
-        .card-panel-icon-wrapper {
-          color: #fff;
-        }
-        .icon-people {
-          background: #40c9c6;
-        }
-        .icon-message {
-          background: #36a3f7;
-        }
-        .icon-money {
-          background: #f4516c;
-        }
-        .icon-shopping {
-          background: #34bfa3
-        }
+  }
+  &.done {
+    .board-column-header {
+      background: #2ac06d;
+    }
+  }
+}
+.panel-group {
+  margin-top: 25px;
+  width: 100%;
+  .card-panel-col {
+    width: 45%;
+    margin-left: 25px;
+    margin-bottom: 32px;
+  }
+  .card-panel {
+    height: 108px;
+    cursor: pointer;
+    font-size: 12px;
+    position: relative;
+    overflow: auto;
+    color: #666;
+    background: #fff;
+    box-shadow: 4px 4px 40px rgba(0, 0, 0, 0.05);
+    border-color: rgba(0, 0, 0, 0.05);
+    &:hover {
+      .card-panel-icon-wrapper {
+        color: #fff;
       }
       .icon-people {
-        color: #40c9c6;
+        background: #40c9c6;
       }
       .icon-message {
-        color: #36a3f7;
+        background: #36a3f7;
       }
       .icon-money {
-        color: #f4516c;
+        background: #f4516c;
       }
       .icon-shopping {
-        color: #34bfa3
+        background: #34bfa3;
       }
-      .card-panel-icon-wrapper {
-        float: left;
-        margin: 14px 0 0 14px;
-        padding: 16px;
-        transition: all 0.38s ease-out;
-        border-radius: 6px;
+    }
+    .icon-people {
+      color: #40c9c6;
+    }
+    .icon-message {
+      color: #36a3f7;
+    }
+    .icon-money {
+      color: #f4516c;
+    }
+    .icon-shopping {
+      color: #34bfa3;
+    }
+    .card-panel-icon-wrapper {
+      float: left;
+      margin: 14px 0 0 14px;
+      padding: 16px;
+      transition: all 0.38s ease-out;
+      border-radius: 6px;
+    }
+    .card-panel-icon {
+      float: left;
+      font-size: 48px;
+    }
+    .card-panel-description {
+      float: right;
+      font-weight: bold;
+      margin: 26px;
+      margin-left: 0px;
+      .card-panel-text {
+        line-height: 18px;
+        color: rgba(0, 0, 0, 0.45);
+        font-size: 16px;
+        margin-bottom: 12px;
       }
-      .card-panel-icon {
-        float: left;
-        font-size: 48px;
-      }
-      .card-panel-description {
-        float: right;
-        font-weight: bold;
-        margin: 26px;
-        margin-left: 0px;
-        .card-panel-text {
-          line-height: 18px;
-          color: rgba(0, 0, 0, 0.45);
-          font-size: 16px;
-          margin-bottom: 12px;
-        }
-        .card-panel-num {
-          font-size: 20px;
-        }
+      .card-panel-num {
+        font-size: 20px;
       }
     }
   }
+}
 </style>
