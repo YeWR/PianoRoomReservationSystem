@@ -15,7 +15,7 @@
 
         <view class="reserve-info-descpt">
             <!--todo-->
-            <text class="reserve-info-description">该钢琴手感细腻，音色动听</text>
+            <text class="reserve-info-description">{{_pianoInfo}}</text>
         </view>
 
         <view class="reserve-info-cut">
